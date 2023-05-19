@@ -9,7 +9,7 @@ class MoarAmmoConfig implements IPostDBLoadMod {
 
     public postDBLoad(container: DependencyContainer): void {
         const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
-        const tables = databaseServer.getTales();
+        const tables = databaseServer.getTables();
 
         const adjustableValueList =
             [
@@ -19,11 +19,11 @@ class MoarAmmoConfig implements IPostDBLoadMod {
                 },
                 {
                     name: "ammoRec",
-                    callback: (val, configVal) => Math.round(val * configVal)
+                    callback: (val, configVal) => val > 0 ? Math.round(val * configVal) : Math.round(val / configVal)
                 },
                 {
                     name: "ammoAccr",
-                    callback: (val, configVal) => Math.round(val * configVal)
+                    callback: (val, configVal) => val > 0 ? Math.round(val * configVal) : Math.round(val / configVal)
                 },
                 {
                     name: "PenetrationPower",
@@ -45,13 +45,17 @@ class MoarAmmoConfig implements IPostDBLoadMod {
 
         Object.keys(tables?.templates?.items || {}).forEach(name => {
             const bulletType = tables?.templates?.items[name]?._props
-            if (bulletType?.PenetrationPower) {
-                config?.debug && console.log(bulletType.Name)
+            if (bulletType?.PenetrationPower && bulletType.Name !== "Shrapnel") {
+                if (config?.debug) console.log(tables?.templates?.items[name]._name?.replace("patron_", "").replace("_", " - "))
                 adjustableValueList.forEach(({ name, callback }) => {
                     if (!!config[name] && bulletType[name] !== undefined) {
+                        const oldValue = bulletType[name]
                         bulletType[name] = callback(bulletType[name], config[name])
+                        const newValue = bulletType[name]
+                        if (config?.debug) console.log(`${name}: ${oldValue} > ${newValue}`)
                     }
                 })
+                if (config?.debug) console.log("\n")
             }
         })
     }
