@@ -35,7 +35,7 @@ class MoarAmmoConfig {
             },
             {
                 name: "SpeedRetardation",
-                callback: (val, configVal) => Math.round((val * configVal) * 100000) / 100000
+                callback: (val, configVal) => Math.round((val * configVal) * 1000000) / 1000000
             }
         ];
         Object.keys(tables?.templates?.items || {}).forEach(name => {

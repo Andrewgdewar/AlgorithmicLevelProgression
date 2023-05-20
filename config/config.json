@@ -5,6 +5,6 @@
     "PenetrationPower": 1,
     "FragmentationChance": 1,
     "InitialSpeed": 1,
-    "SpeedRetardation": 0.5,
-    "debug": true
+    "SpeedRetardation": 0.7,
+    "debug": false
 }
