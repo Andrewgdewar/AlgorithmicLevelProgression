@@ -8,6 +8,19 @@ class MoarAmmoConfig {
     postDBLoad(container) {
         const databaseServer = container.resolve("DatabaseServer");
         const tables = databaseServer.getTables();
+        if (config_json_1.default?.weaponRecoilModifier !== 1) {
+            tables.templates.items;
+            for (const item in tables.templates.items) {
+                if (tables.templates.items[item]._props.ItemSound == "mod") {
+                    tables.templates.items[item]._props.Recoil =
+                        Math.round((tables.templates.items[item]._props.Recoil / config_json_1.default?.weaponRecoilModifier) * 100) / 100;
+                }
+                if (tables.templates.items[item]._props.ItemSound == "mag_plastic") {
+                    tables.templates.items[item]._props.Recoil =
+                        Math.round((tables.templates.items[item]._props.Recoil / config_json_1.default?.weaponRecoilModifier) * 100) / 100;
+                }
+            }
+        }
         const adjustableValueList = [
             {
                 name: "Damage",
@@ -19,7 +32,7 @@ class MoarAmmoConfig {
             },
             {
                 name: "ammoAccr",
-                callback: (val, configVal) => val > 0 ? Math.round(val * configVal) : Math.round(val / configVal)
+                callback: (val, configVal) => val < 0 ? Math.round(val * configVal) : Math.round(val / configVal)
             },
             {
                 name: "PenetrationPower",
@@ -44,9 +57,9 @@ class MoarAmmoConfig {
                 if (config_json_1.default?.debug)
                     console.log(tables?.templates?.items[name]._name?.replace("patron_", "").replace("_", " - "));
                 adjustableValueList.forEach(({ name, callback }) => {
-                    if (!!config_json_1.default[name] && bulletType[name] !== undefined) {
+                    if (!!config_json_1.default.BulletChanges[name] && bulletType[name] !== undefined) {
                         const oldValue = bulletType[name];
-                        bulletType[name] = callback(bulletType[name], config_json_1.default[name]);
+                        bulletType[name] = callback(bulletType[name], config_json_1.default.BulletChanges[name]);
                         const newValue = bulletType[name];
                         if (config_json_1.default?.debug)
                             console.log(`${name}: ${oldValue} > ${newValue}`);

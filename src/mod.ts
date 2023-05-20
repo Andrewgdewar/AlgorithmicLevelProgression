@@ -11,6 +11,22 @@ class MoarAmmoConfig implements IPostDBLoadMod {
         const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
         const tables = databaseServer.getTables();
 
+
+        if (config?.weaponRecoilModifier !== 1) {
+            tables.templates.items
+            for (const item in tables.templates.items) {
+                if (tables.templates.items[item]._props.ItemSound == "mod") {
+                    tables.templates.items[item]._props.Recoil =
+                        Math.round((tables.templates.items[item]._props.Recoil / config?.weaponRecoilModifier) * 100) / 100;
+                }
+                if (tables.templates.items[item]._props.ItemSound == "mag_plastic") {
+                    tables.templates.items[item]._props.Recoil =
+                        Math.round((tables.templates.items[item]._props.Recoil / config?.weaponRecoilModifier) * 100) / 100
+                }
+            }
+        }
+
+
         const adjustableValueList =
             [
                 {
@@ -23,7 +39,7 @@ class MoarAmmoConfig implements IPostDBLoadMod {
                 },
                 {
                     name: "ammoAccr",
-                    callback: (val, configVal) => val > 0 ? Math.round(val * configVal) : Math.round(val / configVal)
+                    callback: (val, configVal) => val < 0 ? Math.round(val * configVal) : Math.round(val / configVal)
                 },
                 {
                     name: "PenetrationPower",
@@ -48,9 +64,9 @@ class MoarAmmoConfig implements IPostDBLoadMod {
             if (bulletType?.PenetrationPower && bulletType.Name !== "Shrapnel") {
                 if (config?.debug) console.log(tables?.templates?.items[name]._name?.replace("patron_", "").replace("_", " - "))
                 adjustableValueList.forEach(({ name, callback }) => {
-                    if (!!config[name] && bulletType[name] !== undefined) {
+                    if (!!config.BulletChanges[name] && bulletType[name] !== undefined) {
                         const oldValue = bulletType[name]
-                        bulletType[name] = callback(bulletType[name], config[name])
+                        bulletType[name] = callback(bulletType[name], config.BulletChanges[name])
                         const newValue = bulletType[name]
                         if (config?.debug) console.log(`${name}: ${oldValue} > ${newValue}`)
                     }
