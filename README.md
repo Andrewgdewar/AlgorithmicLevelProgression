@@ -1,64 +1,56 @@
 
-This project was created to automate most parts of building and setting up an environment.
+# **Dushaoan's MOAR - Ammo Configs**
 
-## **NodeJS:**
+=== INSTALL STEPS ===
 
-The first step would be to install nodejs on your pc, the version you NEED is **16.17.1**
+1. Drag and drop this folder into the user/mods folder.
+2. Update your mods/order.json so that MOAR is last on the list.
+3. Optionally change your configuration (see below configuration options).
 
-That version is the one that has been used to test the mod templates and build scripts.
+4. ???????
 
-It can be downloaded from here: https://nodejs.org/dist/v16.17.1/node-v16.17.1-x64.msi
+5. Profit!!!!
 
-A system reboot may be needed after install.
+Example order.json with recommended mods:
+{
+"order": [
+"ServerValueModifier",
+"SPT-Realism-Mod",
+"zPOOP",
+"Lua-CustomSpawnPoints",
+"Dushaoan-MOAR-1.x.x",
+"Dushaoan-MoarAmmoConfigs-1.x.x"
+]
+}
 
-## **IDE:**
+==== Configuration Options ====
 
-The second step is having an IDE ready. We've setup a VSCodium workspace file to help with this.
 
-You CAN use Visual Studio Code if you so desire, just keep in mind that our dev tests on the mod files was done using VSCodium.
+All values are multipliers on default values!
 
-You can get VSCodium here: https://vscodium.com/#install
+Values of 1 are default. 5 would increase the defaults by 5. 
 
-## **Workspace:**
+Below is an example config and how it would effect some 556x45 ammo examples
+{
+    "Damage": 1,  // Default 1
+    "ammoRec": 0.5,  // Default 1
+    "ammoAccr": 0.8,  // Default 1
+    "PenetrationPower": 1,  // Default 1
+    "FragmentationChance": 1,  // Default 1
+    "InitialSpeed": 1,  // Default 1
+    "SpeedRetardation": 0.5,  // Default 1
+    "debug": true // Default false
+}
 
-Once you have NodeJS and VSCodium ready, open the mod.code-workspace file with VSCodium (File->Open Workspace from File...).
 
-Once the project loads into VSCodium you will be recommended to install the ESLint plugin. This is HIGHLY recommended.
+Example output from debug > 
 
-## **Environment Setup:**
+762x39 - mai_ap
 
-There is a task that will automatically setup your environment to use typescript.
-
-To run it, you just need to go to: 
-
-> Terminal->Run Task...->Show All Tasks...->npm: install
-
-After running this task, your environment will be ready to start coding.
-
-DO NOT remove the node_modules folder, this is an auto generated directory that has the required dependencies to be able to use typescript and more.
-
-## **IMPORTANT:**
-
-Before starting to work on your mod, we suggest you read about Dependency Injection and Inversion of Control as this is the adopted architecture SPT-AKI has adopted.
-
-It will be difficult to understand some of the problems you may be having if you dont understand the basics of it.
-
-A guide explaining all the essentials will be available on the hub on release for you to read about.
-
-## **Coding:**
-
-All your work should be centered around the mod.ts file as an entry point.
-You can ONLY change the following properties from the package.json file: `"name"`, `"version"`, `"license"`: `"MIT"`, `"author"`, `"akiVersion"`.
-
-If you have never used typescript before, you can read about it here: https://www.typescriptlang.org/docs/
-
-## **Distributing your mod:**
-
-The project has been set up with an automatic task that will copy and zip ALL required files for your mod to work on SPT-AKI.
-To run this task you just need to go to: 
-
-> Terminal->Run Task...->Show All Tasks...->npm: build:zip
-
-The output will be a mod.zip file that will appear on the root of the project.
-
-Always verify that all files were included into the zip file.
+Damage: 47 > 47
+ammoRec: 10 > 5 // 0.5 reduces debuff recoil by 50%
+ammoAccr: -5 > -6  // 0.8 increases buff values by 20%
+PenetrationPower: 58 > 58
+FragmentationChance: 0.05 > 0.05
+InitialSpeed: 730 > 730
+SpeedRetardation: 0.000025 > 0.00001 // 0.5 multiplier reduces speed falloff by 50% (rounded)
