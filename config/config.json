@@ -1,7 +1,7 @@
 {
     "enableProgressionChanges": true,
-
-    "enableRecoilAndAmmoChanges": true,
+    "botRelativeDelta": 5,
+    "enableRecoilAndAmmoChanges": false,
     "weaponRecoilModifier": 0.7,
     "AmmoChanges": {
         "Damage": 1,
