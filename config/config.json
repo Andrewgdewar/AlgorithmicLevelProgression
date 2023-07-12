@@ -1,16 +1,23 @@
 {
-    "enableProgressionChanges": true,
+    "enabled": true,
     "botRelativeDelta": 5,
-    "enableRecoilAndAmmoChanges": false,
-    "weaponRecoilModifier": 0.7,
-    "AmmoChanges": {
-        "Damage": 1,
-        "ammoRec": 1,
-        "ammoAccr": 1,
-        "PenetrationPower": 1,
-        "FragmentationChance": 1,
-        "InitialSpeed": 1,
-        "SpeedRetardation": 1
+    "levelRange": {
+        "1": {
+            "min": 1,
+            "max": 14
+        },
+        "2": {
+            "min": 15,
+            "max": 21
+        },
+        "3": {
+            "min": 22,
+            "max": 34
+        },
+        "4": {
+            "min": 35,
+            "max": 100
+        }
     },
     "debug": false
 }

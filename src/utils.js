@@ -1,6 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.randomization = exports.equipmentIdMapper = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = void 0;
+exports.randomization = exports.equipmentIdMapper = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = void 0;
+const deDupeArr = (arr) => [...new Set(arr)];
+exports.deDupeArr = deDupeArr;
+const checkParentRecursive = (parentId, items, queryIds) => {
+    if (queryIds.includes(items?.[parentId]?._id))
+        return true;
+    if (items?.[parentId]?._parent)
+        return false;
+    return (0, exports.checkParentRecursive)(items[parentId]._parent, items, queryIds);
+};
+exports.checkParentRecursive = checkParentRecursive;
 const cloneDeep = (objectToClone) => JSON.parse(JSON.stringify(objectToClone));
 exports.cloneDeep = cloneDeep;
 const isObject = (item) => {
@@ -88,7 +98,6 @@ const getWeaponWeighting = ({ _props: { bFirerate, Ergonomics, RepairCost, BoltA
 };
 exports.getWeaponWeighting = getWeaponWeighting;
 exports.equipmentIdMapper = {
-    Magazine: ["5448bc234bdc2d3c308b4569"],
     Headwear: ["5a341c4086f77401f2541505"],
     Earpiece: ["5645bcb74bdc2ded0b8b4578"],
     FaceCover: ["5a341c4686f77469e155819e"],

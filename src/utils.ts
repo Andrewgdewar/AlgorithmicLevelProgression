@@ -1,6 +1,15 @@
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { RandomisationDetails } from "@spt-aki/models/spt/config/IBotConfig";
 
+export const deDupeArr = (arr: any[]) => [...new Set(arr)]
+
+export const checkParentRecursive = (parentId: string, items: Record<string, ITemplateItem>, queryIds: string[]): boolean => {
+    if (queryIds.includes(items?.[parentId]?._id)) return true
+    if (items?.[parentId]?._parent) return false
+
+    return checkParentRecursive(items[parentId]._parent, items, queryIds)
+}
+
 export const cloneDeep = (objectToClone: any) => JSON.parse(JSON.stringify(objectToClone));
 
 export const isObject = (item) => {
@@ -93,7 +102,6 @@ export const getWeaponWeighting = ({
 
 
 export const equipmentIdMapper = {
-    Magazine: ["5448bc234bdc2d3c308b4569"], //?
     Headwear: ["5a341c4086f77401f2541505"],
     Earpiece: ["5645bcb74bdc2ded0b8b4578"],
     FaceCover: ["5a341c4686f77469e155819e"],

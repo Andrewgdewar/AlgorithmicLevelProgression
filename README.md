@@ -19,7 +19,7 @@ Example order.json with recommended mods:
 "zPOOP",
 "Lua-CustomSpawnPoints",
 "Dushaoan-MOAR-1.x.x",
-"Dushaoan-MoarAmmoConfigs-1.x.x"
+"Dushaoan-AlgorithmicLevelProgression-1.x.x"
 ]
 }
 
