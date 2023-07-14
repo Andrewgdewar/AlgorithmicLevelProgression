@@ -4,7 +4,12 @@ import { DependencyContainer } from "tsyringe";
 import config from "../config/config.json";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { checkParentRecursive, cloneDeep, deDupeArr, getAmmoWeighting, getArmorRating, getEquipmentType, getHighestScoringAmmoValue, getWeaponWeighting, mergeDeep, randomization } from './utils';
+import {
+    TradersMasterList,
+    checkParentRecursive, cloneDeep, deDupeArr, getAmmoWeighting, getArmorRating,
+    getEquipmentType, getHighestScoringAmmoValue, getWeaponWeighting, mergeDeep, numList,
+    randomization, setWhitelists, setupBaseWhiteList
+} from './utils';
 import { EquipmentSlots } from '@spt-aki/models/enums/EquipmentSlots';
 
 
@@ -12,11 +17,9 @@ export default function ProgressionChanges(
     container: DependencyContainer
 ): undefined {
 
-
     //Next tasks
-
+    // - Make whiteList with levels (Try to incorporate the items that come with usec base) 1/2
     // - Make function to set items value in equipment/ammo
-    // - Make whiteList with levels (Try to incorporate the items that come with usec base)
     // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases
     // - Build randomisation
     // - Add clothing levels
@@ -47,6 +50,7 @@ export default function ProgressionChanges(
     const medsParent = "543be5664bdc2dd4348b4569"
     const modParent = "5448fe124bdc2da5018b4567"
     const moneyParent = "543be5dd4bdc2deb348b4569"
+
     // Fix PP-9 
     tables.templates.items["57f4c844245977379d5c14d1"]._props.ammoCaliber = "Caliber9x18PM"
 
@@ -67,9 +71,12 @@ export default function ProgressionChanges(
     const traderList = Object.values(traders).filter(({ base }) => tradersToInclude.includes(base.nickname))
 
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
-    const tradersMasterList:
-        { 1: Set<string>, 2: Set<string>, 3: Set<string>, 4: Set<string> } =
+    const tradersMasterList: TradersMasterList =
         { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() }
+
+
+    // SetBaseWhitelist
+    botConfig.equipment.pmc.whitelist = setupBaseWhiteList()
 
     traderList.forEach(({ assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }) => {
         if (!tradItems) return
@@ -159,7 +166,7 @@ export default function ProgressionChanges(
                 if (items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === moneyParent) {
                     tradersMasterList[loyaltyLevel].add(_tpl)
                 } else {
-                    //Do something with the barter items
+                    //Do something with the barter items, Maybe set to the next level higher?
                 }
             } else {
                 // these are weapon components that come with the rifle. no need to add them.
@@ -184,7 +191,7 @@ export default function ProgressionChanges(
     bearInventory.items.SpecialLoot = deDupeArr(bearInventory.items.SpecialLoot)
 
     // Eliminates duplicate id's in later levels
-    const numList = [1, 2, 3, 4]
+
     numList.forEach((num) => {
         tradersMasterList[num].forEach((id) => {
             numList.slice(num, 4).forEach(numListNum => {
@@ -208,10 +215,10 @@ export default function ProgressionChanges(
         updatedData.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"]
     }
 
+    setWhitelists(items, botConfig, tradersMasterList)
 
-    // console.log(JSON.stringify(usecInventory))
 
-
+    console.log(JSON.stringify(botConfig.equipment.pmc.whitelist))
 
     // for (let index = 0; index < numList.length; index++) {
     //     const loyalty = numList[index];
@@ -225,43 +232,38 @@ export default function ProgressionChanges(
     //         levelRange: levelRange[loyalty],
     //     } as EquipmentFilterDetails
 
-    //     const weightingAdjustmentItem = {
-    //         levelRange: levelRange[loyalty],
-    //         ammo: { add: {}, edit: {} },
-    //         equipment: { add: {}, edit: {} },
-    //         // clothing: {} //Implement later
-    //     } as WeightingAdjustmentDetails
+    //     // const weightingAdjustmentItem = {
+    //     //     levelRange: levelRange[loyalty],
+    //     //     ammo: { add: {}, edit: {} },
+    //     //     equipment: { add: {}, edit: {} },
+    //     //     // clothing: {} //Implement later
+    //     // } as WeightingAdjustmentDetails
 
-    // for (let k = 0; k < itemList.length; k++) {
-    //     const id = itemList[k];
-    //     const item = items[id]
-    //     const parent = item._parent
+    //     for (let k = 0; k < itemList.length; k++) {
+    //         const id = itemList[k];
+    //         const item = items[id]
+    //         const parent = item._parent
 
-    //     if (parent === AmmoParent) {
-    //         const calibre = item._props.Caliber || item._props.ammoCaliber
-    //         whitelistItem.cartridge[calibre] =
-    //             [...whitelistItem.cartridge[calibre] ? whitelistItem.cartridge[calibre] : [], id]
+    //         if (parent === AmmoParent) {
+    //             const calibre = item._props.Caliber || item._props.ammoCaliber
+    //             whitelistItem.cartridge[calibre] =
+    //                 [...whitelistItem.cartridge[calibre] ? whitelistItem.cartridge[calibre] : [], id]
 
-    //         if (!weightingAdjustmentItem.ammo.add?.[calibre]) { weightingAdjustmentItem.ammo.add = { ...weightingAdjustmentItem.ammo.add, [calibre]: {} } }
-    //         const ammoWeight = getAmmoWeighting(items[id])
+    //             // if (!weightingAdjustmentItem.ammo.add?.[calibre]) { weightingAdjustmentItem.ammo.add = { ...weightingAdjustmentItem.ammo.add, [calibre]: {} } }
+    //             // const ammoWeight = getAmmoWeighting(items[id])
 
-    //         usecInventory.Ammo[calibre] =
-    //             { ...usecInventory.Ammo[calibre] || {}, [id]: 1 }
-    //         bearInventory.Ammo[calibre] =
-    //             { ...bearInventory.Ammo[calibre] || {}, [id]: 1 }
+    //             // weightingAdjustmentItem.ammo.add[calibre] =
+    //             //     { ...weightingAdjustmentItem.ammo.add[calibre] || {}, [id]: ammoWeight }
+    //             continue
+    //         }
 
-    //         weightingAdjustmentItem.ammo.add[calibre] =
-    //             { ...weightingAdjustmentItem.ammo.add[calibre] || {}, [id]: ammoWeight }
-    //         continue
+    //         const equipmentType = getEquipmentType(parent)
+
+    //         if (equipmentType) {
+    //             whitelistItem.equipment[equipmentType] =
+    //                 [...whitelistItem.equipment[equipmentType] ? whitelistItem.equipment[equipmentType] : [], id]
+    //         }
     //     }
-
-    //     const equipmentType = getEquipmentType(parent)
-
-    //     if (equipmentType) {
-    //         whitelistItem.equipment[equipmentType] =
-    //             [...whitelistItem.equipment[equipmentType] ? whitelistItem.equipment[equipmentType] : [], id]
-    //     }
-    // }
 
     // updatedData.whitelist.push(whitelistItem)
 
@@ -356,14 +358,12 @@ export default function ProgressionChanges(
 
     // updatedData.weightingAdjustments.push(weightingAdjustmentItem)
     // }
-
     // botConfig.equipment.pmc = updatedData
-
     // console.log(JSON.stringify(updatedData))
 
-
-
 }
+
+
 
  // // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<
 

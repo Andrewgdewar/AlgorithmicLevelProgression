@@ -9,8 +9,8 @@ const utils_1 = require("./utils");
 const EquipmentSlots_1 = require("C:/snapshot/project/obj/models/enums/EquipmentSlots");
 function ProgressionChanges(container) {
     //Next tasks
+    // - Make whiteList with levels (Try to incorporate the items that come with usec base) >
     // - Make function to set items value in equipment/ammo
-    // - Make whiteList with levels (Try to incorporate the items that come with usec base)
     // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases
     // - Build randomisation
     // - Add clothing levels
@@ -53,6 +53,8 @@ function ProgressionChanges(container) {
     const traderList = Object.values(traders).filter(({ base }) => tradersToInclude.includes(base.nickname));
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() };
+    // SetBaseWhitelist
+    botConfig.equipment.pmc.whitelist = (0, utils_1.setupBaseWhiteList)();
     traderList.forEach(({ assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }) => {
         if (!tradItems)
             return;
@@ -128,7 +130,7 @@ function ProgressionChanges(container) {
                     tradersMasterList[loyaltyLevel].add(_tpl);
                 }
                 else {
-                    //Do something with the barter items
+                    //Do something with the barter items, Maybe set to the next level higher?
                 }
             }
             else {
@@ -136,6 +138,7 @@ function ProgressionChanges(container) {
             }
         });
     });
+    console.log(botConfig.equipment.pmc.whitelist);
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
     bearInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(bearInventory.items.SecuredContainer);
@@ -148,10 +151,9 @@ function ProgressionChanges(container) {
     usecInventory.items.SpecialLoot = (0, utils_1.deDupeArr)(usecInventory.items.SpecialLoot);
     bearInventory.items.SpecialLoot = (0, utils_1.deDupeArr)(bearInventory.items.SpecialLoot);
     // Eliminates duplicate id's in later levels
-    const numList = [1, 2, 3, 4];
-    numList.forEach((num) => {
+    utils_1.numList.forEach((num) => {
         tradersMasterList[num].forEach((id) => {
-            numList.slice(num, 4).forEach(numListNum => {
+            utils_1.numList.slice(num, 4).forEach(numListNum => {
                 tradersMasterList[numListNum].delete(id);
             });
         });
@@ -170,6 +172,8 @@ function ProgressionChanges(container) {
         updatedData.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"];
     }
     // console.log(JSON.stringify(usecInventory))
+    (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList);
+    console.log(JSON.stringify(botConfig.equipment.pmc.whitelist));
     // for (let index = 0; index < numList.length; index++) {
     //     const loyalty = numList[index];
     //     const itemList = [...tradersMasterList[loyalty]]
@@ -180,36 +184,32 @@ function ProgressionChanges(container) {
     //         ...copyOfPreviousWhitelist,
     //         levelRange: levelRange[loyalty],
     //     } as EquipmentFilterDetails
-    //     const weightingAdjustmentItem = {
-    //         levelRange: levelRange[loyalty],
-    //         ammo: { add: {}, edit: {} },
-    //         equipment: { add: {}, edit: {} },
-    //         // clothing: {} //Implement later
-    //     } as WeightingAdjustmentDetails
-    // for (let k = 0; k < itemList.length; k++) {
-    //     const id = itemList[k];
-    //     const item = items[id]
-    //     const parent = item._parent
-    //     if (parent === AmmoParent) {
-    //         const calibre = item._props.Caliber || item._props.ammoCaliber
-    //         whitelistItem.cartridge[calibre] =
-    //             [...whitelistItem.cartridge[calibre] ? whitelistItem.cartridge[calibre] : [], id]
-    //         if (!weightingAdjustmentItem.ammo.add?.[calibre]) { weightingAdjustmentItem.ammo.add = { ...weightingAdjustmentItem.ammo.add, [calibre]: {} } }
-    //         const ammoWeight = getAmmoWeighting(items[id])
-    //         usecInventory.Ammo[calibre] =
-    //             { ...usecInventory.Ammo[calibre] || {}, [id]: 1 }
-    //         bearInventory.Ammo[calibre] =
-    //             { ...bearInventory.Ammo[calibre] || {}, [id]: 1 }
-    //         weightingAdjustmentItem.ammo.add[calibre] =
-    //             { ...weightingAdjustmentItem.ammo.add[calibre] || {}, [id]: ammoWeight }
-    //         continue
+    //     // const weightingAdjustmentItem = {
+    //     //     levelRange: levelRange[loyalty],
+    //     //     ammo: { add: {}, edit: {} },
+    //     //     equipment: { add: {}, edit: {} },
+    //     //     // clothing: {} //Implement later
+    //     // } as WeightingAdjustmentDetails
+    //     for (let k = 0; k < itemList.length; k++) {
+    //         const id = itemList[k];
+    //         const item = items[id]
+    //         const parent = item._parent
+    //         if (parent === AmmoParent) {
+    //             const calibre = item._props.Caliber || item._props.ammoCaliber
+    //             whitelistItem.cartridge[calibre] =
+    //                 [...whitelistItem.cartridge[calibre] ? whitelistItem.cartridge[calibre] : [], id]
+    //             // if (!weightingAdjustmentItem.ammo.add?.[calibre]) { weightingAdjustmentItem.ammo.add = { ...weightingAdjustmentItem.ammo.add, [calibre]: {} } }
+    //             // const ammoWeight = getAmmoWeighting(items[id])
+    //             // weightingAdjustmentItem.ammo.add[calibre] =
+    //             //     { ...weightingAdjustmentItem.ammo.add[calibre] || {}, [id]: ammoWeight }
+    //             continue
+    //         }
+    //         const equipmentType = getEquipmentType(parent)
+    //         if (equipmentType) {
+    //             whitelistItem.equipment[equipmentType] =
+    //                 [...whitelistItem.equipment[equipmentType] ? whitelistItem.equipment[equipmentType] : [], id]
+    //         }
     //     }
-    //     const equipmentType = getEquipmentType(parent)
-    //     if (equipmentType) {
-    //         whitelistItem.equipment[equipmentType] =
-    //             [...whitelistItem.equipment[equipmentType] ? whitelistItem.equipment[equipmentType] : [], id]
-    //     }
-    // }
     // updatedData.whitelist.push(whitelistItem)
     // const combinedWhiteLists = {} as EquipmentFilterDetails
     // for (const key of updatedData.whitelist) {

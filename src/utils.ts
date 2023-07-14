@@ -1,6 +1,6 @@
 import { MinMax } from './../types/models/common/MinMax.d';
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { RandomisationDetails } from "@spt-aki/models/spt/config/IBotConfig";
+import { EquipmentFilterDetails, IBotConfig, RandomisationDetails } from "@spt-aki/models/spt/config/IBotConfig";
 import { levelRange } from "../config/config.json"
 
 export const deDupeArr = (arr: any[]) => [...new Set(arr)]
@@ -168,4 +168,52 @@ export const getCurrentLevelRange = (currentLevel: number): oneToFour | undefine
     }
 }
 
+export const numList = [1, 2, 3, 4]
+
 export const arrSum = (arr: number[]): number => arr.reduce((a, b) => a + b, 0)
+
+export const setupBaseWhiteList = (): EquipmentFilterDetails[] => {
+    return numList.map(num => ({
+        levelRange: levelRange[num],
+        "equipment": {},
+        "cartridge": {}
+    }))
+}
+
+export type TradersMasterList = { 1: Set<string>, 2: Set<string>, 3: Set<string>, 4: Set<string> }
+
+export const setWhitelists = (
+    items: Record<string, ITemplateItem>,
+    botConfig: IBotConfig,
+    tradersMasterList: TradersMasterList) => {
+    numList.forEach((num, index) => {
+        const loyalty = num;
+        const whitelist = botConfig.equipment.pmc.whitelist
+        const itemList = [...tradersMasterList[loyalty]]
+
+        itemList.forEach(id => {
+            const item = items[id]
+            const parent = item._parent
+            const equipmentType = getEquipmentType(parent)
+
+            switch (true) {
+                case items[parent]?._parent === "5422acb9af1c889c16000029": // Ammo Parent
+                    const calibre = item._props.Caliber || item._props.ammoCaliber
+                    whitelist[index].cartridge[calibre] =
+                        [...whitelist[index].cartridge[calibre] ? whitelist[index].cartridge[calibre] : [], id]
+                    break;
+                case !!equipmentType:
+                    whitelist[index].equipment[equipmentType] =
+                        [...whitelist[index].equipment[equipmentType] ? whitelist[index].equipment[equipmentType] : [], id]
+                    break;
+                default:
+                    break;
+            }
+        })
+
+        if (!!whitelist[index + 1]) {
+            whitelist[index + 1].cartridge = { ...whitelist[index].cartridge }
+            whitelist[index + 1].equipment = { ...whitelist[index].equipment }
+        }
+    })
+}

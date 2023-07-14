@@ -22,7 +22,7 @@ function BotLevelChanges(container) {
                 if (range.max > 99) {
                     range.max = Math.min(range.max, Math.max(range.min + 10, playerLevel + 10, range.max - range.min));
                 }
-                const level = Math.round((range.max - range.min) * Math.random()) + range.min;
+                // const level = Math.round((range.max - range.min) * Math.random()) + range.min
                 const levelName = result.levelRange;
                 thing[levelName] = (thing[levelName] || 0) + 1;
             }
@@ -47,7 +47,7 @@ function BotLevelChanges(container) {
                 level,
                 exp: profileHelper.getExperience(level)
             };
-            config_json_1.debug && console.log(final);
+            // debug && console.log(final)
             return final;
         };
     }, { frequency: "Always" });

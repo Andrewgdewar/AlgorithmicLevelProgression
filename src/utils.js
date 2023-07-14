@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.arrSum = exports.getCurrentLevelRange = exports.randomization = exports.equipmentIdMapper = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = void 0;
+exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.randomization = exports.equipmentIdMapper = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = void 0;
 const config_json_1 = require("../config/config.json");
 const deDupeArr = (arr) => [...new Set(arr)];
 exports.deDupeArr = deDupeArr;
@@ -157,5 +157,44 @@ const getCurrentLevelRange = (currentLevel) => {
     }
 };
 exports.getCurrentLevelRange = getCurrentLevelRange;
+exports.numList = [1, 2, 3, 4];
 const arrSum = (arr) => arr.reduce((a, b) => a + b, 0);
 exports.arrSum = arrSum;
+const setupBaseWhiteList = () => {
+    return exports.numList.map(num => ({
+        levelRange: config_json_1.levelRange[num],
+        "equipment": {},
+        "cartridge": {}
+    }));
+};
+exports.setupBaseWhiteList = setupBaseWhiteList;
+const setWhitelists = (items, botConfig, tradersMasterList) => {
+    exports.numList.forEach((num, index) => {
+        const loyalty = num;
+        const whitelist = botConfig.equipment.pmc.whitelist;
+        const itemList = [...tradersMasterList[loyalty]];
+        itemList.forEach(id => {
+            const item = items[id];
+            const parent = item._parent;
+            const equipmentType = (0, exports.getEquipmentType)(parent);
+            switch (true) {
+                case items[parent]?._parent === "5422acb9af1c889c16000029": // Ammo Parent
+                    const calibre = item._props.Caliber || item._props.ammoCaliber;
+                    whitelist[index].cartridge[calibre] =
+                        [...whitelist[index].cartridge[calibre] ? whitelist[index].cartridge[calibre] : [], id];
+                    break;
+                case !!equipmentType:
+                    whitelist[index].equipment[equipmentType] =
+                        [...whitelist[index].equipment[equipmentType] ? whitelist[index].equipment[equipmentType] : [], id];
+                    break;
+                default:
+                    break;
+            }
+        });
+        if (!!whitelist[index + 1]) {
+            whitelist[index + 1].cartridge = { ...whitelist[index].cartridge };
+            whitelist[index + 1].equipment = { ...whitelist[index].equipment };
+        }
+    });
+};
+exports.setWhitelists = setWhitelists;
