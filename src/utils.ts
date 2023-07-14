@@ -1,5 +1,7 @@
+import { MinMax } from './../types/models/common/MinMax.d';
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { RandomisationDetails } from "@spt-aki/models/spt/config/IBotConfig";
+import { levelRange } from "../config/config.json"
 
 export const deDupeArr = (arr: any[]) => [...new Set(arr)]
 
@@ -156,3 +158,14 @@ export const randomization: RandomisationDetails[] = [{
         "Backpack": 35,
     }
 }]
+
+export type oneToFour = "1" | "2" | "3" | "4"
+
+export const getCurrentLevelRange = (currentLevel: number): oneToFour | undefined => {
+    for (const key in levelRange) {
+        const { min, max } = levelRange[key] as MinMax;
+        if (currentLevel >= min && currentLevel <= max) return key as oneToFour
+    }
+}
+
+export const arrSum = (arr: number[]): number => arr.reduce((a, b) => a + b, 0)

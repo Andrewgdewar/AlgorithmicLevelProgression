@@ -8,6 +8,12 @@ const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes"
 const utils_1 = require("./utils");
 const EquipmentSlots_1 = require("C:/snapshot/project/obj/models/enums/EquipmentSlots");
 function ProgressionChanges(container) {
+    //Next tasks
+    // - Make function to set items value in equipment/ammo
+    // - Make whiteList with levels (Try to incorporate the items that come with usec base)
+    // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases
+    // - Build randomisation
+    // - Add clothing levels
     const databaseServer = container.resolve("DatabaseServer");
     const configServer = container.resolve("ConfigServer");
     const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
@@ -163,7 +169,7 @@ function ProgressionChanges(container) {
     if (updatedData?.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
         updatedData.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"];
     }
-    console.log(JSON.stringify(usecInventory));
+    // console.log(JSON.stringify(usecInventory))
     // for (let index = 0; index < numList.length; index++) {
     //     const loyalty = numList[index];
     //     const itemList = [...tradersMasterList[loyalty]]

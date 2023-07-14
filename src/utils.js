@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.randomization = exports.equipmentIdMapper = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = void 0;
+exports.arrSum = exports.getCurrentLevelRange = exports.randomization = exports.equipmentIdMapper = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = void 0;
+const config_json_1 = require("../config/config.json");
 const deDupeArr = (arr) => [...new Set(arr)];
 exports.deDupeArr = deDupeArr;
 const checkParentRecursive = (parentId, items, queryIds) => {
@@ -148,3 +149,13 @@ exports.randomization = [{
             "Backpack": 35,
         }
     }];
+const getCurrentLevelRange = (currentLevel) => {
+    for (const key in config_json_1.levelRange) {
+        const { min, max } = config_json_1.levelRange[key];
+        if (currentLevel >= min && currentLevel <= max)
+            return key;
+    }
+};
+exports.getCurrentLevelRange = getCurrentLevelRange;
+const arrSum = (arr) => arr.reduce((a, b) => a + b, 0);
+exports.arrSum = arrSum;

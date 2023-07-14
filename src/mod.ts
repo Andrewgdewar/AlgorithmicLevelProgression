@@ -4,14 +4,14 @@ import { DependencyContainer } from "tsyringe";
 import { IPostDBLoadMod } from "@spt-aki/models/external/IPostDBLoadMod";
 import ProgressionChanges from "./ProgressionChanges";
 import BotLevelChanges from "./BotLevelChanges";
-import { enabled } from "../config/config.json"
+import { enableProgressionChanges, enableLevelChanges } from "../config/config.json"
 
 class MoarAmmoConfig implements IPreAkiLoadMod, IPostDBLoadMod {
     postDBLoad(container: DependencyContainer): void {
-        enabled && ProgressionChanges(container)
+        enableProgressionChanges && ProgressionChanges(container)
     }
     preAkiLoad(container: DependencyContainer): void {
-        // BotLevelChanges(container)
+        enableLevelChanges && BotLevelChanges(container)
     }
 }
 
