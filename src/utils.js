@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.randomization = exports.equipmentIdMapper = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = void 0;
+exports.setWeightingAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.randomization = exports.equipmentIdMapper = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = void 0;
 const config_json_1 = require("../config/config.json");
 const deDupeArr = (arr) => [...new Set(arr)];
 exports.deDupeArr = deDupeArr;
@@ -38,24 +38,23 @@ const mergeDeep = (target, ...sources) => {
 };
 exports.mergeDeep = mergeDeep;
 const getArmorRating = ({ _props: { RepairCost, Durability, armorClass, armorZone, Name }, _name, _id }) => {
-    let armClass = armorClass - 1;
-    const repair = RepairCost * 0.1;
-    let durability = (((Durability - 20) * armorZone?.length) * armClass) * 0.15;
-    if (durability < 0)
-        durability = 0;
-    const total = Math.round((repair + durability));
+    const repair = RepairCost * 0.01;
+    let arm = (armorClass - 2) * 10;
+    if (arm < 1)
+        arm = 1;
+    const armorZoneCoverage = armorZone?.length || 0;
+    const durability = Durability * 0.3;
+    const total = Math.round(repair + durability + armorZoneCoverage + arm);
     return total || 1;
 };
 exports.getArmorRating = getArmorRating;
 const getAmmoWeighting = ({ _props: { PenetrationPower, Damage, InitialSpeed, ProjectileCount }, _id, _name }) => {
-    let pen = ((PenetrationPower - 15) * 10);
-    if (pen < 0)
-        pen = 0;
-    const dam = (ProjectileCount ? (Damage * (ProjectileCount * 0.6)) : Damage) * 0.5;
-    let speed = (InitialSpeed - 600) * 0.2;
-    if (speed < 0)
-        speed = 0;
-    return Math.round(pen + dam + speed) || 1;
+    let penBonus = ((PenetrationPower - 15));
+    if (penBonus < 0)
+        penBonus = 0;
+    const damBonus = (ProjectileCount ? (Damage * (ProjectileCount * 0.6)) : Damage) * 0.1;
+    let speedBonus = InitialSpeed > 600 ? 5 : 0;
+    return Math.round(penBonus + speedBonus + damBonus) || 1;
 };
 exports.getAmmoWeighting = getAmmoWeighting;
 const getEquipmentType = (id) => {
@@ -147,7 +146,38 @@ exports.randomization = [{
             "Holster": 5,
             "Eyewear": 5,
             "Backpack": 35,
-        }
+        },
+        "generation": {
+            "drugs": {
+                "min": 0,
+                "max": 1
+            },
+            "grenades": {
+                "min": 0,
+                "max": 1,
+                "whitelist": [
+                    "5710c24ad2720bc3458b45a3",
+                    "58d3db5386f77426186285a0",
+                    "5448be9a4bdc2dfd2f8b456a"
+                ]
+            },
+            "healing": {
+                "min": 0,
+                "max": 1
+            },
+            "looseLoot": {
+                "min": 0,
+                "max": 5
+            },
+            "magazines": {
+                "min": 1,
+                "max": 2
+            },
+            "stims": {
+                "min": 0,
+                "max": 0
+            }
+        },
     }];
 const getCurrentLevelRange = (currentLevel) => {
     for (const key in config_json_1.levelRange) {
@@ -198,3 +228,118 @@ const setWhitelists = (items, botConfig, tradersMasterList) => {
     });
 };
 exports.setWhitelists = setWhitelists;
+const buildEmptyWeightAdjustments = () => {
+    return exports.numList.map(num => ({
+        levelRange: config_json_1.levelRange[num],
+        "equipment": {
+            "add": {},
+            "edit": {}
+        },
+        "ammo": {
+            "add": {},
+            "edit": {}
+        }
+    }));
+};
+const setWeightItem = (weight, equipmentType, id, rating) => {
+    weight.equipment.edit[equipmentType] = {
+        ...weight.equipment.edit[equipmentType] || {},
+        [id]: rating
+    };
+};
+const setWeightingAdjustments = (items, botConfig, tradersMasterList, itemCosts) => {
+    botConfig.equipment.pmc.weightingAdjustments = buildEmptyWeightAdjustments();
+    const weight = botConfig.equipment.pmc.weightingAdjustments;
+    exports.numList.forEach((num, index) => {
+        console.log("\n");
+        const loyalty = num;
+        const itemList = [...tradersMasterList[loyalty]];
+        // First edit ammo
+        itemList.forEach(id => {
+            const item = items[id];
+            const parent = item._parent;
+            // Ammo Parent
+            if (parent === "5485a8684bdc2da71d8b4567") {
+                const calibre = item._props.Caliber || item._props.ammoCaliber;
+                if (!weight[index]?.ammo.edit?.[calibre]) {
+                    weight[index].ammo.edit = { ...weight[index].ammo.edit, [calibre]: {} };
+                }
+                const ammoWeight = (0, exports.getAmmoWeighting)(item);
+                weight[index].ammo.edit[calibre] =
+                    { ...weight[index].ammo.edit[calibre] || {}, [id]: ammoWeight };
+            }
+        });
+        const combinedWhiteLists = {};
+        for (const key of botConfig.equipment.pmc.whitelist) {
+            (0, exports.mergeDeep)(combinedWhiteLists, key);
+        }
+        const combinedWeightingAdjustmentItem = {};
+        for (const key of botConfig.equipment.pmc.weightingAdjustments) {
+            (0, exports.mergeDeep)(combinedWeightingAdjustmentItem, key);
+        }
+        (0, exports.mergeDeep)(combinedWeightingAdjustmentItem, weight[index]);
+        itemList.forEach(id => {
+            const item = items[id];
+            const parent = item._parent;
+            const equipmentType = (0, exports.getEquipmentType)(parent);
+            if (equipmentType) {
+                if (!weight[index]?.equipment?.edit?.[equipmentType]) {
+                    weight[index].equipment.edit = { ...weight[index].equipment.edit, [equipmentType]: {} };
+                }
+            }
+            switch (equipmentType) {
+                case "FirstPrimaryWeapon":
+                    const calibre = item._props.Caliber || item._props.ammoCaliber;
+                    if (combinedWhiteLists?.cartridge?.[calibre]) {
+                        const highestScoringAmmo = (0, exports.getHighestScoringAmmoValue)(combinedWeightingAdjustmentItem.ammo.edit[calibre]);
+                        const weaponRating = (0, exports.getWeaponWeighting)(item, highestScoringAmmo);
+                        setWeightItem(weight[index], equipmentType, id, weaponRating);
+                    }
+                    break;
+                case "Headwear":
+                    const coverageBonus = item?._props?.headSegments?.length || 0;
+                    const helmetBonus = Math.round(((item?._props?.MaxDurability || 0) * item?._props?.armorClass) / 10);
+                    const repairCostBonus = Math.round(item?._props?.RepairCost * 0.005);
+                    let rating = coverageBonus + helmetBonus + repairCostBonus;
+                    if (rating < 5)
+                        rating = 5;
+                    setWeightItem(weight[index], equipmentType, id, rating);
+                    break;
+                case "Earpiece":
+                    const ambientVolumeBonus = item?._props?.AmbientVolume * -1;
+                    const compressorBonus = Math.round(item?._props?.CompressorVolume * -0.5);
+                    setWeightItem(weight[index], equipmentType, id, compressorBonus + ambientVolumeBonus);
+                    break;
+                case "FaceCover":
+                    const faceCoverCost = (itemCosts[id]) * 0.0005;
+                    const experience = item._props.LootExperience;
+                    console.log("🚀 ~ file: utils.ts:374 ~ numList.forEach ~ item:", item._name);
+                    setWeightItem(weight[index], equipmentType, id, Math.round(faceCoverCost) + experience);
+                    break;
+                case "ArmorVest":
+                    const armorRating = (0, exports.getArmorRating)(item);
+                    setWeightItem(weight[index], equipmentType, id, armorRating);
+                    break;
+                case "ArmBand":
+                    break;
+                case "SecuredContainer":
+                    break;
+                case "Scabbard":
+                    break;
+                case "Holster":
+                    break;
+                case "Eyewear":
+                    break;
+                case "Backpack":
+                    break;
+                default:
+                    break;
+            }
+        });
+        if (!!weight[index + 1]) {
+            weight[index + 1].ammo = { ...weight[index].ammo };
+            weight[index + 1].equipment = { ...weight[index].equipment };
+        }
+    });
+};
+exports.setWeightingAdjustments = setWeightingAdjustments;

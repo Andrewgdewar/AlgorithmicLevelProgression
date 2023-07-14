@@ -9,7 +9,7 @@ const utils_1 = require("./utils");
 const EquipmentSlots_1 = require("C:/snapshot/project/obj/models/enums/EquipmentSlots");
 function ProgressionChanges(container) {
     //Next tasks
-    // - Make whiteList with levels (Try to incorporate the items that come with usec base) >
+    // - Make whiteList with levels (Try to incorporate the items that come with usec base) 1/2
     // - Make function to set items value in equipment/ammo
     // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases
     // - Build randomisation
@@ -53,6 +53,7 @@ function ProgressionChanges(container) {
     const traderList = Object.values(traders).filter(({ base }) => tradersToInclude.includes(base.nickname));
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() };
+    const itemCosts = {};
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = (0, utils_1.setupBaseWhiteList)();
     traderList.forEach(({ assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }) => {
@@ -130,15 +131,18 @@ function ProgressionChanges(container) {
                     tradersMasterList[loyaltyLevel].add(_tpl);
                 }
                 else {
-                    //Do something with the barter items, Maybe set to the next level higher?
+                    if (loyaltyLevel === 4)
+                        tradersMasterList[loyaltyLevel].add(_tpl);
+                    else
+                        tradersMasterList[loyaltyLevel + 1].add(_tpl);
                 }
+                itemCosts[_tpl] = barterSchemeRef?.[0]?.[0]?.count;
             }
             else {
                 // these are weapon components that come with the rifle. no need to add them.
             }
         });
     });
-    console.log(botConfig.equipment.pmc.whitelist);
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
     bearInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(bearInventory.items.SecuredContainer);
@@ -158,22 +162,12 @@ function ProgressionChanges(container) {
             });
         });
     });
-    const updatedData = {
-        blacklist: [],
-        weaponModLimits: {},
-        weaponSightWhitelist: {},
-        clothing: [],
-        randomisation: [],
-        ...botConfig.equipment.pmc,
-        whitelist: [],
-        weightingAdjustments: [],
-    };
-    if (updatedData?.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
-        updatedData.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"];
+    if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
+        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"];
     }
-    // console.log(JSON.stringify(usecInventory))
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList);
-    console.log(JSON.stringify(botConfig.equipment.pmc.whitelist));
+    (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, itemCosts);
+    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
     // for (let index = 0; index < numList.length; index++) {
     //     const loyalty = numList[index];
     //     const itemList = [...tradersMasterList[loyalty]]

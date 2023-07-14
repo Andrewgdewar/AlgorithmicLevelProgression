@@ -8,7 +8,7 @@ import {
     TradersMasterList,
     checkParentRecursive, cloneDeep, deDupeArr, getAmmoWeighting, getArmorRating,
     getEquipmentType, getHighestScoringAmmoValue, getWeaponWeighting, mergeDeep, numList,
-    randomization, setWhitelists, setupBaseWhiteList
+    randomization, setWeightingAdjustments, setWhitelists, setupBaseWhiteList
 } from './utils';
 import { EquipmentSlots } from '@spt-aki/models/enums/EquipmentSlots';
 
@@ -74,7 +74,7 @@ export default function ProgressionChanges(
     const tradersMasterList: TradersMasterList =
         { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() }
 
-
+    const itemCosts = {} as Record<string, number>
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = setupBaseWhiteList()
 
@@ -165,9 +165,13 @@ export default function ProgressionChanges(
                 // Only add the item if it's a cash trade
                 if (items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === moneyParent) {
                     tradersMasterList[loyaltyLevel].add(_tpl)
+
+
                 } else {
-                    //Do something with the barter items, Maybe set to the next level higher?
+                    if (loyaltyLevel === 4) tradersMasterList[loyaltyLevel].add(_tpl)
+                    else tradersMasterList[loyaltyLevel + 1].add(_tpl)
                 }
+                itemCosts[_tpl] = barterSchemeRef?.[0]?.[0]?.count
             } else {
                 // these are weapon components that come with the rifle. no need to add them.
             }
@@ -200,25 +204,16 @@ export default function ProgressionChanges(
         })
     })
 
-    const updatedData: EquipmentFilters = {
-        blacklist: [],
-        weaponModLimits: {},
-        weaponSightWhitelist: {},
-        clothing: [],
-        randomisation: [],
-        ...botConfig.equipment.pmc,
-        whitelist: [],
-        weightingAdjustments: [],
+    if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
+        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"]
     }
 
-    if (updatedData?.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
-        updatedData.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"]
-    }
+
 
     setWhitelists(items, botConfig, tradersMasterList)
+    setWeightingAdjustments(items, botConfig, tradersMasterList, itemCosts)
 
-
-    console.log(JSON.stringify(botConfig.equipment.pmc.whitelist))
+    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
 
     // for (let index = 0; index < numList.length; index++) {
     //     const loyalty = numList[index];
