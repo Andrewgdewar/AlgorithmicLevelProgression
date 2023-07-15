@@ -1,4 +1,4 @@
-import { IBotConfig, EquipmentFilters, EquipmentFilterDetails, WeightingAdjustmentDetails } from './../types/models/spt/config/IBotConfig.d';
+import { IBotConfig } from './../types/models/spt/config/IBotConfig.d';
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { DependencyContainer } from "tsyringe";
 import config from "../config/config.json";
@@ -6,9 +6,9 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import {
     TradersMasterList,
-    checkParentRecursive, cloneDeep, deDupeArr, getAmmoWeighting, getArmorRating,
-    getEquipmentType, getHighestScoringAmmoValue, getWeaponWeighting, mergeDeep, numList,
-    randomization, setWeightingAdjustments, setWhitelists, setupBaseWhiteList
+    checkParentRecursive, deDupeArr,
+    getEquipmentType, numList,
+    setWeightingAdjustments, setWhitelists, setupBaseWhiteList
 } from './utils';
 import { EquipmentSlots } from '@spt-aki/models/enums/EquipmentSlots';
 
@@ -19,8 +19,8 @@ export default function ProgressionChanges(
 
     //Next tasks
     // - Make whiteList with levels (Try to incorporate the items that come with usec base) 1/2
-    // - Make function to set items value in equipment/ammo
-    // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases
+    // - Make function to set items value in equipment/ammo < done
+    // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases> not needed
     // - Build randomisation
     // - Add clothing levels
 
@@ -32,13 +32,23 @@ export default function ProgressionChanges(
     const traders = tables.traders
     const { levelRange } = config
 
-    // Object.keys(tables.bots.types.usec.inventory.equipment).forEach((key) => {
-    //     tables.bots.types.usec.inventory.equipment[key] = {}
-    // })
+    const originalEquipmentList = {}
 
-    // Object.keys(tables.bots.types.bear.inventory.equipment).forEach((key) => {
-    //     tables.bots.types.bear.inventory.equipment[key] = {}
-    // })
+    Object.keys(tables.bots.types.usec.inventory.equipment).forEach((key) => {
+        if (["Pockets", "SecuredContainer"].includes(key)) return;
+        if (!originalEquipmentList[key]) originalEquipmentList[key] = []
+        originalEquipmentList[key].push(...Object.keys(tables.bots.types.usec.inventory.equipment[key]))
+
+        tables.bots.types.usec.inventory.equipment[key] = {}
+    })
+
+    Object.keys(tables.bots.types.bear.inventory.equipment).forEach((key) => {
+        if (["Pockets", "SecuredContainer"].includes(key)) return;
+        if (!originalEquipmentList[key]) originalEquipmentList[key] = []
+        originalEquipmentList[key].push(...Object.keys(tables.bots.types.bear.inventory.equipment[key]))
+        tables.bots.types.bear.inventory.equipment[key] = {}
+    })
+
 
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
@@ -88,6 +98,11 @@ export default function ProgressionChanges(
 
             switch (true) {
                 case checkParentRecursive(parent, items, [barterParent, keyParent, medsParent, modParent, moneyParent]):
+
+                    if (modParent) {
+                        // usecInventory.mods
+                        // usecInventory.mods
+                    }
 
                     usecInventory.items.Pockets.push(_tpl)
                     bearInventory.items.Pockets.push(_tpl)
@@ -154,6 +169,15 @@ export default function ProgressionChanges(
                     bearInventory.equipment[equipmentType][_tpl] = 1
                     break;
                 default:
+                    const otherEquipmentType = items[item._parent]._name
+                    switch (otherEquipmentType) {
+                        case "Magazine":
+                            usecInventory.equipment[otherEquipmentType] =
+                                { ...(usecInventory.equipment[otherEquipmentType] ? usecInventory.equipment[otherEquipmentType] : {}), [_tpl]: 1 }
+                            break;
+                        default:
+                            break;
+                    }
                     break;
             }
 
@@ -205,7 +229,7 @@ export default function ProgressionChanges(
     })
 
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
-        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"]
+        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766", "6217726288ed9f0845317459"]
     }
 
 
@@ -213,7 +237,7 @@ export default function ProgressionChanges(
     setWhitelists(items, botConfig, tradersMasterList)
     setWeightingAdjustments(items, botConfig, tradersMasterList, itemCosts)
 
-    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
+    console.log(JSON.stringify(botConfig.equipment.pmc))
 
     // for (let index = 0; index < numList.length; index++) {
     //     const loyalty = numList[index];

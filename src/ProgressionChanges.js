@@ -10,8 +10,8 @@ const EquipmentSlots_1 = require("C:/snapshot/project/obj/models/enums/Equipment
 function ProgressionChanges(container) {
     //Next tasks
     // - Make whiteList with levels (Try to incorporate the items that come with usec base) 1/2
-    // - Make function to set items value in equipment/ammo
-    // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases
+    // - Make function to set items value in equipment/ammo < done
+    // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases> not needed
     // - Build randomisation
     // - Add clothing levels
     const databaseServer = container.resolve("DatabaseServer");
@@ -21,12 +21,23 @@ function ProgressionChanges(container) {
     const items = tables.templates.items;
     const traders = tables.traders;
     const { levelRange } = config_json_1.default;
-    // Object.keys(tables.bots.types.usec.inventory.equipment).forEach((key) => {
-    //     tables.bots.types.usec.inventory.equipment[key] = {}
-    // })
-    // Object.keys(tables.bots.types.bear.inventory.equipment).forEach((key) => {
-    //     tables.bots.types.bear.inventory.equipment[key] = {}
-    // })
+    const originalEquipmentList = {};
+    Object.keys(tables.bots.types.usec.inventory.equipment).forEach((key) => {
+        if (["Pockets", "SecuredContainer"].includes(key))
+            return;
+        if (!originalEquipmentList[key])
+            originalEquipmentList[key] = [];
+        originalEquipmentList[key].push(...Object.keys(tables.bots.types.usec.inventory.equipment[key]));
+        tables.bots.types.usec.inventory.equipment[key] = {};
+    });
+    Object.keys(tables.bots.types.bear.inventory.equipment).forEach((key) => {
+        if (["Pockets", "SecuredContainer"].includes(key))
+            return;
+        if (!originalEquipmentList[key])
+            originalEquipmentList[key] = [];
+        originalEquipmentList[key].push(...Object.keys(tables.bots.types.bear.inventory.equipment[key]));
+        tables.bots.types.bear.inventory.equipment[key] = {};
+    });
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
     const AmmoParent = "5485a8684bdc2da71d8b4567";
@@ -65,6 +76,10 @@ function ProgressionChanges(container) {
             const equipmentType = (0, utils_1.getEquipmentType)(parent);
             switch (true) {
                 case (0, utils_1.checkParentRecursive)(parent, items, [barterParent, keyParent, medsParent, modParent, moneyParent]):
+                    if (modParent) {
+                        // usecInventory.mods
+                        // usecInventory.mods
+                    }
                     usecInventory.items.Pockets.push(_tpl);
                     bearInventory.items.Pockets.push(_tpl);
                     usecInventory.items.TacticalVest.push(_tpl);
@@ -120,6 +135,15 @@ function ProgressionChanges(container) {
                     bearInventory.equipment[equipmentType][_tpl] = 1;
                     break;
                 default:
+                    const otherEquipmentType = items[item._parent]._name;
+                    switch (otherEquipmentType) {
+                        case "Magazine":
+                            usecInventory.equipment[otherEquipmentType] =
+                                { ...(usecInventory.equipment[otherEquipmentType] ? usecInventory.equipment[otherEquipmentType] : {}), [_tpl]: 1 };
+                            break;
+                        default:
+                            break;
+                    }
                     break;
             }
             const loyaltyLevel = loyal_level_items[_id] || loyal_level_items[parentId];
@@ -163,11 +187,11 @@ function ProgressionChanges(container) {
         });
     });
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
-        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766"];
+        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766", "6217726288ed9f0845317459"];
     }
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList);
     (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, itemCosts);
-    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
+    console.log(JSON.stringify(botConfig.equipment.pmc));
     // for (let index = 0; index < numList.length; index++) {
     //     const loyalty = numList[index];
     //     const itemList = [...tradersMasterList[loyalty]]
