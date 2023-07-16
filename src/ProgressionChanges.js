@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const config_json_1 = __importDefault(require("../config/config.json"));
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
 const utils_1 = require("./utils");
-const EquipmentSlots_1 = require("C:/snapshot/project/obj/models/enums/EquipmentSlots");
 function ProgressionChanges(container) {
     //Next tasks
     // - Make whiteList with levels (Try to incorporate the items that come with usec base) 1/2
@@ -22,35 +21,14 @@ function ProgressionChanges(container) {
     const traders = tables.traders;
     const { levelRange } = config_json_1.default;
     const originalEquipmentList = {};
-    Object.keys(tables.bots.types.usec.inventory.equipment).forEach((key) => {
-        if (["Pockets", "SecuredContainer"].includes(key))
-            return;
-        if (!originalEquipmentList[key])
-            originalEquipmentList[key] = [];
-        originalEquipmentList[key].push(...Object.keys(tables.bots.types.usec.inventory.equipment[key]));
-        tables.bots.types.usec.inventory.equipment[key] = {};
-    });
-    Object.keys(tables.bots.types.bear.inventory.equipment).forEach((key) => {
-        if (["Pockets", "SecuredContainer"].includes(key))
-            return;
-        if (!originalEquipmentList[key])
-            originalEquipmentList[key] = [];
-        originalEquipmentList[key].push(...Object.keys(tables.bots.types.bear.inventory.equipment[key]));
-        tables.bots.types.bear.inventory.equipment[key] = {};
-    });
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
-    const AmmoParent = "5485a8684bdc2da71d8b4567";
-    const magParent = "5448bc234bdc2d3c308b4569";
-    const barterParent = "5448eb774bdc2d0a728b4567";
-    const keyParent = "543be5e94bdc2df1348b4568";
-    const medsParent = "543be5664bdc2dd4348b4569";
-    const modParent = "5448fe124bdc2da5018b4567";
-    const moneyParent = "543be5dd4bdc2deb348b4569";
+    tables.bots.types.usec.inventory.mods = {};
+    tables.bots.types.bear.inventory.mods = {};
     // Fix PP-9 
-    tables.templates.items["57f4c844245977379d5c14d1"]._props.ammoCaliber = "Caliber9x18PM";
+    // tables.templates.items["57f4c844245977379d5c14d1"]._props.ammoCaliber = "Caliber9x18PM"
     // Fix MP-19 
-    tables.templates.items["61f7c9e189e6fb1a5e3ea78d"]._props.BoltAction = true;
+    // tables.templates.items["61f7c9e189e6fb1a5e3ea78d"]._props.BoltAction = true
     // Add rhino clip
     const tradersToInclude = [
         'Prapor',
@@ -75,8 +53,8 @@ function ProgressionChanges(container) {
             const parent = item._parent;
             const equipmentType = (0, utils_1.getEquipmentType)(parent);
             switch (true) {
-                case (0, utils_1.checkParentRecursive)(parent, items, [barterParent, keyParent, medsParent, modParent, moneyParent]):
-                    if (modParent) {
+                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.keyParent, utils_1.medsParent, utils_1.modParent, utils_1.moneyParent]):
+                    if (utils_1.modParent) {
                         // usecInventory.mods
                         // usecInventory.mods
                     }
@@ -88,70 +66,48 @@ function ProgressionChanges(container) {
                     bearInventory.items.Backpack.push(_tpl);
                     break;
                 //Add Ammo
-                case (0, utils_1.checkParentRecursive)(parent, items, [AmmoParent]):
+                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.AmmoParent]):
                     const calibre = item._props.Caliber || item._props.ammoCaliber;
                     if (calibre) {
                         usecInventory.Ammo[calibre] =
                             { ...usecInventory.Ammo[calibre] || {}, [_tpl]: 1 };
                         bearInventory.Ammo[calibre] =
                             { ...bearInventory.Ammo[calibre] || {}, [_tpl]: 1 };
+                        usecInventory.items.Pockets.push(_tpl);
+                        bearInventory.items.Pockets.push(_tpl);
+                        usecInventory.items.Backpack.push(_tpl);
+                        bearInventory.items.Backpack.push(_tpl);
+                        usecInventory.items.TacticalVest.push(_tpl);
+                        bearInventory.items.TacticalVest.push(_tpl);
+                        usecInventory.items.SecuredContainer.push(_tpl);
+                        bearInventory.items.SecuredContainer.push(_tpl);
                     }
                     else {
                         console.log(item._name, " likely has the incorrect calibre: ", calibre);
                     }
-                    usecInventory.items.Pockets.push(_tpl);
-                    bearInventory.items.Pockets.push(_tpl);
-                    usecInventory.items.Backpack.push(_tpl);
-                    bearInventory.items.Backpack.push(_tpl);
-                    usecInventory.items.TacticalVest.push(_tpl);
-                    bearInventory.items.TacticalVest.push(_tpl);
-                    usecInventory.items.SecuredContainer.push(_tpl);
-                    bearInventory.items.SecuredContainer.push(_tpl);
                     break;
                 // Add matching equipment
                 case !!equipmentType:
-                    if ((equipmentType === EquipmentSlots_1.EquipmentSlots.HOLSTER
-                        || equipmentType === EquipmentSlots_1.EquipmentSlots.FIRST_PRIMARY_WEAPON)) {
-                        const newModObject = {};
-                        if (item?._props.Slots.length > 0) {
-                            item._props.Slots.forEach(mod => {
-                                if (mod._props?.filters?.[0]?.Filter?.length) {
-                                    // console.log(item._name, "adding ", mod._props?.filters[0].Filter.length, mod._name)
-                                    newModObject[mod._name] = mod._props?.filters[0].Filter;
-                                }
-                            });
-                        }
-                        if (item._props?.Chambers?.[0]?._name === "patron_in_weapon" &&
-                            item._props?.Chambers?.[0]?._props?.filters?.[0]?.Filter?.length) {
-                            // console.log("adding ", item._props.Chambers[0]._props?.filters[0].Filter.length, "bullet types")
-                            newModObject["patron_in_weapon"] = item._props.Chambers[0]._props?.filters[0].Filter;
-                        }
-                        if (Object.keys(newModObject)) {
-                            usecInventory.mods[_tpl] = newModObject;
-                            bearInventory.mods[_tpl] = newModObject;
-                        }
-                    }
+                    if (!usecInventory.equipment[equipmentType])
+                        usecInventory.equipment[equipmentType] = {};
+                    if (!bearInventory.equipment[equipmentType])
+                        bearInventory.equipment[equipmentType] = {};
                     usecInventory.equipment[equipmentType][_tpl] = 1;
                     bearInventory.equipment[equipmentType][_tpl] = 1;
                     break;
                 default:
-                    const otherEquipmentType = items[item._parent]._name;
-                    switch (otherEquipmentType) {
-                        case "Magazine":
-                            usecInventory.equipment[otherEquipmentType] =
-                                { ...(usecInventory.equipment[otherEquipmentType] ? usecInventory.equipment[otherEquipmentType] : {}), [_tpl]: 1 };
-                            break;
-                        default:
-                            break;
-                    }
                     break;
             }
             const loyaltyLevel = loyal_level_items[_id] || loyal_level_items[parentId];
             //Set trader list for levels
             if (loyaltyLevel) {
                 const barterSchemeRef = barter_scheme[_id] || barter_scheme[parentId];
-                // Only add the item if it's a cash trade
-                if (items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === moneyParent) {
+                if ((0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50) {
+                    // Take big mags and put them to level 4
+                    tradersMasterList[4].add(_tpl);
+                }
+                else if (items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === utils_1.moneyParent) {
+                    // Only add the item if it's a cash trade
                     tradersMasterList[loyaltyLevel].add(_tpl);
                 }
                 else {
@@ -161,6 +117,8 @@ function ProgressionChanges(container) {
                         tradersMasterList[loyaltyLevel + 1].add(_tpl);
                 }
                 itemCosts[_tpl] = barterSchemeRef?.[0]?.[0]?.count;
+                (0, utils_1.buildOutModsObject)(_tpl, items, usecInventory);
+                (0, utils_1.buildOutModsObject)(_tpl, items, bearInventory);
             }
             else {
                 // these are weapon components that come with the rifle. no need to add them.
@@ -178,6 +136,11 @@ function ProgressionChanges(container) {
     bearInventory.items.TacticalVest = (0, utils_1.deDupeArr)(bearInventory.items.TacticalVest);
     usecInventory.items.SpecialLoot = (0, utils_1.deDupeArr)(usecInventory.items.SpecialLoot);
     bearInventory.items.SpecialLoot = (0, utils_1.deDupeArr)(bearInventory.items.SpecialLoot);
+    //Make everything level 1 in equipment
+    (0, utils_1.reduceEquipmentChancesTo1)(usecInventory);
+    (0, utils_1.reduceEquipmentChancesTo1)(bearInventory);
+    (0, utils_1.reduceAmmoChancesTo1)(usecInventory);
+    (0, utils_1.reduceAmmoChancesTo1)(bearInventory);
     // Eliminates duplicate id's in later levels
     utils_1.numList.forEach((num) => {
         tradersMasterList[num].forEach((id) => {
@@ -189,121 +152,13 @@ function ProgressionChanges(container) {
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
         botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766", "6217726288ed9f0845317459"];
     }
-    (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList);
+    // setWhitelists(items, botConfig, tradersMasterList)
     (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, itemCosts);
-    console.log(JSON.stringify(botConfig.equipment.pmc));
-    // for (let index = 0; index < numList.length; index++) {
-    //     const loyalty = numList[index];
-    //     const itemList = [...tradersMasterList[loyalty]]
-    //     const copyOfPreviousWhitelist = !!updatedData.whitelist[index - 1] ?
-    //         cloneDeep(updatedData.whitelist[index - 1]) :
-    //         { equipment: {}, cartridge: {} }
-    //     const whitelistItem = {
-    //         ...copyOfPreviousWhitelist,
-    //         levelRange: levelRange[loyalty],
-    //     } as EquipmentFilterDetails
-    //     // const weightingAdjustmentItem = {
-    //     //     levelRange: levelRange[loyalty],
-    //     //     ammo: { add: {}, edit: {} },
-    //     //     equipment: { add: {}, edit: {} },
-    //     //     // clothing: {} //Implement later
-    //     // } as WeightingAdjustmentDetails
-    //     for (let k = 0; k < itemList.length; k++) {
-    //         const id = itemList[k];
-    //         const item = items[id]
-    //         const parent = item._parent
-    //         if (parent === AmmoParent) {
-    //             const calibre = item._props.Caliber || item._props.ammoCaliber
-    //             whitelistItem.cartridge[calibre] =
-    //                 [...whitelistItem.cartridge[calibre] ? whitelistItem.cartridge[calibre] : [], id]
-    //             // if (!weightingAdjustmentItem.ammo.add?.[calibre]) { weightingAdjustmentItem.ammo.add = { ...weightingAdjustmentItem.ammo.add, [calibre]: {} } }
-    //             // const ammoWeight = getAmmoWeighting(items[id])
-    //             // weightingAdjustmentItem.ammo.add[calibre] =
-    //             //     { ...weightingAdjustmentItem.ammo.add[calibre] || {}, [id]: ammoWeight }
-    //             continue
-    //         }
-    //         const equipmentType = getEquipmentType(parent)
-    //         if (equipmentType) {
-    //             whitelistItem.equipment[equipmentType] =
-    //                 [...whitelistItem.equipment[equipmentType] ? whitelistItem.equipment[equipmentType] : [], id]
-    //         }
-    //     }
-    // updatedData.whitelist.push(whitelistItem)
-    // const combinedWhiteLists = {} as EquipmentFilterDetails
-    // for (const key of updatedData.whitelist) {
-    //     mergeDeep(combinedWhiteLists, key)
-    // }
-    // const combinedWeightingAdjustmentItem = {} as WeightingAdjustmentDetails
-    // for (const key of updatedData.weightingAdjustments) {
-    //     mergeDeep(combinedWeightingAdjustmentItem, key)
-    // }
-    // mergeDeep(combinedWeightingAdjustmentItem, weightingAdjustmentItem)
-    // for (let k = 0; k < itemList.length; k++) {
-    //     const id = itemList[k];
-    //     const item = items[id]
-    //     const parent = item._parent
-    //     const equipmentType = getEquipmentType(parent)
-    //     switch (true) {
-    //         case items[parent]?._parent === "5422acb9af1c889c16000029": // Ammo Parent
-    //             const calibre = item._props.Caliber || item._props.ammoCaliber
-    //             if (combinedWhiteLists?.cartridge?.[calibre]) {
-    //                 if (!weightingAdjustmentItem.equipment.add?.[equipmentType]) {
-    //                     weightingAdjustmentItem.equipment.add = { ...weightingAdjustmentItem.equipment.add, [equipmentType]: {} }
-    //                 }
-    //                 const highestScoringAmmo = getHighestScoringAmmoValue(combinedWeightingAdjustmentItem.ammo.add[calibre])
-    //                 const weaponRating = getWeaponWeighting(item, highestScoringAmmo)
-    //                 usecInventory.equipment[equipmentType][id] = weaponRating
-    //                 bearInventory.equipment[equipmentType][id] = weaponRating
-    //                 weightingAdjustmentItem.equipment.add[equipmentType] = {
-    //                     ...weightingAdjustmentItem.equipment.add[equipmentType] || {},
-    //                     [id]: weaponRating
-    //                 }
-    //             } else {
-    //                 console.log(item._name, " likely has the incorrect calibre: ", calibre)
-    //             }
-    //             break;
-    //         case parent === "5448e54d4bdc2dcc718b4568": //"ArmorParent"
-    //             if (!weightingAdjustmentItem.equipment.add?.[equipmentType]) {
-    //                 weightingAdjustmentItem.equipment.add = { ...weightingAdjustmentItem.equipment.add, [equipmentType]: {} }
-    //             }
-    //             const armorRating = getArmorRating(item)
-    //             usecInventory.equipment[equipmentType][id] = armorRating
-    //             bearInventory.equipment[equipmentType][id] = armorRating
-    //             weightingAdjustmentItem.equipment.add[equipmentType] = {
-    //                 ...weightingAdjustmentItem.equipment.add[equipmentType] || {},
-    //                 [id]: armorRating
-    //             }
-    //             break;
-    //         case equipmentType === "Magazine" && !!item._props.Cartridges[0]._max_count: //"MagazineParent"
-    //             if (!weightingAdjustmentItem.equipment.add?.[equipmentType]) {
-    //                 weightingAdjustmentItem.equipment.add = { ...weightingAdjustmentItem.equipment.add, [equipmentType]: {} }
-    //             }
-    //             weightingAdjustmentItem.equipment.add[equipmentType] = {
-    //                 ...weightingAdjustmentItem.equipment.add[equipmentType] || {},
-    //                 [id]: item._props.Cartridges[0]._max_count
-    //             }
-    //             break;
-    //         default:
-    //             if (!!equipmentType) {
-    //                 if (!weightingAdjustmentItem.equipment.add?.[equipmentType]) {
-    //                     weightingAdjustmentItem.equipment.add = { ...weightingAdjustmentItem.equipment.add, [equipmentType]: {} }
-    //                 }
-    //                 usecInventory.equipment[equipmentType][id] = 1
-    //                 bearInventory.equipment[equipmentType][id] = 1
-    //                 weightingAdjustmentItem.equipment.add[equipmentType] = {
-    //                     ...weightingAdjustmentItem.equipment.add[equipmentType] || {},
-    //                     [id]: 1
-    //                 }
-    //             } else {
-    //                 // console.log(item._parent, "=", items[item._parent]._name)
-    //             }
-    //             break;
-    //     }
-    // }
-    // updatedData.weightingAdjustments.push(weightingAdjustmentItem)
-    // }
-    // botConfig.equipment.pmc = updatedData
-    // console.log(JSON.stringify(updatedData))
+    (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
+    // botConfig.equipment.pmc.weightingAdjustments = []
+    // botConfig.equipment.pmc.randomisation = []
+    // console.log(JSON.stringify(botConfig.equipment.pmc))
+    // console.log(JSON.stringify(usecInventory))
 }
 exports.default = ProgressionChanges;
 // // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<
