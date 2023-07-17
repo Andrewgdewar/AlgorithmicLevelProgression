@@ -35,13 +35,6 @@ export default function ProgressionChanges(
     const tables = databaseServer.getTables();
     const items = tables.templates.items;
     const traders = tables.traders
-    const { levelRange } = config
-
-    const originalEquipmentList = {}
-
-
-
-
 
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
@@ -51,10 +44,6 @@ export default function ProgressionChanges(
 
     // Fix PP-9 
     // tables.templates.items["57f4c844245977379d5c14d1"]._props.ammoCaliber = "Caliber9x18PM"
-
-    // Fix MP-19 
-    // tables.templates.items["61f7c9e189e6fb1a5e3ea78d"]._props.BoltAction = true
-    // Add rhino clip
 
     const tradersToInclude = [
         'Prapor',

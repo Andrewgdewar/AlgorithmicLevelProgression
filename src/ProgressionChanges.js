@@ -1,9 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_json_1 = __importDefault(require("../config/config.json"));
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
@@ -19,17 +15,12 @@ function ProgressionChanges(container) {
     const tables = databaseServer.getTables();
     const items = tables.templates.items;
     const traders = tables.traders;
-    const { levelRange } = config_json_1.default;
-    const originalEquipmentList = {};
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
     tables.bots.types.usec.inventory.mods = {};
     tables.bots.types.bear.inventory.mods = {};
     // Fix PP-9 
     // tables.templates.items["57f4c844245977379d5c14d1"]._props.ammoCaliber = "Caliber9x18PM"
-    // Fix MP-19 
-    // tables.templates.items["61f7c9e189e6fb1a5e3ea78d"]._props.BoltAction = true
-    // Add rhino clip
     const tradersToInclude = [
         'Prapor',
         'Therapist',
@@ -39,6 +30,7 @@ function ProgressionChanges(container) {
         'Ragman',
         'Jaeger',
     ];
+    console.log(botConfig.lootNValue);
     const traderList = Object.values(traders).filter(({ base }) => tradersToInclude.includes(base.nickname));
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() };
