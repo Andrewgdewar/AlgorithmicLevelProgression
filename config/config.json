@@ -1,6 +1,7 @@
 {
     "enableProgressionChanges": true,
     "enableLevelChanges": true,
+    "leveledClothing": true,
     "levelRange": {
         "1": {
             "min": 1,

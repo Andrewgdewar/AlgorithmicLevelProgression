@@ -1,5 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const config_json_1 = __importDefault(require("../config/config.json"));
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
@@ -14,13 +18,16 @@ function ProgressionChanges(container) {
     const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
     const tables = databaseServer.getTables();
     const items = tables.templates.items;
+    const customization = tables.templates.customization;
     const traders = tables.traders;
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
     tables.bots.types.usec.inventory.mods = {};
     tables.bots.types.bear.inventory.mods = {};
+    const usecAppearance = tables.bots.types.usec.appearance;
+    const bearAppearance = tables.bots.types.bear.appearance;
     // Fix PP-9 
-    // tables.templates.items["57f4c844245977379d5c14d1"]._props.ammoCaliber = "Caliber9x18PM"
+    tables.templates.items["57f4c844245977379d5c14d1"]._props.ammoCaliber = "Caliber9x18PM";
     const tradersToInclude = [
         'Prapor',
         'Therapist',
@@ -30,20 +37,29 @@ function ProgressionChanges(container) {
         'Ragman',
         'Jaeger',
     ];
-    console.log(botConfig.lootNValue);
     const traderList = Object.values(traders).filter(({ base }) => tradersToInclude.includes(base.nickname));
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() };
+    const mods = { "1": {}, "2": {}, "3": {}, "4": {} };
     const itemCosts = {};
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = (0, utils_1.setupBaseWhiteList)();
+    const { suits } = Object.values(traders).find(({ base }) => "Ragman" === base.nickname);
+    if (config_json_1.default?.leveledClothing) {
+        (0, utils_1.buildInitialUsecAppearance)(usecAppearance);
+        (0, utils_1.buildInitialBearAppearance)(bearAppearance);
+        (0, utils_1.buildClothingWeighting)(suits, customization, botConfig);
+    }
+    // console.log(JSON.stringify(botConfig.equipment.pmc.clothing))
+    // console.log(JSON.stringify(usecAppearance))
+    // console.log(JSON.stringify(bearAppearance))
     traderList.forEach(({ assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }) => {
         if (!tradItems)
             return;
-        tradItems.forEach(({ _tpl, _id, parentId }, key) => {
+        tradItems.forEach(({ _tpl, _id, parentId, slotId }, key) => {
             const item = items[_tpl];
             const parent = item._parent;
-            const equipmentType = (0, utils_1.getEquipmentType)(parent);
+            const equipmentType = (0, utils_1.getEquipmentType)(parent, items);
             switch (true) {
                 case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.keyParent, utils_1.medsParent, utils_1.modParent, utils_1.moneyParent]):
                     if (utils_1.modParent) {
@@ -97,16 +113,38 @@ function ProgressionChanges(container) {
                 if ((0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50) {
                     // Take big mags and put them to level 4
                     tradersMasterList[4].add(_tpl);
+                    if (!!slotId && slotId !== "hideout") {
+                        if (!mods[4]?.[slotId])
+                            mods[4][slotId] = [];
+                        mods[4][slotId].push(_tpl);
+                    }
                 }
                 else if (items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === utils_1.moneyParent) {
                     // Only add the item if it's a cash trade
                     tradersMasterList[loyaltyLevel].add(_tpl);
+                    if (!!slotId && slotId !== "hideout") {
+                        if (!mods[loyaltyLevel]?.[slotId])
+                            mods[loyaltyLevel][slotId] = [];
+                        mods[loyaltyLevel][slotId].push(_tpl);
+                    }
                 }
                 else {
-                    if (loyaltyLevel === 4)
+                    if (loyaltyLevel === 4) {
                         tradersMasterList[loyaltyLevel].add(_tpl);
-                    else
+                        if (!!slotId && slotId !== "hideout") {
+                            if (!mods[loyaltyLevel]?.[slotId])
+                                mods[loyaltyLevel][slotId] = [];
+                            mods[loyaltyLevel][slotId].push(_tpl);
+                        }
+                    }
+                    else {
                         tradersMasterList[loyaltyLevel + 1].add(_tpl);
+                        if (!!slotId && slotId !== "hideout") {
+                            if (!mods[loyaltyLevel + 1]?.[slotId])
+                                mods[loyaltyLevel + 1][slotId] = [];
+                            mods[loyaltyLevel + 1][slotId].push(_tpl);
+                        }
+                    }
                 }
                 itemCosts[_tpl] = barterSchemeRef?.[0]?.[0]?.count;
                 (0, utils_1.buildOutModsObject)(_tpl, items, usecInventory);
@@ -117,6 +155,7 @@ function ProgressionChanges(container) {
             }
         });
     });
+    (0, utils_1.setupMods)(mods);
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
     bearInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(bearInventory.items.SecuredContainer);
@@ -144,12 +183,12 @@ function ProgressionChanges(container) {
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
         botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766", "6217726288ed9f0845317459"];
     }
-    // setWhitelists(items, botConfig, tradersMasterList)
+    (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, itemCosts);
     (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
     // botConfig.equipment.pmc.weightingAdjustments = []
     // botConfig.equipment.pmc.randomisation = []
-    // console.log(JSON.stringify(botConfig.equipment.pmc))
+    console.log(JSON.stringify(botConfig.equipment.pmc.whitelist));
     // console.log(JSON.stringify(usecInventory))
 }
 exports.default = ProgressionChanges;

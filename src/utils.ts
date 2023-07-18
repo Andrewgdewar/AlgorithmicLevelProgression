@@ -1,9 +1,27 @@
-import { Equipment, Inventory } from './../types/models/eft/common/tables/IBotType.d';
+import { Level } from './../types/models/eft/common/IGlobals.d';
+import { Appearance, Equipment, Inventory, ModsChances } from './../types/models/eft/common/tables/IBotType.d';
 import { MinMax } from './../types/models/common/MinMax.d';
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { EquipmentFilterDetails, IBotConfig, RandomisationDetails, WeightingAdjustmentDetails } from "@spt-aki/models/spt/config/IBotConfig";
 import { levelRange } from "../config/config.json"
+import { ISuit } from '@spt-aki/models/eft/common/tables/ITrader';
+import { ICustomizationItem } from '@spt-aki/models/eft/common/tables/ICustomizationItem';
 
+
+export const setupMods = (mods: Record<string, Record<string, string[]>>) => {
+    Object.keys(mods).forEach(numstr => {
+        const num = Number(numstr)
+        Object.keys(mods[num]).forEach(mod => {
+            mods[num][mod] = deDupeArr(mods[num][mod])
+            if (mods[num + 1]) {
+                if (!mods[num + 1]?.[mod]) mods[num + 1][mod] = mods[num][mod]
+                else {
+                    mods[num + 1][mod].push(...mods[num][mod])
+                }
+            }
+        })
+    })
+}
 
 export const reduceEquipmentChancesTo1 = (inventory: Inventory) => {
     Object.keys(inventory.equipment).forEach((equipType => {
@@ -81,11 +99,11 @@ export const getAmmoWeighting = ({ _props: { PenetrationPower, Damage, InitialSp
     return Math.round(penBonus + speedBonus + damBonus) || 3
 }
 
-export const getEquipmentType = (id: string) => {
+export const getEquipmentType = (id: string, items: Record<string, ITemplateItem>) => {
     const equipmentKeys = Object.keys(equipmentIdMapper)
     for (let index = 0; index < equipmentKeys.length; index++) {
         const key = equipmentKeys[index];
-        if (equipmentIdMapper[key].includes(id)) {
+        if (checkParentRecursive(id, items, equipmentIdMapper[key])) {
             return key
         }
     }
@@ -184,10 +202,11 @@ export const equipmentIdMapper = {
         "5447b5cf4bdc2d65278b4567",
     ],
     Scabbard: ["5447e1d04bdc2dff2f8b4567"],
-    Magazine: [
-        "5448bc234bdc2d3c308b4569",
-        "610720f290b75a49ff2e5e25"
-    ],
+    // mod_magazine: [
+    //     "5448bc234bdc2d3c308b4569",
+    //     "610720f290b75a49ff2e5e25"
+    // ],
+    Sights: ["5448fe7a4bdc2d6f028b456b"],
 }
 
 
@@ -217,23 +236,27 @@ export type TradersMasterList = { 1: Set<string>, 2: Set<string>, 3: Set<string>
 export const setWhitelists = (
     items: Record<string, ITemplateItem>,
     botConfig: IBotConfig,
-    tradersMasterList: TradersMasterList) => {
+    tradersMasterList: TradersMasterList,
+    mods: Record<string, Record<string, string[]>>
+) => {
     numList.forEach((num, index) => {
         const loyalty = num;
         const whitelist = botConfig.equipment.pmc.whitelist
         const itemList = [...tradersMasterList[loyalty]]
 
+        whitelist[index].equipment = { ...whitelist[index].equipment, ...mods[num] }
+
         itemList.forEach(id => {
             const item = items[id]
             const parent = item._parent
-            const equipmentType = getEquipmentType(parent)
+            const equipmentType = getEquipmentType(parent, items)
 
             switch (true) {
-                case items[parent]?._parent === "5422acb9af1c889c16000029": // Ammo Parent
-                    const calibre = item._props.Caliber || item._props.ammoCaliber
-                    whitelist[index].cartridge[calibre] =
-                        [...whitelist[index].cartridge[calibre] ? whitelist[index].cartridge[calibre] : [], id]
-                    break;
+                // case items[parent]?._parent === "5422acb9af1c889c16000029": // Ammo Parent
+                //     const calibre = item._props.Caliber || item._props.ammoCaliber
+                //     whitelist[index].cartridge[calibre] =
+                //         [...whitelist[index].cartridge[calibre] ? whitelist[index].cartridge[calibre] : [], id]
+                //     break;
                 case !!equipmentType:
                     whitelist[index].equipment[equipmentType] =
                         [...whitelist[index].equipment[equipmentType] ? whitelist[index].equipment[equipmentType] : [], id]
@@ -256,8 +279,10 @@ export const setWhitelists = (
             }
         })
 
+
+
         if (!!whitelist[index + 1]) {
-            whitelist[index + 1].cartridge = { ...whitelist[index].cartridge }
+            // whitelist[index + 1].cartridge = { ...whitelist[index].cartridge }
             whitelist[index + 1].equipment = { ...whitelist[index].equipment }
         }
     })
@@ -275,6 +300,16 @@ const buildEmptyWeightAdjustments = (): WeightingAdjustmentDetails[] => {
             "add": {},
             "edit": {}
         }
+    }))
+}
+
+const buildEmptyClothingAdjustments = (levels: number[][]): WeightingAdjustmentDetails[] => {
+    return levels.map(num => ({
+        levelRange: { min: num[0], max: num[1] },
+        "clothing": {
+            "add": {},
+            "edit": {}
+        },
     }))
 }
 
@@ -337,7 +372,7 @@ export const setWeightingAdjustments = (
         itemList.forEach(id => {
             const item = items[id]
             const parent = item._parent
-            const equipmentType = getEquipmentType(parent)
+            const equipmentType = getEquipmentType(parent, items)
 
             if (equipmentType) {
                 if (!weight[index]?.equipment?.edit?.[equipmentType]) {
@@ -400,7 +435,7 @@ export const setWeightingAdjustments = (
                     const tacticalVestWeighting = getTacticalVestValue(item)
                     setWeightItem(weight[index], equipmentType, id, tacticalVestWeighting * additionalChancePerItem)
                     break;
-                case "Magazine":
+                case "Sights":
                 default:
                     break;
             }
@@ -492,7 +527,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "Holster": [1, 5, 10, 10][index],
                 "Eyewear": [5, 15, 26, 49][index],
                 "Backpack": [90, 95, 99, 99][index],
-                "Magazine": 99,
+                "Sights": 80,
             },
             generation: {
                 "drugs": {
@@ -518,10 +553,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "magazines": {
                     "min": 1,
                     "max": [3, 3, 3, 4][index],
-                    ...{
-                        ...weightAdjust?.[index]?.equipment?.edit?.Magazine ?
-                            { whitelist: Object.keys(weightAdjust?.[index]?.equipment?.edit?.Magazine) } : {}
-                    }
+                    "whitelist": botConfig.equipment.pmc.whitelist[index].equipment.mod_magazine
                 },
                 "stims": {
                     "min": 0,
@@ -571,18 +603,18 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "mod_barrel": [5, 10, 15, 15][index],
                 "mod_bipod": [5, 5, 5, 11][index],
                 "mod_flashlight": [5, 10, 15, 15][index],
-                "mod_foregrip": [20, 20, 25, 35][index],
-                "mod_handguard": [15, 20, 25, 35][index],
+                "mod_foregrip": [20, 25, 30, 35][index],
+                "mod_handguard": [10, 20, 25, 35][index],
                 "mod_launcher": 0,
                 "mod_magazine": [25, 30, 35, 45][index],
                 "mod_mount": [15, 20, 25, 35][index],
-                "mod_mount_000": [15, 20, 25, 35][index],
-                "mod_mount_001": [15, 20, 25, 35][index],
-                "mod_mount_002": [15, 20, 25, 35][index],
-                "mod_mount_003": [15, 20, 25, 35][index],
-                "mod_mount_004": [15, 20, 25, 35][index],
-                "mod_mount_005": [15, 20, 25, 35][index],
-                "mod_mount_006": [15, 20, 25, 35][index],
+                "mod_mount_000": [5, 10, 25, 35][index],
+                "mod_mount_001": [5, 10, 25, 35][index],
+                "mod_mount_002": [5, 10, 25, 35][index],
+                "mod_mount_003": [5, 10, 25, 35][index],
+                "mod_mount_004": [5, 10, 25, 35][index],
+                "mod_mount_005": [5, 10, 25, 35][index],
+                "mod_mount_006": [5, 10, 25, 35][index],
                 "mod_muzzle": [5, 10, 15, 15][index],
                 "mod_muzzle_000": [5, 10, 15, 15][index],
                 "mod_muzzle_001": [5, 10, 15, 15][index],
@@ -593,11 +625,11 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "mod_nvg": 0,
                 "mod_pistol_grip_akms": [5, 10, 15, 15][index],
                 "mod_pistol_grip": [5, 10, 15, 15][index],
-                "mod_scope": [15, 20, 25, 35][index],
-                "mod_scope_000": [15, 20, 25, 35][index],
-                "mod_scope_001": [15, 20, 25, 35][index],
-                "mod_scope_002": [15, 20, 25, 35][index],
-                "mod_scope_003": [15, 20, 25, 35][index],
+                "mod_scope": 100, //[15, 20, 25, 35][index],
+                "mod_scope_000": 0,//[15, 20, 25, 35][index],
+                "mod_scope_001": 0,//[15, 20, 25, 35][index],
+                "mod_scope_002": 0,//[15, 20, 25, 35][index],
+                "mod_scope_003": 0,//[15, 20, 25, 35][index],
                 "mod_tactical": [5, 10, 15, 15][index],
                 "mod_tactical001": [5, 10, 15, 15][index],
                 "mod_tactical002": [5, 10, 15, 15][index],
@@ -630,7 +662,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     newItem.generation.looseLoot["whitelist"] = [...newItem.generation.looseLoot["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, [magParent]):
-                    newItem.generation.magazines["whitelist"] = [...newItem.generation.magazines["whitelist"] || [], id]
+                    // newItem.generation.magazines["whitelist"] = [...newItem.generation.magazines["whitelist"] || [], id]
                     break;
 
                 default:
@@ -650,4 +682,49 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
     })
 
     botConfig.equipment.pmc.randomisation = randomizationItems
+}
+
+
+export const buildInitialUsecAppearance = (appearance: Appearance) => {
+    appearance.feet = {
+        "5cde95ef7d6c8b04713c4f2d": 1
+    }
+    appearance.body = {
+        "5cde95d97d6c8b647a3769b0": 1
+    }
+}
+
+
+export const buildInitialBearAppearance = (appearance: Appearance) => {
+    appearance.feet = {
+        "5cc085bb14c02e000e67a5c5": 1
+    }
+    appearance.body = {
+        "5cc0858d14c02e000c6bea66": 1
+    }
+}
+
+export const buildClothingWeighting = (suit: ISuit[], items: Record<string, ICustomizationItem>, botConfig: IBotConfig) => {
+    const levels: number[][] = [[1, 4], [5, 7], [8, 15], [16, 22], [23, 30], [31, 40], [41, 100]]
+    botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels)
+    const clothingAdjust = botConfig.equipment.pmc.clothing
+
+    suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } }) => {
+        if (profileLevel === 0) return;
+        const index = levels.findIndex(([min, max]: number[]) => {
+            if (profileLevel >= min && profileLevel <= max) {
+                return true
+            }
+        })
+        if (index === undefined) return console.log('Empty index for: ', suiteId)
+        if (items[suiteId]?._props?.Body) {
+            if (!clothingAdjust[index].clothing.add["body"]) clothingAdjust[index].clothing.add["body"] = {}
+            clothingAdjust[index].clothing.add["body"][items[suiteId]._props.Body] = (profileLevel * loyaltyLevel)
+        }
+
+        if (items[suiteId]?._props?.Feet) {
+            if (!clothingAdjust[index].clothing.add["feet"]) clothingAdjust[index].clothing.add["feet"] = {}
+            clothingAdjust[index].clothing.add["feet"][items[suiteId]._props.Feet] = (profileLevel * loyaltyLevel)
+        }
+    })
 }
