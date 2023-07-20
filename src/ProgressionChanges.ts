@@ -1,4 +1,3 @@
-import { Customization } from './../types/models/eft/common/tables/IBotBase.d';
 import { IBotConfig } from './../types/models/spt/config/IBotConfig.d';
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { DependencyContainer } from "tsyringe";
@@ -16,7 +15,7 @@ import {
     getEquipmentType, keyParent, magParent, medsParent, modParent, moneyParent, numList,
     reduceAmmoChancesTo1,
     reduceEquipmentChancesTo1,
-    setWeightingAdjustments, setWhitelists, setupBaseWhiteList, buildInitialBearAppearance, buildInitialUsecAppearance, setupMods
+    setWeightingAdjustments, setWhitelists, setupBaseWhiteList, buildInitialBearAppearance, buildInitialUsecAppearance, setupMods, buildWeaponSightWhitelist
 } from './utils';
 import { ISuit } from '@spt-aki/models/eft/common/tables/ITrader';
 
@@ -25,12 +24,10 @@ export default function ProgressionChanges(
     container: DependencyContainer
 ): undefined {
 
-    //Next tasks
-    // - Make whiteList with levels (Try to incorporate the items that come with usec base) 1/2
-    // - Make function to set items value in equipment/ammo < done
-    // - determine ammo/equipment weightingAdjustments to "edit" lower as the level increases> not needed
-    // - Build randomisation
-    // - Add clothing levels
+    // Next tasks
+    // Update weapon weight with higher balance && Confirm ammo weighting is working correctly 
+    // Fix issue with sights not functioning maybe utilize "mod_scope" seen in blacklist
+    // Make the trade items optional in config
 
     const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
     const configServer = container.resolve<ConfigServer>("ConfigServer");
@@ -49,9 +46,8 @@ export default function ProgressionChanges(
     const usecAppearance = tables.bots.types.usec.appearance
     const bearAppearance = tables.bots.types.bear.appearance
 
-
-    // Fix PP-9 
-    tables.templates.items["57f4c844245977379d5c14d1"]._props.ammoCaliber = "Caliber9x18PM"
+    botConfig.pmc.looseWeaponInBackpackChancePercent = 1
+    botConfig.pmc.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 }
 
     const tradersToInclude = [
         'Prapor',
@@ -72,9 +68,7 @@ export default function ProgressionChanges(
 
     const mods = { "1": {}, "2": {}, "3": {}, "4": {} }
 
-    const itemCosts = {} as Record<string, number>
     // SetBaseWhitelist
-
     botConfig.equipment.pmc.whitelist = setupBaseWhiteList()
 
     const { suits } = Object.values(traders).find(({ base }) => "Ragman" === base.nickname) as any
@@ -85,13 +79,9 @@ export default function ProgressionChanges(
         buildClothingWeighting(suits, customization, botConfig)
     }
 
-    // console.log(JSON.stringify(botConfig.equipment.pmc.clothing))
-    // console.log(JSON.stringify(usecAppearance))
-    // console.log(JSON.stringify(bearAppearance))
-
-    traderList.forEach(({ assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }) => {
+    traderList.forEach(({ questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
         if (!tradItems) return
-
+        // if (index === 0) console.log(JSON.stringify(questassort))
         tradItems.forEach(({ _tpl, _id, parentId, slotId }, key) => {
 
             const item = items[_tpl]
@@ -100,12 +90,6 @@ export default function ProgressionChanges(
 
             switch (true) {
                 case checkParentRecursive(parent, items, [barterParent, keyParent, medsParent, modParent, moneyParent]):
-
-                    if (modParent) {
-                        // usecInventory.mods
-                        // usecInventory.mods
-                    }
-
                     usecInventory.items.Pockets.push(_tpl)
                     bearInventory.items.Pockets.push(_tpl)
 
@@ -158,43 +142,67 @@ export default function ProgressionChanges(
             //Set trader list for levels
             if (loyaltyLevel) {
                 const barterSchemeRef = barter_scheme[_id] || barter_scheme[parentId]
-                if (checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50) {
-                    // Take big mags and put them to level 4
-                    tradersMasterList[4].add(_tpl)
-                    if (!!slotId && slotId !== "hideout") {
-                        if (!mods[4]?.[slotId]) mods[4][slotId] = []
-                        mods[4][slotId].push(_tpl)
-                    }
-                } else if (items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === moneyParent) {
-                    // Only add the item if it's a cash trade
-                    tradersMasterList[loyaltyLevel].add(_tpl)
 
-                    if (!!slotId && slotId !== "hideout") {
-                        if (!mods[loyaltyLevel]?.[slotId]) mods[loyaltyLevel][slotId] = []
-                        mods[loyaltyLevel][slotId].push(_tpl)
-                    }
-                } else {
-                    if (loyaltyLevel === 4) {
+                switch (true) {
+                    // If large magazine
+                    case checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50:
+                        tradersMasterList[4].add(_tpl)
+
+                        if (slotId !== "hideout") {
+                            if (!mods[4]?.[slotId]) mods[4][slotId] = []
+                            mods[4][slotId].push(_tpl)
+                        }
+
+                        break;
+                    // Check if its a quest unlocked trade    
+                    case !!questassort.success[_id]:
+                        if ((loyaltyLevel === 4 || checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50)) {
+                            tradersMasterList[4].add(_tpl)
+
+                            if (slotId !== "hideout") {
+                                if (!mods[4]?.[slotId]) mods[4][slotId] = []
+                                mods[4][slotId].push(_tpl)
+                            }
+                        } else {
+                            tradersMasterList[loyaltyLevel + 1].add(_tpl)
+                            if (slotId !== "hideout") {
+                                if (!mods[loyaltyLevel + 1]?.[slotId]) mods[loyaltyLevel + 1][slotId] = []
+                                mods[loyaltyLevel + 1][slotId].push(_tpl)
+                            }
+                        }
+                        break;
+                    // Only add the item if it's a cash trade
+                    case items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === moneyParent:
                         tradersMasterList[loyaltyLevel].add(_tpl)
-                        if (!!slotId && slotId !== "hideout") {
+
+                        if (slotId !== "hideout") {
                             if (!mods[loyaltyLevel]?.[slotId]) mods[loyaltyLevel][slotId] = []
                             mods[loyaltyLevel][slotId].push(_tpl)
                         }
-                    } else {
-                        tradersMasterList[loyaltyLevel + 1].add(_tpl)
-                        if (!!slotId && slotId !== "hideout") {
-                            if (!mods[loyaltyLevel + 1]?.[slotId]) mods[loyaltyLevel + 1][slotId] = []
-                            mods[loyaltyLevel + 1][slotId].push(_tpl)
+                        break;
+                    // Then it's a tradeItem
+                    default:
+                        if ((loyaltyLevel + 2) > 4 || checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50) {
+                            tradersMasterList[4].add(_tpl)
+
+                            if (slotId !== "hideout") {
+                                if (!mods[4]?.[slotId]) mods[4][slotId] = []
+                                mods[4][slotId].push(_tpl)
+                            }
+                        } else {
+                            tradersMasterList[loyaltyLevel + 2].add(_tpl)
+
+                            if (slotId !== "hideout") {
+                                if (!mods[loyaltyLevel + 2]?.[slotId]) mods[loyaltyLevel + 2][slotId] = []
+                                mods[loyaltyLevel + 2][slotId].push(_tpl)
+                            }
                         }
-                    }
+                        break;
                 }
-                itemCosts[_tpl] = barterSchemeRef?.[0]?.[0]?.count
+
+
                 buildOutModsObject(_tpl, items, usecInventory)
                 buildOutModsObject(_tpl, items, bearInventory)
-
-
-            } else {
-                // these are weapon components that come with the rifle. no need to add them.
             }
         })
     })
@@ -239,18 +247,24 @@ export default function ProgressionChanges(
     })
 
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
-        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = ["624c0b3340357b5f566e8766", "6217726288ed9f0845317459"]
+        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon =
+            ["624c0b3340357b5f566e8766", "624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709"]
     }
+    // if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.mod_magazine) {
+    //     botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon =
+    //         ["624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709"]
+    // }
 
 
 
 
     setWhitelists(items, botConfig, tradersMasterList, mods)
-    setWeightingAdjustments(items, botConfig, tradersMasterList, itemCosts)
+    setWeightingAdjustments(items, botConfig, tradersMasterList)
     buildInitialRandomization(items, botConfig, tradersMasterList)
+    buildWeaponSightWhitelist(items, botConfig, tradersMasterList)
     // botConfig.equipment.pmc.weightingAdjustments = []
     // botConfig.equipment.pmc.randomisation = []
-    console.log(JSON.stringify(botConfig.equipment.pmc.whitelist))
+    console.log(JSON.stringify(botConfig.equipment.pmc))
     // console.log(JSON.stringify(usecInventory))
 }
 

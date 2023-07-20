@@ -1,7 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.moneyParent = exports.modParent = exports.medsParent = exports.keyParent = exports.barterParent = exports.magParent = exports.AmmoParent = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = void 0;
+exports.buildWeaponSightWhitelist = exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.mountParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.modParent = exports.medsParent = exports.keyParent = exports.barterParent = exports.magParent = exports.AmmoParent = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.SightType = void 0;
 const config_json_1 = require("../config/config.json");
+var SightType;
+(function (SightType) {
+    SightType["AssaultScope"] = "55818add4bdc2d5b648b456f";
+    SightType["Collimator"] = "55818ad54bdc2ddc698b4569";
+    SightType["CompactCollimator"] = "55818acf4bdc2dde698b456b";
+    SightType["OpticScope"] = "55818ae44bdc2dde698b456c";
+})(SightType = exports.SightType || (exports.SightType = {}));
 const setupMods = (mods) => {
     Object.keys(mods).forEach(numstr => {
         const num = Number(numstr);
@@ -74,13 +81,9 @@ const mergeDeep = (target, ...sources) => {
 };
 exports.mergeDeep = mergeDeep;
 const getArmorRating = ({ _props: { RepairCost, Durability, armorClass, armorZone, Name }, _name, _id }) => {
-    const repair = RepairCost * 0.01;
-    let arm = (armorClass - 2) * 10;
-    if (arm < 1)
-        arm = 1;
     const armorZoneCoverage = armorZone?.length || 0;
     const durability = Durability * 0.3;
-    const total = Math.round(repair + durability + armorZoneCoverage + arm);
+    const total = Math.round((armorClass * 20) + durability + (armorZoneCoverage * 5));
     return total || 3;
 };
 exports.getArmorRating = getArmorRating;
@@ -153,7 +156,7 @@ const getTacticalVestValue = (item) => {
         spaceTotal = spaceTotal + (_props?.cellsH * _props?.cellsV);
     });
     spaceTotal = Math.round((spaceTotal * 0.6)) || 3;
-    const armorRating = (0, exports.getArmorRating)(item);
+    const armorRating = (0, exports.getArmorRating)(item) * 0.6;
     // console.log(item._name, item._id, " - ", armorRating > 5 ? armorRating + spaceTotal : spaceTotal * 4)
     return armorRating || spaceTotal;
 };
@@ -186,11 +189,12 @@ exports.equipmentIdMapper = {
         "5447b5cf4bdc2d65278b4567",
     ],
     Scabbard: ["5447e1d04bdc2dff2f8b4567"],
-    // mod_magazine: [
-    //     "5448bc234bdc2d3c308b4569",
-    //     "610720f290b75a49ff2e5e25"
-    // ],
-    Sights: ["5448fe7a4bdc2d6f028b456b"],
+    mod_magazine: [
+        "5448bc234bdc2d3c308b4569",
+        "610720f290b75a49ff2e5e25"
+    ],
+    // Stock: ["55818a594bdc2db9688b456a"],
+    mod_scope: [...Object.values(SightType)],
 };
 const getCurrentLevelRange = (currentLevel) => {
     for (const key in config_json_1.levelRange) {
@@ -249,9 +253,11 @@ const setWhitelists = (items, botConfig, tradersMasterList, mods) => {
             }
         });
         if (!!whitelist[index + 1]) {
-            // whitelist[index + 1].cartridge = { ...whitelist[index].cartridge }
+            // if (!whitelist[index + 1]["ammo"]) whitelist[index + 1]["ammo"] = {}
+            // whitelist[index + 1]["ammo"] = { ...whitelist[index]["ammo"] }
             whitelist[index + 1].equipment = { ...whitelist[index].equipment };
         }
+        // console.log(whitelist[0]["ammo"])
     });
 };
 exports.setWhitelists = setWhitelists;
@@ -277,11 +283,19 @@ const buildEmptyClothingAdjustments = (levels) => {
         },
     }));
 };
-const setWeightItem = (weight, equipmentType, id, rating) => {
-    weight.equipment.edit[equipmentType] = {
-        ...weight.equipment.edit[equipmentType] || {},
-        [id]: rating
-    };
+const setWeightItem = (weight, equipmentType, id, rating, add) => {
+    if (add) {
+        weight.equipment.add[equipmentType] = {
+            ...weight.equipment.add[equipmentType] || {},
+            [id]: rating
+        };
+    }
+    else {
+        weight.equipment.edit[equipmentType] = {
+            ...weight.equipment.edit[equipmentType] || {},
+            [id]: rating
+        };
+    }
 };
 exports.AmmoParent = "5485a8684bdc2da71d8b4567";
 exports.magParent = "5448bc234bdc2d3c308b4569";
@@ -290,7 +304,10 @@ exports.keyParent = "543be5e94bdc2df1348b4568";
 exports.medsParent = "543be5664bdc2dd4348b4569";
 exports.modParent = "5448fe124bdc2da5018b4567";
 exports.moneyParent = "543be5dd4bdc2deb348b4569";
-const setWeightingAdjustments = (items, botConfig, tradersMasterList, itemCosts) => {
+exports.sightParent = "5448fe7a4bdc2d6f028b456b";
+exports.stockParent = "55818a594bdc2db9688b456a";
+exports.mountParent = "55818b224bdc2dde698b456f";
+const setWeightingAdjustments = (items, botConfig, tradersMasterList) => {
     botConfig.equipment.pmc.weightingAdjustments = buildEmptyWeightAdjustments();
     const weight = botConfig.equipment.pmc.weightingAdjustments;
     const additionalChancePerItem = 5;
@@ -351,9 +368,8 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, itemCosts)
                     setWeightItem(weight[index], equipmentType, id, (compressorBonus + ambientVolumeBonus) * additionalChancePerItem);
                     break;
                 case "FaceCover":
-                    const faceCoverCost = ((itemCosts[id]) * 0.0005) || 1;
                     const experience = item._props.LootExperience;
-                    setWeightItem(weight[index], equipmentType, id, (Math.round(faceCoverCost) + experience) * additionalChancePerItem);
+                    setWeightItem(weight[index], equipmentType, id, experience * additionalChancePerItem);
                     break;
                 case "ArmorVest":
                     const armorRating = (0, exports.getArmorRating)(item);
@@ -379,8 +395,21 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, itemCosts)
                     const tacticalVestWeighting = (0, exports.getTacticalVestValue)(item);
                     setWeightItem(weight[index], equipmentType, id, tacticalVestWeighting * additionalChancePerItem);
                     break;
-                case "Sights":
+                case "mod_magazine":
+                case "mod_scope":
+                    setWeightItem(weight[index], equipmentType, id, (loyalty * 10) * additionalChancePerItem, true);
+                    break;
                 default:
+                    switch (true) {
+                        //     case checkParentRecursive(id, items, [...Object.values(SightType)]):
+                        //         setWeightItem(weight[index], "mod_scope", id, (loyalty * 10) * additionalChancePerItem, true)
+                        //         break;
+                        case (0, exports.checkParentRecursive)(id, items, [exports.stockParent, exports.mountParent]):
+                            setWeightItem(weight[index], "Others", id, (loyalty * 10) * additionalChancePerItem, true);
+                            break;
+                        default:
+                            break;
+                    }
                     break;
             }
         });
@@ -445,7 +474,6 @@ const buildOutModsObject = (id, items, inventory) => {
 exports.buildOutModsObject = buildOutModsObject;
 const buildInitialRandomization = (items, botConfig, traderList) => {
     const randomizationItems = [];
-    const weightAdjust = botConfig.equipment.pmc.weightingAdjustments;
     exports.numList.forEach((num, index) => {
         const range = config_json_1.levelRange[num];
         const loyalty = num;
@@ -454,7 +482,7 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
             levelRange: range,
             equipment: {
                 "Headwear": [95, 95, 99, 99][index],
-                "Earpiece": [60, 70, 80, 90][index],
+                "Earpiece": [70, 80, 90, 95][index],
                 "FaceCover": [6, 15, 25, 35][index],
                 "ArmorVest": [95, 95, 99, 99][index],
                 "ArmBand": 20,
@@ -476,12 +504,12 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                     ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
                 },
                 "grenades": {
-                    "min": 0,
+                    "min": [0, 0, 1, 1][index],
                     "max": [1, 2, 2, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "healing": {
-                    "min": 0,
+                    "min": [1, 1, 1, 2][index],
                     "max": [2, 2, 3, 4][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
@@ -664,3 +692,34 @@ const buildClothingWeighting = (suit, items, botConfig) => {
     });
 };
 exports.buildClothingWeighting = buildClothingWeighting;
+exports.weaponTypes = {
+    "5447b6254bdc2dc3278b4568": [SightType.AssaultScope, SightType.OpticScope],
+    "5447b6194bdc2d67278b4567": [SightType.AssaultScope, SightType.OpticScope],
+    "5447b5fc4bdc2d87278b4567": [SightType.CompactCollimator, SightType.Collimator, SightType.AssaultScope],
+    "5447b5f14bdc2d61278b4567": [SightType.CompactCollimator, SightType.Collimator, SightType.AssaultScope],
+    "5447bed64bdc2d97278b4568": [SightType.CompactCollimator, SightType.Collimator],
+    "5447b5e04bdc2d62278b4567": [SightType.CompactCollimator, SightType.Collimator],
+    "5447bee84bdc2dc3278b4569": [SightType.CompactCollimator, SightType.Collimator],
+    "5447b6094bdc2dc3278b4567": [SightType.CompactCollimator, SightType.Collimator],
+    "5447b5cf4bdc2d65278b4567": [SightType.CompactCollimator, SightType.Collimator],
+    "617f1ef5e8b54b0998387733": [SightType.CompactCollimator, SightType.Collimator],
+    "5447bedf4bdc2d87278b4568": [SightType.CompactCollimator, SightType.Collimator], // GrenadeLauncher
+};
+const buildWeaponSightWhitelist = (items, botConfig, { 1: a, 2: b, 3: c, 4: d }) => {
+    botConfig.equipment.pmc.weaponSightWhitelist = {};
+    const sightWhitelist = botConfig.equipment.pmc.weaponSightWhitelist;
+    const traderItems = [...new Set([...a, ...b, ...c, ...d])];
+    traderItems.forEach(id => {
+        if ((0, exports.checkParentRecursive)(id, items, Object.values(SightType))) {
+            for (const key in exports.weaponTypes) {
+                const sightsToCheck = exports.weaponTypes[key];
+                if ((0, exports.checkParentRecursive)(id, items, sightsToCheck)) {
+                    if (!sightWhitelist[key])
+                        sightWhitelist[key] = [];
+                    sightWhitelist[key].push(id);
+                }
+            }
+        }
+    });
+};
+exports.buildWeaponSightWhitelist = buildWeaponSightWhitelist;

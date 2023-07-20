@@ -8,6 +8,13 @@ import { ISuit } from '@spt-aki/models/eft/common/tables/ITrader';
 import { ICustomizationItem } from '@spt-aki/models/eft/common/tables/ICustomizationItem';
 
 
+export enum SightType {
+    AssaultScope = "55818add4bdc2d5b648b456f",
+    Collimator = "55818ad54bdc2ddc698b4569",
+    CompactCollimator = "55818acf4bdc2dde698b456b",
+    OpticScope = "55818ae44bdc2dde698b456c",
+}
+
 export const setupMods = (mods: Record<string, Record<string, string[]>>) => {
     Object.keys(mods).forEach(numstr => {
         const num = Number(numstr)
@@ -77,16 +84,11 @@ export const mergeDeep = (target, ...sources) => {
 }
 
 export const getArmorRating = ({ _props: { RepairCost, Durability, armorClass, armorZone, Name }, _name, _id }: any): number => {
-    const repair = RepairCost * 0.01
-    let arm = (armorClass - 2) * 10
-    if (arm < 1) arm = 1
-
-
     const armorZoneCoverage = armorZone?.length || 0
 
     const durability = Durability * 0.3
 
-    const total = Math.round(repair + durability + armorZoneCoverage + arm)
+    const total = Math.round((armorClass * 20) + durability + (armorZoneCoverage * 5))
 
     return total || 3
 }
@@ -169,7 +171,7 @@ export const getTacticalVestValue = (item: ITemplateItem,
         spaceTotal = spaceTotal + (_props?.cellsH * _props?.cellsV)
     })
     spaceTotal = Math.round((spaceTotal * 0.6)) || 3
-    const armorRating = getArmorRating(item)
+    const armorRating = getArmorRating(item) * 0.6
     // console.log(item._name, item._id, " - ", armorRating > 5 ? armorRating + spaceTotal : spaceTotal * 4)
     return armorRating || spaceTotal
 }
@@ -202,11 +204,12 @@ export const equipmentIdMapper = {
         "5447b5cf4bdc2d65278b4567",
     ],
     Scabbard: ["5447e1d04bdc2dff2f8b4567"],
-    // mod_magazine: [
-    //     "5448bc234bdc2d3c308b4569",
-    //     "610720f290b75a49ff2e5e25"
-    // ],
-    Sights: ["5448fe7a4bdc2d6f028b456b"],
+    mod_magazine: [
+        "5448bc234bdc2d3c308b4569",
+        "610720f290b75a49ff2e5e25"
+    ],
+    // Stock: ["55818a594bdc2db9688b456a"],
+    mod_scope: [...Object.values(SightType)],
 }
 
 
@@ -254,6 +257,7 @@ export const setWhitelists = (
             switch (true) {
                 // case items[parent]?._parent === "5422acb9af1c889c16000029": // Ammo Parent
                 //     const calibre = item._props.Caliber || item._props.ammoCaliber
+
                 //     whitelist[index].cartridge[calibre] =
                 //         [...whitelist[index].cartridge[calibre] ? whitelist[index].cartridge[calibre] : [], id]
                 //     break;
@@ -282,9 +286,11 @@ export const setWhitelists = (
 
 
         if (!!whitelist[index + 1]) {
-            // whitelist[index + 1].cartridge = { ...whitelist[index].cartridge }
+            // if (!whitelist[index + 1]["ammo"]) whitelist[index + 1]["ammo"] = {}
+            // whitelist[index + 1]["ammo"] = { ...whitelist[index]["ammo"] }
             whitelist[index + 1].equipment = { ...whitelist[index].equipment }
         }
+        // console.log(whitelist[0]["ammo"])
     })
 }
 
@@ -313,10 +319,17 @@ const buildEmptyClothingAdjustments = (levels: number[][]): WeightingAdjustmentD
     }))
 }
 
-const setWeightItem = (weight: WeightingAdjustmentDetails, equipmentType, id, rating: any) => {
-    weight.equipment.edit[equipmentType] = {
-        ...weight.equipment.edit[equipmentType] || {},
-        [id]: rating
+const setWeightItem = (weight: WeightingAdjustmentDetails, equipmentType, id, rating: any, add?: boolean) => {
+    if (add) {
+        weight.equipment.add[equipmentType] = {
+            ...weight.equipment.add[equipmentType] || {},
+            [id]: rating
+        }
+    } else {
+        weight.equipment.edit[equipmentType] = {
+            ...weight.equipment.edit[equipmentType] || {},
+            [id]: rating
+        }
     }
 }
 export const AmmoParent = "5485a8684bdc2da71d8b4567"
@@ -326,13 +339,16 @@ export const keyParent = "543be5e94bdc2df1348b4568"
 export const medsParent = "543be5664bdc2dd4348b4569"
 export const modParent = "5448fe124bdc2da5018b4567"
 export const moneyParent = "543be5dd4bdc2deb348b4569"
+export const sightParent = "5448fe7a4bdc2d6f028b456b"
+export const stockParent = "55818a594bdc2db9688b456a"
+export const mountParent = "55818b224bdc2dde698b456f"
 
 
 export const setWeightingAdjustments = (
     items: Record<string, ITemplateItem>,
     botConfig: IBotConfig,
     tradersMasterList: TradersMasterList,
-    itemCosts: Record<string, number>) => {
+) => {
     botConfig.equipment.pmc.weightingAdjustments = buildEmptyWeightAdjustments()
     const weight = botConfig.equipment.pmc.weightingAdjustments
 
@@ -406,9 +422,8 @@ export const setWeightingAdjustments = (
                     setWeightItem(weight[index], equipmentType, id, (compressorBonus + ambientVolumeBonus) * additionalChancePerItem)
                     break;
                 case "FaceCover":
-                    const faceCoverCost = ((itemCosts[id]) * 0.0005) || 1
                     const experience = item._props.LootExperience
-                    setWeightItem(weight[index], equipmentType, id, (Math.round(faceCoverCost) + experience) * additionalChancePerItem)
+                    setWeightItem(weight[index], equipmentType, id, experience * additionalChancePerItem)
                     break;
                 case "ArmorVest":
                     const armorRating = getArmorRating(item)
@@ -435,8 +450,21 @@ export const setWeightingAdjustments = (
                     const tacticalVestWeighting = getTacticalVestValue(item)
                     setWeightItem(weight[index], equipmentType, id, tacticalVestWeighting * additionalChancePerItem)
                     break;
-                case "Sights":
+                case "mod_magazine":
+                case "mod_scope":
+                    setWeightItem(weight[index], equipmentType, id, (loyalty * 10) * additionalChancePerItem, true)
+                    break;
                 default:
+                    switch (true) {
+                        //     case checkParentRecursive(id, items, [...Object.values(SightType)]):
+                        //         setWeightItem(weight[index], "mod_scope", id, (loyalty * 10) * additionalChancePerItem, true)
+                        //         break;
+                        case checkParentRecursive(id, items, [stockParent, mountParent]):
+                            setWeightItem(weight[index], "Others", id, (loyalty * 10) * additionalChancePerItem, true)
+                            break;
+                        default:
+                            break;
+                    }
                     break;
             }
         })
@@ -505,7 +533,6 @@ export const buildOutModsObject = (id: string, items: Record<string, ITemplateIt
 
 export const buildInitialRandomization = (items: Record<string, ITemplateItem>, botConfig: IBotConfig, traderList: TradersMasterList) => {
     const randomizationItems = []
-    const weightAdjust = botConfig.equipment.pmc.weightingAdjustments
     numList.forEach((num, index) => {
         const range = levelRange[num]
         const loyalty = num
@@ -514,7 +541,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             levelRange: range,
             equipment: {
                 "Headwear": [95, 95, 99, 99][index],
-                "Earpiece": [60, 70, 80, 90][index],
+                "Earpiece": [70, 80, 90, 95][index],
                 "FaceCover": [6, 15, 25, 35][index],
                 "ArmorVest": [95, 95, 99, 99][index],
                 "ArmBand": 20,
@@ -536,12 +563,12 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
                 },
                 "grenades": {
-                    "min": 0,
+                    "min": [0, 0, 1, 1][index],
                     "max": [1, 2, 2, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "healing": {
-                    "min": 0,
+                    "min": [1, 1, 1, 2][index],
                     "max": [2, 2, 3, 4][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
@@ -664,7 +691,6 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 case checkParentRecursive(parent, items, [magParent]):
                     // newItem.generation.magazines["whitelist"] = [...newItem.generation.magazines["whitelist"] || [], id]
                     break;
-
                 default:
                     break;
             }
@@ -725,6 +751,44 @@ export const buildClothingWeighting = (suit: ISuit[], items: Record<string, ICus
         if (items[suiteId]?._props?.Feet) {
             if (!clothingAdjust[index].clothing.add["feet"]) clothingAdjust[index].clothing.add["feet"] = {}
             clothingAdjust[index].clothing.add["feet"][items[suiteId]._props.Feet] = (profileLevel * loyaltyLevel)
+        }
+    })
+}
+
+
+
+
+export const weaponTypes = {
+    "5447b6254bdc2dc3278b4568": [SightType.AssaultScope, SightType.OpticScope],// SniperRifle
+    "5447b6194bdc2d67278b4567": [SightType.AssaultScope, SightType.OpticScope],// MarksmanRifle
+    "5447b5fc4bdc2d87278b4567": [SightType.CompactCollimator, SightType.Collimator, SightType.AssaultScope],// AssaultCarbine
+    "5447b5f14bdc2d61278b4567": [SightType.CompactCollimator, SightType.Collimator, SightType.AssaultScope],// AssaultRifle
+    "5447bed64bdc2d97278b4568": [SightType.CompactCollimator, SightType.Collimator],// MachineGun
+    "5447b5e04bdc2d62278b4567": [SightType.CompactCollimator, SightType.Collimator],// Smg
+    "5447bee84bdc2dc3278b4569": [SightType.CompactCollimator, SightType.Collimator],// SpecialWeapon
+    "5447b6094bdc2dc3278b4567": [SightType.CompactCollimator, SightType.Collimator],// Shotgun
+    "5447b5cf4bdc2d65278b4567": [SightType.CompactCollimator, SightType.Collimator],// Pistol
+    "617f1ef5e8b54b0998387733": [SightType.CompactCollimator, SightType.Collimator],// Revolver
+    "5447bedf4bdc2d87278b4568": [SightType.CompactCollimator, SightType.Collimator],// GrenadeLauncher
+}
+
+export const buildWeaponSightWhitelist = (
+    items: Record<string, ITemplateItem>,
+    botConfig: IBotConfig,
+    { 1: a, 2: b, 3: c, 4: d }: TradersMasterList) => {
+    botConfig.equipment.pmc.weaponSightWhitelist = {}
+    const sightWhitelist = botConfig.equipment.pmc.weaponSightWhitelist
+    const traderItems = [...new Set([...a, ...b, ...c, ...d])]
+
+    traderItems.forEach(id => {
+        if (checkParentRecursive(id, items, Object.values(SightType))) {
+            for (const key in weaponTypes) {
+                const sightsToCheck = weaponTypes[key];
+                if (checkParentRecursive(id, items, sightsToCheck)) {
+                    if (!sightWhitelist[key]) sightWhitelist[key] = []
+                    sightWhitelist[key].push(id)
+                }
+            }
         }
     })
 }
