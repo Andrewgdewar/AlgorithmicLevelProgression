@@ -7,6 +7,23 @@ import { levelRange } from "../config/config.json"
 import { ISuit } from '@spt-aki/models/eft/common/tables/ITrader';
 import { ICustomizationItem } from '@spt-aki/models/eft/common/tables/ICustomizationItem';
 
+export const AmmoParent = "5485a8684bdc2da71d8b4567"
+export const magParent = "5448bc234bdc2d3c308b4569"
+export const barterParent = "5448eb774bdc2d0a728b4567"
+export const keyParent = "543be5e94bdc2df1348b4568"
+export const medsParent = "543be5664bdc2dd4348b4569"
+export const modParent = "5448fe124bdc2da5018b4567"
+export const moneyParent = "543be5dd4bdc2deb348b4569"
+export const sightParent = "5448fe7a4bdc2d6f028b456b"
+export const stockParent = "55818a594bdc2db9688b456a"
+export const pistolGripParent = "55818a684bdc2ddd698b456d"
+export const muzzleParent = "5448fe394bdc2d0d028b456c"
+export const receiverParent = "55818a304bdc2db5418b457d"
+export const gasblockParent = "56ea9461d2720b67698b456f"
+export const barrelParent = "555ef6e44bdc2de9068b457e"
+export const handguardParent = "55818a104bdc2db9688b4569"
+export const chargeParent = "55818a104bdc2db9688b4569"
+export const mountParent = "55818b224bdc2dde698b456f"
 
 export enum SightType {
     AssaultScope = "55818add4bdc2d5b648b456f",
@@ -14,6 +31,69 @@ export enum SightType {
     CompactCollimator = "55818acf4bdc2dde698b456b",
     OpticScope = "55818ae44bdc2dde698b456c",
 }
+
+export const addToModsObject = (
+    mods: { "1": {}, "2": {}, "3": {}, "4": {} },
+    _tpl: string,
+    items: Record<string, ITemplateItem>,
+    loyaltyLevel: number,
+    slotId: string = "") => {
+    switch (true) {
+        case checkParentRecursive(_tpl, items, [magParent]):
+            if (!mods[loyaltyLevel]?.["mod_magazine"]) mods[loyaltyLevel]["mod_magazine"] = []
+            mods[loyaltyLevel]["mod_magazine"].push(_tpl)
+            break;
+        case slotId !== "hideout":
+            if (!mods[loyaltyLevel]?.[slotId]) mods[loyaltyLevel][slotId] = []
+            mods[loyaltyLevel][slotId].push(_tpl)
+            break;
+        // case checkParentRecursive(_tpl, items, Object.values(SightType)):
+        //     if (!mods[loyaltyLevel]?.["mod_scope"]) mods[loyaltyLevel]["mod_scope"] = []
+        //     mods[loyaltyLevel]["mod_scope"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [pistolGripParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_pistol_grip"]) mods[loyaltyLevel]["mod_pistol_grip"] = []
+        //     mods[loyaltyLevel]["mod_pistol_grip"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [stockParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_stock"]) mods[loyaltyLevel]["mod_stock"] = []
+        //     mods[loyaltyLevel]["mod_stock"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [muzzleParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_muzzle"]) mods[loyaltyLevel]["mod_muzzle"] = []
+        //     mods[loyaltyLevel]["mod_muzzle"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [receiverParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_reciever"]) mods[loyaltyLevel]["mod_reciever"] = []
+        //     mods[loyaltyLevel]["mod_reciever"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [gasblockParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_gas_block"]) mods[loyaltyLevel]["mod_gas_block"] = []
+        //     mods[loyaltyLevel]["mod_gas_block"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [barrelParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_barrel"]) mods[loyaltyLevel]["mod_barrel"] = []
+        //     mods[loyaltyLevel]["mod_barrel"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [handguardParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_handguard"]) mods[loyaltyLevel]["mod_handguard"] = []
+        //     mods[loyaltyLevel]["mod_handguard"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [chargeParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_charge"]) mods[loyaltyLevel]["mod_charge"] = []
+        //     mods[loyaltyLevel]["mod_charge"].push(_tpl)
+        //     break;
+        // case checkParentRecursive(_tpl, items, [mountParent]):
+        //     if (!mods[loyaltyLevel]?.["mod_mount"]) mods[loyaltyLevel]["mod_mount"] = []
+        //     mods[loyaltyLevel]["mod_mount"].push(_tpl)
+        //     break;
+        default:
+            break;
+    }
+
+}
+
+
 
 export const setupMods = (mods: Record<string, Record<string, string[]>>) => {
     Object.keys(mods).forEach(numstr => {
@@ -137,8 +217,8 @@ export const getWeaponWeighting = ({
     const isPistol = weapClass === "pistol" ? - 15 : 0
     const isBarrelLoader = ReloadMode.includes("OnlyBarrel") ? -15 : 0
     const gunBase = ergoBonus + lowRecoilBonus + isAutomatic + isBoltAction + isPistol + isBarrelLoader
-    if (BoltAction || weapClass === "pistol") ammo = ammo / 2
-    if (ReloadMode.includes("OnlyBarrel")) ammo = ammo / 3
+    if (BoltAction || weapClass === "pistol") ammo = ammo / 3
+    if (ReloadMode.includes("OnlyBarrel")) ammo = ammo / 5
     const finalValue = Math.round(gunBase + ammo)
     // console.log(_name, _id, " - ", Math.round(gunBase), Math.round(ammo), finalValue)
     return finalValue > 0 ? finalValue : 1
@@ -156,6 +236,7 @@ export const getBackPackInternalGridValue = ({
             total = total / 2
         }
     })
+
     total = Math.round((total * 0.6) - Weight)
 
     // console.log(_name, _id, " - ", total)
@@ -171,9 +252,9 @@ export const getTacticalVestValue = (item: ITemplateItem,
         spaceTotal = spaceTotal + (_props?.cellsH * _props?.cellsV)
     })
     spaceTotal = Math.round((spaceTotal * 0.6)) || 3
-    const armorRating = getArmorRating(item) * 0.6
+    const armorRating = getArmorRating(item) * 0.5
     // console.log(item._name, item._id, " - ", armorRating > 5 ? armorRating + spaceTotal : spaceTotal * 4)
-    return armorRating || spaceTotal
+    return Math.round(armorRating || spaceTotal)
 }
 
 export const equipmentIdMapper = {
@@ -204,12 +285,12 @@ export const equipmentIdMapper = {
         "5447b5cf4bdc2d65278b4567",
     ],
     Scabbard: ["5447e1d04bdc2dff2f8b4567"],
-    mod_magazine: [
-        "5448bc234bdc2d3c308b4569",
-        "610720f290b75a49ff2e5e25"
-    ],
-    // Stock: ["55818a594bdc2db9688b456a"],
-    mod_scope: [...Object.values(SightType)],
+    // mod_magazine: [
+    //     "5448bc234bdc2d3c308b4569",
+    //     "610720f290b75a49ff2e5e25"
+    // ],
+    // // Stock: ["55818a594bdc2db9688b456a"],
+    // mod_scope: [...Object.values(SightType)],
 }
 
 
@@ -261,24 +342,15 @@ export const setWhitelists = (
                 //     whitelist[index].cartridge[calibre] =
                 //         [...whitelist[index].cartridge[calibre] ? whitelist[index].cartridge[calibre] : [], id]
                 //     break;
+                case id === "60db29ce99594040e04c4a27":
+                    whitelist[index].equipment["FirstPrimaryWeapon"] =
+                        [...whitelist[index].equipment["FirstPrimaryWeapon"] ? whitelist[index].equipment["FirstPrimaryWeapon"] : [], id]
+                    break;
                 case !!equipmentType:
                     whitelist[index].equipment[equipmentType] =
                         [...whitelist[index].equipment[equipmentType] ? whitelist[index].equipment[equipmentType] : [], id]
                     break;
                 default:
-                    // const otherEquipmentType = items[item._parent]._name
-                    // if (!checkParentRecursive(parent, items, [AmmoParent, modParent])) {
-                    //     whitelist[index].equipment["Other"] =
-                    //         [...whitelist[index].equipment["Other"] ? whitelist[index].equipment["Other"] : [], id]
-                    // }
-                    //     switch (otherEquipmentType) {
-                    //         case "Magazine":
-                    //             whitelist[index].equipment[otherEquipmentType] =
-                    //                 [...whitelist[index].equipment[otherEquipmentType] ? whitelist[index].equipment[otherEquipmentType] : [], id]
-                    //             break;
-                    //         default:
-                    //             break;
-                    //     }
                     break;
             }
         })
@@ -290,7 +362,6 @@ export const setWhitelists = (
             // whitelist[index + 1]["ammo"] = { ...whitelist[index]["ammo"] }
             whitelist[index + 1].equipment = { ...whitelist[index].equipment }
         }
-        // console.log(whitelist[0]["ammo"])
     })
 }
 
@@ -332,49 +403,50 @@ const setWeightItem = (weight: WeightingAdjustmentDetails, equipmentType, id, ra
         }
     }
 }
-export const AmmoParent = "5485a8684bdc2da71d8b4567"
-export const magParent = "5448bc234bdc2d3c308b4569"
-export const barterParent = "5448eb774bdc2d0a728b4567"
-export const keyParent = "543be5e94bdc2df1348b4568"
-export const medsParent = "543be5664bdc2dd4348b4569"
-export const modParent = "5448fe124bdc2da5018b4567"
-export const moneyParent = "543be5dd4bdc2deb348b4569"
-export const sightParent = "5448fe7a4bdc2d6f028b456b"
-export const stockParent = "55818a594bdc2db9688b456a"
-export const mountParent = "55818b224bdc2dde698b456f"
+
 
 
 export const setWeightingAdjustments = (
     items: Record<string, ITemplateItem>,
     botConfig: IBotConfig,
     tradersMasterList: TradersMasterList,
+    mods: Record<string, Record<string, string[]>>
 ) => {
     botConfig.equipment.pmc.weightingAdjustments = buildEmptyWeightAdjustments()
     const weight = botConfig.equipment.pmc.weightingAdjustments
 
     const additionalChancePerItem = 5
 
+    const itemsForNextLevel = {}
+
+
+
     numList.forEach((num, index) => {
         const loyalty = num;
 
         const itemList = [...tradersMasterList[loyalty]]
+        const finalList = [...new Set([...itemsForNextLevel[num] || [], ...itemList])]
+
 
         // First edit ammo
-        itemList.forEach(id => {
+        finalList.forEach(id => {
             const item = items[id]
             const parent = item._parent
 
             // Ammo Parent
             if (checkParentRecursive(parent, items, [AmmoParent])) {
                 const calibre = item._props.Caliber || item._props.ammoCaliber
-
+                if ((num + 1) < 5) {
+                    if (!itemsForNextLevel[num + 1]) itemsForNextLevel[num + 1] = []
+                    itemsForNextLevel[num + 1].push(id)
+                }
                 if (!weight[index]?.ammo.edit?.[calibre]) {
                     weight[index].ammo.edit = { ...weight[index].ammo.edit, [calibre]: {} }
                 }
                 const ammoWeight = getAmmoWeighting(item)
 
                 weight[index].ammo.edit[calibre] =
-                    { ...weight[index].ammo.edit[calibre] || {}, [id]: ammoWeight }
+                    { ...weight[index].ammo.edit[calibre] || {}, [id]: ammoWeight * additionalChancePerItem }
             }
         })
 
@@ -384,8 +456,19 @@ export const setWeightingAdjustments = (
         }
         mergeDeep(combinedWeightingAdjustmentItem, weight[index])
 
+        //Make bad ammos worse
+        Object.keys(weight[index].ammo.edit).forEach((caliber => {
+            const caliberList = Object.keys(weight[index].ammo.edit[caliber]).sort((a, b) => weight[index].ammo.edit[caliber][b] - weight[index].ammo.edit[caliber][a])
+            caliberList.forEach((id, rank) => {
+                if (caliberList.length > 1 && rank > 1) {
+                    const modifier = (caliberList.length - rank) / caliberList.length
+                    weight[index].ammo.edit[caliber][id] = Math.round(weight[index].ammo.edit[caliber][id] * modifier)
+                }
+            })
+        }))
 
-        itemList.forEach(id => {
+
+        finalList.forEach(id => {
             const item = items[id]
             const parent = item._parent
             const equipmentType = getEquipmentType(parent, items)
@@ -399,12 +482,18 @@ export const setWeightingAdjustments = (
             switch (equipmentType) {
                 case "FirstPrimaryWeapon":
                 case "Holster":
+                    if ((num + 1) < 5) {
+                        if (!itemsForNextLevel[num + 1]) itemsForNextLevel[num + 1] = []
+                        itemsForNextLevel[num + 1].push(id)
+                    }
                     const calibre = item._props.Caliber || item._props.ammoCaliber
                     const highestScoringAmmo = getHighestScoringAmmoValue(combinedWeightingAdjustmentItem.ammo.edit[calibre])
                     const weaponRating = getWeaponWeighting(item, highestScoringAmmo)
-
-                    setWeightItem(weight[index], equipmentType, id, weaponRating * additionalChancePerItem)
-                    // }
+                    // Check if revolver shotgun
+                    if (id === "60db29ce99594040e04c4a27") setWeightItem(weight[index], "FirstPrimaryWeapon", id, weaponRating)
+                    else {
+                        setWeightItem(weight[index], equipmentType, id, weaponRating)
+                    }
                     break;
                 case "Headwear":
                     // TODO: Make it so earphones are prioritized
@@ -450,24 +539,35 @@ export const setWeightingAdjustments = (
                     const tacticalVestWeighting = getTacticalVestValue(item)
                     setWeightItem(weight[index], equipmentType, id, tacticalVestWeighting * additionalChancePerItem)
                     break;
-                case "mod_magazine":
-                case "mod_scope":
-                    setWeightItem(weight[index], equipmentType, id, (loyalty * 10) * additionalChancePerItem, true)
-                    break;
+                // case "mod_magazine":
+                // case "mod_scope":
+                //     setWeightItem(weight[index], equipmentType, id, (loyalty * 40) * additionalChancePerItem, true)
+                // break;
                 default:
                     switch (true) {
                         //     case checkParentRecursive(id, items, [...Object.values(SightType)]):
                         //         setWeightItem(weight[index], "mod_scope", id, (loyalty * 10) * additionalChancePerItem, true)
                         //         break;
-                        case checkParentRecursive(id, items, [stockParent, mountParent]):
-                            setWeightItem(weight[index], "Others", id, (loyalty * 10) * additionalChancePerItem, true)
-                            break;
+                        // case checkParentRecursive(id, items, [stockParent]):
+                        //     setWeightItem(weight[index], "mod_stock", id, (loyalty * 10) * additionalChancePerItem, true)
+                        //     break;
+                        // case checkParentRecursive(id, items, [mountParent]):
+                        //     setWeightItem(weight[index], "mod_mount", id, (loyalty * 10) * additionalChancePerItem, true)
+                        //     break;
                         default:
                             break;
                     }
                     break;
             }
+
+            const modsList = mods[num]
+            Object.keys(modsList).forEach(modtype => {
+                modsList[modtype].forEach(modId => {
+                    setWeightItem(weight[index], modtype, modId, (loyalty * 20) * additionalChancePerItem, true)
+                })
+            })
         })
+
 
 
         // if (!!weight[index + 1]) {
@@ -477,16 +577,22 @@ export const setWeightingAdjustments = (
     })
 }
 
-export const buildOutModsObject = (id: string, items: Record<string, ITemplateItem>, inventory: Inventory) => {
+export const buildOutModsObject = (
+    id: string,
+    items: Record<string, ITemplateItem>,
+    inventory: Inventory,
+    // allowedSights: Set<string>
+) => {
     const item = items[id]
     const newModObject = {}
     if (checkParentRecursive(items[id]._parent, items, [modParent, "5422acb9af1c889c16000029", "5a341c4086f77401f2541505"])) {
         switch (true) {
-            case checkParentRecursive(items[id]._parent, items, [magParent]):
+            case checkParentRecursive(items[id]._parent, items, [magParent]) && items[id]?._props?.Cartridges?.[0]?._max_count < 50:
+                //  && !modsObjectChecker.has(id):
+
                 const bulletList = item?._props?.Cartridges?.[0]?._props?.filters?.[0]?.Filter
                 if (bulletList) {
                     newModObject["cartridges"] = bulletList
-                    inventory.mods[id] = newModObject
                     inventory.mods[id] = newModObject
                 }
                 break;
@@ -496,6 +602,7 @@ export const buildOutModsObject = (id: string, items: Record<string, ITemplateIt
                         if (mod._props?.filters?.[0]?.Filter?.length) {
                             // console.log(item._name, "adding ", mod._props?.filters[0].Filter.length, mod._name)
                             newModObject[mod._name] = mod._props?.filters[0].Filter
+                            // .filter(filtId => mod._name !== "mod_scope" || allowedSights.has(filtId))
                         }
                     })
                 }
@@ -506,7 +613,6 @@ export const buildOutModsObject = (id: string, items: Record<string, ITemplateIt
                 }
                 if (Object.keys(newModObject)) {
                     inventory.mods[id] = newModObject
-                    inventory.mods[id] = newModObject
                 }
                 break;
             case checkParentRecursive(items[id]._parent, items, ["5a341c4086f77401f2541505", modParent])://Headwear
@@ -515,10 +621,10 @@ export const buildOutModsObject = (id: string, items: Record<string, ITemplateIt
                         if (mod._props?.filters?.[0]?.Filter?.length) {
                             // console.log(item._name, "adding ", mod._props?.filters[0].Filter.length, mod._name)
                             newModObject[mod._name] = mod._props?.filters[0].Filter
+                            //.filter(filtId => mod._name !== "mod_scope" || allowedSights.has(filtId))
                         }
                     })
                     if (Object.keys(newModObject)) {
-                        inventory.mods[id] = newModObject
                         inventory.mods[id] = newModObject
                     }
                 }
@@ -543,7 +649,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "Headwear": [95, 95, 99, 99][index],
                 "Earpiece": [70, 80, 90, 95][index],
                 "FaceCover": [6, 15, 25, 35][index],
-                "ArmorVest": [95, 95, 99, 99][index],
+                "ArmorVest": [99, 99, 99, 99][index],
                 "ArmBand": 20,
                 "TacticalVest": [95, 95, 99, 99][index],
                 "Pockets": [25, 45, 59, 69][index],
@@ -554,7 +660,6 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "Holster": [1, 5, 10, 10][index],
                 "Eyewear": [5, 15, 26, 49][index],
                 "Backpack": [90, 95, 99, 99][index],
-                "Sights": 80,
             },
             generation: {
                 "drugs": {
@@ -564,7 +669,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 },
                 "grenades": {
                     "min": [0, 0, 1, 1][index],
-                    "max": [1, 2, 2, 3][index],
+                    "max": [0, 2, 2, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "healing": {
@@ -589,82 +694,82 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 }
             },
             "randomisedWeaponModSlots": [
-                "mod_barrel",
-                "mod_scope",
-                "mod_scope_000",
-                "mod_scope_001",
-                "mod_scope_002",
-                "mod_scope_003",
-                "mod_handguard",
-                "mod_magazine",
-                "mod_muzzle",
-                "mod_bipod",
-                "mod_muzzle_000",
-                "mod_charge",
-                "mod_reciever",
-                "mod_trigger",
-                "mod_gas_block",
-                "mod_pistol_grip",
-                "mod_pistol_grip_akms",
-                "mod_foregrip",
-                "mod_stock",
-                "mod_stock_000",
-                "mod_stock_001",
-                "mod_stock_akms",
-                "mod_stock_axis",
-                "mod_mount_000",
-                "mod_mount_001",
-                "mod_mount_002",
-                "mod_mount_003",
-                "mod_mount_004",
-                "mod_mount_005",
-                "mod_mount_006",
-                "mod_tactical",
-                "mod_tactical_2",
-                "mod_tactical_000",
-                "mod_tactical_001",
-                "mod_tactical_002",
-                "mod_tactical_003"
+                // "mod_barrel",
+                // "mod_scope",
+                // "mod_scope_000",
+                // "mod_scope_001",
+                // "mod_scope_002",
+                // "mod_scope_003",
+                // "mod_handguard",
+                // "mod_magazine",
+                // "mod_muzzle",
+                // "mod_bipod",
+                // "mod_muzzle_000",
+                // "mod_charge",
+                // "mod_reciever",
+                // "mod_trigger",
+                // "mod_gas_block",
+                // "mod_pistol_grip",
+                // "mod_pistol_grip_akms",
+                // "mod_foregrip",
+                // "mod_stock",
+                // "mod_stock_000",
+                // "mod_stock_001",
+                // "mod_stock_akms",
+                // "mod_stock_axis",
+                // "mod_mount_000",
+                // "mod_mount_001",
+                // "mod_mount_002",
+                // "mod_mount_003",
+                // "mod_mount_004",
+                // "mod_mount_005",
+                // "mod_mount_006",
+                // "mod_tactical",
+                // "mod_tactical_2",
+                // "mod_tactical_000",
+                // "mod_tactical_001",
+                // "mod_tactical_002",
+                // "mod_tactical_003"
             ],
             "mods": {
-                "mod_barrel": [5, 10, 15, 15][index],
-                "mod_bipod": [5, 5, 5, 11][index],
-                "mod_flashlight": [5, 10, 15, 15][index],
-                "mod_foregrip": [20, 25, 30, 35][index],
-                "mod_handguard": [10, 20, 25, 35][index],
-                "mod_launcher": 0,
-                "mod_magazine": [25, 30, 35, 45][index],
-                "mod_mount": [15, 20, 25, 35][index],
-                "mod_mount_000": [5, 10, 25, 35][index],
-                "mod_mount_001": [5, 10, 25, 35][index],
-                "mod_mount_002": [5, 10, 25, 35][index],
-                "mod_mount_003": [5, 10, 25, 35][index],
-                "mod_mount_004": [5, 10, 25, 35][index],
-                "mod_mount_005": [5, 10, 25, 35][index],
-                "mod_mount_006": [5, 10, 25, 35][index],
-                "mod_muzzle": [5, 10, 15, 15][index],
-                "mod_muzzle_000": [5, 10, 15, 15][index],
-                "mod_muzzle_001": [5, 10, 15, 15][index],
-                "mod_equipment": [5, 10, 15, 15][index],
-                "mod_equipment_000": [5, 10, 15, 15][index],
-                "mod_equipment_001": [5, 10, 15, 15][index],
+                "mod_barrel": [1, 5, 15, 15][index],
+                "mod_bipod": [1, 2, 5, 11][index],
+                "mod_flashlight": [5, 30, 65, 70][index],
+                "mod_foregrip": [5, 15, 30, 35][index],
+                "mod_handguard": [5, 20, 15, 35][index],
+                "mod_launcher": [0, 0, 5, 15][index],
+                "mod_magazine": 100,
+                "mod_mount": [5, 15, 15, 35][index],
+                "mod_mount_000": [5, 5, 15, 35][index],
+                "mod_mount_001": [4, 5, 15, 35][index],
+                "mod_mount_002": [3, 5, 15, 35][index],
+                "mod_mount_003": [3, 5, 15, 35][index],
+                "mod_mount_004": [2, 5, 15, 35][index],
+                "mod_mount_005": [1, 5, 15, 35][index],
+                "mod_mount_006": [1, 5, 15, 35][index],
+                "mod_muzzle": [5, 5, 15, 15][index],
+                "mod_muzzle_000": [0, 5, 15, 15][index],
+                "mod_muzzle_001": [0, 5, 15, 15][index],
+                "mod_equipment": [5, 5, 15, 15][index],
+                "mod_equipment_000": [0, 5, 15, 15][index],
+                "mod_equipment_001": [0, 5, 15, 15][index],
                 "mod_equipment_002": 0,
                 "mod_nvg": 0,
-                "mod_pistol_grip_akms": [5, 10, 15, 15][index],
-                "mod_pistol_grip": [5, 10, 15, 15][index],
-                "mod_scope": 100, //[15, 20, 25, 35][index],
-                "mod_scope_000": 0,//[15, 20, 25, 35][index],
-                "mod_scope_001": 0,//[15, 20, 25, 35][index],
-                "mod_scope_002": 0,//[15, 20, 25, 35][index],
-                "mod_scope_003": 0,//[15, 20, 25, 35][index],
-                "mod_tactical": [5, 10, 15, 15][index],
-                "mod_tactical001": [5, 10, 15, 15][index],
-                "mod_tactical002": [5, 10, 15, 15][index],
-                "mod_tactical_000": [5, 10, 15, 15][index],
-                "mod_tactical_001": [5, 10, 15, 15][index],
-                "mod_tactical_002": [5, 10, 15, 15][index],
-                "mod_tactical_003": [5, 10, 15, 15][index],
-                "mod_tactical_2": [5, 10, 15, 15][index],
+                "mod_pistol_grip_akms": [0, 5, 15, 15][index],
+                "mod_pistol_grip": [0, 5, 15, 15][index],
+                "mod_scope": [65, 85, 95, 100][index],
+                "mod_scope_000": 0,//[15, 20, 15, 35][index],
+                "mod_scope_001": 0,//[15, 20, 15, 35][index],
+                "mod_scope_002": 0,//[15, 20, 15, 35][index],
+                "mod_scope_003": 0,//[15, 20, 15, 35][index],
+                "mod_tactical": [5, 5, 15, 15][index],
+                "mod_tactical001": [4, 5, 15, 15][index],
+                "mod_tactical002": [2, 5, 15, 15][index],
+                "mod_tactical_000": [5, 5, 15, 15][index],
+                "mod_tactical_001": [4, 5, 15, 15][index],
+                "mod_tactical_002": [3, 5, 15, 15][index],
+                "mod_tactical_003": [2, 5, 15, 15][index],
+                "mod_tactical_2": [2, 5, 15, 15][index],
             }
         }
 
@@ -676,13 +781,13 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 case checkParentRecursive(parent, items, ["5448f3a64bdc2d60728b456a"]): //stims
                     newItem.generation.stims["whitelist"] = [...newItem.generation.stims["whitelist"] || [], id]
                     break;
-                case checkParentRecursive(parent, items, ["5448f3a14bdc2d27728b4569"]): //ThrowWeap
+                case checkParentRecursive(parent, items, ["5448f3a14bdc2d27728b4569"]): //drugs
                     newItem.generation.drugs["whitelist"] = [...newItem.generation.drugs["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, ["543be6564bdc2df4348b4568"]): //ThrowWeap
                     newItem.generation.grenades["whitelist"] = [...newItem.generation.grenades["whitelist"] || [], id]
                     break;
-                case checkParentRecursive(parent, items, [medsParent]): //FoodDrink
+                case checkParentRecursive(parent, items, [medsParent]): //meds
                     newItem.generation.healing["whitelist"] = [...newItem.generation.healing["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, [barterParent, "543be6674bdc2df1348b4569"]): //FoodDrink
@@ -778,7 +883,7 @@ export const buildWeaponSightWhitelist = (
     { 1: a, 2: b, 3: c, 4: d }: TradersMasterList) => {
     botConfig.equipment.pmc.weaponSightWhitelist = {}
     const sightWhitelist = botConfig.equipment.pmc.weaponSightWhitelist
-    const traderItems = [...new Set([...a, ...b, ...c, ...d])]
+    const traderItems = [...new Set([...a, ...b, ...c])] //, ...d
 
     traderItems.forEach(id => {
         if (checkParentRecursive(id, items, Object.values(SightType))) {
@@ -790,5 +895,30 @@ export const buildWeaponSightWhitelist = (
                 }
             }
         }
+    })
+
+}
+
+export const buildBlacklist = (items: Record<string, ITemplateItem>, botConfig: IBotConfig, mods: { "1": {}, "2": {}, "3": {}, "4": {} }) => {
+    delete botConfig.equipment.pmc.blacklist[0].equipment.mod_magazine
+    const currentBlacklist = cloneDeep(botConfig.equipment.pmc.blacklist[0])
+    botConfig.equipment.pmc.blacklist = []
+    const blacklist = botConfig.equipment.pmc.blacklist
+
+    // const itemsToAddToBlacklist = ["mod_scope", "mod_magazine"]
+    numList.forEach((num, index) => {
+        const modList = mods[num]
+        const range = levelRange[num]
+        const loyalty = num
+        const base = { ...cloneDeep(currentBlacklist), levelRange: range }
+        if (index < 2) {
+            numList.splice(0, index + 2).forEach((numInner) => {
+                Object.keys(mods[numInner]).forEach(key => {
+                    if (!base.equipment[key]) base.equipment[key] = []
+                    base.equipment[key].push(...mods[numInner][key])
+                })
+            })
+        }
+        blacklist.push(base)
     })
 }
