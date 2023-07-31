@@ -12,10 +12,10 @@ import {
     buildInitialRandomization,
     buildOutModsObject,
     checkParentRecursive, deDupeArr,
-    getEquipmentType, keyParent, magParent, medsParent, modParent, moneyParent, numList,
+    getEquipmentType, keyParent, magParent, medsParent, moneyParent, numList,
     reduceAmmoChancesTo1,
     reduceEquipmentChancesTo1,
-    setWeightingAdjustments, setWhitelists, setupBaseWhiteList, buildInitialBearAppearance, buildInitialUsecAppearance, setupMods, buildWeaponSightWhitelist, addToModsObject, buildBlacklist
+    setWeightingAdjustments, setWhitelists, setupBaseWhiteList, buildInitialBearAppearance, buildInitialUsecAppearance, setupMods, buildWeaponSightWhitelist, addToModsObject
 } from './utils';
 
 
@@ -159,25 +159,31 @@ export default function ProgressionChanges(
                         break;
                     // Check if its a quest unlocked trade    
                     case !!questassort.success[_id]:
-                        if ((loyaltyLevel === 4 || checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50)) {
-                            tradersMasterList[4].add(_tpl)
+                        if (!config?.questUnlockedItemsShifted) {
+                            tradersMasterList[loyaltyLevel].add(_tpl)
 
-                            addToModsObject(mods, _tpl, items, 4, slotId)
+                            addToModsObject(mods, _tpl, items, loyaltyLevel, slotId)
                         } else {
-                            tradersMasterList[loyaltyLevel + 1].add(_tpl)
+                            if (loyaltyLevel === 4) {
+                                tradersMasterList[4].add(_tpl)
 
-                            addToModsObject(mods, _tpl, items, loyaltyLevel + 1, slotId)
+                                addToModsObject(mods, _tpl, items, 4, slotId)
+                            } else {
+                                tradersMasterList[loyaltyLevel + 1].add(_tpl)
+
+                                addToModsObject(mods, _tpl, items, loyaltyLevel + 1, slotId)
+                            }
                         }
                         break;
-                    // Only add the item if it's a cash trade
-                    case items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === moneyParent:
+                    // Only add the item if it's a cash trade or if tradeItems are not shifted
+                    case items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === moneyParent || !config?.tradedItemsShifted:
                         tradersMasterList[loyaltyLevel].add(_tpl)
 
                         addToModsObject(mods, _tpl, items, loyaltyLevel, slotId)
                         break;
                     // Then it's a tradeItem
                     default:
-                        if ((loyaltyLevel + 2) > 4 || checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50) {
+                        if ((loyaltyLevel + 2) > 4) {
                             tradersMasterList[4].add(_tpl)
 
                             addToModsObject(mods, _tpl, items, 4, slotId)
@@ -222,8 +228,6 @@ export default function ProgressionChanges(
     reduceAmmoChancesTo1(usecInventory)
     reduceAmmoChancesTo1(bearInventory)
 
-
-
     // Eliminates duplicate id's in later levels
     numList.forEach((num) => {
         tradersMasterList[num].forEach((id) => {
@@ -234,7 +238,7 @@ export default function ProgressionChanges(
     })
 
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment) {
-        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = []
+        if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = []
         botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon.push("624c0b3340357b5f566e8766", "624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709")
     }
 
@@ -245,7 +249,7 @@ export default function ProgressionChanges(
     // buildBlacklist(items, botConfig, mods)
 
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
-    // console.log(JSON.stringify(usecInventory.mods))
+    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0].equipment))
 }
 
 

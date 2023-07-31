@@ -218,8 +218,8 @@ const getBackPackInternalGridValue = ({ _props: { Grids, Weight } = {}, _name, _
             total = total / 6;
         }
     });
-    total = Math.round((total * 0.4) - Weight);
-    // console.log(_name, _id, " - ", total)
+    total = Math.round((total * 0.5) - Weight - (Grids.length)) + 10;
+    console.log(_name, _id, " - ", total);
     return total > 1 ? total : 1;
 };
 exports.getBackPackInternalGridValue = getBackPackInternalGridValue;
@@ -438,12 +438,11 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
                     // const coverageBonus = item?._props?.headSegments?.length || 0
                     const blocksEarpiece = item?._props?.BlocksEarpiece;
                     const helmetBonus = item?._props?.armorClass * 5;
-                    let rating = helmetBonus; //+ coverageBonus 
+                    let rating = (helmetBonus + 10) - item?._props?.Weight; //+ coverageBonus 
                     if (blocksEarpiece)
                         rating = rating * 0.5;
-                    if (rating < 10)
-                        rating = 10;
-                    // console.log(item._name, blocksEarpiece, Math.round(rating * additionalChancePerItem))
+                    // if (rating < 10) rating = 10
+                    // console.log(loyalty, item._name, blocksEarpiece, Math.round(rating))
                     setWeightItem(weight[index], equipmentType, id, Math.round(rating * additionalChancePerItem));
                     break;
                 case "Earpiece":
@@ -660,11 +659,11 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
             // "mod_tactical_003"
             ],
             "mods": {
-                "mod_barrel": [1, 20, 15, 15][index],
+                "mod_barrel": [1, 20, 25, 25][index],
                 "mod_bipod": [1, 10, 5, 11][index],
-                "mod_flashlight": [5, 5, 65, 70][index],
+                "mod_flashlight": [25, 35, 65, 70][index],
                 "mod_foregrip": [5, 15, 30, 35][index],
-                "mod_handguard": [5, 25, 15, 35][index],
+                "mod_handguard": [5, 25, 25, 35][index],
                 "mod_launcher": [0, 0, 5, 15][index],
                 "mod_magazine": [5, 25, 25, 35][index],
                 "mod_mount": [5, 15, 15, 35][index],
@@ -686,18 +685,18 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 "mod_pistol_grip_akms": [1, 5, 5, 15][index],
                 "mod_pistol_grip": [1, 5, 5, 15][index],
                 "mod_scope": [50, 70, 85, 85][index],
-                "mod_scope_000": [50, 70, 85, 85][index],
-                "mod_scope_001": [50, 70, 85, 85][index],
-                "mod_scope_002": [50, 70, 85, 85][index],
-                "mod_scope_003": [50, 70, 85, 85][index],
-                "mod_tactical": [5, 10, 15, 15][index],
-                "mod_tactical001": [5, 10, 15, 15][index],
-                "mod_tactical002": [5, 10, 15, 15][index],
-                "mod_tactical_000": [5, 10, 15, 15][index],
-                "mod_tactical_001": [5, 10, 15, 15][index],
-                "mod_tactical_002": [5, 10, 15, 15][index],
-                "mod_tactical_003": [5, 10, 15, 15][index],
-                "mod_tactical_2": [5, 10, 15, 15][index],
+                "mod_scope_000": [30, 40, 55, 85][index],
+                "mod_scope_001": [30, 40, 55, 85][index],
+                "mod_scope_002": [30, 40, 55, 85][index],
+                "mod_scope_003": [30, 40, 55, 85][index],
+                "mod_tactical": [5, 10, 15, 20][index],
+                "mod_tactical001": [5, 10, 15, 20][index],
+                "mod_tactical002": [5, 10, 15, 20][index],
+                "mod_tactical_000": [5, 10, 15, 20][index],
+                "mod_tactical_001": [5, 10, 15, 20][index],
+                "mod_tactical_002": [5, 10, 15, 20][index],
+                "mod_tactical_003": [5, 10, 15, 20][index],
+                "mod_tactical_2": [5, 10, 15, 20][index],
             }
         };
         itemList.forEach((id) => {
@@ -816,6 +815,7 @@ const buildWeaponSightWhitelist = (items, botConfig, { 1: a, 2: b, 3: c, 4: d })
             }
         }
     });
+    // console.log(JSON.stringify(sightWhitelist))
 };
 exports.buildWeaponSightWhitelist = buildWeaponSightWhitelist;
 const buildBlacklist = (items, botConfig, mods) => {

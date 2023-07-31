@@ -119,23 +119,29 @@ function ProgressionChanges(container) {
                         break;
                     // Check if its a quest unlocked trade    
                     case !!questassort.success[_id]:
-                        if ((loyaltyLevel === 4 || (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50)) {
-                            tradersMasterList[4].add(_tpl);
-                            (0, utils_1.addToModsObject)(mods, _tpl, items, 4, slotId);
+                        if (!config_json_1.default?.questUnlockedItemsShifted) {
+                            tradersMasterList[loyaltyLevel].add(_tpl);
+                            (0, utils_1.addToModsObject)(mods, _tpl, items, loyaltyLevel, slotId);
                         }
                         else {
-                            tradersMasterList[loyaltyLevel + 1].add(_tpl);
-                            (0, utils_1.addToModsObject)(mods, _tpl, items, loyaltyLevel + 1, slotId);
+                            if (loyaltyLevel === 4) {
+                                tradersMasterList[4].add(_tpl);
+                                (0, utils_1.addToModsObject)(mods, _tpl, items, 4, slotId);
+                            }
+                            else {
+                                tradersMasterList[loyaltyLevel + 1].add(_tpl);
+                                (0, utils_1.addToModsObject)(mods, _tpl, items, loyaltyLevel + 1, slotId);
+                            }
                         }
                         break;
-                    // Only add the item if it's a cash trade
-                    case items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === utils_1.moneyParent:
+                    // Only add the item if it's a cash trade or if tradeItems are not shifted
+                    case items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === utils_1.moneyParent || !config_json_1.default?.tradedItemsShifted:
                         tradersMasterList[loyaltyLevel].add(_tpl);
                         (0, utils_1.addToModsObject)(mods, _tpl, items, loyaltyLevel, slotId);
                         break;
                     // Then it's a tradeItem
                     default:
-                        if ((loyaltyLevel + 2) > 4 || (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50) {
+                        if ((loyaltyLevel + 2) > 4) {
                             tradersMasterList[4].add(_tpl);
                             (0, utils_1.addToModsObject)(mods, _tpl, items, 4, slotId);
                         }
@@ -178,7 +184,8 @@ function ProgressionChanges(container) {
         });
     });
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment) {
-        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = [];
+        if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon)
+            botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = [];
         botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon.push("624c0b3340357b5f566e8766", "624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709");
     }
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList, mods);
@@ -187,7 +194,7 @@ function ProgressionChanges(container) {
     (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
     // buildBlacklist(items, botConfig, mods)
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
-    // console.log(JSON.stringify(usecInventory.mods))
+    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0].equipment))
 }
 exports.default = ProgressionChanges;
 // // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<

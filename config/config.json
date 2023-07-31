@@ -2,6 +2,8 @@
     "enableProgressionChanges": true,
     "enableLevelChanges": true,
     "leveledClothing": true,
+    "questUnlockedItemsShifted": true,
+    "tradedItemsShifted": true,
     "levelRange": {
         "1": {
             "min": 1,
@@ -9,14 +11,14 @@
         },
         "2": {
             "min": 15,
-            "max": 21
+            "max": 24
         },
         "3": {
-            "min": 22,
-            "max": 34
+            "min": 25,
+            "max": 39
         },
         "4": {
-            "min": 35,
+            "min": 40,
             "max": 100
         }
     },
@@ -37,13 +39,13 @@
             8,
             10,
             11,
-            7
+            4
         ],
         "4": [
             8,
             10,
             10,
-            10
+            7
         ]
     },
     "debug": false

@@ -1,8 +1,7 @@
-import { Level } from './../types/models/eft/common/IGlobals.d';
-import { Appearance, Equipment, Inventory, ModsChances } from './../types/models/eft/common/tables/IBotType.d';
+import { Appearance, Inventory } from './../types/models/eft/common/tables/IBotType.d';
 import { MinMax } from './../types/models/common/MinMax.d';
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { EquipmentFilterDetails, IBotConfig, RandomisationDetails, WeightingAdjustmentDetails } from "@spt-aki/models/spt/config/IBotConfig";
+import { EquipmentFilterDetails, IBotConfig, WeightingAdjustmentDetails } from "@spt-aki/models/spt/config/IBotConfig";
 import { levelRange } from "../config/config.json"
 import { ISuit } from '@spt-aki/models/eft/common/tables/ITrader';
 import { ICustomizationItem } from '@spt-aki/models/eft/common/tables/ICustomizationItem';
@@ -237,7 +236,7 @@ export const getBackPackInternalGridValue = ({
         }
     })
 
-    total = Math.round((total * 0.4) - Weight)
+    total = Math.round((total * 0.5) - Weight - (Grids.length)) + 10
 
     // console.log(_name, _id, " - ", total)
     return total > 1 ? total : 1
@@ -405,7 +404,6 @@ const setWeightItem = (weight: WeightingAdjustmentDetails, equipmentType, id, ra
 }
 
 
-
 export const setWeightingAdjustments = (
     items: Record<string, ITemplateItem>,
     botConfig: IBotConfig,
@@ -419,14 +417,11 @@ export const setWeightingAdjustments = (
 
     const itemsForNextLevel = {}
 
-
-
     numList.forEach((num, index) => {
         const loyalty = num;
 
         const itemList = [...tradersMasterList[loyalty]]
         const finalList = [...new Set([...itemsForNextLevel[num] || [], ...itemList])]
-
 
         // First edit ammo
         finalList.forEach(id => {
@@ -501,10 +496,10 @@ export const setWeightingAdjustments = (
                     // const coverageBonus = item?._props?.headSegments?.length || 0
                     const blocksEarpiece = item?._props?.BlocksEarpiece
                     const helmetBonus = item?._props?.armorClass * 5
-                    let rating = helmetBonus //+ coverageBonus 
+                    let rating = (helmetBonus + 10) - item?._props?.Weight//+ coverageBonus 
                     if (blocksEarpiece) rating = rating * 0.5
-                    if (rating < 10) rating = 10
-                    // console.log(item._name, blocksEarpiece, Math.round(rating * additionalChancePerItem))
+                    // if (rating < 10) rating = 10
+                    // console.log(loyalty, item._name, blocksEarpiece, Math.round(rating))
                     setWeightItem(weight[index], equipmentType, id, Math.round(rating * additionalChancePerItem))
                     break;
                 case "Earpiece":
@@ -652,10 +647,10 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             equipment: {
                 "Headwear": [95, 95, 99, 99][index],
                 "Earpiece": [60, 70, 80, 85][index],
-                "FaceCover": [6, 15, 25, 35][index],
+                "FaceCover": [15, 25, 35, 45][index],
                 "ArmorVest": [99, 99, 99, 99][index],
                 "ArmBand": 40,
-                "TacticalVest": [95, 95, 99, 99][index],
+                "TacticalVest": [96, 96, 99, 99][index],
                 "Pockets": [25, 45, 59, 69][index],
                 "SecuredContainer": 99,
                 "SecondPrimaryWeapon": 1,
@@ -668,21 +663,21 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             generation: {
                 "drugs": {
                     "min": 0,
-                    "max": [2, 2, 3, 4][index],
+                    "max": [2, 2, 3, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
                 },
                 "grenades": {
-                    "min": [0, 0, 1, 1][index],
+                    "min": [0, 0, 0, 1][index],
                     "max": [0, 2, 2, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "healing": {
-                    "min": [1, 1, 1, 2][index],
+                    "min": [0, 0, 1, 2][index],
                     "max": [2, 2, 3, 4][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
                 "looseLoot": {
-                    "min": 0,
+                    "min": [0, 2, 3, 3][index],
                     "max": [3, 5, 6, 8][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
                 },
@@ -736,13 +731,13 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 // "mod_tactical_003"
             ],
             "mods": {
-                "mod_barrel": [1, 20, 15, 15][index],
+                "mod_barrel": [1, 20, 25, 25][index],
                 "mod_bipod": [1, 10, 5, 11][index],
-                "mod_flashlight": [5, 5, 65, 70][index],
+                "mod_flashlight": [25, 35, 65, 70][index],
                 "mod_foregrip": [5, 15, 30, 35][index],
-                "mod_handguard": [5, 25, 15, 35][index],
+                "mod_handguard": [5, 25, 25, 35][index],
                 "mod_launcher": [0, 0, 5, 15][index],
-                "mod_magazine": [5, 25, 25, 35][index],
+                "mod_magazine": [15, 25, 25, 35][index],
                 "mod_mount": [5, 15, 15, 35][index],
                 "mod_mount_000": [5, 15, 15, 35][index],
                 "mod_mount_001": [5, 15, 15, 35][index],
@@ -762,18 +757,18 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "mod_pistol_grip_akms": [1, 5, 5, 15][index],
                 "mod_pistol_grip": [1, 5, 5, 15][index],
                 "mod_scope": [50, 70, 85, 85][index],
-                "mod_scope_000": [50, 70, 85, 85][index],
-                "mod_scope_001": [50, 70, 85, 85][index],
-                "mod_scope_002": [50, 70, 85, 85][index],
-                "mod_scope_003": [50, 70, 85, 85][index],
-                "mod_tactical": [5, 10, 15, 15][index],
-                "mod_tactical001": [5, 10, 15, 15][index],
-                "mod_tactical002": [5, 10, 15, 15][index],
-                "mod_tactical_000": [5, 10, 15, 15][index],
-                "mod_tactical_001": [5, 10, 15, 15][index],
-                "mod_tactical_002": [5, 10, 15, 15][index],
-                "mod_tactical_003": [5, 10, 15, 15][index],
-                "mod_tactical_2": [5, 10, 15, 15][index],
+                "mod_scope_000": [30, 40, 55, 85][index],
+                "mod_scope_001": [30, 40, 55, 85][index],
+                "mod_scope_002": [30, 40, 55, 85][index],
+                "mod_scope_003": [30, 40, 55, 85][index],
+                "mod_tactical": [5, 10, 15, 20][index],
+                "mod_tactical001": [5, 10, 15, 20][index],
+                "mod_tactical002": [5, 10, 15, 20][index],
+                "mod_tactical_000": [5, 10, 15, 20][index],
+                "mod_tactical_001": [5, 10, 15, 20][index],
+                "mod_tactical_002": [5, 10, 15, 20][index],
+                "mod_tactical_003": [5, 10, 15, 20][index],
+                "mod_tactical_2": [5, 10, 15, 20][index],
             }
         }
 
@@ -902,7 +897,7 @@ export const buildWeaponSightWhitelist = (
             }
         }
     })
-
+    // console.log(JSON.stringify(sightWhitelist))
 }
 
 export const buildBlacklist = (items: Record<string, ITemplateItem>, botConfig: IBotConfig, mods: { "1": {}, "2": {}, "3": {}, "4": {} }) => {
