@@ -25,7 +25,6 @@ export default function ProgressionChanges(
 
     // Next tasks
     // Update weapon weight with higher chance of higher weapon level
-    // Fix grenades (only explosive)
     // Make the trade items optional in config
 
     const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
@@ -39,8 +38,8 @@ export default function ProgressionChanges(
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
 
-    tables.bots.types.usec.inventory.mods = {}
-    tables.bots.types.bear.inventory.mods = {}
+    // tables.bots.types.usec.inventory.mods = {}
+    // tables.bots.types.bear.inventory.mods = {}
 
     const usecAppearance = tables.bots.types.usec.appearance
     const bearAppearance = tables.bots.types.bear.appearance
@@ -198,21 +197,6 @@ export default function ProgressionChanges(
     })
 
     setupMods(mods)
-    //, ...Object.values(mods[2])
-    // const modsObjectChecker = new Set([...Object.values(mods[4])].flat(1)) as Set<string>
-
-    // traderList.forEach(({ assort: { items: tradItems, loyal_level_items } = {}, }, index) => {
-    //     if (!tradItems) return
-    //     tradItems.forEach(({ _tpl, _id, parentId }) => {
-    //         const loyaltyLevel = loyal_level_items[_id] || loyal_level_items[parentId]
-    //         if (loyaltyLevel !== 4) {
-    //             buildOutModsObject(_tpl, items, usecInventory)
-    //             buildOutModsObject(_tpl, items, bearInventory)
-    //         }
-    //     })
-    // })
-
-
 
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = deDupeArr(usecInventory.items.SecuredContainer)
@@ -260,7 +244,7 @@ export default function ProgressionChanges(
     buildWeaponSightWhitelist(items, botConfig, tradersMasterList)
     // buildBlacklist(items, botConfig, mods)
 
-    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist))
+    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
     // console.log(JSON.stringify(usecInventory.mods))
 }
 

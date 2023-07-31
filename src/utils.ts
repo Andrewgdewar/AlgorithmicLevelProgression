@@ -166,9 +166,9 @@ export const mergeDeep = (target, ...sources) => {
 export const getArmorRating = ({ _props: { RepairCost, Durability, armorClass, armorZone, Name }, _name, _id }: any): number => {
     const armorZoneCoverage = armorZone?.length || 0
 
-    const durability = Durability * 0.3
+    const durability = Durability * 0.2
 
-    const total = Math.round((armorClass * 20) + durability + (armorZoneCoverage * 5))
+    const total = Math.round((armorClass * 20) + durability + (armorZoneCoverage * 3))
 
     return total || 3
 }
@@ -217,8 +217,8 @@ export const getWeaponWeighting = ({
     const isPistol = weapClass === "pistol" ? - 15 : 0
     const isBarrelLoader = ReloadMode.includes("OnlyBarrel") ? -15 : 0
     const gunBase = ergoBonus + lowRecoilBonus + isAutomatic + isBoltAction + isPistol + isBarrelLoader
-    if (BoltAction || weapClass === "pistol") ammo = ammo / 3
-    if (ReloadMode.includes("OnlyBarrel")) ammo = ammo / 5
+    if (BoltAction || weapClass === "pistol") ammo = ammo / 4
+    if (ReloadMode.includes("OnlyBarrel")) ammo = ammo / 6
     const finalValue = Math.round(gunBase + ammo)
     // console.log(_name, _id, " - ", Math.round(gunBase), Math.round(ammo), finalValue)
     return finalValue > 0 ? finalValue : 1
@@ -233,14 +233,14 @@ export const getBackPackInternalGridValue = ({
         total += _props?.cellsH * _props?.cellsV
         // if the backpack can't hold "Items" give it a severe lower ranking
         if (_props.filters?.[0]?.Filter?.length && !_props.filters?.[0]?.Filter?.includes("54009119af1c881c07000029")) {
-            total = total / 2
+            total = total / 6
         }
     })
 
-    total = Math.round((total * 0.6) - Weight)
+    total = Math.round((total * 0.4) - Weight)
 
     // console.log(_name, _id, " - ", total)
-    return total > 0 ? total : 1
+    return total > 1 ? total : 1
 }
 
 
@@ -251,10 +251,10 @@ export const getTacticalVestValue = (item: ITemplateItem,
     Grids.forEach(({ _props }) => {
         spaceTotal = spaceTotal + (_props?.cellsH * _props?.cellsV)
     })
-    spaceTotal = Math.round((spaceTotal * 0.6)) || 3
-    const armorRating = getArmorRating(item) * 0.5
+    spaceTotal = Math.round(spaceTotal) || 3
+    const armorRating = getArmorRating(item) * 0.3
     // console.log(item._name, item._id, " - ", armorRating > 5 ? armorRating + spaceTotal : spaceTotal * 4)
-    return Math.round(armorRating || spaceTotal)
+    return Math.round(armorRating > 5 ? armorRating : spaceTotal)
 }
 
 export const equipmentIdMapper = {
@@ -437,8 +437,8 @@ export const setWeightingAdjustments = (
             if (checkParentRecursive(parent, items, [AmmoParent])) {
                 const calibre = item._props.Caliber || item._props.ammoCaliber
                 if ((num + 1) < 5) {
-                    if (!itemsForNextLevel[num + 1]) itemsForNextLevel[num + 1] = []
-                    itemsForNextLevel[num + 1].push(id)
+                    if (!itemsForNextLevel[num + 1]) itemsForNextLevel[num + 1] = new Set([])
+                    itemsForNextLevel[num + 1].add(id)
                 }
                 if (!weight[index]?.ammo.edit?.[calibre]) {
                     weight[index].ammo.edit = { ...weight[index].ammo.edit, [calibre]: {} }
@@ -483,12 +483,13 @@ export const setWeightingAdjustments = (
                 case "FirstPrimaryWeapon":
                 case "Holster":
                     if ((num + 1) < 5) {
-                        if (!itemsForNextLevel[num + 1]) itemsForNextLevel[num + 1] = []
-                        itemsForNextLevel[num + 1].push(id)
+                        if (!itemsForNextLevel[num + 1]) itemsForNextLevel[num + 1] = new Set([])
+                        itemsForNextLevel[num + 1].add(id)
                     }
+                    const isFromPreviousLevel = !!itemsForNextLevel[num]?.has(id)
                     const calibre = item._props.Caliber || item._props.ammoCaliber
                     const highestScoringAmmo = getHighestScoringAmmoValue(combinedWeightingAdjustmentItem.ammo.edit[calibre])
-                    const weaponRating = getWeaponWeighting(item, highestScoringAmmo)
+                    const weaponRating = isFromPreviousLevel ? Math.round(getWeaponWeighting(item, highestScoringAmmo) * 0.7) : getWeaponWeighting(item, highestScoringAmmo)
                     // Check if revolver shotgun
                     if (id === "60db29ce99594040e04c4a27") setWeightItem(weight[index], "FirstPrimaryWeapon", id, weaponRating)
                     else {
@@ -497,12 +498,14 @@ export const setWeightingAdjustments = (
                     break;
                 case "Headwear":
                     // TODO: Make it so earphones are prioritized
-                    const coverageBonus = item?._props?.headSegments?.length || 0
-                    const helmetBonus = Math.round(((item?._props?.MaxDurability || 0) * item?._props?.armorClass) / 10)
-                    const repairCostBonus = Math.round(item?._props?.RepairCost * 0.005)
-                    let rating = coverageBonus + helmetBonus + repairCostBonus
-                    if (rating < 5) rating = 5
-                    setWeightItem(weight[index], equipmentType, id, rating * additionalChancePerItem)
+                    // const coverageBonus = item?._props?.headSegments?.length || 0
+                    const blocksEarpiece = item?._props?.BlocksEarpiece
+                    const helmetBonus = item?._props?.armorClass * 5
+                    let rating = helmetBonus //+ coverageBonus 
+                    if (blocksEarpiece) rating = rating * 0.5
+                    if (rating < 10) rating = 10
+                    // console.log(item._name, blocksEarpiece, Math.round(rating * additionalChancePerItem))
+                    setWeightItem(weight[index], equipmentType, id, Math.round(rating * additionalChancePerItem))
                     break;
                 case "Earpiece":
                     const ambientVolumeBonus = item?._props?.AmbientVolume * -1
@@ -574,6 +577,7 @@ export const setWeightingAdjustments = (
         //     weight[index + 1].ammo = { ...weight[index].ammo }
         //     weight[index + 1].equipment = { ...weight[index].equipment }
         // }
+
     })
 }
 
@@ -647,10 +651,10 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             levelRange: range,
             equipment: {
                 "Headwear": [95, 95, 99, 99][index],
-                "Earpiece": [70, 80, 90, 95][index],
+                "Earpiece": [60, 70, 80, 85][index],
                 "FaceCover": [6, 15, 25, 35][index],
                 "ArmorVest": [99, 99, 99, 99][index],
-                "ArmBand": 20,
+                "ArmBand": 40,
                 "TacticalVest": [95, 95, 99, 99][index],
                 "Pockets": [25, 45, 59, 69][index],
                 "SecuredContainer": 99,
@@ -659,7 +663,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "FirstPrimaryWeapon": [85, 95, 99, 99][index],
                 "Holster": [1, 5, 10, 10][index],
                 "Eyewear": [5, 15, 26, 49][index],
-                "Backpack": [90, 95, 99, 99][index],
+                "Backpack": [60, 70, 80, 99][index],
             },
             generation: {
                 "drugs": {
@@ -732,44 +736,44 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 // "mod_tactical_003"
             ],
             "mods": {
-                "mod_barrel": [1, 5, 15, 15][index],
-                "mod_bipod": [1, 2, 5, 11][index],
-                "mod_flashlight": [5, 30, 65, 70][index],
+                "mod_barrel": [1, 20, 15, 15][index],
+                "mod_bipod": [1, 10, 5, 11][index],
+                "mod_flashlight": [5, 5, 65, 70][index],
                 "mod_foregrip": [5, 15, 30, 35][index],
-                "mod_handguard": [5, 20, 15, 35][index],
+                "mod_handguard": [5, 25, 15, 35][index],
                 "mod_launcher": [0, 0, 5, 15][index],
-                "mod_magazine": 100,
+                "mod_magazine": [5, 25, 25, 35][index],
                 "mod_mount": [5, 15, 15, 35][index],
-                "mod_mount_000": [5, 5, 15, 35][index],
-                "mod_mount_001": [4, 5, 15, 35][index],
-                "mod_mount_002": [3, 5, 15, 35][index],
-                "mod_mount_003": [3, 5, 15, 35][index],
-                "mod_mount_004": [2, 5, 15, 35][index],
-                "mod_mount_005": [1, 5, 15, 35][index],
-                "mod_mount_006": [1, 5, 15, 35][index],
-                "mod_muzzle": [5, 5, 15, 15][index],
-                "mod_muzzle_000": [0, 5, 15, 15][index],
-                "mod_muzzle_001": [0, 5, 15, 15][index],
-                "mod_equipment": [5, 5, 15, 15][index],
-                "mod_equipment_000": [0, 5, 15, 15][index],
-                "mod_equipment_001": [0, 5, 15, 15][index],
+                "mod_mount_000": [5, 15, 15, 35][index],
+                "mod_mount_001": [5, 15, 15, 35][index],
+                "mod_mount_002": [5, 15, 15, 35][index],
+                "mod_mount_003": [5, 15, 15, 35][index],
+                "mod_mount_004": [5, 15, 15, 35][index],
+                "mod_mount_005": [5, 15, 15, 35][index],
+                "mod_mount_006": [5, 15, 15, 35][index],
+                "mod_muzzle": [5, 10, 15, 15][index],
+                "mod_muzzle_000": [1, 10, 15, 15][index],
+                "mod_muzzle_001": [1, 10, 15, 15][index],
+                "mod_equipment": [5, 5, 10, 15][index],
+                "mod_equipment_000": [5, 10, 15, 15][index],
+                "mod_equipment_001": [5, 5, 10, 15][index],
                 "mod_equipment_002": 0,
                 "mod_nvg": 0,
-                "mod_pistol_grip_akms": [0, 5, 15, 15][index],
-                "mod_pistol_grip": [0, 5, 15, 15][index],
-                "mod_scope": [65, 85, 95, 100][index],
-                "mod_scope_000": 0,//[15, 20, 15, 35][index],
-                "mod_scope_001": 0,//[15, 20, 15, 35][index],
-                "mod_scope_002": 0,//[15, 20, 15, 35][index],
-                "mod_scope_003": 0,//[15, 20, 15, 35][index],
-                "mod_tactical": [5, 5, 15, 15][index],
-                "mod_tactical001": [4, 5, 15, 15][index],
-                "mod_tactical002": [2, 5, 15, 15][index],
-                "mod_tactical_000": [5, 5, 15, 15][index],
-                "mod_tactical_001": [4, 5, 15, 15][index],
-                "mod_tactical_002": [3, 5, 15, 15][index],
-                "mod_tactical_003": [2, 5, 15, 15][index],
-                "mod_tactical_2": [2, 5, 15, 15][index],
+                "mod_pistol_grip_akms": [1, 5, 5, 15][index],
+                "mod_pistol_grip": [1, 5, 5, 15][index],
+                "mod_scope": [50, 70, 85, 85][index],
+                "mod_scope_000": [50, 70, 85, 85][index],
+                "mod_scope_001": [50, 70, 85, 85][index],
+                "mod_scope_002": [50, 70, 85, 85][index],
+                "mod_scope_003": [50, 70, 85, 85][index],
+                "mod_tactical": [5, 10, 15, 15][index],
+                "mod_tactical001": [5, 10, 15, 15][index],
+                "mod_tactical002": [5, 10, 15, 15][index],
+                "mod_tactical_000": [5, 10, 15, 15][index],
+                "mod_tactical_001": [5, 10, 15, 15][index],
+                "mod_tactical_002": [5, 10, 15, 15][index],
+                "mod_tactical_003": [5, 10, 15, 15][index],
+                "mod_tactical_2": [5, 10, 15, 15][index],
             }
         }
 
@@ -785,7 +789,9 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     newItem.generation.drugs["whitelist"] = [...newItem.generation.drugs["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, ["543be6564bdc2df4348b4568"]): //ThrowWeap
-                    newItem.generation.grenades["whitelist"] = [...newItem.generation.grenades["whitelist"] || [], id]
+                    if (items[id]._props.ThrowType !== "smoke_grenade") {
+                        newItem.generation.grenades["whitelist"] = [...newItem.generation.grenades["whitelist"] || [], id]
+                    }
                     break;
                 case checkParentRecursive(parent, items, [medsParent]): //meds
                     newItem.generation.healing["whitelist"] = [...newItem.generation.healing["whitelist"] || [], id]
@@ -811,7 +817,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
 
         randomizationItems.push(newItem)
     })
-
+    // console.log(JSON.stringify(botConfig.equipment.pmc.randomisation))
     botConfig.equipment.pmc.randomisation = randomizationItems
 }
 

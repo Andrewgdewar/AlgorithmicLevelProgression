@@ -8,8 +8,7 @@ const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes"
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
     // Next tasks
-    // Update weapon weight with higher balance && Confirm ammo weighting is working correctly 
-    // Fix issue with sights not functioning maybe utilize "mod_scope" seen in blacklist
+    // Update weapon weight with higher chance of higher weapon level
     // Make the trade items optional in config
     const databaseServer = container.resolve("DatabaseServer");
     const configServer = container.resolve("ConfigServer");
@@ -20,8 +19,8 @@ function ProgressionChanges(container) {
     const traders = tables.traders;
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
-    tables.bots.types.usec.inventory.mods = {};
-    tables.bots.types.bear.inventory.mods = {};
+    // tables.bots.types.usec.inventory.mods = {}
+    // tables.bots.types.bear.inventory.mods = {}
     const usecAppearance = tables.bots.types.usec.appearance;
     const bearAppearance = tables.bots.types.bear.appearance;
     botConfig.pmc.looseWeaponInBackpackChancePercent = 1;
@@ -56,7 +55,7 @@ function ProgressionChanges(container) {
             const parent = item._parent;
             const equipmentType = (0, utils_1.getEquipmentType)(parent, items);
             switch (true) {
-                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.keyParent, utils_1.medsParent, utils_1.modParent, utils_1.moneyParent]):
+                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.keyParent, utils_1.medsParent, utils_1.moneyParent]):
                     usecInventory.items.Pockets.push(_tpl);
                     bearInventory.items.Pockets.push(_tpl);
                     usecInventory.items.TacticalVest.push(_tpl);
@@ -85,6 +84,17 @@ function ProgressionChanges(container) {
                         console.log(item._name, " likely has the incorrect calibre: ", calibre);
                     }
                     break;
+                // case equipmentType === "mod_scope":
+                //     break;
+                // Check if revolver shotgun
+                case _tpl === "60db29ce99594040e04c4a27":
+                    if (!usecInventory.equipment["FirstPrimaryWeapon"])
+                        usecInventory.equipment["FirstPrimaryWeapon"] = {};
+                    if (!bearInventory.equipment["FirstPrimaryWeapon"])
+                        bearInventory.equipment["FirstPrimaryWeapon"] = {};
+                    usecInventory.equipment["FirstPrimaryWeapon"][_tpl] = 1;
+                    bearInventory.equipment["FirstPrimaryWeapon"][_tpl] = 1;
+                    break;
                 // Add matching equipment
                 case !!equipmentType:
                     if (!usecInventory.equipment[equipmentType])
@@ -105,62 +115,40 @@ function ProgressionChanges(container) {
                     // If large magazine
                     case (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50:
                         tradersMasterList[4].add(_tpl);
-                        if (slotId !== "hideout") {
-                            if (!mods[4]?.[slotId])
-                                mods[4][slotId] = [];
-                            mods[4][slotId].push(_tpl);
-                        }
+                        (0, utils_1.addToModsObject)(mods, _tpl, items, 4);
                         break;
                     // Check if its a quest unlocked trade    
                     case !!questassort.success[_id]:
                         if ((loyaltyLevel === 4 || (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50)) {
                             tradersMasterList[4].add(_tpl);
-                            if (slotId !== "hideout") {
-                                if (!mods[4]?.[slotId])
-                                    mods[4][slotId] = [];
-                                mods[4][slotId].push(_tpl);
-                            }
+                            (0, utils_1.addToModsObject)(mods, _tpl, items, 4, slotId);
                         }
                         else {
                             tradersMasterList[loyaltyLevel + 1].add(_tpl);
-                            if (slotId !== "hideout") {
-                                if (!mods[loyaltyLevel + 1]?.[slotId])
-                                    mods[loyaltyLevel + 1][slotId] = [];
-                                mods[loyaltyLevel + 1][slotId].push(_tpl);
-                            }
+                            (0, utils_1.addToModsObject)(mods, _tpl, items, loyaltyLevel + 1, slotId);
                         }
                         break;
                     // Only add the item if it's a cash trade
                     case items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === utils_1.moneyParent:
                         tradersMasterList[loyaltyLevel].add(_tpl);
-                        if (slotId !== "hideout") {
-                            if (!mods[loyaltyLevel]?.[slotId])
-                                mods[loyaltyLevel][slotId] = [];
-                            mods[loyaltyLevel][slotId].push(_tpl);
-                        }
+                        (0, utils_1.addToModsObject)(mods, _tpl, items, loyaltyLevel, slotId);
                         break;
                     // Then it's a tradeItem
                     default:
                         if ((loyaltyLevel + 2) > 4 || (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50) {
                             tradersMasterList[4].add(_tpl);
-                            if (slotId !== "hideout") {
-                                if (!mods[4]?.[slotId])
-                                    mods[4][slotId] = [];
-                                mods[4][slotId].push(_tpl);
-                            }
+                            (0, utils_1.addToModsObject)(mods, _tpl, items, 4, slotId);
                         }
                         else {
                             tradersMasterList[loyaltyLevel + 2].add(_tpl);
-                            if (slotId !== "hideout") {
-                                if (!mods[loyaltyLevel + 2]?.[slotId])
-                                    mods[loyaltyLevel + 2][slotId] = [];
-                                mods[loyaltyLevel + 2][slotId].push(_tpl);
-                            }
+                            (0, utils_1.addToModsObject)(mods, _tpl, items, loyaltyLevel + 2, slotId);
                         }
                         break;
                 }
-                (0, utils_1.buildOutModsObject)(_tpl, items, usecInventory);
-                (0, utils_1.buildOutModsObject)(_tpl, items, bearInventory);
+                if (loyaltyLevel !== 4) {
+                    (0, utils_1.buildOutModsObject)(_tpl, items, usecInventory);
+                    (0, utils_1.buildOutModsObject)(_tpl, items, bearInventory);
+                }
             }
         });
     });
@@ -189,22 +177,17 @@ function ProgressionChanges(container) {
             });
         });
     });
-    if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) {
-        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon =
-            ["624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709"];
+    if (botConfig.equipment.pmc.blacklist?.[0]?.equipment) {
+        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = [];
+        botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon.push("624c0b3340357b5f566e8766", "624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709");
     }
-    // if (botConfig.equipment.pmc.blacklist?.[0]?.equipment?.mod_magazine) {
-    //     botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon =
-    //         ["624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709"]
-    // }
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList, mods);
-    (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList);
+    (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
     (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
-    // botConfig.equipment.pmc.weightingAdjustments = []
-    // botConfig.equipment.pmc.randomisation = []
-    console.log(JSON.stringify(botConfig.equipment.pmc));
-    // console.log(JSON.stringify(usecInventory))
+    // buildBlacklist(items, botConfig, mods)
+    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
+    // console.log(JSON.stringify(usecInventory.mods))
 }
 exports.default = ProgressionChanges;
 // // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<
