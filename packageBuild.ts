@@ -12,7 +12,7 @@ const path = require("path");
 // atypical, and you would never do this in a production environment, but this script is only used for development so
 // it's fine in this case. Some of these values are stored in environment variables, but those differ between node
 // versions; the 'author' value is not available after node v14.
-const { author, name:packageName, version } = require("./package.json");
+const { author, name: packageName, version } = require("./package.json");
 
 // Generate the name of the package, stripping out all non-alphanumeric characters in the 'author' and 'name'.
 const modName = `${author.replace(/[^a-z0-9]/gi, "")}-${packageName.replace(/[^a-z0-9]/gi, "")}-${version}`;
@@ -28,6 +28,7 @@ console.log("Previous build files deleted.");
 const ignoreList = [
     "node_modules/",
     // "node_modules/!(weighted|glob)", // Instead of excluding the entire node_modules directory, allow two node modules.
+    "src/refDBS",
     "src/**/*.js",
     "types/",
     ".git/",
@@ -46,10 +47,11 @@ const exclude = glob.sync(`{${ignoreList.join(",")}}`, { realpath: true, dot: tr
 
 // For some reason these basic-bitch functions won't allow us to copy a directory into itself, so we have to resort to
 // using a temporary directory, like an idiot. Excuse the normalize spam; some modules cross-platform, some don't...
-fs.copySync(__dirname, path.normalize(`${__dirname}/../~${modName}`), {filter:(filePath) => 
-{
-    return !exclude.includes(filePath);
-}});
+fs.copySync(__dirname, path.normalize(`${__dirname}/../~${modName}`), {
+    filter: (filePath) => {
+        return !exclude.includes(filePath);
+    }
+});
 fs.moveSync(path.normalize(`${__dirname}/../~${modName}`), path.normalize(`${__dirname}/${modName}`), { overwrite: true });
 fs.copySync(path.normalize(`${__dirname}/${modName}`), path.normalize(`${__dirname}/dist`));
 console.log("Build files copied.");
@@ -60,11 +62,9 @@ zip({
     source: modName,
     destination: `dist/${modName}.zip`,
     cwd: __dirname
-}).catch(function(err)
-{
+}).catch(function (err) {
     console.error("A bestzip error has occurred: ", err.stack);
-}).then(function()
-{
+}).then(function () {
     console.log(`Compressed mod package to: /dist/${modName}.zip`);
 
     // Now that we're done with the compression we can delete the temporary build directory.
