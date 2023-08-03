@@ -6,7 +6,7 @@ import ProgressionChanges from "./ProgressionChanges";
 import BotLevelChanges from "./BotLevelChanges";
 import { enableProgressionChanges, enableLevelChanges } from "../config/config.json"
 
-class MoarAmmoConfig implements IPreAkiLoadMod, IPostDBLoadMod {
+class AlgorithmicLevelProgression implements IPreAkiLoadMod, IPostDBLoadMod {
     postDBLoad(container: DependencyContainer): void {
         enableProgressionChanges && ProgressionChanges(container)
     }
@@ -15,4 +15,4 @@ class MoarAmmoConfig implements IPreAkiLoadMod, IPostDBLoadMod {
     }
 }
 
-module.exports = { mod: new MoarAmmoConfig() }
+module.exports = { mod: new AlgorithmicLevelProgression() }
