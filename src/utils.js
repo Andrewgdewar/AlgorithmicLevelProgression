@@ -219,7 +219,7 @@ const getBackPackInternalGridValue = ({ _props: { Grids, Weight } = {}, _name, _
         }
     });
     total = Math.round((total * 0.5) - Weight - (Grids.length)) + 10;
-    console.log(_name, _id, " - ", total);
+    // console.log(_name, _id, " - ", total)
     return total > 1 ? total : 1;
 };
 exports.getBackPackInternalGridValue = getBackPackInternalGridValue;
@@ -575,10 +575,10 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
             equipment: {
                 "Headwear": [95, 95, 99, 99][index],
                 "Earpiece": [60, 70, 80, 85][index],
-                "FaceCover": [6, 15, 25, 35][index],
+                "FaceCover": [15, 25, 35, 45][index],
                 "ArmorVest": [99, 99, 99, 99][index],
                 "ArmBand": 40,
-                "TacticalVest": [95, 95, 99, 99][index],
+                "TacticalVest": [96, 96, 99, 99][index],
                 "Pockets": [25, 45, 59, 69][index],
                 "SecuredContainer": 99,
                 "SecondPrimaryWeapon": 1,
@@ -591,21 +591,21 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
             generation: {
                 "drugs": {
                     "min": 0,
-                    "max": [2, 2, 3, 4][index],
+                    "max": [2, 2, 3, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
                 },
                 "grenades": {
-                    "min": [0, 0, 1, 1][index],
-                    "max": [0, 2, 2, 3][index],
+                    "min": [0, 0, 0, 1][index],
+                    "max": [1, 2, 2, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "healing": {
-                    "min": [1, 1, 1, 2][index],
+                    "min": [0, 0, 1, 2][index],
                     "max": [2, 2, 3, 4][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
                 "looseLoot": {
-                    "min": 0,
+                    "min": [0, 2, 3, 3][index],
                     "max": [3, 5, 6, 8][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
                 },
@@ -665,7 +665,7 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 "mod_foregrip": [5, 15, 30, 35][index],
                 "mod_handguard": [5, 25, 25, 35][index],
                 "mod_launcher": [0, 0, 5, 15][index],
-                "mod_magazine": [5, 25, 25, 35][index],
+                "mod_magazine": [15, 25, 25, 35][index],
                 "mod_mount": [5, 15, 15, 35][index],
                 "mod_mount_000": [5, 15, 15, 35][index],
                 "mod_mount_001": [5, 15, 15, 35][index],

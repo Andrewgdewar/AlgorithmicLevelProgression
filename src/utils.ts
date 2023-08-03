@@ -668,7 +668,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 },
                 "grenades": {
                     "min": [0, 0, 0, 1][index],
-                    "max": [0, 2, 2, 3][index],
+                    "max": [1, 2, 2, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "healing": {

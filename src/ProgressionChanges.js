@@ -193,7 +193,26 @@ function ProgressionChanges(container) {
     (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
     (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
     // buildBlacklist(items, botConfig, mods)
-    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments))
+    //Fix assault
+    botConfig.equipment.assault.randomisation = [{
+            "levelRange": {
+                "min": 1,
+                "max": 100
+            },
+            "generation": {
+                "grenades": {
+                    "min": 0,
+                    "max": 1,
+                    "whitelist": [
+                        "5710c24ad2720bc3458b45a3",
+                        "58d3db5386f77426186285a0",
+                        "5a0c27731526d80618476ac4",
+                        "619256e5f8af2c1a4e1f5d92"
+                    ]
+                }
+            }
+        }];
+    console.log(JSON.stringify(botConfig.equipment.assault));
     // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0].equipment))
 }
 exports.default = ProgressionChanges;
