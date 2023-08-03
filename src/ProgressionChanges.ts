@@ -268,7 +268,7 @@ export default function ProgressionChanges(
         }
     }] as any
 
-    console.log(JSON.stringify(botConfig.equipment.assault))
+    // console.log(JSON.stringify(botConfig.equipment.assault))
     // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0].equipment))
 }
 
