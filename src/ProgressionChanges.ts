@@ -87,8 +87,8 @@ export default function ProgressionChanges(
     traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
         if (!tradItems || !nickname) return
         // if (index === 0) console.log(JSON.stringify(questassort))
-        if (config.debug && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
-            console.log(`AlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!`)
+        if (config.addCustomTraders && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
+            console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`)
         }
         tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
             const item = items[_tpl]

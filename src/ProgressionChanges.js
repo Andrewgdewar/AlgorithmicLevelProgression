@@ -57,15 +57,16 @@ function ProgressionChanges(container) {
         if (!tradItems || !nickname)
             return;
         // if (index === 0) console.log(JSON.stringify(questassort))
-        if (![...tradersToExclude, ...tradersToInclude].includes(nickname))
-            console.log(`AlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!`);
+        if (config_json_1.default.addCustomTraders && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
+            console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`);
+        }
         tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
             const item = items[_tpl];
             if (!item)
-                return console.log("Skipping custom item: ", _tpl, " for trader: ", nickname);
+                return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const parent = item._parent;
             if (!parent || !items[parent])
-                return console.log("Skipping custom item: ", _tpl, " for trader: ", nickname);
+                return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const equipmentType = (0, utils_1.getEquipmentType)(parent, items);
             switch (true) {
                 case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.keyParent, utils_1.medsParent, utils_1.moneyParent]):
