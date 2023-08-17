@@ -1,13 +1,13 @@
 import { IPreAkiLoadMod } from './../types/models/external/IPreAkiLoadMod.d';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { DependencyContainer } from "tsyringe";
-import { IPostDBLoadMod } from "@spt-aki/models/external/IPostDBLoadMod";
+import { IPostAkiLoadMod } from "@spt-aki/models/external/IPostAkiLoadMod";
 import ProgressionChanges from "./ProgressionChanges";
 import BotLevelChanges from "./BotLevelChanges";
 import { enableProgressionChanges, enableLevelChanges } from "../config/config.json"
 
-class AlgorithmicLevelProgression implements IPreAkiLoadMod, IPostDBLoadMod {
-    postDBLoad(container: DependencyContainer): void {
+class AlgorithmicLevelProgression implements IPreAkiLoadMod, IPostAkiLoadMod {
+    postAkiLoad(container: DependencyContainer): void {
         enableProgressionChanges && ProgressionChanges(container)
     }
     preAkiLoad(container: DependencyContainer): void {

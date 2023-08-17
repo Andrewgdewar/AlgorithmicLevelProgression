@@ -763,8 +763,8 @@ const buildClothingWeighting = (suit, items, botConfig) => {
     const levels = [[1, 4], [5, 7], [8, 15], [16, 22], [23, 30], [31, 40], [41, 100]];
     botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels);
     const clothingAdjust = botConfig.equipment.pmc.clothing;
-    suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } }) => {
-        if (profileLevel === 0)
+    suit?.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } = {} }) => {
+        if (!profileLevel || !suiteId || loyaltyLevel === undefined)
             return;
         const index = levels.findIndex(([min, max]) => {
             if (profileLevel >= min && profileLevel <= max) {
@@ -784,6 +784,7 @@ const buildClothingWeighting = (suit, items, botConfig) => {
             clothingAdjust[index].clothing.add["feet"][items[suiteId]._props.Feet] = (profileLevel * loyaltyLevel);
         }
     });
+    console.log(JSON.stringify(clothingAdjust));
 };
 exports.buildClothingWeighting = buildClothingWeighting;
 exports.weaponTypes = {

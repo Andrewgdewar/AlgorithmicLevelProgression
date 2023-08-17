@@ -841,8 +841,8 @@ export const buildClothingWeighting = (suit: ISuit[], items: Record<string, ICus
     botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels)
     const clothingAdjust = botConfig.equipment.pmc.clothing
 
-    suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } }) => {
-        if (profileLevel === 0) return;
+    suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } = {} }) => {
+        if (!profileLevel || !suiteId || loyaltyLevel === undefined) return;
         const index = levels.findIndex(([min, max]: number[]) => {
             if (profileLevel >= min && profileLevel <= max) {
                 return true
@@ -859,6 +859,7 @@ export const buildClothingWeighting = (suit: ISuit[], items: Record<string, ICus
             clothingAdjust[index].clothing.add["feet"][items[suiteId]._props.Feet] = (profileLevel * loyaltyLevel)
         }
     })
+    // console.log(JSON.stringify(clothingAdjust))
 }
 
 

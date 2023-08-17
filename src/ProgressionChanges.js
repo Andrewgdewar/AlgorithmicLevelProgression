@@ -47,11 +47,11 @@ function ProgressionChanges(container) {
     const mods = { "1": {}, "2": {}, "3": {}, "4": {} };
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = (0, utils_1.setupBaseWhiteList)();
-    const { suits } = Object.values(traders).find(({ base }) => "Ragman" === base.nickname);
+    let allTradersSuits = Object.values(traders).filter(({ suits }) => !!suits?.length).map(({ suits }) => suits).flat(1);
     if (config_json_1.default?.leveledClothing) {
         (0, utils_1.buildInitialUsecAppearance)(usecAppearance);
         (0, utils_1.buildInitialBearAppearance)(bearAppearance);
-        (0, utils_1.buildClothingWeighting)(suits, customization, botConfig);
+        (0, utils_1.buildClothingWeighting)(allTradersSuits, customization, botConfig);
     }
     traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
         if (!tradItems || !nickname)
@@ -223,12 +223,12 @@ function ProgressionChanges(container) {
                         "5a0c27731526d80618476ac4",
                         "619256e5f8af2c1a4e1f5d92"
                     ]
+                },
+                "stims": {
+                    "min": 0,
+                    "max": 0,
                 }
             },
-            "stims": {
-                "min": 0,
-                "max": 0,
-            }
         }];
     // console.log(JSON.stringify(botConfig.equipment.pmc))
     // console.log(JSON.stringify(botConfig.equipment.pmc))

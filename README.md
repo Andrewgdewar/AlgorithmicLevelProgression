@@ -47,6 +47,8 @@ Example order.json with recommended mods:
 
     // In general, turning the above off can make bots create weird meta builds and in general makes pmcs better equiped sooner. 
 
+    // Allows bots to use items from custom traders like Priscillu
+    "addCustomTraders": false,
 
     // This dictates at what level bots obtain trader tiers. 
     // 1 - 14 for example are for tier 1 traders

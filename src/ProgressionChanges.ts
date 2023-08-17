@@ -76,12 +76,12 @@ export default function ProgressionChanges(
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = setupBaseWhiteList()
 
-    const { suits } = Object.values(traders).find(({ base }) => "Ragman" === base.nickname) as any
+    let allTradersSuits = Object.values(traders).filter(({ suits }) => !!suits?.length).map(({ suits }) => suits).flat(1)
 
     if (config?.leveledClothing) {
         buildInitialUsecAppearance(usecAppearance)
         buildInitialBearAppearance(bearAppearance)
-        buildClothingWeighting(suits, customization, botConfig)
+        buildClothingWeighting(allTradersSuits, customization, botConfig)
     }
 
     traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
@@ -274,12 +274,12 @@ export default function ProgressionChanges(
                     "5a0c27731526d80618476ac4",
                     "619256e5f8af2c1a4e1f5d92"
                 ]
+            },
+            "stims": {
+                "min": 0,
+                "max": 0,
             }
         },
-        "stims": {
-            "min": 0,
-            "max": 0,
-        }
     }] as any
 
     // console.log(JSON.stringify(botConfig.equipment.pmc))
