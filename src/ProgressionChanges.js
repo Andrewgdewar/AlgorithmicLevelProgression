@@ -7,9 +7,6 @@ const config_json_1 = __importDefault(require("../config/config.json"));
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
-    // Next tasks
-    // Update weapon weight with higher chance of higher weapon level
-    // Make the trade items optional in config
     const databaseServer = container.resolve("DatabaseServer");
     const configServer = container.resolve("ConfigServer");
     const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
@@ -34,7 +31,17 @@ function ProgressionChanges(container) {
         'Ragman',
         'Jaeger',
     ];
-    const traderList = Object.values(traders).filter(({ base }) => tradersToInclude.includes(base.nickname));
+    const tradersToExclude = [
+        "Unknown",
+        "caretaker",
+        'Fence'
+    ];
+    const traderList = Object.values(traders).filter(({ base }) => {
+        if (config_json_1.default.addCustomTraders) {
+            return !tradersToExclude.includes(base.nickname);
+        }
+        return tradersToInclude.includes(base.nickname);
+    });
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() };
     const mods = { "1": {}, "2": {}, "3": {}, "4": {} };
@@ -46,13 +53,19 @@ function ProgressionChanges(container) {
         (0, utils_1.buildInitialBearAppearance)(bearAppearance);
         (0, utils_1.buildClothingWeighting)(suits, customization, botConfig);
     }
-    traderList.forEach(({ questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
-        if (!tradItems)
+    traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
+        if (!tradItems || !nickname)
             return;
         // if (index === 0) console.log(JSON.stringify(questassort))
-        tradItems.forEach(({ _tpl, _id, parentId, slotId }, key) => {
+        if (![...tradersToExclude, ...tradersToInclude].includes(nickname))
+            console.log(`AlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!`);
+        tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
             const item = items[_tpl];
+            if (!item)
+                return console.log("Skipping custom item: ", _tpl, " for trader: ", nickname);
             const parent = item._parent;
+            if (!parent || !items[parent])
+                return console.log("Skipping custom item: ", _tpl, " for trader: ", nickname);
             const equipmentType = (0, utils_1.getEquipmentType)(parent, items);
             switch (true) {
                 case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.keyParent, utils_1.medsParent, utils_1.moneyParent]):
@@ -210,10 +223,14 @@ function ProgressionChanges(container) {
                         "619256e5f8af2c1a4e1f5d92"
                     ]
                 }
+            },
+            "stims": {
+                "min": 0,
+                "max": 0,
             }
         }];
-    console.log(JSON.stringify(botConfig.equipment.assault));
-    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0].equipment))
+    // console.log(JSON.stringify(botConfig.equipment.pmc))
+    // console.log(JSON.stringify(botConfig.equipment.pmc))
 }
 exports.default = ProgressionChanges;
 // // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<

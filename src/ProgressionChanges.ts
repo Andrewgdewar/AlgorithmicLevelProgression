@@ -23,10 +23,6 @@ export default function ProgressionChanges(
     container: DependencyContainer
 ): undefined {
 
-    // Next tasks
-    // Update weapon weight with higher chance of higher weapon level
-    // Make the trade items optional in config
-
     const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
     const configServer = container.resolve<ConfigServer>("ConfigServer");
     const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
@@ -57,7 +53,18 @@ export default function ProgressionChanges(
         'Jaeger',
     ]
 
-    const traderList = Object.values(traders).filter(({ base }) => tradersToInclude.includes(base.nickname))
+    const tradersToExclude = [
+        "Unknown",
+        "caretaker",
+        'Fence'
+    ]
+
+    const traderList = Object.values(traders).filter(({ base }) => {
+        if (config.addCustomTraders) {
+            return !tradersToExclude.includes(base.nickname)
+        }
+        return tradersToInclude.includes(base.nickname)
+    })
 
 
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
@@ -77,13 +84,17 @@ export default function ProgressionChanges(
         buildClothingWeighting(suits, customization, botConfig)
     }
 
-    traderList.forEach(({ questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
-        if (!tradItems) return
+    traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
+        if (!tradItems || !nickname) return
         // if (index === 0) console.log(JSON.stringify(questassort))
-        tradItems.forEach(({ _tpl, _id, parentId, slotId }, key) => {
-
+        if (config.debug && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
+            console.log(`AlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!`)
+        }
+        tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
             const item = items[_tpl]
+            if (!item) return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const parent = item._parent
+            if (!parent || !items[parent]) return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const equipmentType = getEquipmentType(parent, items)
 
             switch (true) {
@@ -221,7 +232,6 @@ export default function ProgressionChanges(
     bearInventory.items.SpecialLoot = deDupeArr(bearInventory.items.SpecialLoot)
 
 
-
     //Make everything level 1 in equipment
     reduceEquipmentChancesTo1(usecInventory)
     reduceEquipmentChancesTo1(bearInventory)
@@ -265,11 +275,15 @@ export default function ProgressionChanges(
                     "619256e5f8af2c1a4e1f5d92"
                 ]
             }
+        },
+        "stims": {
+            "min": 0,
+            "max": 0,
         }
     }] as any
 
-    // console.log(JSON.stringify(botConfig.equipment.assault))
-    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0].equipment))
+    // console.log(JSON.stringify(botConfig.equipment.pmc))
+    // console.log(JSON.stringify(botConfig.equipment.pmc))
 }
 
 

@@ -25,7 +25,7 @@ var SightType;
     SightType["Collimator"] = "55818ad54bdc2ddc698b4569";
     SightType["CompactCollimator"] = "55818acf4bdc2dde698b456b";
     SightType["OpticScope"] = "55818ae44bdc2dde698b456c";
-})(SightType = exports.SightType || (exports.SightType = {}));
+})(SightType || (exports.SightType = SightType = {}));
 const addToModsObject = (mods, _tpl, items, loyaltyLevel, slotId = "") => {
     switch (true) {
         case (0, exports.checkParentRecursive)(_tpl, items, [exports.magParent]):

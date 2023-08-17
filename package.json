@@ -1,10 +1,10 @@
 {
     "name": "AlgorithmicLevelProgression",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "src/mod.js",
     "license": "MIT",
     "author": "Dushaoan",
-    "akiVersion": "^3.5.0",
+    "akiVersion": "^3.x.x",
     "scripts": {
         "setup": "npm i",
         "build": "node ./packageBuild.ts"

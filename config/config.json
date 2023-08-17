@@ -4,6 +4,7 @@
     "leveledClothing": true,
     "questUnlockedItemsShifted": true,
     "tradedItemsShifted": true,
+    "addCustomTraders": true,
     "levelRange": {
         "1": {
             "min": 1,
