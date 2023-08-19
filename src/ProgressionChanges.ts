@@ -2,6 +2,7 @@ import { IBotConfig } from './../types/models/spt/config/IBotConfig.d';
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { DependencyContainer } from "tsyringe";
 import config from "../config/config.json";
+import advancedConfig from "../config/advancedConfig.json";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import {
@@ -15,13 +16,16 @@ import {
     getEquipmentType, keyParent, magParent, medsParent, moneyParent, numList,
     reduceAmmoChancesTo1,
     reduceEquipmentChancesTo1,
-    setWeightingAdjustments, setWhitelists, setupBaseWhiteList, buildInitialBearAppearance, buildInitialUsecAppearance, setupMods, buildWeaponSightWhitelist, addToModsObject
+    setWeightingAdjustments, setWhitelists, setupBaseWhiteList, buildInitialBearAppearance, buildInitialUsecAppearance, setupMods, buildWeaponSightWhitelist, addToModsObject, blacklistedMods
 } from './utils';
 
 
 export default function ProgressionChanges(
     container: DependencyContainer
 ): undefined {
+    //Todo: 
+    // rifle scopes on assault weapons? ring scope mount fix?
+
 
     const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
     const configServer = container.resolve<ConfigServer>("ConfigServer");
@@ -36,7 +40,7 @@ export default function ProgressionChanges(
 
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
-
+    // console.log(JSON.stringify(bearInventory))
     const usecAppearance = tables.bots.types.usec.appearance
     const bearAppearance = tables.bots.types.bear.appearance
 
@@ -56,11 +60,12 @@ export default function ProgressionChanges(
     const tradersToExclude = [
         "Unknown",
         "caretaker",
-        'Fence'
+        'Fence',
+        ...config.customTradersToExclude
     ]
 
     const traderList = Object.values(traders).filter(({ base }) => {
-        if (config.addCustomTraders) {
+        if (config.addCustomTraderItems) {
             return !tradersToExclude.includes(base.nickname)
         }
         return tradersToInclude.includes(base.nickname)
@@ -87,10 +92,11 @@ export default function ProgressionChanges(
     traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
         if (!tradItems || !nickname) return
         // if (index === 0) console.log(JSON.stringify(questassort))
-        if (config.addCustomTraders && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
+        if (config.addCustomTraderItems && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`)
         }
         tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
+            if (blacklistedMods.has(_tpl)) return; //Remove blacklisted items
             const item = items[_tpl]
             if (!item) return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const parent = item._parent
@@ -118,18 +124,17 @@ export default function ProgressionChanges(
                         bearInventory.Ammo[calibre] =
                             { ...bearInventory.Ammo[calibre] || {}, [_tpl]: 1 }
 
+                        // usecInventory.items.Pockets.push(_tpl)
+                        // bearInventory.items.Pockets.push(_tpl)
 
-                        usecInventory.items.Pockets.push(_tpl)
-                        bearInventory.items.Pockets.push(_tpl)
+                        // usecInventory.items.Backpack.push(_tpl)
+                        // bearInventory.items.Backpack.push(_tpl)
 
-                        usecInventory.items.Backpack.push(_tpl)
-                        bearInventory.items.Backpack.push(_tpl)
+                        // usecInventory.items.TacticalVest.push(_tpl)
+                        // bearInventory.items.TacticalVest.push(_tpl)
 
-                        usecInventory.items.TacticalVest.push(_tpl)
-                        bearInventory.items.TacticalVest.push(_tpl)
-
-                        usecInventory.items.SecuredContainer.push(_tpl)
-                        bearInventory.items.SecuredContainer.push(_tpl)
+                        // usecInventory.items.SecuredContainer.push(_tpl)
+                        // bearInventory.items.SecuredContainer.push(_tpl)
                     } else {
                         console.log(item._name, " likely has the incorrect calibre: ", calibre)
                     }
@@ -162,10 +167,10 @@ export default function ProgressionChanges(
 
                 switch (true) {
                     // If large magazine
-                    case checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50:
-                        tradersMasterList[4].add(_tpl)
+                    case checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 39:
+                        // tradersMasterList[4].add(_tpl)
 
-                        addToModsObject(mods, _tpl, items, 4)
+                        // addToModsObject(mods, _tpl, items, 4)
 
                         break;
                     // Check if its a quest unlocked trade    
@@ -205,13 +210,18 @@ export default function ProgressionChanges(
                         }
                         break;
                 }
-                if (loyaltyLevel !== 4) {
-                    buildOutModsObject(_tpl, items, usecInventory)
-                    buildOutModsObject(_tpl, items, bearInventory)
-                }
+                // if (loyaltyLevel !== 4) {
+
+                // }
             }
         })
     })
+
+    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]])
+
+    buildWeaponSightWhitelist(items, botConfig, tradersMasterList)
+    buildOutModsObject(combinedNumList, items, usecInventory, botConfig)
+    buildOutModsObject(combinedNumList, items, bearInventory, botConfig)
 
     setupMods(mods)
 
@@ -247,42 +257,33 @@ export default function ProgressionChanges(
         })
     })
 
+
+
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment) {
         if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = []
+        if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.mod_scope) botConfig.equipment.pmc.blacklist[0].equipment.mod_scope = []
+        if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.mod_handguard) botConfig.equipment.pmc.blacklist[0].equipment.mod_handguard = []
+        if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.Headwear) botConfig.equipment.pmc.blacklist[0].equipment.Headwear = []
         botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon.push("624c0b3340357b5f566e8766", "624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709")
+        botConfig.equipment.pmc.blacklist[0].equipment.mod_scope.push("544a3d0a4bdc2d1b388b4567")
+        botConfig.equipment.pmc.blacklist[0].equipment.mod_handguard.push("5a0c59791526d8dba737bba7")
+        botConfig.equipment.pmc.blacklist[0].equipment.Headwear.push("5c066ef40db834001966a595")
     }
 
     setWhitelists(items, botConfig, tradersMasterList, mods)
     setWeightingAdjustments(items, botConfig, tradersMasterList, mods)
     buildInitialRandomization(items, botConfig, tradersMasterList)
-    buildWeaponSightWhitelist(items, botConfig, tradersMasterList)
+
     // buildBlacklist(items, botConfig, mods)
 
-    //Fix assault
-    botConfig.equipment.assault.randomisation = [{
-        "levelRange": {
-            "min": 1,
-            "max": 100
-        },
-        "generation": {
-            "grenades": {
-                "min": 0,
-                "max": 1,
-                "whitelist": [
-                    "5710c24ad2720bc3458b45a3",
-                    "58d3db5386f77426186285a0",
-                    "5a0c27731526d80618476ac4",
-                    "619256e5f8af2c1a4e1f5d92"
-                ]
-            },
-            "stims": {
-                "min": 0,
-                "max": 0,
-            }
-        },
-    }] as any
 
-    // console.log(JSON.stringify(botConfig.equipment.pmc))
+    //Fix otherBotTypes
+    Object.keys(advancedConfig.otherBotTypes).forEach(botType => {
+        botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig.otherBotTypes[botType] }
+    })
+
+    // 544a3d0a4bdc2d1b388b4567
+    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0]))
     // console.log(JSON.stringify(botConfig.equipment.pmc))
 }
 

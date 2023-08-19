@@ -4,9 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_json_1 = __importDefault(require("../config/config.json"));
+const advancedConfig_json_1 = __importDefault(require("../config/advancedConfig.json"));
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
+    //Todo: 
+    // rifle scopes on assault weapons? ring scope mount fix?
     const databaseServer = container.resolve("DatabaseServer");
     const configServer = container.resolve("ConfigServer");
     const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
@@ -18,6 +21,7 @@ function ProgressionChanges(container) {
     const bearInventory = tables.bots.types.bear.inventory;
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
+    // console.log(JSON.stringify(bearInventory))
     const usecAppearance = tables.bots.types.usec.appearance;
     const bearAppearance = tables.bots.types.bear.appearance;
     botConfig.pmc.looseWeaponInBackpackChancePercent = 1;
@@ -34,10 +38,11 @@ function ProgressionChanges(container) {
     const tradersToExclude = [
         "Unknown",
         "caretaker",
-        'Fence'
+        'Fence',
+        ...config_json_1.default.customTradersToExclude
     ];
     const traderList = Object.values(traders).filter(({ base }) => {
-        if (config_json_1.default.addCustomTraders) {
+        if (config_json_1.default.addCustomTraderItems) {
             return !tradersToExclude.includes(base.nickname);
         }
         return tradersToInclude.includes(base.nickname);
@@ -57,10 +62,12 @@ function ProgressionChanges(container) {
         if (!tradItems || !nickname)
             return;
         // if (index === 0) console.log(JSON.stringify(questassort))
-        if (config_json_1.default.addCustomTraders && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
+        if (config_json_1.default.addCustomTraderItems && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`);
         }
         tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
+            if (utils_1.blacklistedMods.has(_tpl))
+                return; //Remove blacklisted items
             const item = items[_tpl];
             if (!item)
                 return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
@@ -85,14 +92,14 @@ function ProgressionChanges(container) {
                             { ...usecInventory.Ammo[calibre] || {}, [_tpl]: 1 };
                         bearInventory.Ammo[calibre] =
                             { ...bearInventory.Ammo[calibre] || {}, [_tpl]: 1 };
-                        usecInventory.items.Pockets.push(_tpl);
-                        bearInventory.items.Pockets.push(_tpl);
-                        usecInventory.items.Backpack.push(_tpl);
-                        bearInventory.items.Backpack.push(_tpl);
-                        usecInventory.items.TacticalVest.push(_tpl);
-                        bearInventory.items.TacticalVest.push(_tpl);
-                        usecInventory.items.SecuredContainer.push(_tpl);
-                        bearInventory.items.SecuredContainer.push(_tpl);
+                        // usecInventory.items.Pockets.push(_tpl)
+                        // bearInventory.items.Pockets.push(_tpl)
+                        // usecInventory.items.Backpack.push(_tpl)
+                        // bearInventory.items.Backpack.push(_tpl)
+                        // usecInventory.items.TacticalVest.push(_tpl)
+                        // bearInventory.items.TacticalVest.push(_tpl)
+                        // usecInventory.items.SecuredContainer.push(_tpl)
+                        // bearInventory.items.SecuredContainer.push(_tpl)
                     }
                     else {
                         console.log(item._name, " likely has the incorrect calibre: ", calibre);
@@ -127,9 +134,9 @@ function ProgressionChanges(container) {
                 const barterSchemeRef = barter_scheme[_id] || barter_scheme[parentId];
                 switch (true) {
                     // If large magazine
-                    case (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 50:
-                        tradersMasterList[4].add(_tpl);
-                        (0, utils_1.addToModsObject)(mods, _tpl, items, 4);
+                    case (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 39:
+                        // tradersMasterList[4].add(_tpl)
+                        // addToModsObject(mods, _tpl, items, 4)
                         break;
                     // Check if its a quest unlocked trade    
                     case !!questassort.success[_id]:
@@ -165,13 +172,15 @@ function ProgressionChanges(container) {
                         }
                         break;
                 }
-                if (loyaltyLevel !== 4) {
-                    (0, utils_1.buildOutModsObject)(_tpl, items, usecInventory);
-                    (0, utils_1.buildOutModsObject)(_tpl, items, bearInventory);
-                }
+                // if (loyaltyLevel !== 4) {
+                // }
             }
         });
     });
+    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]]);
+    (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
+    (0, utils_1.buildOutModsObject)(combinedNumList, items, usecInventory, botConfig);
+    (0, utils_1.buildOutModsObject)(combinedNumList, items, bearInventory, botConfig);
     (0, utils_1.setupMods)(mods);
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
@@ -200,37 +209,27 @@ function ProgressionChanges(container) {
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment) {
         if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon)
             botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = [];
+        if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.mod_scope)
+            botConfig.equipment.pmc.blacklist[0].equipment.mod_scope = [];
+        if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.mod_handguard)
+            botConfig.equipment.pmc.blacklist[0].equipment.mod_handguard = [];
+        if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.Headwear)
+            botConfig.equipment.pmc.blacklist[0].equipment.Headwear = [];
         botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon.push("624c0b3340357b5f566e8766", "624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709");
+        botConfig.equipment.pmc.blacklist[0].equipment.mod_scope.push("544a3d0a4bdc2d1b388b4567");
+        botConfig.equipment.pmc.blacklist[0].equipment.mod_handguard.push("5a0c59791526d8dba737bba7");
+        botConfig.equipment.pmc.blacklist[0].equipment.Headwear.push("5c066ef40db834001966a595");
     }
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
-    (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
     // buildBlacklist(items, botConfig, mods)
-    //Fix assault
-    botConfig.equipment.assault.randomisation = [{
-            "levelRange": {
-                "min": 1,
-                "max": 100
-            },
-            "generation": {
-                "grenades": {
-                    "min": 0,
-                    "max": 1,
-                    "whitelist": [
-                        "5710c24ad2720bc3458b45a3",
-                        "58d3db5386f77426186285a0",
-                        "5a0c27731526d80618476ac4",
-                        "619256e5f8af2c1a4e1f5d92"
-                    ]
-                },
-                "stims": {
-                    "min": 0,
-                    "max": 0,
-                }
-            },
-        }];
-    // console.log(JSON.stringify(botConfig.equipment.pmc))
+    //Fix otherBotTypes
+    Object.keys(advancedConfig_json_1.default.otherBotTypes).forEach(botType => {
+        botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig_json_1.default.otherBotTypes[botType] };
+    });
+    // 544a3d0a4bdc2d1b388b4567
+    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0]))
     // console.log(JSON.stringify(botConfig.equipment.pmc))
 }
 exports.default = ProgressionChanges;

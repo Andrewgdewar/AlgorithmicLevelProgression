@@ -4,7 +4,10 @@
     "leveledClothing": true,
     "questUnlockedItemsShifted": true,
     "tradedItemsShifted": true,
-    "addCustomTraders": true,
+    "addCustomTraderItems": false,
+    "customTradersToExclude": [
+        "insertTheTraderNameToIgnoreTheirItems"
+    ],
     "levelRange": {
         "1": {
             "min": 1,
@@ -49,5 +52,6 @@
             7
         ]
     },
+    "equipmentRandomness": 30,
     "debug": false
 }
