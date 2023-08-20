@@ -16,7 +16,8 @@ const { author, name: packageName, version } = require("./package.json");
 
 // Generate the name of the package, stripping out all non-alphanumeric characters in the 'author' and 'name'.
 const modName = `${author.replace(/[^a-z0-9]/gi, "")}-${packageName.replace(/[^a-z0-9]/gi, "")}-${version}`;
-console.log(`Generated package name: ${modName}`);
+const modNameWithoutVersion = `${author.replace(/[^a-z0-9]/gi, "")}-${packageName.replace(/[^a-z0-9]/gi, "")}`;
+console.log(`Generated package name: ${modNameWithoutVersion}`);
 
 // Delete the old build directory and compressed package file.
 fs.rmSync(`${__dirname}/dist`, { force: true, recursive: true });
@@ -47,19 +48,19 @@ const exclude = glob.sync(`{${ignoreList.join(",")}}`, { realpath: true, dot: tr
 
 // For some reason these basic-bitch functions won't allow us to copy a directory into itself, so we have to resort to
 // using a temporary directory, like an idiot. Excuse the normalize spam; some modules cross-platform, some don't...
-fs.copySync(__dirname, path.normalize(`${__dirname}/../~${modName}`), {
+fs.copySync(__dirname, path.normalize(`${__dirname}/../~${modNameWithoutVersion}`), {
     filter: (filePath) => {
         return !exclude.includes(filePath);
     }
 });
-fs.moveSync(path.normalize(`${__dirname}/../~${modName}`), path.normalize(`${__dirname}/${modName}`), { overwrite: true });
-fs.copySync(path.normalize(`${__dirname}/${modName}`), path.normalize(`${__dirname}/dist`));
+fs.moveSync(path.normalize(`${__dirname}/../~${modNameWithoutVersion}`), path.normalize(`${__dirname}/${modNameWithoutVersion}`), { overwrite: true });
+fs.copySync(path.normalize(`${__dirname}/${modNameWithoutVersion}`), path.normalize(`${__dirname}/dist`));
 console.log("Build files copied.");
 
 // Compress the files for easy distribution. The compressed file is saved into the dist directory. When uncompressed we
 // need to be sure that it includes a directory that the user can easily copy into their game mods directory.
 zip({
-    source: modName,
+    source: modNameWithoutVersion,
     destination: `dist/${modName}.zip`,
     cwd: __dirname
 }).catch(function (err) {
@@ -68,6 +69,6 @@ zip({
     console.log(`Compressed mod package to: /dist/${modName}.zip`);
 
     // Now that we're done with the compression we can delete the temporary build directory.
-    fs.rmSync(`${__dirname}/${modName}`, { force: true, recursive: true });
+    fs.rmSync(`${__dirname}/${modNameWithoutVersion}`, { force: true, recursive: true });
     console.log("Build successful! your zip file has been created and is ready to be uploaded to hub.sp-tarkov.com/files/");
 });
