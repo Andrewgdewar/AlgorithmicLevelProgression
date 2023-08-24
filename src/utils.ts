@@ -254,9 +254,11 @@ export const getBackPackInternalGridValue = ({
         }
     })
 
-    total = Math.round(((total * 0.5) - (Weight * 5)) - ((Grids.length - 1) * 3))
-
-    // console.log(_name, _id, Grids.length, " - ", total)
+    total = Math.round(((total) - (Weight * 5)) - ((Grids.length - 1) * 3))
+    if (["6034d103ca006d2dca39b3f0", "6038d614d10cbf667352dd44"].includes(_id)) {
+        total = Math.round(total * 0.7)
+    }
+    // console.log(_name, _id, " - ", (total > 1 ? total : 1) + 20)
     return (total > 1 ? total : 1) + 30
 }
 
@@ -491,7 +493,6 @@ export const setWeightingAdjustments = (
         //     mergeDeep(combinedWeightingAdjustmentItem, key)
         // }
         // mergeDeep(combinedWeightingAdjustmentItem, weight[index])
-
 
         finalList.forEach(id => {
             const item = items[id]
@@ -737,18 +738,18 @@ const weaponsToAllowAllMods = { "5ae08f0a5acfc408fb1398a1": true }
 
 const checkForScopeTypeRecursive = (modId: string, items: Record<string, ITemplateItem>, weaponId: string, mods: Mods) => {
     // if (memo[modId] !== undefined) return memo[modId]
-    if (checkParentRecursive(items[modId]._parent, items, [sightParent])) {
+    if (checkParentRecursive(items[modId]?._parent, items, [sightParent])) {
         const allowedSightParents = weaponTypes[items[weaponId]?._parent]
         if (allowedSightParents.length === 0) {
             // memo[modId] = false
             return false
         }
         // console.log(allowedSightParents)
-        const result = checkParentRecursive(items[modId]._parent, items, allowedSightParents)
+        const result = checkParentRecursive(items[modId]?._parent, items, allowedSightParents)
         // memo[modId] = result
         return result
     } else {
-        const isMount = items[items[modId]._parent]._id === mountParent
+        const isMount = items[items[modId]?._parent]._id === mountParent
         if (isMount) {
             const newModObject = {}
             let pass = true
@@ -871,17 +872,17 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
         const newItem = {
             levelRange: range,
             equipment: {
-                "Headwear": [95, 95, 99, 99][index],
+                "Headwear": [75, 85, 99, 99][index],
                 "Earpiece": [50, 65, 90, 100][index],
                 "FaceCover": [15, 25, 35, 45][index],
                 "ArmorVest": [99, 99, 99, 99][index],
-                "ArmBand": 40,
+                "ArmBand": [25, 45, 59, 69][index],
                 "TacticalVest": [96, 96, 99, 99][index],
                 "Pockets": [25, 45, 59, 69][index],
-                "SecuredContainer": 99,
-                "SecondPrimaryWeapon": 1,
-                "Scabbard": 5,
-                "FirstPrimaryWeapon": [85, 95, 99, 99][index],
+                "SecuredContainer": 100,
+                "SecondPrimaryWeapon": [0, 0, 1, 2][index],
+                "Scabbard": [1, 5, 5, 10][index],
+                "FirstPrimaryWeapon": [85, 98, 99, 99][index],
                 "Holster": [1, 5, 10, 10][index],
                 "Eyewear": [5, 15, 26, 49][index],
                 "Backpack": [70, 80, 90, 99][index],
@@ -957,45 +958,45 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 // "mod_tactical_003"
             ],
             "mods": {
-                // "mod_barrel": [15, 20, 25, 25][index],
-                // "mod_bipod": [1, 10, 5, 11][index],
+                "mod_barrel": [15, 20, 25, 25][index],
+                "mod_bipod": [1, 10, 5, 11][index],
                 "mod_flashlight": [35, 50, 70, 90][index],
-                "mod_foregrip": [15, 40, 70, 90][index],
-                "mod_handguard": [35, 50, 70, 90][index],
+                "mod_foregrip": [10, 40, 70, 90][index],
+                "mod_handguard": [15, 40, 70, 90][index],
                 "mod_launcher": [0, 0, 5, 15][index],
                 "mod_magazine": [50, 60, 80, 90][index],
                 "mod_magazine_000": [0, 0, 25, 35][index],
-                "mod_mount": [80, 90, 100, 100][index],
-                "mod_mount_000": [80, 90, 100, 100][index],
-                "mod_mount_001": [80, 90, 100, 100][index],
-                "mod_mount_002": [80, 90, 100, 100][index],
-                "mod_mount_003": [80, 90, 100, 100][index],
-                "mod_mount_004": [80, 90, 100, 100][index],
-                "mod_mount_005": [80, 90, 100, 100][index],
-                "mod_mount_006": [80, 90, 100, 100][index],
-                "mod_muzzle": [20, 40, 75, 85][index],
-                "mod_muzzle_000": [20, 40, 75, 85][index],
-                "mod_muzzle_001": [20, 40, 75, 85][index],
+                "mod_mount": [60, 90, 100, 100][index],
+                "mod_mount_000": [50, 65, 85, 90][index],
+                "mod_mount_001": [50, 65, 85, 90][index],
+                "mod_mount_002": [50, 65, 85, 90][index],
+                "mod_mount_003": [50, 65, 85, 90][index],
+                "mod_mount_004": [50, 65, 85, 90][index],
+                "mod_mount_005": [50, 65, 85, 90][index],
+                "mod_mount_006": [50, 65, 85, 90][index],
+                "mod_muzzle": [10, 30, 65, 85][index],
+                "mod_muzzle_000": [10, 30, 65, 85][index],
+                "mod_muzzle_001": [10, 30, 65, 85][index],
                 "mod_equipment": [15, 25, 25, 35][index],
                 "mod_equipment_000": [15, 25, 25, 35][index],
                 "mod_equipment_001": [15, 25, 25, 35][index],
                 "mod_equipment_002": [15, 25, 25, 35][index],
-                "mod_pistol_grip_akms": [15, 25, 25, 35][index],
-                "mod_pistol_grip": [15, 25, 25, 35][index],
+                "mod_pistol_grip_akms": [1, 15, 25, 35][index],
+                "mod_pistol_grip": [1, 15, 25, 35][index],
                 "mod_scope": [90, 95, 100, 100][index],
                 "mod_scope_000": [90, 95, 100, 100][index],
                 "mod_scope_001": [90, 95, 100, 100][index],
                 "mod_scope_002": [90, 95, 100, 100][index],
                 "mod_scope_003": [90, 95, 100, 100][index],
-                "mod_tactical": [25, 30, 35, 50][index],
-                "mod_tactical_2": [25, 30, 35, 50][index],
-                "mod_tactical001": [25, 30, 35, 50][index],
-                "mod_tactical002": [25, 30, 35, 50][index],
-                "mod_tactical_000": [25, 30, 35, 50][index],
-                "mod_tactical_001": [25, 30, 35, 50][index],
-                "mod_tactical_002": [25, 30, 35, 50][index],
-                "mod_tactical_003": [25, 30, 35, 50][index],
-                "mod_charge": [25, 30, 35, 50][index],
+                "mod_tactical": [15, 30, 35, 50][index],
+                "mod_tactical_2": [15, 30, 35, 50][index],
+                "mod_tactical001": [15, 30, 35, 50][index],
+                "mod_tactical002": [15, 30, 35, 50][index],
+                "mod_tactical_000": [15, 30, 35, 50][index],
+                "mod_tactical_001": [15, 30, 35, 50][index],
+                "mod_tactical_002": [15, 30, 35, 50][index],
+                "mod_tactical_003": [15, 30, 35, 50][index],
+                "mod_charge": [10, 20, 35, 50][index],
                 "mod_stock": 99,
                 "mod_stock_000": 99,
                 // "mod_stock_001": [1, 10, 15, 20][index],
@@ -1004,7 +1005,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 // "mod_sight_rear": 50,
                 // "mod_reciever": 100,
                 // "mod_gas_block": [1, 10, 15, 20][index],
-                "mod_pistolgrip": [5, 15, 25, 35][index],
+                "mod_pistolgrip": [1, 15, 25, 35][index],
                 // "mod_trigger": 1,
                 // "mod_hammer": 1,
                 // "mod_catch": 1
