@@ -1,32 +1,46 @@
-import { IBotConfig } from './../types/models/spt/config/IBotConfig.d';
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { DependencyContainer } from "tsyringe";
-import config from "../config/config.json";
-import advancedConfig from "../config/advancedConfig.json";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { DependencyContainer } from 'tsyringe';
+
+import { ConfigTypes } from '@spt-aki/models/enums/ConfigTypes';
+import { ConfigServer } from '@spt-aki/servers/ConfigServer';
+import { DatabaseServer } from '@spt-aki/servers/DatabaseServer';
+
+import advancedConfig from '../config/advancedConfig.json';
+import config from '../config/config.json';
+import { IBotConfig } from '../types/models/spt/config/IBotConfig.d';
 import {
+    addToModsObject,
     AmmoParent,
-    TradersMasterList,
     barterParent,
+    blacklistedItems,
     buildClothingWeighting,
+    buildInitialBearAppearance,
     buildInitialRandomization,
+    buildInitialUsecAppearance,
     buildOutModsObject,
-    checkParentRecursive, deDupeArr,
-    getEquipmentType, keyParent, magParent, medsParent, moneyParent, numList,
+    buildWeaponSightWhitelist,
+    checkParentRecursive,
+    cloneDeep,
+    deDupeArr,
+    getEquipmentType,
+    keyParent,
+    magParent,
+    medsParent,
+    moneyParent,
+    numList,
     reduceAmmoChancesTo1,
     reduceEquipmentChancesTo1,
-    setWeightingAdjustments, setWhitelists, setupBaseWhiteList, buildInitialBearAppearance, buildInitialUsecAppearance, setupMods, buildWeaponSightWhitelist, addToModsObject, blacklistedMods
+    setupBaseWhiteList,
+    setupMods,
+    setWeightingAdjustments,
+    setWhitelists,
+    TradersMasterList
 } from './utils';
-
 
 export default function ProgressionChanges(
     container: DependencyContainer
 ): undefined {
     //Todo: 
     // rifle scopes on assault weapons? ring scope mount fix?
-
-
     const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
     const configServer = container.resolve<ConfigServer>("ConfigServer");
     const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
@@ -46,7 +60,7 @@ export default function ProgressionChanges(
 
     botConfig.pmc.looseWeaponInBackpackChancePercent = 1
     botConfig.pmc.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 }
-
+    botConfig.equipment.assault = cloneDeep(botConfig.equipment.assault)
     const tradersToInclude = [
         'Prapor',
         'Therapist',
@@ -96,7 +110,7 @@ export default function ProgressionChanges(
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`)
         }
         tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
-            if (blacklistedMods.has(_tpl)) return; //Remove blacklisted items
+            if (blacklistedItems.has(_tpl)) return; //Remove blacklisted items
             const item = items[_tpl]
             if (!item) return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const parent = item._parent
@@ -221,7 +235,7 @@ export default function ProgressionChanges(
 
     buildWeaponSightWhitelist(items, botConfig, tradersMasterList)
     buildOutModsObject(combinedNumList, items, usecInventory, botConfig)
-    buildOutModsObject(combinedNumList, items, bearInventory, botConfig)
+    bearInventory.mods = cloneDeep(usecInventory.mods)
 
     setupMods(mods)
 

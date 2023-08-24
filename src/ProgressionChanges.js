@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_json_1 = __importDefault(require("../config/config.json"));
-const advancedConfig_json_1 = __importDefault(require("../config/advancedConfig.json"));
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
+const advancedConfig_json_1 = __importDefault(require("../config/advancedConfig.json"));
+const config_json_1 = __importDefault(require("../config/config.json"));
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
     //Todo: 
@@ -26,6 +26,7 @@ function ProgressionChanges(container) {
     const bearAppearance = tables.bots.types.bear.appearance;
     botConfig.pmc.looseWeaponInBackpackChancePercent = 1;
     botConfig.pmc.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 };
+    botConfig.equipment.assault = (0, utils_1.cloneDeep)(botConfig.equipment.assault);
     const tradersToInclude = [
         'Prapor',
         'Therapist',
@@ -66,7 +67,7 @@ function ProgressionChanges(container) {
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`);
         }
         tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
-            if (utils_1.blacklistedMods.has(_tpl))
+            if (utils_1.blacklistedItems.has(_tpl))
                 return; //Remove blacklisted items
             const item = items[_tpl];
             if (!item)
@@ -180,7 +181,7 @@ function ProgressionChanges(container) {
     const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]]);
     (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
     (0, utils_1.buildOutModsObject)(combinedNumList, items, usecInventory, botConfig);
-    (0, utils_1.buildOutModsObject)(combinedNumList, items, bearInventory, botConfig);
+    bearInventory.mods = (0, utils_1.cloneDeep)(usecInventory.mods);
     (0, utils_1.setupMods)(mods);
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
