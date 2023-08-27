@@ -26,8 +26,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildWeaponSightWhitelist = exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addToModsObject = exports.SightType = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.keyParent = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = void 0;
-exports.blacklistedItems = exports.buildBlacklist = void 0;
+exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addKeysToPockets = exports.addToModsObject = exports.SightType = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.keyParent = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = void 0;
+exports.blacklistedItems = exports.buildBlacklist = exports.buildWeaponSightWhitelist = void 0;
 const advancedConfig_json_1 = __importDefault(require("../config/advancedConfig.json"));
 const config_json_1 = __importStar(require("../config/config.json"));
 exports.headwearParent = "5a341c4086f77401f2541505";
@@ -113,6 +113,16 @@ const addToModsObject = (mods, _tpl, items, loyaltyLevel, slotId = "") => {
     }
 };
 exports.addToModsObject = addToModsObject;
+const addKeysToPockets = (items, inventory) => {
+    Object.keys(items).forEach((id) => {
+        if ((0, exports.checkParentRecursive)(id, items, [exports.keyParent])) {
+            inventory.items.Pockets.push(id);
+            inventory.items.Backpack.push(id);
+            inventory.items.TacticalVest.push(id);
+        }
+    });
+};
+exports.addKeysToPockets = addKeysToPockets;
 const setupMods = (mods) => {
     Object.keys(mods).forEach(numstr => {
         const num = Number(numstr);
@@ -995,7 +1005,10 @@ const buildBlacklist = (items, botConfig, mods) => {
     });
 };
 exports.buildBlacklist = buildBlacklist;
+//skull lock
 exports.blacklistedItems = new Set([
+    "544a3d0a4bdc2d1b388b4567",
+    "5a16bb52fcdbcb001a3b00dc",
     "5a1eaa87fcdbcb001865f75e",
     "5d1b5e94d7ad1a2b865a96b0",
     "5c066ef40db834001966a595",

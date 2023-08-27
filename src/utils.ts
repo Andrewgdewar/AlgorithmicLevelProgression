@@ -22,7 +22,7 @@ export const headwearParent = "5a341c4086f77401f2541505"
 export const AmmoParent = "5485a8684bdc2da71d8b4567"
 export const magParent = "5448bc234bdc2d3c308b4569"
 export const barterParent = "5448eb774bdc2d0a728b4567"
-export const keyParent = "543be5e94bdc2df1348b4568"
+export const keyMechanical = "5c99f98d86f7745c314214b3"
 export const medsParent = "543be5664bdc2dd4348b4569"
 export const modParent = "5448fe124bdc2da5018b4567"
 export const masterMod = "55802f4a4bdc2ddb688b4569"
@@ -106,6 +106,16 @@ export const addToModsObject = (
             break;
     }
 
+}
+
+export const addKeysToPockets = (items: Record<string, ITemplateItem>, inventory: Inventory) => {
+    Object.keys(items).forEach((id) => {
+        if (checkParentRecursive(id, items, [keyMechanical])) {
+            inventory.items.Pockets.push(id)
+            inventory.items.Backpack.push(id)
+            inventory.items.TacticalVest.push(id)
+        }
+    })
 }
 
 

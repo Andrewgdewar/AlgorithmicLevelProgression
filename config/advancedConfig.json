@@ -59,9 +59,9 @@
                         "Headwear": 40,
                         "Earpiece": 10,
                         "FaceCover": 25,
-                        "ArmorVest": 90,
+                        "ArmorVest": 60,
                         "ArmBand": 5,
-                        "TacticalVest": 98,
+                        "TacticalVest": 100,
                         "Pockets": 25,
                         "SecondPrimaryWeapon": 1,
                         "Scabbard": 35,
@@ -78,7 +78,7 @@
                         "mod_sight_front": 50,
                         "mod_sight_rear": 50,
                         "mod_flashlight": 50,
-                        "mod_muzzle": 40,
+                        "mod_muzzle": 5,
                         "mod_tactical": 10,
                         "mod_handguard": 0,
                         "mod_charge": 0,
@@ -130,12 +130,15 @@
                 {
                     "levelRange": {
                         "min": 1,
-                        "max": 100
+                        "max": 99
                     },
                     "equipment": {
                         "mod_magazine": [
                             "5b1fb3e15acfc4001637f068",
                             "59e5f5a486f7746c530b3ce2"
+                        ],
+                        "mod_stock_akms": [
+                            "5a0c59791526d8dba737bba7"
                         ],
                         "mod_stock": [
                             "5a0c59791526d8dba737bba7",

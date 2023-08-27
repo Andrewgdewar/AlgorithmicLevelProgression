@@ -99,12 +99,16 @@ function ProgressionChanges(container) {
                         // bearInventory.items.Backpack.push(_tpl)
                         // usecInventory.items.TacticalVest.push(_tpl)
                         // bearInventory.items.TacticalVest.push(_tpl)
-                        // usecInventory.items.SecuredContainer.push(_tpl)
-                        // bearInventory.items.SecuredContainer.push(_tpl)
+                        usecInventory.items.SecuredContainer.push(_tpl);
+                        bearInventory.items.SecuredContainer.push(_tpl);
                     }
                     else {
                         console.log(item._name, " likely has the incorrect calibre: ", calibre);
                     }
+                    break;
+                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.magParent]):
+                    usecInventory.items.SecuredContainer.push(_tpl);
+                    bearInventory.items.SecuredContainer.push(_tpl);
                     break;
                 // case equipmentType === "mod_scope":
                 //     break;
@@ -173,8 +177,6 @@ function ProgressionChanges(container) {
                         }
                         break;
                 }
-                // if (loyaltyLevel !== 4) {
-                // }
             }
         });
     });
@@ -183,6 +185,11 @@ function ProgressionChanges(container) {
     (0, utils_1.buildOutModsObject)(combinedNumList, items, usecInventory, botConfig);
     bearInventory.mods = (0, utils_1.cloneDeep)(usecInventory.mods);
     (0, utils_1.setupMods)(mods);
+    if (config_json_1.default.addAllKeysToLootList) {
+        (0, utils_1.addKeysToPockets)(items, bearInventory);
+        (0, utils_1.addKeysToPockets)(items, tables.bots.types.assault.inventory);
+        (0, utils_1.addKeysToPockets)(items, usecInventory);
+    }
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
     bearInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(bearInventory.items.SecuredContainer);
@@ -218,7 +225,7 @@ function ProgressionChanges(container) {
             botConfig.equipment.pmc.blacklist[0].equipment.Headwear = [];
         botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon.push("624c0b3340357b5f566e8766", "624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709");
         botConfig.equipment.pmc.blacklist[0].equipment.mod_scope.push("544a3d0a4bdc2d1b388b4567");
-        botConfig.equipment.pmc.blacklist[0].equipment.mod_handguard.push("5a0c59791526d8dba737bba7");
+        botConfig.equipment.pmc.blacklist[0].equipment.mod_stock.push("5a0c59791526d8dba737bba7");
         botConfig.equipment.pmc.blacklist[0].equipment.Headwear.push("5c066ef40db834001966a595");
     }
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList, mods);
@@ -232,6 +239,7 @@ function ProgressionChanges(container) {
     // 544a3d0a4bdc2d1b388b4567
     // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0]))
     // console.log(JSON.stringify(botConfig.equipment.pmc))
+    config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;
 // // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<

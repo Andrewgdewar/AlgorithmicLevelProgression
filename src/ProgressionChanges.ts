@@ -8,6 +8,7 @@ import advancedConfig from '../config/advancedConfig.json';
 import config from '../config/config.json';
 import { IBotConfig } from '../types/models/spt/config/IBotConfig.d';
 import {
+    addKeysToPockets,
     addToModsObject,
     AmmoParent,
     barterParent,
@@ -22,7 +23,7 @@ import {
     cloneDeep,
     deDupeArr,
     getEquipmentType,
-    keyParent,
+    keyMechanical,
     magParent,
     medsParent,
     moneyParent,
@@ -118,7 +119,7 @@ export default function ProgressionChanges(
             const equipmentType = getEquipmentType(parent, items)
 
             switch (true) {
-                case checkParentRecursive(parent, items, [barterParent, keyParent, medsParent, moneyParent]):
+                case checkParentRecursive(parent, items, [barterParent, keyMechanical, medsParent, moneyParent]):
                     usecInventory.items.Pockets.push(_tpl)
                     bearInventory.items.Pockets.push(_tpl)
 
@@ -147,12 +148,16 @@ export default function ProgressionChanges(
                         // usecInventory.items.TacticalVest.push(_tpl)
                         // bearInventory.items.TacticalVest.push(_tpl)
 
-                        // usecInventory.items.SecuredContainer.push(_tpl)
-                        // bearInventory.items.SecuredContainer.push(_tpl)
+                        usecInventory.items.SecuredContainer.push(_tpl)
+                        bearInventory.items.SecuredContainer.push(_tpl)
                     } else {
                         console.log(item._name, " likely has the incorrect calibre: ", calibre)
                     }
                     break
+                case checkParentRecursive(parent, items, [magParent]):
+                    usecInventory.items.SecuredContainer.push(_tpl)
+                    bearInventory.items.SecuredContainer.push(_tpl)
+                    break;
                 // case equipmentType === "mod_scope":
                 //     break;
                 // Check if revolver shotgun
@@ -224,20 +229,24 @@ export default function ProgressionChanges(
                         }
                         break;
                 }
-                // if (loyaltyLevel !== 4) {
-
-                // }
             }
         })
     })
 
     const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]])
 
+
     buildWeaponSightWhitelist(items, botConfig, tradersMasterList)
     buildOutModsObject(combinedNumList, items, usecInventory, botConfig)
     bearInventory.mods = cloneDeep(usecInventory.mods)
 
     setupMods(mods)
+
+    if (config.addAllKeysToLootList) {
+        addKeysToPockets(items, bearInventory)
+        addKeysToPockets(items, tables.bots.types.assault.inventory)
+        addKeysToPockets(items, usecInventory)
+    }
 
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = deDupeArr(usecInventory.items.SecuredContainer)
@@ -280,7 +289,7 @@ export default function ProgressionChanges(
         if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.Headwear) botConfig.equipment.pmc.blacklist[0].equipment.Headwear = []
         botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon.push("624c0b3340357b5f566e8766", "624c0b3340357b5f566e8766", "6217726288ed9f0845317459", "62389be94d5d474bf712e709")
         botConfig.equipment.pmc.blacklist[0].equipment.mod_scope.push("544a3d0a4bdc2d1b388b4567")
-        botConfig.equipment.pmc.blacklist[0].equipment.mod_handguard.push("5a0c59791526d8dba737bba7")
+        botConfig.equipment.pmc.blacklist[0].equipment.mod_stock.push("5a0c59791526d8dba737bba7")
         botConfig.equipment.pmc.blacklist[0].equipment.Headwear.push("5c066ef40db834001966a595")
     }
 
@@ -299,6 +308,7 @@ export default function ProgressionChanges(
     // 544a3d0a4bdc2d1b388b4567
     // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0]))
     // console.log(JSON.stringify(botConfig.equipment.pmc))
+    config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }
 
 

@@ -5,6 +5,7 @@
     "questUnlockedItemsShifted": true,
     "tradedItemsShifted": true,
     "addCustomTraderItems": false,
+    "addAllKeysToLootList": true,
     "customTradersToExclude": [
         "insertTheTraderNameToIgnoreTheirItems"
     ],
