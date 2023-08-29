@@ -23,6 +23,11 @@ export const AmmoParent = "5485a8684bdc2da71d8b4567"
 export const magParent = "5448bc234bdc2d3c308b4569"
 export const barterParent = "5448eb774bdc2d0a728b4567"
 export const keyMechanical = "5c99f98d86f7745c314214b3"
+export const stimParent = "5448f3a64bdc2d60728b456a"
+export const painKillerParent = "5448f3a14bdc2d27728b4569"
+export const medicalParent = "5448f3ac4bdc2dce718b4569"
+export const medKitParent = "5448f39d4bdc2d0a728b4568"
+export const FoodDrinkParent = "543be6674bdc2df1348b4569"
 export const medsParent = "543be5664bdc2dd4348b4569"
 export const modParent = "5448fe124bdc2da5018b4567"
 export const masterMod = "55802f4a4bdc2ddb688b4569"
@@ -108,14 +113,17 @@ export const addToModsObject = (
 
 }
 
-export const addKeysToPockets = (items: Record<string, ITemplateItem>, inventory: Inventory) => {
-    Object.keys(items).forEach((id) => {
-        if (checkParentRecursive(id, items, [keyMechanical])) {
+export const addKeysToPockets = (traderItems: Set<string>, items: Record<string, ITemplateItem>, inventory: Inventory) => {
+    traderItems.forEach((id) => {
+        if (id && items[id]?._parent && checkParentRecursive(id, items, [keyMechanical])) {
             inventory.items.Pockets.push(id)
             inventory.items.Backpack.push(id)
             inventory.items.TacticalVest.push(id)
         }
     })
+    inventory.items.Pockets = deDupeArr(inventory.items.Pockets)
+    inventory.items.Backpack = deDupeArr(inventory.items.Backpack)
+    inventory.items.TacticalVest = deDupeArr(inventory.items.TacticalVest)
 }
 
 
@@ -449,7 +457,12 @@ export const setWeightingAdjustments = (
     numList.forEach((num, index) => {
         const loyalty = num;
         const itemList = [...tradersMasterList[loyalty]]
-        const finalList = [...new Set([...itemsForNextLevel[num] || [], ...itemList])]
+        const finalList = [
+            ...new Set([
+                ...itemsForNextLevel[num] || [],
+                ...itemList,
+                ...num === 4 && config.addDangerousBulletsToTier4Bots ? advancedConfig.forbiddenBullets : []
+            ])]
 
         // First edit ammo
         finalList.forEach(id => {
@@ -525,7 +538,9 @@ export const setWeightingAdjustments = (
                     const isFromPreviousLevel = !!itemsForNextLevel[num]?.has(id)
                     const calibre = item._props.Caliber || item._props.ammoCaliber
                     const highestScoringAmmo = getHighestScoringAmmoValue(weight[index].ammo.edit[calibre])
-                    const weaponRating = isFromPreviousLevel ? Math.round(getWeaponWeighting(item, highestScoringAmmo) * 0.5) : getWeaponWeighting(item, highestScoringAmmo)
+                    const weaponRating = isFromPreviousLevel ?
+                        Math.round(getWeaponWeighting(item, highestScoringAmmo) * 0.8) :
+                        getWeaponWeighting(item, highestScoringAmmo)
                     // Check if revolver shotgun
                     if (id === "60db29ce99594040e04c4a27") setWeightItem(weight[index], "FirstPrimaryWeapon", id, weaponRating)
                     else {
@@ -606,28 +621,7 @@ export const setWeightingAdjustments = (
                 })
             })
         })
-
-
-        // if (!!weight[index + 1]) {
-        //     weight[index + 1].ammo = { ...weight[index].ammo }
-        //     weight[index + 1].equipment = { ...weight[index].equipment }
-        // }
     })
-
-    //Make bad weapons worse, better ones better not needed
-    // numList.forEach((num, index) => {
-    //     const weaponList = Object.keys(weight[index].equipment.edit.FirstPrimaryWeapon)
-    //         .sort((a, b) => weight[index].equipment.edit.FirstPrimaryWeapon[b] - weight[index].equipment.edit.FirstPrimaryWeapon[a])
-    //     console.log('Level', num)
-    //     weaponList.forEach((weapId, rank) => {
-    //         console.log(weapId, weight[index].equipment.edit.FirstPrimaryWeapon[weapId])
-    //         // weight[index].equipment.edit.FirstPrimaryWeapon[id] = 1
-    //         // const modifier = (caliberList.length - rank) / caliberList.length
-    //         // weight[index].ammo.edit[caliber][id] = Math.round(weight[index].ammo.edit[caliber][id] * modifier) || 1
-    //     })
-
-    // })
-
 
     // console.log(JSON.stringify(weight))
 }
@@ -766,7 +760,8 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
     numList.forEach((num, index) => {
         const range = levelRange[num]
         const loyalty = num
-        const itemList = [...traderList[loyalty]]
+        const itemList = new Set([...traderList[loyalty]])
+
         const newItem = {
             levelRange: range,
             equipment: {
@@ -786,24 +781,29 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "Backpack": [70, 80, 90, 99][index],
             },
             generation: {
-                "drugs": {
-                    "min": 0,
+                "stims": {
+                    "min": 1,
                     "max": [1, 1, 2, 2][index],
+                    ...{ ...randomizationItems[index - 1]?.generation?.stims?.whitelist ? { whitelist: randomizationItems[index - 1].generation.stims.whitelist } : {} }
+                },
+                "drugs": {
+                    "min": 1,
+                    "max": [1, 2, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
+                },
+                "healing": {
+                    "min": 1,
+                    "max": [2, 2, 2, 2][index],
+                    ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
                 "grenades": {
                     "min": [0, 0, 0, 1][index],
                     "max": [1, 2, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
-                "healing": {
-                    "min": [0, 0, 1, 1][index],
-                    "max": [2, 2, 2, 2][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
-                },
                 "looseLoot": {
-                    "min": [0, 2, 3, 3][index],
-                    "max": [3, 5, 6, 5][index],
+                    "min": [0, 1, 2, 3][index],
+                    "max": [3, 5, 6, 8][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
                 },
                 "magazines": {
@@ -811,11 +811,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     "max": [3, 3, 4, 4][index],
                     "whitelist": botConfig.equipment.pmc.whitelist[index].equipment.mod_magazine
                 },
-                "stims": {
-                    "min": 0,
-                    "max": [0, 1, 1, 2][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.stims?.whitelist ? { whitelist: randomizationItems[index - 1].generation.stims.whitelist } : {} }
-                }
+
             },
             "randomisedWeaponModSlots": [
                 // "mod_barrel",
@@ -915,21 +911,21 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             const item = items[id]
             const parent = item._parent
             switch (true) {
-                case checkParentRecursive(parent, items, ["5448f3a64bdc2d60728b456a"]): //stims
+                case checkParentRecursive(parent, items, num >= 3 ? [painKillerParent, stimParent] : [painKillerParent]): //stims
                     newItem.generation.stims["whitelist"] = [...newItem.generation.stims["whitelist"] || [], id]
                     break;
-                case checkParentRecursive(parent, items, ["5448f3a14bdc2d27728b4569"]): //drugs
+                case checkParentRecursive(parent, items, [medicalParent]): //drugs
                     newItem.generation.drugs["whitelist"] = [...newItem.generation.drugs["whitelist"] || [], id]
+                    break;
+                case checkParentRecursive(parent, items, [medKitParent]): //meds
+                    newItem.generation.healing["whitelist"] = [...newItem.generation.healing["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, ["543be6564bdc2df4348b4568"]): //ThrowWeap
                     if (items[id]._props.ThrowType !== "smoke_grenade") {
                         newItem.generation.grenades["whitelist"] = [...newItem.generation.grenades["whitelist"] || [], id]
                     }
                     break;
-                case checkParentRecursive(parent, items, [medsParent]): //meds
-                    newItem.generation.healing["whitelist"] = [...newItem.generation.healing["whitelist"] || [], id]
-                    break;
-                case checkParentRecursive(parent, items, [barterParent, "543be6674bdc2df1348b4569"]): //FoodDrink
+                case checkParentRecursive(parent, items, [barterParent, FoodDrinkParent]): //FoodDrink/barter
                     newItem.generation.looseLoot["whitelist"] = [...newItem.generation.looseLoot["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, [magParent]):
@@ -1067,6 +1063,8 @@ export const buildBlacklist = (items: Record<string, ITemplateItem>, botConfig: 
 
 //skull lock
 export const blacklistedItems = new Set([
+    ...config.addDangerousBulletsToTier4Bots ? [] : advancedConfig.forbiddenBullets,
+    ...config.customBlacklist,
     "544a3d0a4bdc2d1b388b4567",
     "5a16bb52fcdbcb001a3b00dc", //skull lock
     "5a1eaa87fcdbcb001865f75e", //reap-ir
@@ -1163,9 +1161,6 @@ export const blacklistedItems = new Set([
     "624c0b3340357b5f566e8766",
     "624c0b3340357b5f566e8766",
     "6217726288ed9f0845317459",
-    "62389be94d5d474bf712e709",
-    ...advancedConfig.forbiddenBullets,
-    ...config.customBlacklist,
     //Mosin shorty,
     "5bfd36ad0db834001c38ef66",
     "5bfd36290db834001966869a",
@@ -1246,4 +1241,11 @@ export const blacklistedItems = new Set([
     "5c1bc5af2e221602b412949b",
     //long handgun stock
     "5d1c702ad7ad1a632267f429",
+
+    "620109578d82e67e7911abf2",// signal pistol
+    "62389aaba63f32501b1b444f",// signal ammo
+    "62389ba9a63f32501b1b4451",
+    "62389bc9423ed1685422dc57",
+    "62389be94d5d474bf712e709",
+    "635267f063651329f75a4ee8"
 ])

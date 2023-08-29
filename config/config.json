@@ -5,7 +5,7 @@
     "questUnlockedItemsShifted": true,
     "tradedItemsShifted": true,
     "addCustomTraderItems": false,
-    "addAllKeysToLootList": true,
+    "addDangerousBulletsToTier4Bots": true,
     "customTradersToExclude": [
         "insertTheTraderNameToIgnoreTheirItems"
     ],
@@ -57,6 +57,6 @@
             7
         ]
     },
-    "equipmentRandomness": 20,
+    "equipmentRandomness": 30,
     "debug": false
 }

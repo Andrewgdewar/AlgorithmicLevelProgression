@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addKeysToPockets = exports.addToModsObject = exports.SightType = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.keyParent = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = void 0;
+exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addKeysToPockets = exports.addToModsObject = exports.SightType = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.keyMechanical = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = void 0;
 exports.blacklistedItems = exports.buildBlacklist = exports.buildWeaponSightWhitelist = void 0;
 const advancedConfig_json_1 = __importDefault(require("../config/advancedConfig.json"));
 const config_json_1 = __importStar(require("../config/config.json"));
@@ -34,7 +34,7 @@ exports.headwearParent = "5a341c4086f77401f2541505";
 exports.AmmoParent = "5485a8684bdc2da71d8b4567";
 exports.magParent = "5448bc234bdc2d3c308b4569";
 exports.barterParent = "5448eb774bdc2d0a728b4567";
-exports.keyParent = "543be5e94bdc2df1348b4568";
+exports.keyMechanical = "5c99f98d86f7745c314214b3";
 exports.medsParent = "543be5664bdc2dd4348b4569";
 exports.modParent = "5448fe124bdc2da5018b4567";
 exports.masterMod = "55802f4a4bdc2ddb688b4569";
@@ -113,9 +113,9 @@ const addToModsObject = (mods, _tpl, items, loyaltyLevel, slotId = "") => {
     }
 };
 exports.addToModsObject = addToModsObject;
-const addKeysToPockets = (items, inventory) => {
-    Object.keys(items).forEach((id) => {
-        if ((0, exports.checkParentRecursive)(id, items, [exports.keyParent])) {
+const addKeysToPockets = (traderItems, items, inventory) => {
+    traderItems.forEach((id) => {
+        if (id && items[id]?._parent && (0, exports.checkParentRecursive)(id, items, [exports.keyMechanical])) {
             inventory.items.Pockets.push(id);
             inventory.items.Backpack.push(id);
             inventory.items.TacticalVest.push(id);
@@ -421,7 +421,13 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
     exports.numList.forEach((num, index) => {
         const loyalty = num;
         const itemList = [...tradersMasterList[loyalty]];
-        const finalList = [...new Set([...itemsForNextLevel[num] || [], ...itemList])];
+        const finalList = [
+            ...new Set([
+                ...itemsForNextLevel[num] || [],
+                ...itemList,
+                ...num === 4 && config_json_1.default.addDangerousBulletsToTier4Bots ? advancedConfig_json_1.default.forbiddenBullets : []
+            ])
+        ];
         // First edit ammo
         finalList.forEach(id => {
             const item = items[id];
@@ -488,7 +494,9 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
                     const isFromPreviousLevel = !!itemsForNextLevel[num]?.has(id);
                     const calibre = item._props.Caliber || item._props.ammoCaliber;
                     const highestScoringAmmo = (0, exports.getHighestScoringAmmoValue)(weight[index].ammo.edit[calibre]);
-                    const weaponRating = isFromPreviousLevel ? Math.round((0, exports.getWeaponWeighting)(item, highestScoringAmmo) * 0.5) : (0, exports.getWeaponWeighting)(item, highestScoringAmmo);
+                    const weaponRating = isFromPreviousLevel ?
+                        Math.round((0, exports.getWeaponWeighting)(item, highestScoringAmmo) * 0.8) :
+                        (0, exports.getWeaponWeighting)(item, highestScoringAmmo);
                     // Check if revolver shotgun
                     if (id === "60db29ce99594040e04c4a27")
                         setWeightItem(weight[index], "FirstPrimaryWeapon", id, weaponRating);
@@ -569,23 +577,7 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
                 });
             });
         });
-        // if (!!weight[index + 1]) {
-        //     weight[index + 1].ammo = { ...weight[index].ammo }
-        //     weight[index + 1].equipment = { ...weight[index].equipment }
-        // }
     });
-    //Make bad weapons worse, better ones better not needed
-    // numList.forEach((num, index) => {
-    //     const weaponList = Object.keys(weight[index].equipment.edit.FirstPrimaryWeapon)
-    //         .sort((a, b) => weight[index].equipment.edit.FirstPrimaryWeapon[b] - weight[index].equipment.edit.FirstPrimaryWeapon[a])
-    //     console.log('Level', num)
-    //     weaponList.forEach((weapId, rank) => {
-    //         console.log(weapId, weight[index].equipment.edit.FirstPrimaryWeapon[weapId])
-    //         // weight[index].equipment.edit.FirstPrimaryWeapon[id] = 1
-    //         // const modifier = (caliberList.length - rank) / caliberList.length
-    //         // weight[index].ammo.edit[caliber][id] = Math.round(weight[index].ammo.edit[caliber][id] * modifier) || 1
-    //     })
-    // })
     // console.log(JSON.stringify(weight))
 };
 exports.setWeightingAdjustments = setWeightingAdjustments;
@@ -749,8 +741,8 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "healing": {
-                    "min": [0, 0, 1, 1][index],
-                    "max": [2, 2, 2, 2][index],
+                    "min": [1, 1, 1, 1][index],
+                    "max": [1, 2, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
                 "looseLoot": {
@@ -1007,6 +999,8 @@ const buildBlacklist = (items, botConfig, mods) => {
 exports.buildBlacklist = buildBlacklist;
 //skull lock
 exports.blacklistedItems = new Set([
+    ...config_json_1.default.addDangerousBulletsToTier4Bots ? [] : advancedConfig_json_1.default.forbiddenBullets,
+    ...config_json_1.default.customBlacklist,
     "544a3d0a4bdc2d1b388b4567",
     "5a16bb52fcdbcb001a3b00dc",
     "5a1eaa87fcdbcb001865f75e",
@@ -1103,9 +1097,6 @@ exports.blacklistedItems = new Set([
     "624c0b3340357b5f566e8766",
     "624c0b3340357b5f566e8766",
     "6217726288ed9f0845317459",
-    "62389be94d5d474bf712e709",
-    ...advancedConfig_json_1.default.forbiddenBullets,
-    ...config_json_1.default.customBlacklist,
     //Mosin shorty,
     "5bfd36ad0db834001c38ef66",
     "5bfd36290db834001966869a",
@@ -1186,4 +1177,10 @@ exports.blacklistedItems = new Set([
     "5c1bc5af2e221602b412949b",
     //long handgun stock
     "5d1c702ad7ad1a632267f429",
+    "620109578d82e67e7911abf2",
+    "62389aaba63f32501b1b444f",
+    "62389ba9a63f32501b1b4451",
+    "62389bc9423ed1685422dc57",
+    "62389be94d5d474bf712e709",
+    "635267f063651329f75a4ee8"
 ]);

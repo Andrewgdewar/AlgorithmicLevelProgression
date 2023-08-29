@@ -104,6 +104,8 @@ export default function ProgressionChanges(
         buildClothingWeighting(allTradersSuits, customization, botConfig)
     }
 
+    const forbiddenBulletSet = new Set(advancedConfig.forbiddenBullets)
+
     traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
         if (!tradItems || !nickname) return
         // if (index === 0) console.log(JSON.stringify(questassort))
@@ -111,7 +113,7 @@ export default function ProgressionChanges(
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`)
         }
         tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
-            if (blacklistedItems.has(_tpl)) return; //Remove blacklisted items
+            if (blacklistedItems.has(_tpl) || forbiddenBulletSet.has(_tpl)) return; //Remove blacklisted items and bullets
             const item = items[_tpl]
             if (!item) return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const parent = item._parent
@@ -242,11 +244,7 @@ export default function ProgressionChanges(
 
     setupMods(mods)
 
-    if (config.addAllKeysToLootList) {
-        addKeysToPockets(items, bearInventory)
-        addKeysToPockets(items, tables.bots.types.assault.inventory)
-        addKeysToPockets(items, usecInventory)
-    }
+    addKeysToPockets(combinedNumList, items, tables.bots.types.assault.inventory)
 
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = deDupeArr(usecInventory.items.SecuredContainer)
@@ -307,7 +305,6 @@ export default function ProgressionChanges(
 
     // 544a3d0a4bdc2d1b388b4567
     // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0]))
-    // console.log(JSON.stringify(botConfig.equipment.pmc))
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }
 
