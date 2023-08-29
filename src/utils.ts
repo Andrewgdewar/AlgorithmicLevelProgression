@@ -782,17 +782,17 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             },
             generation: {
                 "stims": {
-                    "min": 1,
+                    "min": 0,
                     "max": [1, 1, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.stims?.whitelist ? { whitelist: randomizationItems[index - 1].generation.stims.whitelist } : {} }
                 },
                 "drugs": {
-                    "min": 1,
+                    "min": 0,
                     "max": [1, 2, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
                 },
                 "healing": {
-                    "min": 1,
+                    "min": 0,
                     "max": [1, 1, 1, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
@@ -907,8 +907,8 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
         }
 
         const medkits = {
-            1: ["590c661e86f7741e566b646a", "590c661e86f7741e566b646a"],
-            2: ["544fb45d4bdc2dee738b4568"],
+            1: ["590c661e86f7741e566b646a"],
+            2: [],
             3: ["590c678286f77426c9660122"],
             4: ["60098ad7c2240c0fe85c570a"]
         }
