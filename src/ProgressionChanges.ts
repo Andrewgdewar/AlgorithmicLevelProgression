@@ -246,6 +246,8 @@ export default function ProgressionChanges(
 
     addKeysToPockets(combinedNumList, items, tables.bots.types.assault.inventory)
 
+    usecInventory.items.SecuredContainer.push("5e99711486f7744bfc4af328")
+    bearInventory.items.SecuredContainer.push("5e99711486f7744bfc4af328")
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = deDupeArr(usecInventory.items.SecuredContainer)
     bearInventory.items.SecuredContainer = deDupeArr(bearInventory.items.SecuredContainer)

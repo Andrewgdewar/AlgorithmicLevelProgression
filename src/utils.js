@@ -26,8 +26,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addKeysToPockets = exports.addToModsObject = exports.SightType = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.keyMechanical = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = void 0;
-exports.blacklistedItems = exports.buildBlacklist = exports.buildWeaponSightWhitelist = void 0;
+exports.buildOutModsObject = exports.setWeightingAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addKeysToPockets = exports.addToModsObject = exports.SightType = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.FoodDrinkParent = exports.medKitParent = exports.medicalParent = exports.painKillerParent = exports.stimParent = exports.keyMechanical = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = void 0;
+exports.blacklistedItems = exports.buildBlacklist = exports.buildWeaponSightWhitelist = exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = void 0;
 const advancedConfig_json_1 = __importDefault(require("../config/advancedConfig.json"));
 const config_json_1 = __importStar(require("../config/config.json"));
 exports.headwearParent = "5a341c4086f77401f2541505";
@@ -35,6 +35,11 @@ exports.AmmoParent = "5485a8684bdc2da71d8b4567";
 exports.magParent = "5448bc234bdc2d3c308b4569";
 exports.barterParent = "5448eb774bdc2d0a728b4567";
 exports.keyMechanical = "5c99f98d86f7745c314214b3";
+exports.stimParent = "5448f3a64bdc2d60728b456a";
+exports.painKillerParent = "5448f3a14bdc2d27728b4569";
+exports.medicalParent = "5448f3ac4bdc2dce718b4569";
+exports.medKitParent = "5448f39d4bdc2d0a728b4568";
+exports.FoodDrinkParent = "543be6674bdc2df1348b4569";
 exports.medsParent = "543be5664bdc2dd4348b4569";
 exports.modParent = "5448fe124bdc2da5018b4567";
 exports.masterMod = "55802f4a4bdc2ddb688b4569";
@@ -121,6 +126,9 @@ const addKeysToPockets = (traderItems, items, inventory) => {
             inventory.items.TacticalVest.push(id);
         }
     });
+    inventory.items.Pockets = (0, exports.deDupeArr)(inventory.items.Pockets);
+    inventory.items.Backpack = (0, exports.deDupeArr)(inventory.items.Backpack);
+    inventory.items.TacticalVest = (0, exports.deDupeArr)(inventory.items.TacticalVest);
 };
 exports.addKeysToPockets = addKeysToPockets;
 const setupMods = (mods) => {
@@ -710,7 +718,7 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
     exports.numList.forEach((num, index) => {
         const range = config_json_1.levelRange[num];
         const loyalty = num;
-        const itemList = [...traderList[loyalty]];
+        const itemList = new Set([...traderList[loyalty]]);
         const newItem = {
             levelRange: range,
             equipment: {
@@ -730,24 +738,29 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 "Backpack": [70, 80, 90, 99][index],
             },
             generation: {
-                "drugs": {
-                    "min": 0,
+                "stims": {
+                    "min": 1,
                     "max": [1, 1, 2, 2][index],
+                    ...{ ...randomizationItems[index - 1]?.generation?.stims?.whitelist ? { whitelist: randomizationItems[index - 1].generation.stims.whitelist } : {} }
+                },
+                "drugs": {
+                    "min": 1,
+                    "max": [1, 2, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
+                },
+                "healing": {
+                    "min": 1,
+                    "max": [1, 1, 1, 2][index],
+                    ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
                 "grenades": {
                     "min": [0, 0, 0, 1][index],
                     "max": [1, 2, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
-                "healing": {
-                    "min": [1, 1, 1, 1][index],
-                    "max": [1, 2, 2, 2][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
-                },
                 "looseLoot": {
-                    "min": [0, 2, 3, 3][index],
-                    "max": [3, 5, 6, 5][index],
+                    "min": [0, 1, 2, 3][index],
+                    "max": [3, 5, 6, 8][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
                 },
                 "magazines": {
@@ -755,11 +768,6 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                     "max": [3, 3, 4, 4][index],
                     "whitelist": botConfig.equipment.pmc.whitelist[index].equipment.mod_magazine
                 },
-                "stims": {
-                    "min": 0,
-                    "max": [0, 1, 1, 2][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.stims?.whitelist ? { whitelist: randomizationItems[index - 1].generation.stims.whitelist } : {} }
-                }
             },
             "randomisedWeaponModSlots": [
             // "mod_barrel",
@@ -853,25 +861,31 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 // "mod_catch": 1
             }
         };
+        const medkits = {
+            1: ["590c661e86f7741e566b646a", "590c661e86f7741e566b646a"],
+            2: ["544fb45d4bdc2dee738b4568"],
+            3: ["590c678286f77426c9660122"],
+            4: ["60098ad7c2240c0fe85c570a"]
+        };
         itemList.forEach((id) => {
             const item = items[id];
             const parent = item._parent;
             switch (true) {
-                case (0, exports.checkParentRecursive)(parent, items, ["5448f3a64bdc2d60728b456a"]): //stims
+                case (0, exports.checkParentRecursive)(parent, items, num >= 3 ? [exports.painKillerParent, exports.stimParent] : [exports.painKillerParent]): //stims
                     newItem.generation.stims["whitelist"] = [...newItem.generation.stims["whitelist"] || [], id];
                     break;
-                case (0, exports.checkParentRecursive)(parent, items, ["5448f3a14bdc2d27728b4569"]): //drugs
+                case (0, exports.checkParentRecursive)(parent, items, [exports.medicalParent]): //drugs
                     newItem.generation.drugs["whitelist"] = [...newItem.generation.drugs["whitelist"] || [], id];
+                    break;
+                case (0, exports.checkParentRecursive)(parent, items, [exports.medKitParent]): //meds
+                    newItem.generation.healing["whitelist"] = [...medkits[num], ...newItem.generation.healing["whitelist"] || [], id];
                     break;
                 case (0, exports.checkParentRecursive)(parent, items, ["543be6564bdc2df4348b4568"]): //ThrowWeap
                     if (items[id]._props.ThrowType !== "smoke_grenade") {
                         newItem.generation.grenades["whitelist"] = [...newItem.generation.grenades["whitelist"] || [], id];
                     }
                     break;
-                case (0, exports.checkParentRecursive)(parent, items, [exports.medsParent]): //meds
-                    newItem.generation.healing["whitelist"] = [...newItem.generation.healing["whitelist"] || [], id];
-                    break;
-                case (0, exports.checkParentRecursive)(parent, items, [exports.barterParent, "543be6674bdc2df1348b4569"]): //FoodDrink
+                case (0, exports.checkParentRecursive)(parent, items, [exports.barterParent, exports.FoodDrinkParent]): //FoodDrink/barter
                     newItem.generation.looseLoot["whitelist"] = [...newItem.generation.looseLoot["whitelist"] || [], id];
                     break;
                 case (0, exports.checkParentRecursive)(parent, items, [exports.magParent]):

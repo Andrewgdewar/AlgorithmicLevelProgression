@@ -793,7 +793,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 },
                 "healing": {
                     "min": 1,
-                    "max": [2, 2, 2, 2][index],
+                    "max": [1, 1, 1, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
                 "grenades": {
@@ -906,6 +906,13 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             }
         }
 
+        const medkits = {
+            1: ["590c661e86f7741e566b646a", "590c661e86f7741e566b646a"],
+            2: ["544fb45d4bdc2dee738b4568"],
+            3: ["590c678286f77426c9660122"],
+            4: ["60098ad7c2240c0fe85c570a"]
+        }
+
 
         itemList.forEach((id) => {
             const item = items[id]
@@ -918,7 +925,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     newItem.generation.drugs["whitelist"] = [...newItem.generation.drugs["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, [medKitParent]): //meds
-                    newItem.generation.healing["whitelist"] = [...newItem.generation.healing["whitelist"] || [], id]
+                    newItem.generation.healing["whitelist"] = [...medkits[num], ...newItem.generation.healing["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, ["543be6564bdc2df4348b4568"]): //ThrowWeap
                     if (items[id]._props.ThrowType !== "smoke_grenade") {

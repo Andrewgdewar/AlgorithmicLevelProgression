@@ -78,7 +78,7 @@ function ProgressionChanges(container) {
                 return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const equipmentType = (0, utils_1.getEquipmentType)(parent, items);
             switch (true) {
-                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.medsParent, utils_1.keyMechanical, utils_1.moneyParent]):
+                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.keyMechanical, utils_1.medsParent, utils_1.moneyParent]):
                     usecInventory.items.Pockets.push(_tpl);
                     bearInventory.items.Pockets.push(_tpl);
                     usecInventory.items.TacticalVest.push(_tpl);
@@ -186,9 +186,9 @@ function ProgressionChanges(container) {
     (0, utils_1.buildOutModsObject)(combinedNumList, items, usecInventory, botConfig);
     bearInventory.mods = (0, utils_1.cloneDeep)(usecInventory.mods);
     (0, utils_1.setupMods)(mods);
-    if (config_json_1.default.addAllKeysToLootList) {
-        (0, utils_1.addKeysToPockets)(combinedNumList, items, tables.bots.types.assault.inventory);
-    }
+    (0, utils_1.addKeysToPockets)(combinedNumList, items, tables.bots.types.assault.inventory);
+    usecInventory.items.SecuredContainer.push("5e99711486f7744bfc4af328");
+    bearInventory.items.SecuredContainer.push("5e99711486f7744bfc4af328");
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
     bearInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(bearInventory.items.SecuredContainer);
@@ -237,44 +237,6 @@ function ProgressionChanges(container) {
     });
     // 544a3d0a4bdc2d1b388b4567
     // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0]))
-    const thing = ["assault",
-        // "marksman",
-        // "cursedassault",
-        // "exusec",
-        // "bossbully",
-        // "bossgluhar",
-        // "bosskilla",
-        // "bosskojaniy",
-        // "bosssanitar",
-        // "bosstagilla",
-        // "bossknight",
-        // "bosszryachiy",
-        // "bosstest",
-        // "followerbully",
-        // "followergluharassault",
-        // "followergluharscout",
-        // "followergluharsecurity",
-        // "followergluharsnipe",
-        // "followerkojaniy",
-        // "followersanitar",
-        // "followertagilla",
-        // "followerbirdeye",
-        // "followerbigpipe",
-        // "followerzryachiy",
-        // "followertest",
-        // "sectantpriest",
-        // "sectantwarrior",
-        // "test",
-        "pmcbot",
-        "arenafighterevent",
-        "arenafighter",
-        "crazyassaultevent",
-        "assaultgroup",
-        "pmc"
-    ];
-    thing.forEach(bot => {
-        console.log(JSON.stringify(botConfig.equipment[bot]));
-    });
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;
