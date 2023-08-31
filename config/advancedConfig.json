@@ -24,6 +24,24 @@
         "5cadf6eeae921500134b2799",
         "5fc382a9d724d907e2077dab"
     ],
+    "locationWeaponWeightings": {
+        "bigmap": 1,
+        "develop": 1,
+        "factory4_day": 1,
+        "factory4_night": 1,
+        "hideout": 1,
+        "interchange": 1,
+        "laboratory": 1,
+        "lighthouse": 1,
+        "privatearea": 1,
+        "rezervbase": 1,
+        "shoreline": 1,
+        "suburbs": 1,
+        "tarkovstreets": 1,
+        "terminal": 1,
+        "town": 1,
+        "woods": 1
+    },
     "otherBotTypes": {
         "assault": {
             "randomisation": [

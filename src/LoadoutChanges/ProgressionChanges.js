@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
-const advancedConfig_json_1 = __importDefault(require("../config/advancedConfig.json"));
-const config_json_1 = __importDefault(require("../config/config.json"));
+const advancedConfig_json_1 = __importDefault(require("../../config/advancedConfig.json"));
+const config_json_1 = __importDefault(require("../../config/config.json"));
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
     //Todo: 
@@ -26,7 +26,6 @@ function ProgressionChanges(container) {
     const bearAppearance = tables.bots.types.bear.appearance;
     botConfig.pmc.looseWeaponInBackpackChancePercent = 1;
     botConfig.pmc.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 };
-    botConfig.equipment.assault = (0, utils_1.cloneDeep)(botConfig.equipment.assault);
     const tradersToInclude = [
         'Prapor',
         'Therapist',
@@ -230,13 +229,10 @@ function ProgressionChanges(container) {
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
-    // buildBlacklist(items, botConfig, mods)
     //Fix otherBotTypes
     Object.keys(advancedConfig_json_1.default.otherBotTypes).forEach(botType => {
         botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig_json_1.default.otherBotTypes[botType] };
     });
-    // 544a3d0a4bdc2d1b388b4567
-    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0]))
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;

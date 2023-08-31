@@ -4,9 +4,9 @@ import { ConfigTypes } from '@spt-aki/models/enums/ConfigTypes';
 import { ConfigServer } from '@spt-aki/servers/ConfigServer';
 import { DatabaseServer } from '@spt-aki/servers/DatabaseServer';
 
-import advancedConfig from '../config/advancedConfig.json';
-import config from '../config/config.json';
-import { IBotConfig } from '../types/models/spt/config/IBotConfig.d';
+import advancedConfig from '../../config/advancedConfig.json';
+import config from '../../config/config.json';
+import { IBotConfig } from '../../types/models/spt/config/IBotConfig.d';
 import {
     addKeysToPockets,
     addToModsObject,
@@ -61,7 +61,7 @@ export default function ProgressionChanges(
 
     botConfig.pmc.looseWeaponInBackpackChancePercent = 1
     botConfig.pmc.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 }
-    botConfig.equipment.assault = cloneDeep(botConfig.equipment.assault)
+
     const tradersToInclude = [
         'Prapor',
         'Therapist',
@@ -280,8 +280,6 @@ export default function ProgressionChanges(
         })
     })
 
-
-
     if (botConfig.equipment.pmc.blacklist?.[0]?.equipment) {
         if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.FirstPrimaryWeapon) botConfig.equipment.pmc.blacklist[0].equipment.FirstPrimaryWeapon = []
         if (!botConfig.equipment.pmc.blacklist?.[0]?.equipment?.mod_scope) botConfig.equipment.pmc.blacklist[0].equipment.mod_scope = []
@@ -297,16 +295,12 @@ export default function ProgressionChanges(
     setWeightingAdjustments(items, botConfig, tradersMasterList, mods)
     buildInitialRandomization(items, botConfig, tradersMasterList)
 
-    // buildBlacklist(items, botConfig, mods)
-
-
     //Fix otherBotTypes
     Object.keys(advancedConfig.otherBotTypes).forEach(botType => {
         botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig.otherBotTypes[botType] }
     })
 
-    // 544a3d0a4bdc2d1b388b4567
-    // console.log(JSON.stringify(botConfig.equipment.pmc.blacklist[0]))
+
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }
 

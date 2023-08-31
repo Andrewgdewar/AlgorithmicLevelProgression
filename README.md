@@ -1,5 +1,5 @@
 
-# **Dushaoan's AlgorithmicLevelProgression**
+# **DewardianDev's AlgorithmicLevelProgression**
 
 === INSTALL STEPS ===
 
@@ -17,8 +17,8 @@ Example order.json with recommended mods:
 "ServerValueModifier",
 "zPOOP",
 "Lua-CustomSpawnPoints",
-"Dushaoan-XXXX-1.x.x",
-"Dushaoan-AlgorithmicLevelProgression-1.x.x"
+"DewardianDev-XXXX-1.x.x",
+"DewardianDev-AlgorithmicLevelProgression-1.x.x"
 ]
 }
 

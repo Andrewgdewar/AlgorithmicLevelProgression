@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SetupLocationGlobals = void 0;
+const GlobalValues_1 = require("./GlobalValues");
+const utils_1 = require("./utils");
+const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
+const SetupLocationGlobals = (container) => {
+    const configServer = container.resolve("ConfigServer");
+    const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
+    GlobalValues_1.globalValues.Logger = container.resolve("WinstonLogger");
+    GlobalValues_1.globalValues.configServer = configServer;
+    GlobalValues_1.globalValues.originalWeighting = (0, utils_1.cloneDeep)(botConfig.equipment.pmc.weightingAdjustments);
+    GlobalValues_1.globalValues.setValuesForLocation('factory4_day');
+};
+exports.SetupLocationGlobals = SetupLocationGlobals;

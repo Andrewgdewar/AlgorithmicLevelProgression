@@ -3,7 +3,7 @@
     "version": "1.1.5",
     "main": "src/mod.js",
     "license": "MIT",
-    "author": "Dushaoan",
+    "author": "DewardianDev",
     "akiVersion": "^3.x.x",
     "scripts": {
         "setup": "npm i",
