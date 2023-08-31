@@ -802,8 +802,8 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "looseLoot": {
-                    "min": [0, 1, 2, 3][index],
-                    "max": [3, 5, 6, 8][index],
+                    "min": config.removePMCLootForLootingBots ? [0, 0, 0, 0][index] : [0, 1, 2, 3][index],
+                    "max": config.removePMCLootForLootingBots ? [1, 1, 1, 2] : [3, 5, 6, 8][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
                 },
                 "magazines": {
@@ -932,7 +932,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                         newItem.generation.grenades["whitelist"] = [...newItem.generation.grenades["whitelist"] || [], id]
                     }
                     break;
-                case checkParentRecursive(parent, items, [barterParent, FoodDrinkParent]): //FoodDrink/barter
+                case checkParentRecursive(parent, items, config.removePMCLootForLootingBots ? [FoodDrinkParent] : [barterParent, FoodDrinkParent]): //FoodDrink/barter
                     newItem.generation.looseLoot["whitelist"] = [...newItem.generation.looseLoot["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, [magParent]):
