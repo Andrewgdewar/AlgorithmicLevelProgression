@@ -40,8 +40,6 @@ import {
 export default function ProgressionChanges(
     container: DependencyContainer
 ): undefined {
-    //Todo: 
-    // rifle scopes on assault weapons? ring scope mount fix?
     const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
     const configServer = container.resolve<ConfigServer>("ConfigServer");
     const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);

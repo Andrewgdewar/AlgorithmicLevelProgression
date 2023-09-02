@@ -24,23 +24,157 @@
         "5cadf6eeae921500134b2799",
         "5fc382a9d724d907e2077dab"
     ],
-    "locationWeaponWeightings": {
-        "bigmap": 1,
-        "develop": 1,
-        "factory4_day": 1,
-        "factory4_night": 1,
-        "hideout": 1,
-        "interchange": 1,
-        "laboratory": 1,
-        "lighthouse": 1,
-        "privatearea": 1,
-        "rezervbase": 1,
-        "shoreline": 1,
-        "suburbs": 1,
-        "tarkovstreets": 1,
-        "terminal": 1,
-        "town": 1,
-        "woods": 1
+    "locations": {
+        "bigmap": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1.1,
+                    "AssaultRifle": 1.3,
+                    "GrenadeLauncher": 1,
+                    "MachineGun": 1.2,
+                    "MarksmanRifle": 0.7,
+                    "Revolver": 1.2,
+                    "Shotgun": 1.2,
+                    "Smg": 1.3,
+                    "SniperRifle": 0.7
+                }
+            }
+        },
+        "factory4_day": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1,
+                    "AssaultRifle": 1.2,
+                    "GrenadeLauncher": 1.5,
+                    "MachineGun": 1.2,
+                    "MarksmanRifle": 0.4,
+                    "Revolver": 1.5,
+                    "Shotgun": 1.5,
+                    "Smg": 1.5,
+                    "SniperRifle": 0.4
+                }
+            }
+        },
+        "factory4_night": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1,
+                    "AssaultRifle": 1.5,
+                    "GrenadeLauncher": 1.5,
+                    "MachineGun": 1.2,
+                    "MarksmanRifle": 0.4,
+                    "Revolver": 1.5,
+                    "Shotgun": 1.5,
+                    "Smg": 1.5,
+                    "SniperRifle": 0.4
+                }
+            }
+        },
+        "interchange": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1.1,
+                    "AssaultRifle": 1.2,
+                    "GrenadeLauncher": 1,
+                    "MachineGun": 1,
+                    "MarksmanRifle": 1.2,
+                    "Revolver": 0.6,
+                    "Shotgun": 0.6,
+                    "Smg": 0.6,
+                    "SniperRifle": 1.1
+                }
+            }
+        },
+        "laboratory": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 0.8,
+                    "AssaultRifle": 1.3,
+                    "GrenadeLauncher": 1.3,
+                    "MachineGun": 1.2,
+                    "MarksmanRifle": 0.6,
+                    "Revolver": 1.2,
+                    "Shotgun": 1.2,
+                    "Smg": 1.3,
+                    "SniperRifle": 0.6
+                }
+            }
+        },
+        "lighthouse": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1,
+                    "AssaultRifle": 1,
+                    "GrenadeLauncher": 0.8,
+                    "MachineGun": 0.8,
+                    "MarksmanRifle": 1.3,
+                    "Revolver": 0.7,
+                    "Shotgun": 0.7,
+                    "Smg": 0.7,
+                    "SniperRifle": 1.3
+                }
+            }
+        },
+        "rezervbase": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1.1,
+                    "AssaultRifle": 1.2,
+                    "GrenadeLauncher": 1,
+                    "MachineGun": 1,
+                    "MarksmanRifle": 1.2,
+                    "Revolver": 0.6,
+                    "Shotgun": 0.6,
+                    "Smg": 0.6,
+                    "SniperRifle": 1.1
+                }
+            }
+        },
+        "shoreline": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1,
+                    "AssaultRifle": 1,
+                    "GrenadeLauncher": 1,
+                    "MachineGun": 0.8,
+                    "MarksmanRifle": 1.3,
+                    "Revolver": 0.7,
+                    "Shotgun": 0.7,
+                    "Smg": 0.7,
+                    "SniperRifle": 1.3
+                }
+            }
+        },
+        "tarkovstreets": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1.2,
+                    "AssaultRifle": 1.2,
+                    "GrenadeLauncher": 1,
+                    "MachineGun": 1,
+                    "MarksmanRifle": 1,
+                    "Revolver": 1,
+                    "Shotgun": 1,
+                    "Smg": 1.3,
+                    "SniperRifle": 0.8
+                }
+            }
+        },
+        "woods": {
+            "weightingAdjustments": {
+                "FirstPrimaryWeapon": {
+                    "AssaultCarbine": 1.1,
+                    "AssaultRifle": 1,
+                    "GrenadeLauncher": 1,
+                    "MachineGun": 0.7,
+                    "MarksmanRifle": 1.3,
+                    "Revolver": 0.7,
+                    "Shotgun": 0.7,
+                    "Smg": 0.7,
+                    "SniperRifle": 1.3
+                }
+            }
+        }
     },
     "otherBotTypes": {
         "assault": {

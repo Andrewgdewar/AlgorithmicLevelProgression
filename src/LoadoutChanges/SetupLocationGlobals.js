@@ -7,9 +7,12 @@ const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes"
 const SetupLocationGlobals = (container) => {
     const configServer = container.resolve("ConfigServer");
     const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
+    const databaseServer = container.resolve("DatabaseServer");
+    const tables = databaseServer.getTables();
     GlobalValues_1.globalValues.Logger = container.resolve("WinstonLogger");
+    GlobalValues_1.globalValues.tables = tables;
     GlobalValues_1.globalValues.configServer = configServer;
     GlobalValues_1.globalValues.originalWeighting = (0, utils_1.cloneDeep)(botConfig.equipment.pmc.weightingAdjustments);
-    GlobalValues_1.globalValues.setValuesForLocation('factory4_day');
+    GlobalValues_1.globalValues.setValuesForLocation('bigmap');
 };
 exports.SetupLocationGlobals = SetupLocationGlobals;

@@ -8,8 +8,6 @@ const advancedConfig_json_1 = __importDefault(require("../../config/advancedConf
 const config_json_1 = __importDefault(require("../../config/config.json"));
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
-    //Todo: 
-    // rifle scopes on assault weapons? ring scope mount fix?
     const databaseServer = container.resolve("DatabaseServer");
     const configServer = container.resolve("ConfigServer");
     const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);

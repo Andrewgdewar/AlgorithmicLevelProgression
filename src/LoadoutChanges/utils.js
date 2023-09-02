@@ -263,17 +263,15 @@ const getWeaponWeighting = ({ _props: { Ergonomics, BoltAction, weapClass, weapF
     let ammo = highestScoringAmmo;
     let gun = Ergonomics;
     if (ReloadMode.includes("OnlyBarrel"))
-        ammo = ammo / 6;
-    if (RecoilForceUp > 300)
-        ammo = ammo / 4;
-    if (weapClass === "pistol")
-        ammo = ammo / 2;
+        ammo = ammo / 3;
+    // if (RecoilForceUp > 300) ammo = ammo / 4
+    // if (weapClass === "pistol") ammo = ammo / 2
     if (BoltAction)
-        ammo = ammo / 4;
+        ammo = ammo / 2;
     if (weapFireType.includes('fullauto'))
-        ammo = ammo * 1.5;
+        ammo = ammo * 1.2;
     if (weapClass !== "pistol" && RecoilForceUp < 100)
-        gun = gun + 10;
+        ammo * 1.2;
     const finalValue = Math.round(gun + ammo);
     // if (finalValue > 5) console.log(finalValue > 0 ? finalValue : 1, Math.round(ammo), Math.round(gun), _name, weapClass)
     return finalValue > 1 ? finalValue : 1;
@@ -512,12 +510,9 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
                             itemsForNextLevel[num + 1] = new Set([]);
                         itemsForNextLevel[num + 1].add(id);
                     }
-                    const isFromPreviousLevel = !!itemsForNextLevel[num]?.has(id);
                     const calibre = item._props.Caliber || item._props.ammoCaliber;
                     const highestScoringAmmo = (0, exports.getHighestScoringAmmoValue)(weight[index].ammo.edit[calibre]);
-                    const weaponRating = isFromPreviousLevel ?
-                        Math.round((0, exports.getWeaponWeighting)(item, highestScoringAmmo) * 0.8) :
-                        (0, exports.getWeaponWeighting)(item, highestScoringAmmo);
+                    const weaponRating = (0, exports.getWeaponWeighting)(item, highestScoringAmmo) + (tradersMasterList[num].has(id) ? (num * 20) : 0);
                     // Check if revolver shotgun
                     if (id === "60db29ce99594040e04c4a27")
                         setWeightItem(weight[index], "FirstPrimaryWeapon", id, weaponRating);
