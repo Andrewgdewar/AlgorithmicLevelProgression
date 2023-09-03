@@ -46,8 +46,8 @@ function ProgressionChanges(container) {
         return tradersToInclude.includes(base.nickname);
     });
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
-    const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() };
-    const mods = { "1": {}, "2": {}, "3": {}, "4": {} };
+    const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items)) };
+    const mods = { "1": {}, "2": {}, "3": {}, "4": {}, "5": {} };
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = (0, utils_1.setupBaseWhiteList)();
     let allTradersSuits = Object.values(traders).filter(({ suits }) => !!suits?.length).map(({ suits }) => suits).flat(1);
@@ -56,16 +56,17 @@ function ProgressionChanges(container) {
         (0, utils_1.buildInitialBearAppearance)(bearAppearance);
         (0, utils_1.buildClothingWeighting)(allTradersSuits, customization, botConfig);
     }
-    const forbiddenBulletSet = new Set(advancedConfig_json_1.default.forbiddenBullets);
-    traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
-        if (!tradItems || !nickname)
+    traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradeItems, loyal_level_items, barter_scheme } = {}, }, index) => {
+        if (!tradeItems || !nickname)
             return;
         // if (index === 0) console.log(JSON.stringify(questassort))
         if (config_json_1.default.addCustomTraderItems && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`);
         }
-        tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
-            if (utils_1.blacklistedItems.has(_tpl) || forbiddenBulletSet.has(_tpl))
+        tradeItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
+            if (tradersMasterList[5].has(_tpl))
+                tradersMasterList[5].delete(_tpl);
+            if (utils_1.blacklistedItems.has(_tpl) || utils_1.combinedForbiddenBullets.has(_tpl))
                 return; //Remove blacklisted items and bullets
             const item = items[_tpl];
             if (!item)
@@ -178,6 +179,40 @@ function ProgressionChanges(container) {
             }
         });
     });
+    //Setup beast mod level 5
+    tradersMasterList[5].forEach(id => {
+        if (utils_1.blacklistedItems.has(id) || utils_1.combinedForbiddenBullets.has(id) || !items[id]._parent || !items[id]._props || !items[id]._name) {
+            tradersMasterList[5].delete(id);
+        }
+        else {
+            const item = items[id];
+            const parent = items[id]?._parent;
+            if (!item || !parent)
+                return;
+            const equipmentType = (0, utils_1.getEquipmentType)(parent, items);
+            switch (true) {
+                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.AmmoParent]):
+                    const calibre = item._props.Caliber || item._props.ammoCaliber;
+                    if (calibre) {
+                        usecInventory.Ammo[calibre] =
+                            { ...usecInventory.Ammo[calibre] || {}, [id]: 1 };
+                        bearInventory.Ammo[calibre] =
+                            { ...bearInventory.Ammo[calibre] || {}, [id]: 1 };
+                    }
+                    break;
+                case !!equipmentType:
+                    if (!usecInventory.equipment[equipmentType])
+                        usecInventory.equipment[equipmentType] = {};
+                    if (!bearInventory.equipment[equipmentType])
+                        bearInventory.equipment[equipmentType] = {};
+                    usecInventory.equipment[equipmentType][id] = 1;
+                    bearInventory.equipment[equipmentType][id] = 1;
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
     const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]]);
     (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
     (0, utils_1.buildOutModsObject)(combinedNumList, items, usecInventory, botConfig);
@@ -205,7 +240,7 @@ function ProgressionChanges(container) {
     // Eliminates duplicate id's in later levels
     utils_1.numList.forEach((num) => {
         tradersMasterList[num].forEach((id) => {
-            utils_1.numList.slice(num, 4).forEach(numListNum => {
+            utils_1.numList.slice(num, 5).forEach(numListNum => {
                 tradersMasterList[numListNum].delete(id);
             });
         });
@@ -231,6 +266,8 @@ function ProgressionChanges(container) {
     Object.keys(advancedConfig_json_1.default.otherBotTypes).forEach(botType => {
         botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig_json_1.default.otherBotTypes[botType] };
     });
+    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
+    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;

@@ -21,6 +21,7 @@ import {
     buildWeaponSightWhitelist,
     checkParentRecursive,
     cloneDeep,
+    combinedForbiddenBullets,
     deDupeArr,
     getEquipmentType,
     keyMechanical,
@@ -30,6 +31,7 @@ import {
     numList,
     reduceAmmoChancesTo1,
     reduceEquipmentChancesTo1,
+    saveToFile,
     setupBaseWhiteList,
     setupMods,
     setWeightingAdjustments,
@@ -87,9 +89,9 @@ export default function ProgressionChanges(
 
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList: TradersMasterList =
-        { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() }
+        { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items)) }
 
-    const mods = { "1": {}, "2": {}, "3": {}, "4": {} }
+    const mods = { "1": {}, "2": {}, "3": {}, "4": {}, "5": {} }
 
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = setupBaseWhiteList()
@@ -102,16 +104,17 @@ export default function ProgressionChanges(
         buildClothingWeighting(allTradersSuits, customization, botConfig)
     }
 
-    const forbiddenBulletSet = new Set(advancedConfig.forbiddenBullets)
 
-    traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradItems, loyal_level_items, barter_scheme } = {}, }, index) => {
-        if (!tradItems || !nickname) return
+
+    traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradeItems, loyal_level_items, barter_scheme } = {}, }, index) => {
+        if (!tradeItems || !nickname) return
         // if (index === 0) console.log(JSON.stringify(questassort))
         if (config.addCustomTraderItems && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`)
         }
-        tradItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
-            if (blacklistedItems.has(_tpl) || forbiddenBulletSet.has(_tpl)) return; //Remove blacklisted items and bullets
+        tradeItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
+            if (tradersMasterList[5].has(_tpl)) tradersMasterList[5].delete(_tpl)
+            if (blacklistedItems.has(_tpl) || combinedForbiddenBullets.has(_tpl)) return; //Remove blacklisted items and bullets
             const item = items[_tpl]
             if (!item) return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const parent = item._parent
@@ -233,8 +236,40 @@ export default function ProgressionChanges(
         })
     })
 
-    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]])
 
+    //Setup beast mod level 5
+    tradersMasterList[5].forEach(id => {
+        if (blacklistedItems.has(id) || combinedForbiddenBullets.has(id) || !items[id]._parent || !items[id]._props || !items[id]._name) {
+            tradersMasterList[5].delete(id)
+        } else {
+            const item = items[id]
+            const parent = items[id]?._parent
+            if (!item || !parent) return
+            const equipmentType = getEquipmentType(parent, items)
+
+            switch (true) {
+                case checkParentRecursive(parent, items, [AmmoParent]):
+                    const calibre = item._props.Caliber || item._props.ammoCaliber
+                    if (calibre) {
+                        usecInventory.Ammo[calibre] =
+                            { ...usecInventory.Ammo[calibre] || {}, [id]: 1 }
+                        bearInventory.Ammo[calibre] =
+                            { ...bearInventory.Ammo[calibre] || {}, [id]: 1 }
+                    }
+                    break;
+                case !!equipmentType:
+                    if (!usecInventory.equipment[equipmentType]) usecInventory.equipment[equipmentType] = {}
+                    if (!bearInventory.equipment[equipmentType]) bearInventory.equipment[equipmentType] = {}
+                    usecInventory.equipment[equipmentType][id] = 1
+                    bearInventory.equipment[equipmentType][id] = 1
+                    break
+                default:
+                    break;
+            }
+        }
+    })
+
+    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]])
 
     buildWeaponSightWhitelist(items, botConfig, tradersMasterList)
     buildOutModsObject(combinedNumList, items, usecInventory, botConfig)
@@ -272,7 +307,7 @@ export default function ProgressionChanges(
     // Eliminates duplicate id's in later levels
     numList.forEach((num) => {
         tradersMasterList[num].forEach((id) => {
-            numList.slice(num, 4).forEach(numListNum => {
+            numList.slice(num, 5).forEach(numListNum => {
                 tradersMasterList[numListNum].delete(id)
             })
         })
@@ -298,7 +333,8 @@ export default function ProgressionChanges(
         botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig.otherBotTypes[botType] }
     })
 
-
+    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
+    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }
 

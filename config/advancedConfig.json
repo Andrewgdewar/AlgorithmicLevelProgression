@@ -1,34 +1,37 @@
 {
     "DO NOT CHANGE ANYTHING HERE": "DON't ASK FOR HELP IF YOU DO!",
-    "forbiddenBullets": [
-        "5d6e68a8a4b9360b6c0d54e2",
-        "5efb0da7a29a85116f6ea05f",
-        "5efb0cabfb3e451d70735af5",
-        "5a26ac0ec4a28200741e1e18",
-        "5cc80f38e4a949001152b560",
-        "5ba26835d4351e0035628ff5",
-        "61962d879bb3d20b0946d385",
-        "5c0d688c86f77413ae3407b2",
-        "61962b617c6c7b169525f168",
-        "56dff026d2720bb8668b4567",
-        "5c0d5e4486f77478390952fe",
-        "59e690b686f7746c9f75e848",
-        "601949593ae8f707c4608daa",
-        "59e0d99486f7744a32234762",
-        "601aa3d2b2bcb34913271e6d",
-        "5fd20ff893a8961fc660a954",
-        "5a6086ea4f39f99cd479502f",
-        "5efb0c1bd79ff02a1f5e68d9",
-        "560d61e84bdc2da74d8b4571",
-        "5e023d48186a883be655e551",
-        "5cadf6eeae921500134b2799",
-        "5fc382a9d724d907e2077dab"
-    ],
+    "forbiddenBullets": {
+        "3": [],
+        "4": [
+            "5d6e68a8a4b9360b6c0d54e2",
+            "5efb0da7a29a85116f6ea05f",
+            "5efb0cabfb3e451d70735af5",
+            "5a26ac0ec4a28200741e1e18",
+            "5cc80f38e4a949001152b560",
+            "5ba26835d4351e0035628ff5",
+            "61962d879bb3d20b0946d385",
+            "5c0d688c86f77413ae3407b2",
+            "61962b617c6c7b169525f168",
+            "56dff026d2720bb8668b4567",
+            "5c0d5e4486f77478390952fe",
+            "59e690b686f7746c9f75e848",
+            "601949593ae8f707c4608daa",
+            "59e0d99486f7744a32234762",
+            "601aa3d2b2bcb34913271e6d",
+            "5fd20ff893a8961fc660a954",
+            "5a6086ea4f39f99cd479502f",
+            "5efb0c1bd79ff02a1f5e68d9",
+            "560d61e84bdc2da74d8b4571",
+            "5e023d48186a883be655e551",
+            "5cadf6eeae921500134b2799",
+            "5fc382a9d724d907e2077dab"
+        ]
+    },
     "locations": {
         "bigmap": {
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1.1,
+                    "AssaultCarbine": 1.2,
                     "AssaultRifle": 1.3,
                     "GrenadeLauncher": 1,
                     "MachineGun": 1.2,
@@ -43,30 +46,30 @@
         "factory4_day": {
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1,
+                    "AssaultCarbine": 0.8,
                     "AssaultRifle": 1.2,
                     "GrenadeLauncher": 1.5,
                     "MachineGun": 1.2,
-                    "MarksmanRifle": 0.4,
+                    "MarksmanRifle": 0.3,
                     "Revolver": 1.5,
                     "Shotgun": 1.5,
                     "Smg": 1.5,
-                    "SniperRifle": 0.4
+                    "SniperRifle": 0.3
                 }
             }
         },
         "factory4_night": {
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1,
-                    "AssaultRifle": 1.5,
+                    "AssaultCarbine": 0.8,
+                    "AssaultRifle": 1.2,
                     "GrenadeLauncher": 1.5,
                     "MachineGun": 1.2,
-                    "MarksmanRifle": 0.4,
+                    "MarksmanRifle": 0.3,
                     "Revolver": 1.5,
                     "Shotgun": 1.5,
                     "Smg": 1.5,
-                    "SniperRifle": 0.4
+                    "SniperRifle": 0.3
                 }
             }
         },
@@ -103,7 +106,7 @@
         "lighthouse": {
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1,
+                    "AssaultCarbine": 1.1,
                     "AssaultRifle": 1,
                     "GrenadeLauncher": 0.8,
                     "MachineGun": 0.8,
@@ -163,15 +166,15 @@
         "woods": {
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1.1,
+                    "AssaultCarbine": 1.2,
                     "AssaultRifle": 1,
                     "GrenadeLauncher": 1,
                     "MachineGun": 0.7,
-                    "MarksmanRifle": 1.3,
+                    "MarksmanRifle": 1.4,
                     "Revolver": 0.7,
                     "Shotgun": 0.7,
                     "Smg": 0.7,
-                    "SniperRifle": 1.3
+                    "SniperRifle": 1.4
                 }
             }
         }
@@ -312,7 +315,11 @@
                             "5648b4534bdc2d3d1c8b4580"
                         ]
                     },
-                    "cartridge": {}
+                    "cartridge": {
+                        "Caliber545x39": [
+                            "56dfef82d2720bbd668b4567"
+                        ]
+                    }
                 }
             ]
         }

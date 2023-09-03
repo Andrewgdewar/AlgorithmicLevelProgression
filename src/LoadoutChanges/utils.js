@@ -26,8 +26,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setWhitelists = exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addKeysToPockets = exports.addToModsObject = exports.SightType = exports.weaponParent = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.FoodDrinkParent = exports.medKitParent = exports.medicalParent = exports.painKillerParent = exports.stimParent = exports.keyMechanical = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = exports.saveToFile = void 0;
-exports.blacklistedItems = exports.buildBlacklist = exports.buildWeaponSightWhitelist = exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = void 0;
+exports.setupBaseWhiteList = exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getHeadwearRating = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addKeysToPockets = exports.addToModsObject = exports.SightType = exports.weaponParent = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.FoodDrinkParent = exports.medKitParent = exports.medicalParent = exports.painKillerParent = exports.stimParent = exports.keyMechanical = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = exports.saveToFile = void 0;
+exports.blacklistedItems = exports.combinedForbiddenBullets = exports.buildBlacklist = exports.buildWeaponSightWhitelist = exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.setWhitelists = void 0;
 const advancedConfig_json_1 = __importDefault(require("../../config/advancedConfig.json"));
 const config_json_1 = __importStar(require("../../config/config.json"));
 const InternalBlacklist_1 = __importDefault(require("./InternalBlacklist"));
@@ -35,7 +35,7 @@ const saveToFile = (data, filePath) => {
     var fs = require('fs');
     let dir = __dirname;
     let dirArray = dir.split("\\");
-    const directory = (`${dirArray[dirArray.length - 4]}/${dirArray[dirArray.length - 3]}/${dirArray[dirArray.length - 2]}/`);
+    const directory = (`${dirArray[dirArray.length - 5]}/${dirArray[dirArray.length - 4]}/${dirArray[dirArray.length - 3]}/${dirArray[dirArray.length - 2]}/`);
     fs.writeFile(directory + filePath, JSON.stringify(data, null, 4), function (err) {
         if (err)
             throw err;
@@ -218,9 +218,10 @@ exports.mergeDeep = mergeDeep;
 const getArmorRating = ({ _props: { RepairCost, Durability, armorClass, armorZone, Weight }, _name, _id }) => {
     const armorZoneCoverage = armorZone?.length || 0;
     const durability = Durability * 0.1;
-    const total = Math.round((armorClass * 30) + durability + (armorZoneCoverage * 3) - Weight);
-    if (total < 0)
+    const total = Math.round(((armorClass * 30) + durability + (armorZoneCoverage * 3)) - Weight);
+    if (total < 1)
         return 1;
+    // console.log(_name, total)
     return total;
 };
 exports.getArmorRating = getArmorRating;
@@ -235,6 +236,21 @@ const getAmmoWeighting = ({ _props: { PenetrationPower, Damage, InitialSpeed, Pr
     return rating || 3;
 };
 exports.getAmmoWeighting = getAmmoWeighting;
+const getHeadwearRating = ({ _props: { BlocksEarpiece, headSegments, armorClass, Durability, RicochetParams, Weight }, _id, _name }) => {
+    const blocksEarpiece = BlocksEarpiece;
+    const coverageBonus = headSegments?.length || 0;
+    const helmetBonus = armorClass * 20;
+    const durability = Durability * 0.1;
+    const ricochetChance = ((RicochetParams.x + RicochetParams.y) * RicochetParams.z) * 0.2;
+    let rating = helmetBonus - Weight + coverageBonus + ricochetChance + durability;
+    if (blocksEarpiece)
+        rating = (rating) * 0.1;
+    if (rating < 10)
+        rating = 10;
+    // console.log(_name, Math.round(rating))
+    return Math.round(rating);
+};
+exports.getHeadwearRating = getHeadwearRating;
 const getEquipmentType = (id, items) => {
     const equipmentKeys = Object.keys(exports.equipmentIdMapper);
     for (let index = 0; index < equipmentKeys.length; index++) {
@@ -262,10 +278,14 @@ exports.getHighestScoringAmmoValue = getHighestScoringAmmoValue;
 const getWeaponWeighting = ({ _props: { Ergonomics, BoltAction, weapClass, weapFireType, RecoilForceUp, ReloadMode } = {}, _name, _id }, highestScoringAmmo) => {
     let ammo = highestScoringAmmo;
     let gun = Ergonomics;
+    if (_id === "5bfd297f0db834001a669119")
+        ammo * 0.7; //Make mosin infantry less desirable
+    if (weapFireType.length === 1 && weapFireType.includes('single'))
+        ammo = ammo * 0.8;
     if (ReloadMode.includes("OnlyBarrel"))
-        ammo = ammo / 3;
-    // if (RecoilForceUp > 300) ammo = ammo / 4
-    // if (weapClass === "pistol") ammo = ammo / 2
+        ammo = ammo / 4;
+    if (RecoilForceUp > 200)
+        ammo = ammo * 0.8;
     if (BoltAction)
         ammo = ammo / 2;
     if (weapFireType.includes('fullauto'))
@@ -300,9 +320,11 @@ const getTacticalVestValue = (item) => {
     Grids.forEach(({ _props }) => {
         spaceTotal = spaceTotal + (_props?.cellsH * _props?.cellsV);
     });
-    spaceTotal = Math.round(spaceTotal) || 3;
-    const armorRating = (0, exports.getArmorRating)(item) * 0.3;
-    // console.log(item._name, item._id, " - ", armorRating > 5 ? armorRating + spaceTotal : spaceTotal * 4)
+    spaceTotal = (Math.round(spaceTotal) - item._props.Weight) || 3;
+    if (spaceTotal < 5)
+        spaceTotal = 5;
+    const armorRating = (0, exports.getArmorRating)(item) * 0.8;
+    // if (armorRating < 5) console.log(item._name, item._id, " - ", armorRating > 5 ? armorRating : spaceTotal * 10)
     return Math.round(armorRating > 5 ? armorRating : (spaceTotal * 10));
 };
 exports.getTacticalVestValue = getTacticalVestValue;
@@ -349,7 +371,7 @@ const getCurrentLevelRange = (currentLevel) => {
     }
 };
 exports.getCurrentLevelRange = getCurrentLevelRange;
-exports.numList = [1, 2, 3, 4];
+exports.numList = [1, 2, 3, 4, 5];
 const arrSum = (arr) => arr.reduce((a, b) => a + b, 0);
 exports.arrSum = arrSum;
 const setupBaseWhiteList = () => {
@@ -442,9 +464,11 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
         const itemList = [...tradersMasterList[loyalty]];
         const finalList = [
             ...new Set([
+                ...num === 4 ?
+                    (config_json_1.default.addDangerousBulletsToTier4Bots ? advancedConfig_json_1.default.forbiddenBullets[num] : [])
+                    : (advancedConfig_json_1.default.forbiddenBullets[num] || []),
                 ...itemsForNextLevel[num] || [],
                 ...itemList,
-                ...num === 4 && config_json_1.default.addDangerousBulletsToTier4Bots ? advancedConfig_json_1.default.forbiddenBullets : []
             ])
         ];
         // First edit ammo
@@ -454,7 +478,7 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
             // Ammo Parent
             if ((0, exports.checkParentRecursive)(parent, items, [exports.AmmoParent])) {
                 const calibre = item._props.Caliber || item._props.ammoCaliber;
-                if ((num + 1) < 5) {
+                if ((num + 1) < 6) {
                     if (!itemsForNextLevel[num + 1])
                         itemsForNextLevel[num + 1] = new Set([]);
                     itemsForNextLevel[num + 1].add(id);
@@ -505,7 +529,7 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
             switch (equipmentType) {
                 case "FirstPrimaryWeapon":
                 case "Holster":
-                    if ((num + 1) < 5) {
+                    if ((num + 1) < 6) {
                         if (!itemsForNextLevel[num + 1])
                             itemsForNextLevel[num + 1] = new Set([]);
                         itemsForNextLevel[num + 1].add(id);
@@ -521,16 +545,7 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
                     }
                     break;
                 case "Headwear":
-                    const blocksEarpiece = item?._props?.BlocksEarpiece;
-                    const coverageBonus = item?._props?.headSegments?.length || 0;
-                    const helmetBonus = item?._props?.armorClass * 30;
-                    const durability = item?._props?.Durability * 0.1;
-                    const ricochetChance = ((item?._props?.RicochetParams.x + item?._props?.RicochetParams.y) * item?._props?.RicochetParams.z) * 0.2;
-                    let rating = helmetBonus - item?._props?.Weight + coverageBonus + ricochetChance + durability;
-                    if (blocksEarpiece)
-                        rating = (rating) * 0.1;
-                    if (rating < 10)
-                        rating = 10;
+                    const rating = (0, exports.getHeadwearRating)(item);
                     // if (rating > 10) console.log(loyalty, item._name, blocksEarpiece, Math.round(rating))
                     setWeightItem(weight[index], equipmentType, id, Math.round(rating));
                     break;
@@ -648,7 +663,6 @@ const buildOutModsObject = (traderList, items, inventory, botConfig) => {
     traderList.forEach((id) => {
         const item = items[id];
         const newModObject = {};
-        const siteWhiteList = botConfig.equipment.pmc.weaponSightWhitelist;
         if (!exports.blacklistedItems.has(id) && (0, exports.checkParentRecursive)(item._parent, items, [exports.magParent, exports.weaponParent, exports.headwearParent])) {
             switch (true) {
                 case (0, exports.checkParentRecursive)(item._parent, items, [exports.magParent]):
@@ -730,50 +744,50 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
         const newItem = {
             levelRange: range,
             equipment: {
-                "Headwear": [75, 85, 99, 99][index],
-                "Earpiece": [50, 65, 90, 100][index],
-                "FaceCover": [15, 25, 35, 45][index],
-                "ArmorVest": [99, 99, 99, 99][index],
-                "ArmBand": [25, 45, 59, 69][index],
-                "TacticalVest": [96, 96, 99, 99][index],
-                "Pockets": [25, 45, 59, 69][index],
+                "Headwear": [75, 85, 99, 99, 99][index],
+                "Earpiece": [50, 65, 90, 100, 100][index],
+                "FaceCover": [15, 25, 35, 45, 80][index],
+                "ArmorVest": [99, 99, 99, 99, 99][index],
+                "ArmBand": [25, 45, 59, 69, 80][index],
+                "TacticalVest": [96, 96, 99, 99, 99][index],
+                "Pockets": [25, 45, 59, 69, 80][index],
                 "SecuredContainer": 100,
-                "SecondPrimaryWeapon": [0, 0, 1, 2][index],
-                "Scabbard": [1, 5, 5, 10][index],
-                "FirstPrimaryWeapon": [85, 98, 99, 99][index],
-                "Holster": [1, 5, 10, 10][index],
-                "Eyewear": [5, 15, 26, 49][index],
-                "Backpack": [70, 80, 90, 99][index],
+                "SecondPrimaryWeapon": [0, 0, 1, 1, 1][index],
+                "Scabbard": [1, 5, 5, 10, 40][index],
+                "FirstPrimaryWeapon": [85, 98, 99, 99, 99][index],
+                "Holster": [1, 5, 10, 10, 10][index],
+                "Eyewear": [5, 15, 26, 49, 75][index],
+                "Backpack": [70, 80, 90, 99, 99][index],
             },
             generation: {
                 "stims": {
                     "min": 0,
-                    "max": [1, 1, 2, 2][index],
+                    "max": [1, 1, 2, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.stims?.whitelist ? { whitelist: randomizationItems[index - 1].generation.stims.whitelist } : {} }
                 },
                 "drugs": {
                     "min": 0,
-                    "max": [1, 2, 2, 2][index],
+                    "max": [1, 2, 2, 2, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
                 },
                 "healing": {
-                    "min": 0,
-                    "max": [1, 1, 1, 2][index],
+                    "min": [0, 1, 1, 1, 1][index],
+                    "max": [1, 1, 1, 1, 2][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
                 },
                 "grenades": {
-                    "min": [0, 0, 0, 1][index],
-                    "max": [1, 2, 2, 2][index],
+                    "min": [0, 0, 0, 1, 1][index],
+                    "max": [1, 2, 2, 2, 3][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "looseLoot": {
-                    "min": config_json_1.default.removePMCLootForLootingBots ? [0, 0, 0, 0][index] : [0, 1, 2, 3][index],
-                    "max": config_json_1.default.removePMCLootForLootingBots ? [1, 1, 1, 2] : [3, 5, 6, 8][index],
+                    "min": config_json_1.default.removePMCLootForLootingBots ? [0, 0, 0, 0, 1][index] : [0, 1, 2, 3, 4][index],
+                    "max": config_json_1.default.removePMCLootForLootingBots ? [1, 1, 1, 2, 3] : [3, 5, 6, 8, 9][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
                 },
                 "magazines": {
-                    "min": [2, 2, 3, 3][index],
-                    "max": [3, 3, 4, 4][index],
+                    "min": [2, 2, 3, 3, 4][index],
+                    "max": [3, 3, 4, 4, 5][index],
                     "whitelist": botConfig.equipment.pmc.whitelist[index].equipment.mod_magazine
                 },
             },
@@ -816,45 +830,45 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
             // "mod_tactical_003"
             ],
             "mods": {
-                "mod_barrel": [15, 20, 25, 25][index],
-                "mod_bipod": [1, 10, 5, 11][index],
-                "mod_flashlight": [35, 50, 70, 90][index],
-                "mod_foregrip": [30, 60, 70, 90][index],
-                "mod_handguard": [20, 30, 70, 90][index],
-                "mod_launcher": [0, 0, 5, 15][index],
-                "mod_magazine": [50, 60, 80, 90][index],
-                "mod_magazine_000": [0, 0, 25, 35][index],
-                "mod_mount": [60, 90, 100, 100][index],
-                "mod_mount_000": [40, 45, 65, 90][index],
-                "mod_mount_001": [40, 45, 65, 90][index],
-                "mod_mount_002": [40, 45, 65, 90][index],
-                "mod_mount_003": [40, 45, 65, 90][index],
-                "mod_mount_004": [40, 45, 65, 90][index],
-                "mod_mount_005": [40, 45, 65, 90][index],
-                "mod_mount_006": [40, 45, 65, 90][index],
-                "mod_muzzle": [15, 35, 65, 85][index],
-                "mod_muzzle_000": [15, 35, 65, 85][index],
-                "mod_muzzle_001": [15, 35, 65, 85][index],
-                "mod_equipment": [15, 25, 25, 35][index],
-                "mod_equipment_000": [15, 25, 25, 35][index],
-                "mod_equipment_001": [15, 25, 25, 35][index],
-                "mod_equipment_002": [15, 25, 25, 35][index],
-                "mod_pistol_grip_akms": [1, 15, 25, 35][index],
-                "mod_pistol_grip": [1, 15, 25, 35][index],
-                "mod_scope": [90, 95, 100, 100][index],
-                "mod_scope_000": [90, 95, 100, 100][index],
-                "mod_scope_001": [90, 95, 100, 100][index],
-                "mod_scope_002": [90, 95, 100, 100][index],
-                "mod_scope_003": [90, 95, 100, 100][index],
-                "mod_tactical": [15, 30, 35, 50][index],
+                "mod_barrel": [15, 20, 25, 35, 45][index],
+                "mod_bipod": [1, 10, 5, 11, 50][index],
+                "mod_flashlight": [35, 50, 70, 90, 95][index],
+                "mod_foregrip": [30, 60, 70, 90, 95][index],
+                "mod_handguard": [20, 30, 70, 90, 95][index],
+                "mod_launcher": [0, 0, 5, 15, 50][index],
+                "mod_magazine": [50, 60, 80, 90, 95][index],
+                "mod_magazine_000": [0, 0, 25, 35, 50][index],
+                "mod_mount": [60, 90, 100, 100, 100][index],
+                "mod_mount_000": [40, 45, 65, 90, 95][index],
+                "mod_mount_001": [40, 45, 65, 90, 95][index],
+                "mod_mount_002": [40, 45, 65, 90, 95][index],
+                "mod_mount_003": [40, 45, 65, 90, 95][index],
+                "mod_mount_004": [40, 45, 65, 90, 95][index],
+                "mod_mount_005": [40, 45, 65, 90, 95][index],
+                "mod_mount_006": [40, 45, 65, 90, 95][index],
+                "mod_muzzle": [15, 35, 65, 85, 99][index],
+                "mod_muzzle_000": [15, 35, 65, 85, 99][index],
+                "mod_muzzle_001": [15, 35, 65, 85, 99][index],
+                "mod_equipment": [15, 25, 25, 35, 50][index],
+                "mod_equipment_000": [15, 25, 25, 35, 50][index],
+                "mod_equipment_001": [15, 25, 25, 35, 50][index],
+                "mod_equipment_002": [15, 25, 25, 35, 50][index],
+                "mod_pistol_grip_akms": [1, 15, 25, 35, 50][index],
+                "mod_pistol_grip": [1, 15, 25, 35, 50][index],
+                "mod_scope": [90, 95, 100, 100, 100][index],
+                "mod_scope_000": [90, 95, 100, 100, 100][index],
+                "mod_scope_001": [90, 95, 100, 100, 100][index],
+                "mod_scope_002": [90, 95, 100, 100, 100][index],
+                "mod_scope_003": [90, 95, 100, 100, 100][index],
+                "mod_tactical": [15, 30, 35, 50, 75][index],
                 "mod_tactical_2": 0,
-                "mod_tactical001": [15, 30, 35, 50][index],
-                "mod_tactical002": [15, 30, 35, 50][index],
-                "mod_tactical_000": [1, 5, 5, 10][index],
-                "mod_tactical_001": [1, 5, 5, 10][index],
-                "mod_tactical_002": [15, 30, 35, 50][index],
-                "mod_tactical_003": [15, 30, 35, 50][index],
-                "mod_charge": [10, 20, 35, 50][index],
+                "mod_tactical001": [15, 30, 35, 50, 75][index],
+                "mod_tactical002": [15, 30, 35, 50, 75][index],
+                "mod_tactical_000": [1, 5, 5, 10, 15][index],
+                "mod_tactical_001": [1, 5, 5, 10, 15][index],
+                "mod_tactical_002": [15, 30, 35, 50, 75][index],
+                "mod_tactical_003": [15, 30, 35, 50, 75][index],
+                "mod_charge": [10, 20, 35, 50, 75][index],
                 "mod_stock": 99,
                 "mod_stock_000": 99,
                 // "mod_stock_001": [1, 10, 15, 20][index],
@@ -863,17 +877,25 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 // "mod_sight_rear": 50,
                 // "mod_reciever": 100,
                 // "mod_gas_block": [1, 10, 15, 20][index],
-                "mod_pistolgrip": [1, 15, 25, 35][index],
+                "mod_pistolgrip": [1, 15, 25, 35, 50][index],
                 // "mod_trigger": 1,
                 // "mod_hammer": 1,
                 // "mod_catch": 1
             }
         };
-        const medkits = {
+        const medkitsAdd = {
             1: ["590c661e86f7741e566b646a"],
             2: [],
             3: ["590c678286f77426c9660122"],
-            4: ["60098ad7c2240c0fe85c570a"]
+            4: ["60098ad7c2240c0fe85c570a"],
+            5: []
+        };
+        const medkitsRemove = {
+            1: new Set([]),
+            2: new Set(["5755356824597772cb798962"]),
+            3: new Set(["590c661e86f7741e566b646a"]),
+            4: new Set([]),
+            5: new Set(["544fb45d4bdc2dee738b4568"]),
         };
         itemList.forEach((id) => {
             const item = items[id];
@@ -886,7 +908,7 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                     newItem.generation.drugs["whitelist"] = [...newItem.generation.drugs["whitelist"] || [], id];
                     break;
                 case (0, exports.checkParentRecursive)(parent, items, [exports.medKitParent]): //meds
-                    newItem.generation.healing["whitelist"] = [...medkits[num], ...newItem.generation.healing["whitelist"] || [], id];
+                    newItem.generation.healing["whitelist"] = [...medkitsAdd[num], ...newItem.generation.healing["whitelist"] || [], id].filter(medKitID => !medkitsRemove[num].has(medKitID));
                     break;
                 case (0, exports.checkParentRecursive)(parent, items, ["543be6564bdc2df4348b4568"]): //ThrowWeap
                     if (items[id]._props.ThrowType !== "smoke_grenade") {
@@ -979,8 +1001,11 @@ exports.weaponTypes = {
 const buildWeaponSightWhitelist = (items, botConfig, { 1: a, 2: b, 3: c, 4: d }) => {
     botConfig.equipment.pmc.weaponSightWhitelist = {};
     const sightWhitelist = botConfig.equipment.pmc.weaponSightWhitelist;
-    const traderItems = [...new Set([...a, ...b, ...c])]; //, ...d
+    const traderItems = [...new Set([...a, ...b, ...c, ...d])]; //, ...d
+    const blacklist = new Set(InternalBlacklist_1.default);
     traderItems.forEach(id => {
+        if (blacklist.has(id))
+            return;
         if ((0, exports.checkParentRecursive)(id, items, Object.values(SightType))) {
             for (const key in exports.weaponTypes) {
                 const sightsToCheck = exports.weaponTypes[key];
@@ -1019,9 +1044,9 @@ const buildBlacklist = (items, botConfig, mods) => {
     });
 };
 exports.buildBlacklist = buildBlacklist;
-//skull lock
+exports.combinedForbiddenBullets = new Set(Object.values(advancedConfig_json_1.default.forbiddenBullets).flat(1));
 exports.blacklistedItems = new Set([
-    ...config_json_1.default.addDangerousBulletsToTier4Bots ? [] : advancedConfig_json_1.default.forbiddenBullets,
+    ...config_json_1.default.addDangerousBulletsToTier4Bots ? [] : exports.combinedForbiddenBullets,
     ...config_json_1.default.customBlacklist,
     ...InternalBlacklist_1.default
 ]);

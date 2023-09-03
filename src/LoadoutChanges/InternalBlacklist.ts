@@ -1,4 +1,16 @@
 export default [
+    "5cdeb229d7f00c000e7ce174", //stationary gun
+    "5943d9c186f7745a13413ac9",// shrapnel bullets?
+    "5996f6cb86f774678763a6ca",// shrapnel bullets?
+    "5996f6fc86f7745e585b4de3",// shrapnel bullets?
+    "63b35f281745dd52341e5da7",// shrapnel bullets?
+    "5d2f2ab648f03550091993ca",// shrapnel bullets?
+    "5cde8864d7f00c0010373be1",
+    "64b9cf0ac12b9c38db26923a", // << no idea
+    "627a137bf21bc425b06ab944",
+    "610720f290b75a49ff2e5e25",
+    "5996f6d686f77467977ba6cc", // shrapnel bullets?
+    "5ae083b25acfc4001a5fc702", // Master hand ?
     "544a3d0a4bdc2d1b388b4567",
     "5a16bb52fcdbcb001a3b00dc", //skull lock
     "5a1eaa87fcdbcb001865f75e", //reap-ir
@@ -95,6 +107,7 @@ export default [
     "624c0b3340357b5f566e8766",
     "624c0b3340357b5f566e8766",
     "6217726288ed9f0845317459",
+    "62178be9d0050232da3485d9",
     //Mosin shorty,
     "5bfd36ad0db834001c38ef66",
     "5bfd36290db834001966869a",
@@ -177,6 +190,7 @@ export default [
     "5d1c702ad7ad1a632267f429",
 
     "620109578d82e67e7911abf2",// signal pistol
+    "62178c4d4ecf221597654e3d",
     "62389aaba63f32501b1b444f",// signal ammo
     "62389ba9a63f32501b1b4451",
     "62389bc9423ed1685422dc57",

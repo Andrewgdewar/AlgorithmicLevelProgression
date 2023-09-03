@@ -18,5 +18,5 @@ export const SetupLocationGlobals = (
     globalValues.tables = tables
     globalValues.configServer = configServer
     globalValues.originalWeighting = cloneDeep(botConfig.equipment.pmc.weightingAdjustments)
-    globalValues.setValuesForLocation('bigmap')
+    // globalValues.setValuesForLocation('factory4_day')
 }
