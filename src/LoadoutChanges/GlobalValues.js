@@ -41,7 +41,7 @@ class globalValues {
                     // console.log(firstPrimary[weaponId], " to ", pmcWeighting[index].equipment.edit.FirstPrimaryWeapon[weaponId], parent, items[weaponId]._name)
                 }
                 else {
-                    // this.Logger.warning(`Algorthimic LevelProgression:  Unable to set map settings for ${items[weaponId]._name} - ${weaponId} `)
+                    this.Logger.warning(`Algorthimic LevelProgression:  Unable to set map settings for ${items[weaponId]._name} - ${weaponId} `);
                 }
             });
         });

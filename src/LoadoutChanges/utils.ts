@@ -357,12 +357,12 @@ export const equipmentIdMapper = {
 }
 
 
-export type oneToFour = "1" | "2" | "3" | "4" | "5"
+export type oneToFive = "1" | "2" | "3" | "4" | "5"
 
-export const getCurrentLevelRange = (currentLevel: number): oneToFour | undefined => {
+export const getCurrentLevelRange = (currentLevel: number): oneToFive | undefined => {
     for (const key in levelRange) {
         const { min, max } = levelRange[key] as MinMax;
-        if (currentLevel >= min && currentLevel <= max) return key as oneToFour
+        if (currentLevel >= min && currentLevel <= max) return key as oneToFive
     }
 }
 

@@ -181,7 +181,7 @@ function ProgressionChanges(container) {
     });
     //Setup beast mod level 5
     tradersMasterList[5].forEach(id => {
-        if (utils_1.blacklistedItems.has(id) || utils_1.combinedForbiddenBullets.has(id) || !items[id]._parent || !items[id]._props || !items[id]._name) {
+        if (utils_1.blacklistedItems.has(id) || !items[id]._parent || !items[id]._props || !items[id]._name) {
             tradersMasterList[5].delete(id);
         }
         else {
@@ -213,7 +213,7 @@ function ProgressionChanges(container) {
             }
         }
     });
-    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]]);
+    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4], ...tradersMasterList[5]]);
     (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
     (0, utils_1.buildOutModsObject)(combinedNumList, items, usecInventory, botConfig);
     bearInventory.mods = (0, utils_1.cloneDeep)(usecInventory.mods);
@@ -269,10 +269,12 @@ function ProgressionChanges(container) {
     if (config_json_1.default.removeScavLootForLootingBots && botConfig?.equipment?.assault?.randomisation?.[0]?.generation) {
         const generation = botConfig.equipment.assault.randomisation[0].generation;
         generation.looseLoot = {
+            ...generation.looseLoot || {},
             min: 0, max: 2
         };
     }
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
+    // saveToFile(usecInventory, "refDBS/refPMC.json")
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }

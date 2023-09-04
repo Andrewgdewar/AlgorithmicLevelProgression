@@ -52,11 +52,11 @@ export default function ProgressionChanges(
 
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
-    
+
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
     // console.log(JSON.stringify(tables.bots.types.assault.inventory))
-    
+
     const usecAppearance = tables.bots.types.usec.appearance
     const bearAppearance = tables.bots.types.bear.appearance
 
@@ -270,10 +270,12 @@ export default function ProgressionChanges(
         }
     })
 
-    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]])
 
+    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]])
+    //TODO: keep an eye on this.. this might be a bad idea.
+    const combinedNumWith5List = new Set([...combinedNumList, ...tradersMasterList[5]])
     buildWeaponSightWhitelist(items, botConfig, tradersMasterList)
-    buildOutModsObject(combinedNumList, items, usecInventory, botConfig)
+    buildOutModsObject(combinedNumWith5List, items, usecInventory, botConfig)
     bearInventory.mods = cloneDeep(usecInventory.mods)
 
     setupMods(mods)
@@ -337,12 +339,14 @@ export default function ProgressionChanges(
     if (config.removeScavLootForLootingBots && (botConfig?.equipment?.assault?.randomisation?.[0] as any)?.generation) {
         const generation = (botConfig.equipment.assault.randomisation[0] as any).generation
         generation.looseLoot = {
+            ...generation.looseLoot || {},
             min: 0, max: 2
         }
     }
 
-  
+
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
+    // saveToFile(usecInventory, "refDBS/refPMC.json")
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }

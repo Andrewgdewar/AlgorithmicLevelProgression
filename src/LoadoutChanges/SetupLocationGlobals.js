@@ -13,6 +13,6 @@ const SetupLocationGlobals = (container) => {
     GlobalValues_1.globalValues.tables = tables;
     GlobalValues_1.globalValues.configServer = configServer;
     GlobalValues_1.globalValues.originalWeighting = (0, utils_1.cloneDeep)(botConfig.equipment.pmc.weightingAdjustments);
-    // globalValues.setValuesForLocation('factory4_day')
+    // globalValues.setValuesForLocation('woods')
 };
 exports.SetupLocationGlobals = SetupLocationGlobals;
