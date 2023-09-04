@@ -52,10 +52,11 @@ export default function ProgressionChanges(
 
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
-
+    
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
-    // console.log(JSON.stringify(bearInventory))
+    // console.log(JSON.stringify(tables.bots.types.assault.inventory))
+    
     const usecAppearance = tables.bots.types.usec.appearance
     const bearAppearance = tables.bots.types.bear.appearance
 
@@ -333,6 +334,14 @@ export default function ProgressionChanges(
         botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig.otherBotTypes[botType] }
     })
 
+    if (config.removeScavLootForLootingBots && (botConfig?.equipment?.assault?.randomisation?.[0] as any)?.generation) {
+        const generation = (botConfig.equipment.assault.randomisation[0] as any).generation
+        generation.looseLoot = {
+            min: 0, max: 2
+        }
+    }
+
+  
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")

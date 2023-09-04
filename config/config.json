@@ -13,7 +13,8 @@
         "get id's from here https://db.sp-tarkov.com/search/",
         "5example3208of34not8f83real8a1id"
     ],
-    "removePMCLootForLootingBots": false,
+    "removePMCLootForLootingBots": true,
+    "removeScavLootForLootingBots": true,
     "levelRange": {
         "1": {
             "min": 1,
