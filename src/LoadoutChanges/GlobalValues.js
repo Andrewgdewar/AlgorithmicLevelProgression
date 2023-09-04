@@ -24,7 +24,7 @@ class globalValues {
         }
         const firstPrimaryWeaponTypes = mapWeightings.FirstPrimaryWeapon;
         const pmcWeighting = botConfig.equipment.pmc.weightingAdjustments;
-        console.log("\nlocation ======>", location);
+        // console.log("\nlocation ======>", location)
         this.originalWeighting?.forEach((weightTier, index) => {
             const firstPrimary = weightTier.equipment.edit.FirstPrimaryWeapon;
             const firstPrimaryKeys = Object.keys(firstPrimary);
@@ -38,7 +38,7 @@ class globalValues {
                 if (parent && firstPrimaryWeaponTypes[parent]) {
                     const multiplier = firstPrimaryWeaponTypes[parent];
                     pmcWeighting[index].equipment.edit.FirstPrimaryWeapon[weaponId] = Math.round(multiplier * firstPrimary[weaponId]);
-                    console.log(firstPrimary[weaponId], " to ", pmcWeighting[index].equipment.edit.FirstPrimaryWeapon[weaponId], parent, items[weaponId]._name);
+                    // console.log(firstPrimary[weaponId], " to ", pmcWeighting[index].equipment.edit.FirstPrimaryWeapon[weaponId], parent, items[weaponId]._name)
                 }
                 else {
                     // this.Logger.warning(`Algorthimic LevelProgression:  Unable to set map settings for ${items[weaponId]._name} - ${weaponId} `)

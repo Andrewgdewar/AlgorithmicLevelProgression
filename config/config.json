@@ -4,8 +4,8 @@
     "leveledClothing": true,
     "questUnlockedItemsShifted": true,
     "tradedItemsShifted": true,
-    "addCustomTraderItems": false,
     "addDangerousBulletsToTier4Bots": true,
+    "addCustomTraderItems": false,
     "customTradersToExclude": [
         "insertTheTraderNameToIgnoreTheirItems"
     ],
@@ -73,6 +73,6 @@
             7
         ]
     },
-    "equipmentRandomness": 30,
+    "equipmentRandomness": 20,
     "debug": false
 }
