@@ -258,6 +258,10 @@ export default function ProgressionChanges(
                             { ...bearInventory.Ammo[calibre] || {}, [id]: 1 }
                     }
                     break;
+                case equipmentType === "Pockets":
+                    // This is wierd sized pockets
+                    // console.log(item._name, item._props.ShortName)
+                    break;
                 case !!equipmentType:
                     if (!usecInventory.equipment[equipmentType]) usecInventory.equipment[equipmentType] = {}
                     if (!bearInventory.equipment[equipmentType]) bearInventory.equipment[equipmentType] = {}

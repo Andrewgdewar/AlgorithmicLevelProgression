@@ -245,7 +245,7 @@ export const getHeadwearRating = ({ _props: { BlocksEarpiece, headSegments, armo
 export const getEquipmentType = (id: string, items: Record<string, ITemplateItem>) => {
     const equipmentKeys = Object.keys(equipmentIdMapper)
     for (let index = 0; index < equipmentKeys.length; index++) {
-        const key = equipmentKeys[index];
+        const key = equipmentKeys[index] as keyof typeof equipmentIdMapper | undefined
         if (checkParentRecursive(id, items, equipmentIdMapper[key])) {
             return key
         }
