@@ -1,4 +1,5 @@
 export default [
+    "58ac60eb86f77401897560ff", //golden balaclava!
     "6241c316234b593b5676b637", //bb ammo
     "5cdeb229d7f00c000e7ce174", //stationary gun
     "5943d9c186f7745a13413ac9",// shrapnel bullets?

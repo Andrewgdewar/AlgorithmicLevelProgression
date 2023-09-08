@@ -201,7 +201,8 @@ function ProgressionChanges(container) {
                     }
                     break;
                 case equipmentType === "Pockets":
-                    console.log(item._name, item._props.ShortName);
+                    // This is wierd sized pockets
+                    // console.log(item._name, item._props.ShortName)
                     break;
                 case !!equipmentType:
                     if (!usecInventory.equipment[equipmentType])
