@@ -100,9 +100,7 @@ export default function ProgressionChanges(
     let allTradersSuits = Object.values(traders).filter(({ suits }) => !!suits?.length).map(({ suits }) => suits).flat(1)
 
     if (config?.leveledClothing) {
-        buildInitialUsecAppearance(usecAppearance)
-        buildInitialBearAppearance(bearAppearance)
-        buildClothingWeighting(allTradersSuits, customization, botConfig)
+        buildClothingWeighting(allTradersSuits, customization, botConfig, usecAppearance, bearAppearance)
     }
 
 
@@ -359,51 +357,51 @@ export default function ProgressionChanges(
 
 
 
- // // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<
+// // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<
 
-    // interface ItemNode {
-    //     name: string;
-    //     id: string;
-    //     parent: string;
-    //     nodes: Nodes
-    // }
+// interface ItemNode {
+//     name: string;
+//     id: string;
+//     parent: string;
+//     nodes: Nodes
+// }
 
-    // type Nodes = {
-    //     [id: string]: ItemNode
-    // }
+// type Nodes = {
+//     [id: string]: ItemNode
+// }
 
-    // const buildDBObject = (parent: string, items: Record<string, ITemplateItem>): Nodes => {
-    //     const itemList = Object.keys(items);
-    //     const dbObject = {} as Nodes
+// const buildDBObject = (parent: string, items: Record<string, ITemplateItem>): Nodes => {
+//     const itemList = Object.keys(items);
+//     const dbObject = {} as Nodes
 
-    //     itemList.forEach((itemID) => {
-    //         const item = items[itemID]
-    //         if (item._parent === parent) {
-    //             dbObject[item._name] = {
-    //                 name: item._name,
-    //                 id: item._id,
-    //                 parent: item._parent,
-    //                 nodes: buildDBObject(item._id, items)
-    //             }
-    //         }
-    //     })
-    //     return dbObject
-    // }
+//     itemList.forEach((itemID) => {
+//         const item = items[itemID]
+//         if (item._parent === parent) {
+//             dbObject[item._name] = {
+//                 name: item._name,
+//                 id: item._id,
+//                 parent: item._parent,
+//                 nodes: buildDBObject(item._id, items)
+//             }
+//         }
+//     })
+//     return dbObject
+// }
 
-    // const nodes = buildDBObject("54009119af1c881c07000029", items)
+// const nodes = buildDBObject("54009119af1c881c07000029", items)
 
 
-    // // const getAmmoWeighting = (pen, dam) => (pen * 2) + (dam * 0.2)
+// // const getAmmoWeighting = (pen, dam) => (pen * 2) + (dam * 0.2)
 
-    // // Build Ammo types
-    // // >>>>>>>>>>>>>>> Ammo DB <<<<<<<<<<<<<<<<<<
-    // const ammoTypes = {}
+// // Build Ammo types
+// // >>>>>>>>>>>>>>> Ammo DB <<<<<<<<<<<<<<<<<<
+// const ammoTypes = {}
 
-    // const ammo = Object.values(nodes?.StackableItem?.nodes?.Ammo?.nodes || {}).map(({ id }) => items[id])
+// const ammo = Object.values(nodes?.StackableItem?.nodes?.Ammo?.nodes || {}).map(({ id }) => items[id])
 
-    // ammo.forEach(({ _props: { Damage, PenetrationPower }, _name, _id }) => {
-    //     if (_name.includes("patron")) {
-    //         const calibre = _name.split("_")[1].toLowerCase()
-    //         ammoTypes[calibre] = { ...ammoTypes[calibre] || {}, [_name]: { id: _id, Damage, PenetrationPower } }
-    //     }
-    // })
+// ammo.forEach(({ _props: { Damage, PenetrationPower }, _name, _id }) => {
+//     if (_name.includes("patron")) {
+//         const calibre = _name.split("_")[1].toLowerCase()
+//         ammoTypes[calibre] = { ...ammoTypes[calibre] || {}, [_name]: { id: _id, Damage, PenetrationPower } }
+//     }
+// })

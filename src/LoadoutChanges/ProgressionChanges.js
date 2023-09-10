@@ -52,9 +52,7 @@ function ProgressionChanges(container) {
     botConfig.equipment.pmc.whitelist = (0, utils_1.setupBaseWhiteList)();
     let allTradersSuits = Object.values(traders).filter(({ suits }) => !!suits?.length).map(({ suits }) => suits).flat(1);
     if (config_json_1.default?.leveledClothing) {
-        (0, utils_1.buildInitialUsecAppearance)(usecAppearance);
-        (0, utils_1.buildInitialBearAppearance)(bearAppearance);
-        (0, utils_1.buildClothingWeighting)(allTradersSuits, customization, botConfig);
+        (0, utils_1.buildClothingWeighting)(allTradersSuits, customization, botConfig, usecAppearance, bearAppearance);
     }
     traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradeItems, loyal_level_items, barter_scheme } = {}, }, index) => {
         if (!tradeItems || !nickname)

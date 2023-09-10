@@ -984,53 +984,114 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
 }
 
 
-export const buildInitialUsecAppearance = (appearance: Appearance) => {
+export const buildInitialUsecAppearance = (appearance: Appearance, items: Record<string, ICustomizationItem>) => {
     appearance.feet = {
-        "5cde95ef7d6c8b04713c4f2d": 1
+        "5cde95ef7d6c8b04713c4f2d": 15
     }
     appearance.body = {
-        "5cde95d97d6c8b647a3769b0": 1
+        "5cde95d97d6c8b647a3769b0": 15
     }
+    Object.keys(items).forEach(itemId => {
+        const item = items[itemId]
+        if (item?._props?.Side?.includes("Usec"))
+            switch (true) {
+                case item._props.BodyPart === "Head":
+                    if (!appearance.head.includes(itemId)) appearance.head.push(itemId)
+                    break;
+                case item._props.BodyPart === "Hands":
+                    if (!appearance.hands.includes(itemId)) appearance.hands.push(itemId)
+                    break;
+                // case item._parent === "5fc100cf95572123ae738483": // this adds voices
+                //     if (!appearance.voice.includes(item._name)) appearance.voice.push(item._name)
+                //     break;
+                default:
+                    break;
+            }
+    })
 }
 
 
-export const buildInitialBearAppearance = (appearance: Appearance) => {
+export const buildInitialBearAppearance = (appearance: Appearance, items: Record<string, ICustomizationItem>) => {
     appearance.feet = {
-        "5cc085bb14c02e000e67a5c5": 1
+        "5cc085bb14c02e000e67a5c5": 15
     }
     appearance.body = {
-        "5cc0858d14c02e000c6bea66": 1
+        "5cc0858d14c02e000c6bea66": 15
     }
+    Object.keys(items).forEach(itemId => {
+        const item = items[itemId]
+        if (item?._props?.Side?.includes("Bear"))
+            switch (true) {
+                case item._props.BodyPart === "Head":
+                    if (!appearance.head.includes(itemId)) appearance.head.push(itemId)
+                    break;
+                case item._props.BodyPart === "Hands":
+                    if (!appearance.hands.includes(itemId)) appearance.hands.push(itemId)
+                    break;
+                // case item._parent === "5fc100cf95572123ae738483":
+                //     if (!appearance.voice.includes(item._name)) appearance.voice.push(item._name)
+                //     break;
+                default:
+                    break;
+            }
+    })
 }
 
-export const buildClothingWeighting = (suit: ISuit[], items: Record<string, ICustomizationItem>, botConfig: IBotConfig) => {
-    const levels: number[][] = [[1, 4], [5, 7], [8, 15], [16, 22], [23, 30], [31, 40], [41, 100]]
+export const buildClothingWeighting = (
+    suit: ISuit[],
+    items: Record<string, ICustomizationItem>,
+    botConfig: IBotConfig,
+    usecAppearance: Appearance,
+    bearAppearance: Appearance
+) => {
+    buildInitialUsecAppearance(usecAppearance, items)
+    buildInitialBearAppearance(bearAppearance, items)
+
+    const levels: number[][] = [[1, 7], [8, 15], [16, 22], [23, 30], [31, 40], [41, 100]]
     botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels)
     const clothingAdjust = botConfig.equipment.pmc.clothing
 
     suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } = {} }) => {
         if (!profileLevel || !suiteId || loyaltyLevel === undefined) return;
+        // if (profileLevel === 0) profileLevel = 1
         const index = levels.findIndex(([min, max]: number[]) => {
             if (profileLevel >= min && profileLevel <= max) {
                 return true
             }
         })
+
         if (index === undefined) return console.log('Empty index for: ', suiteId)
         if (items[suiteId]?._props?.Body) {
-            if (!clothingAdjust[index].clothing.add["body"]) clothingAdjust[index].clothing.add["body"] = {}
-            clothingAdjust[index].clothing.add["body"][items[suiteId]._props.Body] = (profileLevel * loyaltyLevel)
+            switch (true) {
+                case !!items[suiteId]?._name?.toLowerCase().includes("bear"):
+                    bearAppearance.body[items[suiteId]._props.Body] = 1
+                    break;
+                case !!items[suiteId]?._name?.toLowerCase().includes("usec"):
+                    usecAppearance.body[items[suiteId]._props.Body] = 1
+                    break;
+                default:
+                    bearAppearance.body[items[suiteId]._props.Body] = 1
+                    usecAppearance.body[items[suiteId]._props.Body] = 1
+                    break;
+            }
+            if (!clothingAdjust[index].clothing.edit["body"]) clothingAdjust[index].clothing.edit["body"] = {}
+            clothingAdjust[index].clothing.edit["body"][items[suiteId]._props.Body] = 10 + (index * 10)
         }
 
         if (items[suiteId]?._props?.Feet) {
-            if (!clothingAdjust[index].clothing.add["feet"]) clothingAdjust[index].clothing.add["feet"] = {}
-            clothingAdjust[index].clothing.add["feet"][items[suiteId]._props.Feet] = (profileLevel * loyaltyLevel)
+            bearAppearance.feet[items[suiteId]._props.Feet] = 1
+            usecAppearance.feet[items[suiteId]._props.Feet] = 1
+            if (!clothingAdjust[index].clothing.edit["feet"]) clothingAdjust[index].clothing.edit["feet"] = {}
+            clothingAdjust[index].clothing.edit["feet"][items[suiteId]._props.Feet] = 10 + (index * 10)
         }
     })
+
+
     // console.log(JSON.stringify(clothingAdjust))
+    // saveToFile(items, "/customization.json")
+    // saveToFile(bearAppearance, "/bear2.json")
+    // saveToFile(clothingAdjust, "/clothingWeighting.json")
 }
-
-
-
 
 export const weaponTypes = {
     "5447b6254bdc2dc3278b4568": [SightType.AssaultScope, SightType.OpticScope],// SniperRifle
