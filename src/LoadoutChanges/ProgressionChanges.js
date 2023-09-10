@@ -17,6 +17,7 @@ function ProgressionChanges(container) {
     const traders = tables.traders;
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
+    botConfig.secureContainerAmmoStackCount = 500;
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
     // console.log(JSON.stringify(tables.bots.types.assault.inventory))

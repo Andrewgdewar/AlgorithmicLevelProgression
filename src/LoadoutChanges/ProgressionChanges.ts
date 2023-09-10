@@ -53,6 +53,7 @@ export default function ProgressionChanges(
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
 
+    botConfig.secureContainerAmmoStackCount = 200
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
     // console.log(JSON.stringify(tables.bots.types.assault.inventory))

@@ -1049,9 +1049,9 @@ const buildClothingWeighting = (suit, items, botConfig, usecAppearance, bearAppe
     });
     // console.log(JSON.stringify(clothingAdjust))
     // saveToFile(items, "/customization.json")
-    (0, exports.saveToFile)(bearAppearance, "/bear.json");
-    (0, exports.saveToFile)(usecAppearance, "/usec.json");
-    (0, exports.saveToFile)(clothingAdjust, "/clothingWeighting.json");
+    // saveToFile(bearAppearance, "/bear.json")
+    // saveToFile(usecAppearance, "/usec.json")
+    // saveToFile(clothingAdjust, "/clothingWeighting.json")
 };
 exports.buildClothingWeighting = buildClothingWeighting;
 exports.weaponTypes = {
