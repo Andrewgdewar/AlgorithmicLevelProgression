@@ -1079,17 +1079,29 @@ export const buildClothingWeighting = (
         }
 
         if (items[suiteId]?._props?.Feet) {
-            bearAppearance.feet[items[suiteId]._props.Feet] = 1
-            usecAppearance.feet[items[suiteId]._props.Feet] = 1
+            switch (true) {
+                case !!items[suiteId]?._name?.toLowerCase().includes("bear"):
+                    bearAppearance.feet[items[suiteId]._props.Feet] = 1
+                    break;
+                case !!items[suiteId]?._name?.toLowerCase().includes("usec"):
+                    usecAppearance.feet[items[suiteId]._props.Feet] = 1
+                    break;
+                default:
+                    bearAppearance.feet[items[suiteId]._props.Feet] = 1
+                    usecAppearance.feet[items[suiteId]._props.Feet] = 1
+                    break;
+            }
+
             if (!clothingAdjust[index].clothing.edit["feet"]) clothingAdjust[index].clothing.edit["feet"] = {}
-            clothingAdjust[index].clothing.edit["feet"][items[suiteId]._props.Feet] = 10 + (index * 10)
+            clothingAdjust[index].clothing.edit["feet"][items[suiteId]._props.Feet] = 10 + (index * 40)
         }
     })
 
 
     // console.log(JSON.stringify(clothingAdjust))
     // saveToFile(items, "/customization.json")
-    // saveToFile(bearAppearance, "/bear2.json")
+    // saveToFile(bearAppearance, "/bear.json")
+    // saveToFile(usecAppearance, "/usec.json")
     // saveToFile(clothingAdjust, "/clothingWeighting.json")
 }
 
