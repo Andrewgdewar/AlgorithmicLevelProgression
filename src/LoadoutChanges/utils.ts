@@ -819,8 +819,8 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "looseLoot": {
-                    "min": config.removePMCLootForLootingBots ? [0, 0, 0, 0, 1][index] : [0, 1, 2, 3, 4][index],
-                    "max": config.removePMCLootForLootingBots ? [1, 1, 1, 2, 3] : [3, 5, 6, 8, 9][index],
+                    "min": config.removePMCLootForLootingBots ? [0, 0, 0, 0, 0][index] : [0, 1, 2, 3, 4][index],
+                    "max": config.removePMCLootForLootingBots ? [0, 0, 0, 0, 0][index] : [3, 5, 6, 8, 9][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
                 },
                 "magazines": {

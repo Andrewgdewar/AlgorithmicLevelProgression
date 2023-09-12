@@ -289,8 +289,8 @@ export default function ProgressionChanges(
     usecInventory.items.SecuredContainer = deDupeArr(usecInventory.items.SecuredContainer)
     bearInventory.items.SecuredContainer = deDupeArr(bearInventory.items.SecuredContainer)
 
-    usecInventory.items.Backpack = deDupeArr(usecInventory.items.Backpack)
-    bearInventory.items.Backpack = deDupeArr(bearInventory.items.Backpack)
+    usecInventory.items.Backpack = config.removePMCLootForLootingBots ? [] : deDupeArr(usecInventory.items.Backpack)
+    bearInventory.items.Backpack = config.removePMCLootForLootingBots ? [] : deDupeArr(bearInventory.items.Backpack)
 
     usecInventory.items.Pockets = deDupeArr(usecInventory.items.Pockets)
     bearInventory.items.Pockets = deDupeArr(bearInventory.items.Pockets)
