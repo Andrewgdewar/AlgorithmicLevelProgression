@@ -781,8 +781,8 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                     ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
                 },
                 "looseLoot": {
-                    "min": config_json_1.default.removePMCLootForLootingBots ? [0, 0, 0, 0, 1][index] : [0, 1, 2, 3, 4][index],
-                    "max": config_json_1.default.removePMCLootForLootingBots ? [1, 1, 1, 2, 3] : [3, 5, 6, 8, 9][index],
+                    "min": config_json_1.default.removePMCLootForLootingBots ? [0, 0, 0, 0, 0][index] : [0, 1, 2, 3, 4][index],
+                    "max": config_json_1.default.removePMCLootForLootingBots ? [0, 0, 0, 0, 0][index] : [3, 5, 6, 8, 9][index],
                     ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
                 },
                 "magazines": {
@@ -969,10 +969,10 @@ const buildInitialUsecAppearance = (appearance, items) => {
 exports.buildInitialUsecAppearance = buildInitialUsecAppearance;
 const buildInitialBearAppearance = (appearance, items) => {
     appearance.feet = {
-        "5cc085bb14c02e000e67a5c5": 15
+        "5cc085bb14c02e000e67a5c5": 10
     };
     appearance.body = {
-        "5cc0858d14c02e000c6bea66": 15
+        "5cc0858d14c02e000c6bea66": 10
     };
     Object.keys(items).forEach(itemId => {
         const item = items[itemId];
@@ -998,13 +998,36 @@ exports.buildInitialBearAppearance = buildInitialBearAppearance;
 const buildClothingWeighting = (suit, items, botConfig, usecAppearance, bearAppearance) => {
     (0, exports.buildInitialUsecAppearance)(usecAppearance, items);
     (0, exports.buildInitialBearAppearance)(bearAppearance, items);
-    const levels = [[1, 7], [8, 15], [16, 22], [23, 30], [31, 40], [41, 100]];
+    const levelSet = [...new Set(suit.map(value => value.requirements.profileLevel))].sort((a, b) => a - b);
+    const levels = [];
+    for (let index = 0; index < levelSet.length; index++) {
+        let aPointer = levelSet[index] || 1;
+        let bPointer = levelSet[index + 1];
+        if (bPointer === 1) {
+            bPointer = levelSet[index + 2];
+            index++;
+        }
+        const prevPointer = levelSet[index - 1];
+        if (index > 0 && prevPointer + 1 !== aPointer)
+            aPointer = prevPointer + 1;
+        if (aPointer + 1 === bPointer) {
+            levels.push([aPointer, bPointer]);
+        }
+        else {
+            if (isNaN(bPointer) || (levelSet.length - 2) === index)
+                bPointer = 100;
+            levels.push([aPointer, bPointer]);
+        }
+        index++;
+    }
+    console.log(levels);
     botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels);
     const clothingAdjust = botConfig.equipment.pmc.clothing;
     suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } = {} }) => {
         if (!profileLevel || !suiteId || loyaltyLevel === undefined)
             return;
-        // if (profileLevel === 0) profileLevel = 1
+        if (profileLevel === 0)
+            profileLevel = 1;
         const index = levels.findIndex(([min, max]) => {
             if (profileLevel >= min && profileLevel <= max) {
                 return true;
@@ -1027,7 +1050,7 @@ const buildClothingWeighting = (suit, items, botConfig, usecAppearance, bearAppe
             }
             if (!clothingAdjust[index].clothing.edit["body"])
                 clothingAdjust[index].clothing.edit["body"] = {};
-            clothingAdjust[index].clothing.edit["body"][items[suiteId]._props.Body] = 10 + (index * 10);
+            clothingAdjust[index].clothing.edit["body"][items[suiteId]._props.Body] = 10 + (index * 30);
         }
         if (items[suiteId]?._props?.Feet) {
             switch (true) {
@@ -1044,14 +1067,14 @@ const buildClothingWeighting = (suit, items, botConfig, usecAppearance, bearAppe
             }
             if (!clothingAdjust[index].clothing.edit["feet"])
                 clothingAdjust[index].clothing.edit["feet"] = {};
-            clothingAdjust[index].clothing.edit["feet"][items[suiteId]._props.Feet] = 10 + (index * 40);
+            clothingAdjust[index].clothing.edit["feet"][items[suiteId]._props.Feet] = 10 + (index * 30);
         }
     });
     // console.log(JSON.stringify(clothingAdjust))
     // saveToFile(items, "/customization.json")
     // saveToFile(bearAppearance, "/bear.json")
     // saveToFile(usecAppearance, "/usec.json")
-    // saveToFile(clothingAdjust, "/clothingWeighting.json")
+    (0, exports.saveToFile)(clothingAdjust, "/clothingWeighting.json");
 };
 exports.buildClothingWeighting = buildClothingWeighting;
 exports.weaponTypes = {

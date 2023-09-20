@@ -17,7 +17,7 @@ function ProgressionChanges(container) {
     const traders = tables.traders;
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
-    botConfig.secureContainerAmmoStackCount = 500;
+    // botConfig.secureContainerAmmoStackCount = 200
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
     // console.log(JSON.stringify(tables.bots.types.assault.inventory))
@@ -229,8 +229,8 @@ function ProgressionChanges(container) {
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
     bearInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(bearInventory.items.SecuredContainer);
-    usecInventory.items.Backpack = (0, utils_1.deDupeArr)(usecInventory.items.Backpack);
-    bearInventory.items.Backpack = (0, utils_1.deDupeArr)(bearInventory.items.Backpack);
+    usecInventory.items.Backpack = config_json_1.default.removePMCLootForLootingBots ? [] : (0, utils_1.deDupeArr)(usecInventory.items.Backpack);
+    bearInventory.items.Backpack = config_json_1.default.removePMCLootForLootingBots ? [] : (0, utils_1.deDupeArr)(bearInventory.items.Backpack);
     usecInventory.items.Pockets = (0, utils_1.deDupeArr)(usecInventory.items.Pockets);
     bearInventory.items.Pockets = (0, utils_1.deDupeArr)(bearInventory.items.Pockets);
     usecInventory.items.TacticalVest = (0, utils_1.deDupeArr)(usecInventory.items.TacticalVest);
