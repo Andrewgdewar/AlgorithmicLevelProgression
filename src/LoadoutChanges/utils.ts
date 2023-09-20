@@ -1066,7 +1066,7 @@ export const buildClothingWeighting = (
             levels.push([aPointer, bPointer])
         } index++
     }
-    console.log(levels)
+    // console.log(levels)
 
     botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels)
     const clothingAdjust = botConfig.equipment.pmc.clothing
