@@ -1,4 +1,5 @@
 export default [
+    "5e99711486f7744bfc4af328", // Sanitarsmedkit
     "58ac60eb86f77401897560ff", //golden balaclava!
     "6241c316234b593b5676b637", //bb ammo
     "5cdeb229d7f00c000e7ce174", //stationary gun
