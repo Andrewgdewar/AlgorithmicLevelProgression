@@ -8,7 +8,6 @@ export const LocationUpdater = (
 ): undefined => {
     const staticRouterModService = container.resolve<StaticRouterModService>("StaticRouterModService");
 
-    //Raid start
     staticRouterModService.registerStaticRouter(`AlgorithmicLevelProgressionMapUpdater`, [{
         url: "/client/raid/configuration",
         action: (_url, info, _sessionId, output) => {

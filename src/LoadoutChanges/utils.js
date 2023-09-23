@@ -1020,7 +1020,7 @@ const buildClothingWeighting = (suit, items, botConfig, usecAppearance, bearAppe
         }
         index++;
     }
-    console.log(levels);
+    // console.log(levels)
     botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels);
     const clothingAdjust = botConfig.equipment.pmc.clothing;
     suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } = {} }) => {

@@ -4,7 +4,6 @@ exports.LocationUpdater = void 0;
 const GlobalValues_1 = require("./GlobalValues");
 const LocationUpdater = (container) => {
     const staticRouterModService = container.resolve("StaticRouterModService");
-    //Raid start
     staticRouterModService.registerStaticRouter(`AlgorithmicLevelProgressionMapUpdater`, [{
             url: "/client/raid/configuration",
             action: (_url, info, _sessionId, output) => {
