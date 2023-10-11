@@ -1,8 +1,10 @@
 import { QuestRewardType } from "../../../enums/QuestRewardType";
 import { QuestStatus } from "../../../enums/QuestStatus";
+import { QuestTypeEnum } from "../../../enums/QuestTypeEnum";
 import { Item } from "./IItem";
 export interface IQuest {
-    QuestName: string;
+    /** SPT addition - human readable quest name */
+    QuestName?: string;
     _id: string;
     canShowNotificationsInGame: boolean;
     conditions: Conditions;
@@ -13,8 +15,10 @@ export interface IQuest {
     traderId: string;
     location: string;
     image: string;
-    type: string;
+    type: QuestTypeEnum;
     isKey: boolean;
+    /** @deprecated - Likely not used, use 'status' instead */
+    questStatus: QuestStatus;
     restartable: boolean;
     instantComplete: boolean;
     secretQuest: boolean;
@@ -22,10 +26,14 @@ export interface IQuest {
     successMessageText: string;
     templateId: string;
     rewards: Rewards;
-    status: string;
+    /** Becomes 'AppearStatus' inside client */
+    status: string | number;
     KeyQuest: boolean;
     changeQuestMessageText: string;
+    /** "Pmc" or "Scav" */
     side: string;
+    /** Status of quest to player */
+    sptStatus?: QuestStatus;
 }
 export interface Conditions {
     Started: AvailableForConditions[];
@@ -43,12 +51,15 @@ export interface AvailableForProps {
     id: string;
     index: number;
     parentId: string;
+    isEncoded: boolean;
     dynamicLocale: boolean;
-    value?: number;
+    value?: string | number;
     compareMethod?: string;
     visibilityConditions?: VisibilityCondition[];
     target?: string | string[];
     status?: QuestStatus[];
+    availableAfter?: number;
+    dispersion?: number;
     onlyFoundInRaid?: boolean;
     oneSessionOnly?: boolean;
     doNotResetIfCounterCompleted?: boolean;
@@ -60,6 +71,7 @@ export interface AvailableForProps {
     zoneId?: string;
     type?: boolean;
     countInRaid?: boolean;
+    globalQuestCounterId?: any;
 }
 export interface AvailableForCounter {
     id: string;

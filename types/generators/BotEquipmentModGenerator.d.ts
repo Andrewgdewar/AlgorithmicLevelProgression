@@ -81,10 +81,11 @@ export declare class BotEquipmentModGenerator {
      */
     protected modSlotCanHoldScope(modSlot: string, modsParentId: string): boolean;
     /**
-     * Set all scope mod chances to 100%
-     * @param modSpawnChances Chances objet to update
+     * Set mod spawn chances to defined amount
+     * @param modSpawnChances Chance dictionary to update
      */
-    protected setScopeSpawnChancesToFull(modSpawnChances: ModsChances): void;
+    protected adjustSlotSpawnChances(modSpawnChances: ModsChances, modSlotsToAdjust: string[], newChancePercent: number): void;
+    protected modSlotCanHoldMuzzleDevices(modSlot: string, modsParentId: string): boolean;
     protected sortModKeys(unsortedKeys: string[]): string[];
     /**
      * Get a Slot property for an item (chamber/cartridge/slot)
@@ -94,7 +95,7 @@ export declare class BotEquipmentModGenerator {
      */
     protected getModItemSlot(modSlot: string, parentTemplate: ITemplateItem): Slot;
     /**
-     * randomly choose if a mod should be spawned, 100% for required mods OR mod is ammo slot
+     * Randomly choose if a mod should be spawned, 100% for required mods OR mod is ammo slot
      * never return true for an item that has 0% spawn chance
      * @param itemSlot slot the item sits in
      * @param modSlot slot the mod sits in
@@ -145,7 +146,7 @@ export declare class BotEquipmentModGenerator {
      * @param modToAdd template of mod to check
      * @param itemSlot slot the item will be placed in
      * @param modSlot slot the mod will fill
-     * @param parentTemplate tempalte of the mods parent item
+     * @param parentTemplate template of the mods parent item
      * @returns true if valid
      */
     protected isModValidForSlot(modToAdd: [boolean, ITemplateItem], itemSlot: Slot, modSlot: string, parentTemplate: ITemplateItem): boolean;
@@ -191,10 +192,12 @@ export declare class BotEquipmentModGenerator {
     protected mergeCamoraPoolsTogether(camorasWithShells: Record<string, string[]>): string[];
     /**
      * Filter out non-whitelisted weapon scopes
+     * Controlled by bot.json weaponSightWhitelist
+     * e.g. filter out rifle scopes from SMGs
      * @param weapon Weapon scopes will be added to
      * @param scopes Full scope pool
-     * @param botWeaponSightWhitelist whitelist of scope types by weapon base type
-     * @returns array of scope tpls that have been filtered
+     * @param botWeaponSightWhitelist Whitelist of scope types by weapon base type
+     * @returns Array of scope tpls that have been filtered to just ones allowed for that weapon type
      */
     protected filterSightsByWeaponType(weapon: Item, scopes: string[], botWeaponSightWhitelist: Record<string, string[]>): string[];
 }

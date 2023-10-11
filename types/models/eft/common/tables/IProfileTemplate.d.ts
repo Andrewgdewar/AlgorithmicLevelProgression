@@ -1,4 +1,4 @@
-import { Dialogue, WeaponBuild } from "../../profile/IAkiProfile";
+import { Dialogue, IUserBuilds } from "../../profile/IAkiProfile";
 import { IPmcData } from "../IPmcData";
 export interface IProfileTemplates {
     Standard: IProfileSides;
@@ -14,11 +14,13 @@ export interface TemplateSide {
     character: IPmcData;
     suits: string[];
     dialogues: Record<string, Dialogue>;
-    weaponbuilds: WeaponBuild[];
+    userbuilds: IUserBuilds;
     trader: ProfileTraderTemplate;
 }
 export interface ProfileTraderTemplate {
     initialLoyaltyLevel: number;
+    setQuestsAvailableForStart?: boolean;
+    setQuestsAvailableForFinish?: boolean;
     initialStanding: number;
     initialSalesSum: number;
     jaegerUnlocked: boolean;
