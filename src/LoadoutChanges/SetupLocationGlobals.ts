@@ -17,6 +17,6 @@ export const SetupLocationGlobals = (
     globalValues.Logger = container.resolve("WinstonLogger")
     globalValues.tables = tables
     globalValues.configServer = configServer
-    globalValues.originalWeighting = cloneDeep(botConfig.equipment.pmc.weightingAdjustments)
-    // globalValues.setValuesForLocation('woods')
+    globalValues.originalWeighting = cloneDeep(botConfig.equipment.pmc)
+    // globalValues.setValuesForLocation('woods',"CURR")
 }

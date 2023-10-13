@@ -7,7 +7,8 @@ const LocationUpdater = (container) => {
     staticRouterModService.registerStaticRouter(`AlgorithmicLevelProgressionMapUpdater`, [{
             url: "/client/raid/configuration",
             action: (_url, info, _sessionId, output) => {
-                GlobalValues_1.globalValues.setValuesForLocation(info.location.toLowerCase());
+                GlobalValues_1.globalValues.setValuesForLocation(info.location.toLowerCase(), info.timeVariant);
+                console.log(JSON.stringify(info), "\n\n", JSON.stringify(output));
                 return output;
             }
         }], "aki");

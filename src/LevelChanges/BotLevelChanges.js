@@ -11,8 +11,8 @@ function BotLevelChanges(container) {
     const profileHelper = container.resolve("ProfileHelper");
     const botLevelGenerator = container.resolve("BotLevelGenerator");
     const configServer = container.resolve("ConfigServer");
-    const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
-    botConfig.pmc.botRelativeLevelDeltaMax = 1;
+    const pmcConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.PMC);
+    pmcConfig.botRelativeLevelDeltaMax = 1;
     container.afterResolution("BotLevelGenerator", (_t, result) => {
         result.generateBotLevel = (levelDetails, botGenerationDetails, bot) => {
             if (!botGenerationDetails.isPmc)

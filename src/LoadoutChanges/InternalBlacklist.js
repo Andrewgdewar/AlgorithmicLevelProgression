@@ -1,7 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = [
+    "5c0558060db834001b735271",
+    "5648b62b4bdc2d9d488b4585",
     "5e99711486f7744bfc4af328",
+    "5d52cc5ba4b9367408500062",
+    "6087e570b998180e9f76dc24",
     "58ac60eb86f77401897560ff",
     "6241c316234b593b5676b637",
     "5cdeb229d7f00c000e7ce174",
@@ -34,9 +38,9 @@ exports.default = [
     "5c503ac82e221602b21d6e9a",
     "6241c2c2117ad530666a5108",
     //large mags
-    "55d485804bdc2d8c2f8b456b",
-    "56deeefcd2720bc8328b4568",
-    "5882163224597757561aa920",
+    // "55d485804bdc2d8c2f8b456b", shotgun 153/155 extended /7/8
+    // "56deeefcd2720bc8328b4568", shotgun 153/155 extended /7/8
+    // "5882163224597757561aa920", shotgun 153/155 extended /7/8
     "5a78832ec5856700155a6ca3",
     "5a966f51a2750c00156aacf6",
     "5cf8f3b0d7f00c00217872ef",
@@ -45,7 +49,7 @@ exports.default = [
     "625ff31daaaa8c1130599f64",
     "627bce33f21bc425b06ab967",
     '564ca9df4bdc2d35148b4569',
-    '55d481904bdc2d8c2f8b456a',
+    // '55d481904bdc2d8c2f8b456a', //45 round ak
     '55d482194bdc2d1d4e8b456b',
     '5bed625c0db834001c062946',
     '55d485be4bdc2d962f8b456f',
@@ -53,7 +57,7 @@ exports.default = [
     '5c6175362e221600133e3b94',
     '5cfe8010d7ad1a59283b14c6',
     '61695095d92c473c7702147a',
-    '5ea034f65aad6446a939737e',
+    '61695095d92c473c7702147a',
     '59c1383d86f774290a37e0ca',
     '5c6592372e221600133e47d7',
     '544a37c44bdc2d25388b4567',
@@ -62,12 +66,12 @@ exports.default = [
     '5a351711c4a282000b1521a4',
     '5addccf45acfc400185c2989',
     '5b7bef9c5acfc43d102852ec',
-    "5b1fb3e15acfc4001637f068",
-    "59e5f5a486f7746c530b3ce2",
-    "544a378f4bdc2d30388b4567",
-    "5d1340bdd7ad1a0e8d245aab",
+    // "5b1fb3e15acfc4001637f068", 40 round ak
+    // "59e5f5a486f7746c530b3ce2", 40 round
+    // "544a378f4bdc2d30388b4567", 40 round
+    // "5d1340bdd7ad1a0e8d245aab", 40-round 556 45
     "630e295c984633f1fb0e7c30",
-    "5ba26586d4351e44f824b340",
+    // "5ba26586d4351e44f824b340", MP7 40 
     "5c5db6652e221600113fba51",
     "5cffa483d7ad1a049e54ef1c",
     "5d52d479a4b936793d58c76b",
@@ -103,7 +107,7 @@ exports.default = [
     "5b0e794b5acfc47a877359b2",
     "6087e2a5232e5a31c233d552",
     //DustCovers 
-    // "59d6507c86f7741b846413a2", // AKM dust cover (6P1 0-1) allowing one
+    "59d6507c86f7741b846413a2",
     "59e6449086f7746c9f75e822",
     "628a665a86cbd9750d2ff5e5",
     "5649af094bdc2df8348b4586",

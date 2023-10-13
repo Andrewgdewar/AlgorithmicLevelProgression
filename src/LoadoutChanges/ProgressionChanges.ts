@@ -1,3 +1,4 @@
+import { IPmcConfig } from './../../types/models/spt/config/IPmcConfig.d';
 import { DependencyContainer } from 'tsyringe';
 
 import { ConfigTypes } from '@spt-aki/models/enums/ConfigTypes';
@@ -14,6 +15,7 @@ import {
     barterParent,
     blacklistedItems,
     buildClothingWeighting,
+    buildEmptyWeightAdjustments,
     buildInitialRandomization,
     buildOutModsObject,
     buildWeaponSightWhitelist,
@@ -43,6 +45,7 @@ export default function ProgressionChanges(
     const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
     const configServer = container.resolve<ConfigServer>("ConfigServer");
     const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
+    const pmcConfig = configServer.getConfig<IPmcConfig>(ConfigTypes.PMC);
     const tables = databaseServer.getTables();
     const items = tables.templates.items;
     const customization = tables.templates.customization;
@@ -59,8 +62,9 @@ export default function ProgressionChanges(
     const usecAppearance = tables.bots.types.usec.appearance
     const bearAppearance = tables.bots.types.bear.appearance
 
-    botConfig.pmc.looseWeaponInBackpackChancePercent = 1
-    botConfig.pmc.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 }
+
+    pmcConfig.looseWeaponInBackpackChancePercent = 1
+    pmcConfig.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 }
 
     const tradersToInclude = [
         'Prapor',
@@ -86,6 +90,7 @@ export default function ProgressionChanges(
         return tradersToInclude.includes(base.nickname)
     })
 
+    botConfig.equipment.pmc.weightingAdjustmentsByBotLevel = buildEmptyWeightAdjustments()
 
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList: TradersMasterList =
@@ -101,8 +106,6 @@ export default function ProgressionChanges(
     if (config?.leveledClothing) {
         buildClothingWeighting(allTradersSuits, customization, botConfig, usecAppearance, bearAppearance)
     }
-
-
 
     traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradeItems, loyal_level_items, barter_scheme } = {}, }, index) => {
         if (!tradeItems || !nickname) return
@@ -188,10 +191,14 @@ export default function ProgressionChanges(
                 switch (true) {
                     // If large magazine
                     case checkParentRecursive(_tpl, items, [magParent]) && item?._props?.Cartridges?.[0]?._max_count > 39:
-                        // tradersMasterList[4].add(_tpl)
 
-                        // addToModsObject(mods, _tpl, items, 4)
+                        // if (item?._props?.Cartridges?.[0]?._max_count > 39) {
+                        //     tradersMasterList[5].add(_tpl)
+                        //     return
+                        // }
+                        // tradersMasterList[loyaltyLevel].add(_tpl)
 
+                        // addToModsObject(mods, _tpl, items, loyaltyLevel, slotId)
                         break;
                     // Check if its a quest unlocked trade    
                     case !!questassort.success[_id]:
@@ -332,23 +339,32 @@ export default function ProgressionChanges(
     setWeightingAdjustments(items, botConfig, tradersMasterList, mods)
     buildInitialRandomization(items, botConfig, tradersMasterList)
 
-    //Fix otherBotTypes
     Object.keys(advancedConfig.otherBotTypes).forEach(botType => {
         botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig.otherBotTypes[botType] }
     })
 
     if (config.removeScavLootForLootingBots && (botConfig?.equipment?.assault?.randomisation?.[0] as any)?.generation) {
         const generation = (botConfig.equipment.assault.randomisation[0] as any).generation
-        generation.looseLoot = {
+        generation.backpackLoot = {
             ...generation.looseLoot || {},
-            min: 0, max: 2
+            "weights": { "0": 1 }, "whitelist": []
+        }
+        generation.pocketLoot = {
+            ...generation.looseLoot || {},
+            "weights": { "0": 1 }, "whitelist": []
+        }
+        generation.vestLoot = {
+            ...generation.looseLoot || {},
+            "weights": { "0": 1 },
+            "whitelist": []
         }
     }
 
 
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
-    // saveToFile(usecInventory, "refDBS/refPMC.json")
+    saveToFile(usecInventory, "refDBS/refPMC.json")
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
+
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }
 

@@ -1,25 +1,29 @@
 export default [
-    "5e99711486f7744bfc4af328", // Sanitarsmedkit
-    "58ac60eb86f77401897560ff", //golden balaclava!
-    "6241c316234b593b5676b637", //bb ammo
-    "5cdeb229d7f00c000e7ce174", //stationary gun
+    "5c0558060db834001b735271",//GPNVG-18 Night Vision goggles
+    "5648b62b4bdc2d9d488b4585",// gp-34
+    "5e99711486f7744bfc4af328",// Sanitarsmedkit
+    "5d52cc5ba4b9367408500062",
+    "6087e570b998180e9f76dc24",
+    "58ac60eb86f77401897560ff",// golden balaclava!
+    "6241c316234b593b5676b637",// bb ammo
+    "5cdeb229d7f00c000e7ce174",// stationary gun
     "5943d9c186f7745a13413ac9",// shrapnel bullets?
     "5996f6cb86f774678763a6ca",// shrapnel bullets?
     "5996f6fc86f7745e585b4de3",// shrapnel bullets?
     "63b35f281745dd52341e5da7",// shrapnel bullets?
     "5d2f2ab648f03550091993ca",// shrapnel bullets?
     "5cde8864d7f00c0010373be1",
-    "64b9cf0ac12b9c38db26923a", // << no idea
+    "64b9cf0ac12b9c38db26923a",// << no idea
     "627a137bf21bc425b06ab944",
     "610720f290b75a49ff2e5e25",
-    "5996f6d686f77467977ba6cc", // shrapnel bullets?
-    "5ae083b25acfc4001a5fc702", // Master hand ?
+    "5996f6d686f77467977ba6cc",// shrapnel bullets?
+    "5ae083b25acfc4001a5fc702",// Master hand ?
     "544a3d0a4bdc2d1b388b4567",
-    "5a16bb52fcdbcb001a3b00dc", //skull lock
-    "5a1eaa87fcdbcb001865f75e", //reap-ir
-    "5d1b5e94d7ad1a2b865a96b0", //flir
-    "5c066ef40db834001966a595", //helmet_armasight_nvg_googles_mask
-    '5a0c59791526d8dba737bba7', // butt pad
+    "5a16bb52fcdbcb001a3b00dc",// skull lock
+    "5a1eaa87fcdbcb001865f75e",// reap-ir
+    "5d1b5e94d7ad1a2b865a96b0",// flir
+    "5c066ef40db834001966a595",// helmet_armasight_nvg_googles_mask
+    '5a0c59791526d8dba737bba7',// butt pad
     "57371aab2459775a77142f22",
     //small mags 
     "57838f0b2459774a256959b2",
@@ -32,9 +36,9 @@ export default [
     "5c503ac82e221602b21d6e9a",
     "6241c2c2117ad530666a5108",
     //large mags
-    "55d485804bdc2d8c2f8b456b",
-    "56deeefcd2720bc8328b4568",
-    "5882163224597757561aa920",
+    // "55d485804bdc2d8c2f8b456b", shotgun 153/155 extended /7/8
+    // "56deeefcd2720bc8328b4568", shotgun 153/155 extended /7/8
+    // "5882163224597757561aa920", shotgun 153/155 extended /7/8
     "5a78832ec5856700155a6ca3",
     "5a966f51a2750c00156aacf6",
     "5cf8f3b0d7f00c00217872ef",
@@ -43,7 +47,7 @@ export default [
     "625ff31daaaa8c1130599f64",
     "627bce33f21bc425b06ab967",
     '564ca9df4bdc2d35148b4569',
-    '55d481904bdc2d8c2f8b456a',
+    // '55d481904bdc2d8c2f8b456a', //45 round ak
     '55d482194bdc2d1d4e8b456b',
     '5bed625c0db834001c062946',
     '55d485be4bdc2d962f8b456f',
@@ -51,7 +55,7 @@ export default [
     '5c6175362e221600133e3b94',
     '5cfe8010d7ad1a59283b14c6',
     '61695095d92c473c7702147a',
-    '5ea034f65aad6446a939737e',
+    '61695095d92c473c7702147a',
     '59c1383d86f774290a37e0ca',
     '5c6592372e221600133e47d7',
     '544a37c44bdc2d25388b4567',
@@ -60,12 +64,12 @@ export default [
     '5a351711c4a282000b1521a4',
     '5addccf45acfc400185c2989',
     '5b7bef9c5acfc43d102852ec',
-    "5b1fb3e15acfc4001637f068",
-    "59e5f5a486f7746c530b3ce2",
-    "544a378f4bdc2d30388b4567",
-    "5d1340bdd7ad1a0e8d245aab",
+    // "5b1fb3e15acfc4001637f068", 40 round ak
+    // "59e5f5a486f7746c530b3ce2", 40 round
+    // "544a378f4bdc2d30388b4567", 40 round
+    // "5d1340bdd7ad1a0e8d245aab", 40-round 556 45
     "630e295c984633f1fb0e7c30",
-    "5ba26586d4351e44f824b340",
+    // "5ba26586d4351e44f824b340", MP7 40 
     "5c5db6652e221600113fba51",
     "5cffa483d7ad1a049e54ef1c",
     "5d52d479a4b936793d58c76b",
@@ -101,7 +105,7 @@ export default [
     "5b0e794b5acfc47a877359b2", // Zhokov black 
     "6087e2a5232e5a31c233d552", //Archangel 
     //DustCovers 
-    // "59d6507c86f7741b846413a2", // AKM dust cover (6P1 0-1) allowing one
+    "59d6507c86f7741b846413a2", // AKM dust cover (6P1 0-1) allowing one
     "59e6449086f7746c9f75e822",
     "628a665a86cbd9750d2ff5e5",
     "5649af094bdc2df8348b4586",

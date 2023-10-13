@@ -11,6 +11,7 @@ function ProgressionChanges(container) {
     const databaseServer = container.resolve("DatabaseServer");
     const configServer = container.resolve("ConfigServer");
     const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
+    const pmcConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.PMC);
     const tables = databaseServer.getTables();
     const items = tables.templates.items;
     const customization = tables.templates.customization;
@@ -23,8 +24,8 @@ function ProgressionChanges(container) {
     // console.log(JSON.stringify(tables.bots.types.assault.inventory))
     const usecAppearance = tables.bots.types.usec.appearance;
     const bearAppearance = tables.bots.types.bear.appearance;
-    botConfig.pmc.looseWeaponInBackpackChancePercent = 1;
-    botConfig.pmc.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 };
+    pmcConfig.looseWeaponInBackpackChancePercent = 1;
+    pmcConfig.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 };
     const tradersToInclude = [
         'Prapor',
         'Therapist',
@@ -46,6 +47,7 @@ function ProgressionChanges(container) {
         }
         return tradersToInclude.includes(base.nickname);
     });
+    botConfig.equipment.pmc.weightingAdjustmentsByBotLevel = (0, utils_1.buildEmptyWeightAdjustments)();
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items)) };
     const mods = { "1": {}, "2": {}, "3": {}, "4": {}, "5": {} };
@@ -138,8 +140,12 @@ function ProgressionChanges(container) {
                 switch (true) {
                     // If large magazine
                     case (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 39:
-                        // tradersMasterList[4].add(_tpl)
-                        // addToModsObject(mods, _tpl, items, 4)
+                        // if (item?._props?.Cartridges?.[0]?._max_count > 39) {
+                        //     tradersMasterList[5].add(_tpl)
+                        //     return
+                        // }
+                        // tradersMasterList[loyaltyLevel].add(_tpl)
+                        // addToModsObject(mods, _tpl, items, loyaltyLevel, slotId)
                         break;
                     // Check if its a quest unlocked trade    
                     case !!questassort.success[_id]:
@@ -267,19 +273,27 @@ function ProgressionChanges(container) {
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
-    //Fix otherBotTypes
     Object.keys(advancedConfig_json_1.default.otherBotTypes).forEach(botType => {
         botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig_json_1.default.otherBotTypes[botType] };
     });
     if (config_json_1.default.removeScavLootForLootingBots && botConfig?.equipment?.assault?.randomisation?.[0]?.generation) {
         const generation = botConfig.equipment.assault.randomisation[0].generation;
-        generation.looseLoot = {
+        generation.backpackLoot = {
             ...generation.looseLoot || {},
-            min: 0, max: 2
+            "weights": { "0": 1 }, "whitelist": []
+        };
+        generation.pocketLoot = {
+            ...generation.looseLoot || {},
+            "weights": { "0": 1 }, "whitelist": []
+        };
+        generation.vestLoot = {
+            ...generation.looseLoot || {},
+            "weights": { "0": 1 },
+            "whitelist": []
         };
     }
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
-    // saveToFile(usecInventory, "refDBS/refPMC.json")
+    (0, utils_1.saveToFile)(usecInventory, "refDBS/refPMC.json");
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }

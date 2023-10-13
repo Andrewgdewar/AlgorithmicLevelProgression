@@ -6,6 +6,7 @@ import { ISuit } from '@spt-aki/models/eft/common/tables/ITrader';
 import {
     EquipmentFilterDetails,
     IBotConfig,
+    RandomisationDetails,
     WeightingAdjustmentDetails
 } from '@spt-aki/models/spt/config/IBotConfig';
 
@@ -60,6 +61,21 @@ export enum SightType {
     Collimator = "55818ad54bdc2ddc698b4569",
     CompactCollimator = "55818acf4bdc2dde698b456b",
     OpticScope = "55818ae44bdc2dde698b456c",
+}
+
+
+export const weaponTypeNameToId = {
+    SniperRifle: "5447b6254bdc2dc3278b4568",
+    MarksmanRifle: "5447b6194bdc2d67278b4567",
+    AssaultCarbine: "5447b5fc4bdc2d87278b4567",
+    AssaultRifle: "5447b5f14bdc2d61278b4567",
+    MachineGun: "5447bed64bdc2d97278b4568",
+    Smg: "5447b5e04bdc2d62278b4567",
+    SpecialWeapon: "5447bee84bdc2dc3278b4569",
+    Shotgun: "5447b6094bdc2dc3278b4567",
+    Pistol: "5447b5cf4bdc2d65278b4567",
+    Revolver: "617f1ef5e8b54b0998387733",
+    GrenadeLauncher: "5447bedf4bdc2d87278b4568",
 }
 
 export const addToModsObject = (
@@ -119,7 +135,6 @@ export const addToModsObject = (
         //     break;
 
         default:
-
             break;
     }
 
@@ -232,7 +247,7 @@ export const getAmmoWeighting = ({ _props: { PenetrationPower, Damage, InitialSp
 export const getHeadwearRating = ({ _props: { BlocksEarpiece, headSegments, armorClass, Durability, RicochetParams, Weight }, _id, _name }: ITemplateItem) => {
     const blocksEarpiece = BlocksEarpiece
     const coverageBonus = headSegments?.length || 0
-    const helmetBonus = armorClass * 20
+    const helmetBonus = Number(armorClass) * 20
     const durability = Durability * 0.1
     const ricochetChance = ((RicochetParams.x + RicochetParams.y) * RicochetParams.z) * 0.2
     let rating = helmetBonus - Weight + coverageBonus + ricochetChance + durability
@@ -430,23 +445,17 @@ export const setWhitelists = (
 }
 
 
-const buildEmptyWeightAdjustments = (): WeightingAdjustmentDetails[] => {
+export const buildEmptyWeightAdjustments = (): WeightingAdjustmentDetails[] => {
     return numList.map(num => ({
         levelRange: levelRange[num],
+        "ammo": {
+            "add": {},
+            "edit": {}
+        },
         "equipment": {
             "add": {},
             "edit": {}
         },
-        "ammo": {
-            "add": {},
-            "edit": {}
-        }
-    }))
-}
-
-const buildEmptyClothingAdjustments = (levels: number[][]): WeightingAdjustmentDetails[] => {
-    return levels.map(num => ({
-        levelRange: { min: num[0], max: num[1] },
         "clothing": {
             "add": {},
             "edit": {}
@@ -475,8 +484,7 @@ export const setWeightingAdjustments = (
     tradersMasterList: TradersMasterList,
     mods: Record<string, Record<string, string[]>>
 ) => {
-    botConfig.equipment.pmc.weightingAdjustments = buildEmptyWeightAdjustments()
-    const weight = botConfig.equipment.pmc.weightingAdjustments
+    const weight = botConfig.equipment.pmc.weightingAdjustmentsByBotLevel
 
     const itemsForNextLevel = {}
 
@@ -632,12 +640,12 @@ export const setWeightingAdjustments = (
                     break;
             }
 
-            const modsList = mods[num]
-            Object.keys(modsList).forEach(modtype => {
-                modsList[modtype].forEach(modId => {
-                    setWeightItem(weight[index], modtype, modId, (loyalty * 20), true)
-                })
-            })
+            // const modsList = mods[num]
+            // Object.keys(modsList).forEach(modtype => {
+            //     modsList[modtype].forEach(modId => {
+            //         setWeightItem(weight[index], modtype, modId, (loyalty * 20), true)
+            //     })
+            // })
         })
     })
 
@@ -691,6 +699,27 @@ const checkForScopeTypeRecursive = (modId: string, items: Record<string, ITempla
     }
 }
 
+const addRecursive = (modId: string, items: Record<string, ITemplateItem>, weaponId: string, mods: Mods) => {
+    const newModObject = {}
+    let pass = false
+    if (items[modId]?._props?.Slots?.length > 0) {
+        items[modId]._props.Slots.forEach(mod => {
+            if (mod._props?.filters?.[0]?.Filter?.length) {
+                newModObject[mod._name] = mod._props.filters[0].Filter.filter((id) => {
+                    if (blacklistedItems.has(id)) return false
+                    addRecursive(id, items, weaponId, mods)
+                    return true
+                })
+                pass = true
+            }
+        })
+    }
+
+    if (pass && Object.keys(newModObject).length) {
+        mods[modId] = newModObject
+    }
+}
+
 export const buildOutModsObject = (
     traderList: Set<string>,
     items: Record<string, ITemplateItem>,
@@ -704,35 +733,54 @@ export const buildOutModsObject = (
             switch (true) {
                 case checkParentRecursive(item._parent, items, [magParent]):
                     if ((item?._props?.Height * item?._props?.Width) < 3) {
-                        const bulletList = item?._props?.Cartridges?.[0]?._props?.filters?.[0]?.Filter.filter((_tpl) => !blacklistedItems.has(_tpl))
+                        const bulletList = item?._props?.Cartridges?.[0]?._props?.filters?.[0]?.Filter.filter((_tpl) => !!_tpl && !blacklistedItems.has(_tpl))
                         if (bulletList) {
                             newModObject["cartridges"] = bulletList
                             inventory.mods[id] = newModObject
                         }
                     } else {
-                        console.warn(id, item._name, item?._props?.Cartridges?.[0]?._max_count)
+                        config.debug && console.warn(id, item._name, item?._props?.Cartridges?.[0]?._max_count)
                     }
                     break;
                 case checkParentRecursive(item._parent, items, [weaponParent])://Weapon
                     if (item?._props?.Slots?.length > 0) {
                         item._props.Slots.forEach(mod => {
-                            if (!weaponsToAllowAllMods[id] && mod._name?.includes("scope")) {
-                                newModObject[mod._name] = mod._props?.filters[0].Filter.filter((_tpl) => !blacklistedItems.has(_tpl) && checkForScopeTypeRecursive(_tpl, items, id, inventory.mods))
-                            } else if (mod._props?.filters?.[0]?.Filter?.length) {
-                                newModObject[mod._name] = mod._props.filters[0].Filter.filter((_tpl) => !blacklistedItems.has(_tpl))
+                            // if (!weaponsToAllowAllMods[id] && mod._name?.includes("scope")) {
+                            //     newModObject[mod._name] = mod._props?.filters[0].Filter.filter((_tpl) => !!_tpl && !blacklistedItems.has(_tpl) && checkForScopeTypeRecursive(_tpl, items, id, inventory.mods))
+                            // } else
+                            if (mod._props?.filters?.[0]?.Filter?.length) {
+                                newModObject[mod._name] = mod._props.filters[0].Filter.filter((_tpl) => {
+                                    if (!!_tpl && !blacklistedItems.has(_tpl)) {
+                                        addRecursive(_tpl, items, id, inventory.mods)
+                                        return true
+                                    }
+                                    return false
+                                })
                             }
                         })
                     }
                     if (item._props?.Chambers?.[0]?._name === "patron_in_weapon" &&
                         item._props?.Chambers?.[0]?._props?.filters?.[0]?.Filter?.length
                     ) {
-                        newModObject["patron_in_weapon"] = item._props.Chambers[0]._props?.filters[0].Filter.filter((_tpl) => !blacklistedItems.has(_tpl))
+                        newModObject["patron_in_weapon"] = item._props.Chambers[0]._props?.filters[0].Filter.filter((_tpl) => !!_tpl && !blacklistedItems.has(_tpl))
                     }
                     if (Object.keys(newModObject)) {
                         inventory.mods[id] = newModObject
                     }
                     break;
                 case checkParentRecursive(item._parent, items, [headwearParent])://Headwear
+                    //TODO: fix helmet mods
+                    if (item?._props?.Slots?.length > 0) {
+                        item._props.Slots.forEach(mod => {
+                            newModObject[mod._name] = mod._props.filters[0].Filter.filter((_tpl) => {
+                                if (!!_tpl && !blacklistedItems.has(_tpl)) {
+                                    addRecursive(_tpl, items, id, inventory.mods)
+                                    return true
+                                }
+                                return false
+                            })
+                        })
+                    }
                     inventory.mods[id] = newModObject
                     break;
                 default:
@@ -745,7 +793,7 @@ export const buildOutModsObject = (
     traderList.forEach((id) => {
         const item = items[id]
         const newModObject = {} as Record<string, string[]>
-        const siteWhiteList = botConfig.equipment.pmc.weaponSightWhitelist
+
         if (!inventory.mods[id] && !blacklistedItems.has(id) && checkParentRecursive(item._parent, items, [modParent])) {
             if (item?._props?.Slots?.length > 0) {
                 item._props.Slots.forEach(mod => {
@@ -773,13 +821,13 @@ export const buildOutModsObject = (
 }
 
 export const buildInitialRandomization = (items: Record<string, ITemplateItem>, botConfig: IBotConfig, traderList: TradersMasterList) => {
-    const randomizationItems = []
+    const randomizationItems: RandomisationDetails[] = []
     numList.forEach((num, index) => {
         const range = levelRange[num]
         const loyalty = num
         const itemList = new Set([...traderList[loyalty]])
 
-        const newItem = {
+        const newItem: RandomisationDetails = {
             levelRange: range,
             equipment: {
                 "Headwear": [75, 85, 99, 99, 99][index],
@@ -799,36 +847,284 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             },
             generation: {
                 "stims": {
-                    "min": 0,
-                    "max": [1, 1, 2, 2, 2][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.stims?.whitelist ? { whitelist: randomizationItems[index - 1].generation.stims.whitelist } : {} }
+                    weights:
+                        [{
+                            "0": 1,
+                            "1": 3
+                        }, {
+                            "0": 1,
+                            "1": 4,
+                        }, {
+                            "0": 1,
+                            "1": 5,
+                        }, {
+                            "0": 0,
+                            "1": 5,
+                            "2": 1
+                        }, {
+                            "0": 0,
+                            "1": 3,
+                            "2": 1
+                        }][index],
+                    whitelist: randomizationItems[index - 1]?.generation?.stims?.whitelist ? randomizationItems[index - 1].generation.stims.whitelist : []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": [1, 2, 2, 2, 2][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.drugs?.whitelist ? { whitelist: randomizationItems[index - 1].generation.drugs.whitelist } : {} }
+                    weights:
+                        [{
+                            "0": 1,
+                            "1": 3
+                        }, {
+                            "0": 1,
+                            "1": 4,
+                        }, {
+                            "0": 1,
+                            "1": 5,
+                        }, {
+                            "0": 0,
+                            "1": 5,
+                            "2": 1
+                        }, {
+                            "0": 0,
+                            "1": 3,
+                            "2": 1
+                        }][index],
+                    whitelist: randomizationItems[index - 1]?.generation?.drugs?.whitelist ? randomizationItems[index - 1].generation.drugs.whitelist : []
                 },
                 "healing": {
-                    "min": [0, 1, 1, 1, 1][index],
-                    "max": [1, 1, 1, 1, 2][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.healing?.whitelist ? { whitelist: randomizationItems[index - 1].generation.healing.whitelist } : {} }
+                    weights:
+                        [{
+                            "0": 1,
+                            "1": 8
+                        }, {
+                            "0": 0,
+                            "1": 4,
+                        }, {
+                            "0": 0,
+                            "1": 3,
+                        }, {
+                            "0": 0,
+                            "1": 5,
+                            "2": 1
+                        }, {
+                            "0": 0,
+                            "1": 3,
+                            "2": 1
+                        }][index],
+                    whitelist: randomizationItems[index - 1]?.generation?.healing?.whitelist ? randomizationItems[index - 1].generation.healing.whitelist : []
                 },
                 "grenades": {
-                    "min": [0, 0, 0, 1, 1][index],
-                    "max": [1, 2, 2, 2, 3][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.grenades?.whitelist ? { whitelist: randomizationItems[index - 1].generation.grenades.whitelist } : {} }
+                    weights:
+                        [{
+                            "0": 1,
+                            "1": 1
+                        }, {
+                            "0": 2,
+                            "1": 2,
+                            "2": 1
+                        }, {
+                            "0": 1,
+                            "1": 2,
+                            "2": 1
+                        }, {
+                            "0": 1,
+                            "1": 2,
+                            "2": 2
+                        }, {
+                            "0": 0,
+                            "1": 2,
+                            "2": 2,
+                            "3": 1
+                        }][index],
+                    whitelist: randomizationItems[index - 1]?.generation?.grenades?.whitelist ? randomizationItems[index - 1].generation.grenades.whitelist : []
                 },
-                "looseLoot": {
-                    "min": config.removePMCLootForLootingBots ? [0, 0, 0, 0, 0][index] : [0, 1, 2, 3, 4][index],
-                    "max": config.removePMCLootForLootingBots ? [0, 0, 0, 0, 0][index] : [3, 5, 6, 8, 9][index],
-                    ...{ ...randomizationItems[index - 1]?.generation?.looseLoot?.whitelist ? { whitelist: randomizationItems[index - 1].generation.looseLoot.whitelist } : {} }
+                "backpackLoot": {
+                    "weights": config.removePMCLootForLootingBots ?
+                        [{
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }][index] :
+                        [{
+                            "0": 1,
+                            "1": 2,
+                            "2": 2,
+                            "3": 1,
+                            "4": 1,
+                        }, {
+                            "0": 1,
+                            "1": 1,
+                            "2": 2,
+                            "3": 2,
+                            "4": 2,
+                            "5": 1,
+                        }, {
+                            "0": 0,
+                            "1": 1,
+                            "2": 1,
+                            "3": 1,
+                            "4": 2,
+                            "5": 2,
+                            "6": 1,
+                            "7": 1,
+                        }, {
+                            "0": 0,
+                            "1": 0,
+                            "2": 1,
+                            "3": 1,
+                            "4": 3,
+                            "5": 2,
+                            "6": 2,
+                            "7": 1,
+                        }, {
+                            "0": 0,
+                            "1": 0,
+                            "2": 0,
+                            "3": 0,
+                            "4": 1,
+                            "5": 1,
+                            "6": 3,
+                            "7": 2,
+                            "8": 2,
+                        }][index],
+                    "whitelist": []
+                },
+                "pocketLoot": {
+                    "weights": config.removePMCLootForLootingBots ?
+                        [{
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }][index] :
+                        [{
+                            "0": 4,
+                            "1": 1,
+                            "2": 1,
+                        }, {
+                            "0": 3,
+                            "1": 2,
+                            "2": 1,
+                        }, {
+                            "0": 2,
+                            "1": 2,
+                            "2": 1,
+                            "3": 1,
+                        }, {
+                            "0": 1,
+                            "1": 2,
+                            "2": 1,
+                            "3": 1,
+                        }, {
+                            "0": 1,
+                            "1": 1,
+                            "2": 2,
+                            "3": 1,
+                        }][index],
+                    "whitelist": []
+                },
+                "vestLoot": {
+                    "weights": config.removePMCLootForLootingBots ?
+                        [{
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }, {
+                            "0": 5,
+                            "1": 1
+                        }][index] :
+                        [{
+                            "0": 3,
+                            "1": 1,
+                            "2": 1,
+                        }, {
+                            "0": 2,
+                            "1": 2,
+                            "2": 1,
+                            "4": 1,
+                        }, {
+                            "0": 1,
+                            "1": 2,
+                            "2": 1,
+                            "3": 1,
+                            "4": 1,
+                        }, {
+                            "0": 1,
+                            "1": 2,
+                            "2": 2,
+                            "3": 1,
+                            "4": 1,
+                        }, {
+                            "0": 0,
+                            "1": 2,
+                            "2": 2,
+                            "3": 1,
+                            "4": 1,
+                        }][index],
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": [2, 2, 3, 3, 4][index],
-                    "max": [3, 3, 4, 4, 5][index],
+                    weights:
+                        [{
+                            "0": 0,
+                            "1": 0,
+                            "2": 1,
+                            "3": 1,
+                        }, {
+                            "0": 0,
+                            "1": 0,
+                            "2": 1,
+                            "3": 1,
+                        }, {
+                            "0": 0,
+                            "1": 0,
+                            "2": 0,
+                            "3": 1,
+                            "4": 1,
+                        }, {
+                            "0": 0,
+                            "1": 0,
+                            "2": 0,
+                            "3": 1,
+                            "4": 1,
+                        }, {
+                            "0": 0,
+                            "1": 0,
+                            "2": 0,
+                            "3": 1,
+                            "4": 1,
+                            "5": 1,
+                        }][index],
                     "whitelist": botConfig.equipment.pmc.whitelist[index].equipment.mod_magazine
                 },
-
             },
             "randomisedWeaponModSlots": [
                 // "mod_barrel",
@@ -877,7 +1173,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "mod_launcher": [0, 0, 5, 15, 50][index],
                 "mod_magazine": [50, 60, 80, 90, 95][index],
                 "mod_magazine_000": [0, 0, 25, 35, 50][index],
-                "mod_mount": [60, 90, 100, 100, 100][index],
+                "mod_mount": [95, 95, 100, 100, 100][index],
                 "mod_mount_000": [40, 45, 65, 90, 95][index],
                 "mod_mount_001": [40, 45, 65, 90, 95][index],
                 "mod_mount_002": [40, 45, 65, 90, 95][index],
@@ -885,13 +1181,14 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "mod_mount_004": [40, 45, 65, 90, 95][index],
                 "mod_mount_005": [40, 45, 65, 90, 95][index],
                 "mod_mount_006": [40, 45, 65, 90, 95][index],
-                "mod_muzzle": [15, 35, 65, 85, 99][index],
+                "mod_muzzle": [5, 25, 45, 65, 99][index],
                 "mod_muzzle_000": [15, 35, 65, 85, 99][index],
                 "mod_muzzle_001": [15, 35, 65, 85, 99][index],
                 "mod_equipment": [15, 25, 25, 35, 50][index],
-                "mod_equipment_000": [15, 25, 25, 35, 50][index],
-                "mod_equipment_001": [15, 25, 25, 35, 50][index],
-                "mod_equipment_002": [15, 25, 25, 35, 50][index],
+                "mod_nvg": 0,
+                "mod_equipment_000": [0, 0, 0, 1, 20][index],
+                "mod_equipment_001": [0, 0, 0, 1, 20][index],
+                "mod_equipment_002": [0, 0, 0, 1, 20][index],
                 "mod_pistol_grip_akms": [1, 15, 25, 35, 50][index],
                 "mod_pistol_grip": [1, 15, 25, 35, 50][index],
                 "mod_scope": [90, 95, 100, 100, 100][index],
@@ -912,8 +1209,8 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "mod_stock_000": 99,
                 // "mod_stock_001": [1, 10, 15, 20][index],
                 "mod_stock_akms": 100,
-                // "mod_sight_front": 20,
-                // "mod_sight_rear": 50,
+                "mod_sight_front": [50, 20, 5, 0, 0][index],
+                "mod_sight_rear": [50, 20, 5, 0, 0][index],
                 // "mod_reciever": 100,
                 // "mod_gas_block": [1, 10, 15, 20][index],
                 "mod_pistolgrip": [1, 15, 25, 35, 50][index],
@@ -959,7 +1256,9 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     }
                     break;
                 case checkParentRecursive(parent, items, config.removePMCLootForLootingBots ? [FoodDrinkParent] : [barterParent, FoodDrinkParent]): //FoodDrink/barter
-                    newItem.generation.looseLoot["whitelist"] = [...newItem.generation.looseLoot["whitelist"] || [], id]
+                    newItem.generation.backpackLoot["whitelist"] = [...newItem.generation.backpackLoot["whitelist"] || [], id]
+                    newItem.generation.pocketLoot["whitelist"] = [...newItem.generation.pocketLoot["whitelist"] || [], id]
+                    newItem.generation.vestLoot["whitelist"] = [...newItem.generation.vestLoot["whitelist"] || [], id]
                     break;
                 case checkParentRecursive(parent, items, [magParent]):
                     // newItem.generation.magazines["whitelist"] = [...newItem.generation.magazines["whitelist"] || [], id]
@@ -971,7 +1270,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
 
         Object.keys(newItem.generation).forEach((key) => {
             if (!newItem.generation[key]?.whitelist) {
-                newItem.generation[key] = { ...newItem.generation[key], min: 0, max: 0 }
+                newItem.generation[key] = { ...newItem.generation[key], weights: { "0": 1 } }
             } else {
                 newItem.generation[key].whitelist = deDupeArr(newItem.generation[key].whitelist)
             }
@@ -1046,39 +1345,42 @@ export const buildClothingWeighting = (
 ) => {
     buildInitialUsecAppearance(usecAppearance, items)
     buildInitialBearAppearance(bearAppearance, items)
-    const levelSet = [...new Set(suit.map(value => value.requirements.profileLevel))].sort((a, b) => a - b)
+    // const levelSet = [...new Set(suit.map(value => value.requirements.profileLevel))].sort((a, b) => a - b)
+    const levels = Object.values(levelRange)
 
-    const levels: number[][] = []
+    // const levels: number[][] = []
 
-    for (let index = 0; index < levelSet.length; index++) {
-        let aPointer = levelSet[index] || 1;
-        let bPointer = levelSet[index + 1];
-        if (bPointer === 1) {
-            bPointer = levelSet[index + 2]
-            index++
-        }
-        const prevPointer = levelSet[index - 1]
-        if (index > 0 && prevPointer + 1 !== aPointer) aPointer = prevPointer + 1
-        if (aPointer + 1 === bPointer) {
-            levels.push([aPointer, bPointer])
-        } else {
-            if (isNaN(bPointer) || (levelSet.length - 2) === index) bPointer = 100
-            levels.push([aPointer, bPointer])
-        } index++
-    }
+    // for (let index = 0; index < levelSet.length; index++) {
+    //     let aPointer = levelSet[index] || 1;
+    //     let bPointer = levelSet[index + 1];
+    //     if (bPointer === 1) {
+    //         bPointer = levelSet[index + 2]
+    //         index++
+    //     }
+    //     const prevPointer = levelSet[index - 1]
+    //     if (index > 0 && prevPointer + 1 !== aPointer) aPointer = prevPointer + 1
+    //     if (aPointer + 1 === bPointer) {
+    //         levels.push([aPointer, bPointer])
+    //     } else {
+    //         if (isNaN(bPointer) || (levelSet.length - 2) === index) bPointer = 100
+    //         levels.push([aPointer, bPointer])
+    //     } index++
+    // }
     // console.log(levels)
 
-    botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels)
-    const clothingAdjust = botConfig.equipment.pmc.clothing
+    // botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels)
+
 
     suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } = {} }) => {
         if (!profileLevel || !suiteId || loyaltyLevel === undefined) return;
         if (profileLevel === 0) profileLevel = 1
-        const index = levels.findIndex(([min, max]: number[]) => {
+        const index = levels.findIndex(({ min, max }) => {
             if (profileLevel >= min && profileLevel <= max) {
                 return true
             }
         })
+        if (index === -1) return console.log("Unable to find index for clothing item", items[suiteId]?._name)
+        const clothingAdjust = botConfig.equipment.pmc.weightingAdjustmentsByBotLevel[index].clothing
 
         if (index === undefined) return console.log('Empty index for: ', suiteId)
         if (items[suiteId]?._props?.Body) {
@@ -1094,8 +1396,8 @@ export const buildClothingWeighting = (
                     usecAppearance.body[items[suiteId]._props.Body] = 1
                     break;
             }
-            if (!clothingAdjust[index].clothing.edit["body"]) clothingAdjust[index].clothing.edit["body"] = {}
-            clothingAdjust[index].clothing.edit["body"][items[suiteId]._props.Body] = 10 + (index * 30)
+            if (!clothingAdjust?.edit["body"]) clothingAdjust.edit["body"] = {}
+            clothingAdjust.edit["body"][items[suiteId]._props.Body] = 10 + (index * 30)
         }
 
         if (items[suiteId]?._props?.Feet) {
@@ -1112,8 +1414,8 @@ export const buildClothingWeighting = (
                     break;
             }
 
-            if (!clothingAdjust[index].clothing.edit["feet"]) clothingAdjust[index].clothing.edit["feet"] = {}
-            clothingAdjust[index].clothing.edit["feet"][items[suiteId]._props.Feet] = 10 + (index * 30)
+            if (!clothingAdjust?.edit["feet"]) clothingAdjust.edit["feet"] = {}
+            clothingAdjust.edit["feet"][items[suiteId]._props.Feet] = 10 + (index * 30)
         }
     })
 
@@ -1128,7 +1430,7 @@ export const buildClothingWeighting = (
 export const weaponTypes = {
     "5447b6254bdc2dc3278b4568": [SightType.AssaultScope, SightType.OpticScope],// SniperRifle
     "5447b6194bdc2d67278b4567": [SightType.AssaultScope, SightType.OpticScope],// MarksmanRifle
-    "5447b5fc4bdc2d87278b4567": [SightType.CompactCollimator, SightType.Collimator, SightType.AssaultScope],// AssaultCarbine
+    "5447b5fc4bdc2d87278b4567": [SightType.Collimator, SightType.AssaultScope],// AssaultCarbine
     "5447b5f14bdc2d61278b4567": [SightType.CompactCollimator, SightType.Collimator, SightType.AssaultScope],// AssaultRifle
     "5447bed64bdc2d97278b4568": [SightType.CompactCollimator, SightType.Collimator],// MachineGun
     "5447b5e04bdc2d62278b4567": [SightType.CompactCollimator, SightType.Collimator],// Smg
@@ -1142,10 +1444,11 @@ export const weaponTypes = {
 export const buildWeaponSightWhitelist = (
     items: Record<string, ITemplateItem>,
     botConfig: IBotConfig,
-    { 1: a, 2: b, 3: c, 4: d }: TradersMasterList) => {
+    { 1: a, 2: b, 3: c, 4: d, 5: e }: TradersMasterList) => {
     botConfig.equipment.pmc.weaponSightWhitelist = {}
+    return
     const sightWhitelist = botConfig.equipment.pmc.weaponSightWhitelist
-    const traderItems = [...new Set([...a, ...b, ...c, ...d])] //, ...d
+    const traderItems = [...new Set([...a, ...b, ...c, ...d, ...e])] //, ...d
     const blacklist = new Set(InternalBlacklist)
     traderItems.forEach(id => {
         if (blacklist.has(id)) return

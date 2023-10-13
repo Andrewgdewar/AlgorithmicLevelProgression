@@ -11,7 +11,8 @@ export const LocationUpdater = (
     staticRouterModService.registerStaticRouter(`AlgorithmicLevelProgressionMapUpdater`, [{
         url: "/client/raid/configuration",
         action: (_url, info, _sessionId, output) => {
-            globalValues.setValuesForLocation(info.location.toLowerCase())
+            globalValues.setValuesForLocation(info.location.toLowerCase(), info.timeVariant)
+            console.log(JSON.stringify(info), "\n\n", JSON.stringify(output))
             return output
         }
     }], "aki");

@@ -11,6 +11,7 @@ import { ConfigServer } from '@spt-aki/servers/ConfigServer';
 import { BotLevelGenerator } from '@spt-aki/generators/BotLevelGenerator';
 import { ProfileHelper } from '@spt-aki/helpers/ProfileHelper';
 import config from "../../config/config.json"
+import { IPmcConfig } from '@spt-aki/models/spt/config/IPmcConfig';
 
 export default function BotLevelChanges(
     container: DependencyContainer
@@ -18,9 +19,9 @@ export default function BotLevelChanges(
     const profileHelper = container.resolve<ProfileHelper>("ProfileHelper");
     const botLevelGenerator = container.resolve<BotLevelGenerator>("BotLevelGenerator");
     const configServer = container.resolve<ConfigServer>("ConfigServer");
-    const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
+    const pmcConfig = configServer.getConfig<IPmcConfig>(ConfigTypes.PMC);
 
-    botConfig.pmc.botRelativeLevelDeltaMax = 1
+    pmcConfig.botRelativeLevelDeltaMax = 1
 
     container.afterResolution("BotLevelGenerator", (_t, result: BotLevelGenerator) => {
         result.generateBotLevel = (
