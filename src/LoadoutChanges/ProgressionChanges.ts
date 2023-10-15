@@ -365,7 +365,7 @@ export default function ProgressionChanges(
 
 
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
-    saveToFile(usecInventory, "refDBS/refPMC.json")
+    // saveToFile(usecInventory, "refDBS/refPMC.json")
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
 
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
