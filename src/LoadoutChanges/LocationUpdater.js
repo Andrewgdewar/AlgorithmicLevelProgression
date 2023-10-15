@@ -10,7 +10,6 @@ const LocationUpdater = (container) => {
             action: (_url, info, _sessionId, output) => {
                 const date = weatherGenerator.getInRaidTime(new Date());
                 const hours = info.timeVariant === "PAST" ? date.getHours() - 12 : date.getHours();
-                console.log("HOURS ", hours);
                 GlobalValues_1.globalValues.setValuesForLocation(info.location.toLowerCase(), hours);
                 return output;
             }

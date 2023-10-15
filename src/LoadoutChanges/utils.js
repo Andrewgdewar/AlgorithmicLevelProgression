@@ -625,49 +625,6 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
 };
 exports.setWeightingAdjustments = setWeightingAdjustments;
 const weaponsToAllowAllMods = { "5ae08f0a5acfc408fb1398a1": true };
-// const checkForScopeTypeRecursive = (modId: string, items: Record<string, ITemplateItem>, weaponId: string, mods: Mods) => {
-//     // if (memo[modId] !== undefined) return memo[modId]
-//     if (checkParentRecursive(items[modId]?._parent, items, [sightParent])) {
-//         const allowedSightParents = weaponTypes[items[weaponId]?._parent]
-//         if (allowedSightParents.length === 0) {
-//             // memo[modId] = false
-//             return false
-//         }
-//         // console.log(allowedSightParents)
-//         const result = checkParentRecursive(items[modId]?._parent, items, allowedSightParents)
-//         // memo[modId] = result
-//         return result
-//     } else {
-//         const isMount = items?.[items?.[modId]?._parent]?._id === mountParent
-//         if (isMount) {
-//             const newModObject = {}
-//             let pass = true
-//             if (items[modId]?._props?.Slots?.length > 0) {
-//                 items[modId]._props.Slots.forEach(mod => {
-//                     if (mod._props?.filters?.[0]?.Filter?.length) {
-//                         if (mod._name.includes("scope")) {
-//                             const allowedItems = mod._props.filters[0].Filter.filter((_tpl) => checkForScopeTypeRecursive(_tpl, items, weaponId, mods))
-//                             if (allowedItems.length) {
-//                                 newModObject[mod._name] = allowedItems
-//                             } else {
-//                                 pass = false
-//                             }
-//                         } else {
-//                             newModObject[mod._name] = mod._props.filters[0].Filter
-//                         }
-//                     }
-//                 })
-//             }
-//             if (pass && Object.keys(newModObject).length) {
-//                 mods[modId] = newModObject
-//                 // memo[modId] = true
-//                 return true
-//             }
-//         }
-//         // memo[modId] = false
-//         return false
-//     }
-// }
 const addRecursive = (modId, items, weaponId, mods) => {
     const newModObject = {};
     let pass = false;

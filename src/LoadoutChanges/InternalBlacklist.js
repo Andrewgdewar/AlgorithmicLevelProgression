@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = [
     // armasight vulcan universal base
     // Geissele Super Precision 30mm
+    "5aa66a9be5b5b0214e506e89",
     "5a1ead28fcdbcb001912fa9f",
     "5c86592b2e2216000e69e77c",
     "5c11046cd174af02a012e42b",

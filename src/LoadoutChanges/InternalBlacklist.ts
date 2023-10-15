@@ -1,6 +1,7 @@
 export default [
     // armasight vulcan universal base
     // Geissele Super Precision 30mm
+    "5aa66a9be5b5b0214e506e89", //Nightforce Magmount 34mm ring scope mount > stupid long scope mount
     "5a1ead28fcdbcb001912fa9f", // Reap-ir Mount
     "5c86592b2e2216000e69e77c", // IEA Mil-Optics KH/F 34mm one-piece magmount <Stupid Long distance scopes>
     "5c11046cd174af02a012e42b", // Wilcox Interface for PVS-7 >  Thermal night vision connector
