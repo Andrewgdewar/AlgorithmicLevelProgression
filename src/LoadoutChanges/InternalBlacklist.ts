@@ -1,5 +1,11 @@
 export default [
-    "5c0558060db834001b735271",//GPNVG-18 Night Vision goggles
+    // armasight vulcan universal base
+    // Geissele Super Precision 30mm
+    "5a1ead28fcdbcb001912fa9f", // Reap-ir Mount
+    "5c86592b2e2216000e69e77c", // IEA Mil-Optics KH/F 34mm one-piece magmount <Stupid Long distance scopes>
+    "5c11046cd174af02a012e42b", // Wilcox Interface for PVS-7 >  Thermal night vision connector
+    "5ea058e01dbce517f324b3e2", // Tac-Kek Heavy Trooper mask for Ops-Core-type helmets
+    "5c0558060db834001b735271",// GPNVG-18 Night Vision goggles
     "5648b62b4bdc2d9d488b4585",// gp-34
     "5e99711486f7744bfc4af328",// Sanitarsmedkit
     "5d52cc5ba4b9367408500062",

@@ -16,7 +16,8 @@ export const SetupLocationGlobals = (
     const tables = databaseServer.getTables();
     globalValues.Logger = container.resolve("WinstonLogger")
     globalValues.tables = tables
+    globalValues.originalBotTypes = cloneDeep(tables.bots.types)
     globalValues.configServer = configServer
     globalValues.originalWeighting = cloneDeep(botConfig.equipment.pmc)
-    // globalValues.setValuesForLocation('woods',"CURR")
+    // globalValues.setValuesForLocation('woods', 1)
 }

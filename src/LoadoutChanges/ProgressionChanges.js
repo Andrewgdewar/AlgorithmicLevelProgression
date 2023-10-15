@@ -47,6 +47,10 @@ function ProgressionChanges(container) {
         }
         return tradersToInclude.includes(base.nickname);
     });
+    botConfig.equipment.pmc.nvgIsActiveChanceNightPercent = 95;
+    botConfig.equipment.pmc.lightIsActiveNightChancePercent = 95;
+    botConfig.equipment.pmc.laserIsActiveChancePercent = 90;
+    botConfig.equipment.pmc.faceShieldIsActiveChancePercent = 100;
     botConfig.equipment.pmc.weightingAdjustmentsByBotLevel = (0, utils_1.buildEmptyWeightAdjustments)();
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items)) };

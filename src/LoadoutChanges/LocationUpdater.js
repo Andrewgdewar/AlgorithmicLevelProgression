@@ -4,11 +4,14 @@ exports.LocationUpdater = void 0;
 const GlobalValues_1 = require("./GlobalValues");
 const LocationUpdater = (container) => {
     const staticRouterModService = container.resolve("StaticRouterModService");
+    const weatherGenerator = container.resolve("WeatherGenerator");
     staticRouterModService.registerStaticRouter(`AlgorithmicLevelProgressionMapUpdater`, [{
             url: "/client/raid/configuration",
             action: (_url, info, _sessionId, output) => {
-                GlobalValues_1.globalValues.setValuesForLocation(info.location.toLowerCase(), info.timeVariant);
-                console.log(JSON.stringify(info), "\n\n", JSON.stringify(output));
+                const date = weatherGenerator.getInRaidTime(new Date());
+                const hours = info.timeVariant === "PAST" ? date.getHours() - 12 : date.getHours();
+                console.log("HOURS ", hours);
+                GlobalValues_1.globalValues.setValuesForLocation(info.location.toLowerCase(), hours);
                 return output;
             }
         }], "aki");

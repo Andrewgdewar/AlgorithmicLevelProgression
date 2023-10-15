@@ -11,8 +11,9 @@ const SetupLocationGlobals = (container) => {
     const tables = databaseServer.getTables();
     GlobalValues_1.globalValues.Logger = container.resolve("WinstonLogger");
     GlobalValues_1.globalValues.tables = tables;
+    GlobalValues_1.globalValues.originalBotTypes = (0, utils_1.cloneDeep)(tables.bots.types);
     GlobalValues_1.globalValues.configServer = configServer;
     GlobalValues_1.globalValues.originalWeighting = (0, utils_1.cloneDeep)(botConfig.equipment.pmc);
-    // globalValues.setValuesForLocation('woods',"CURR")
+    // globalValues.setValuesForLocation('woods', 1)
 };
 exports.SetupLocationGlobals = SetupLocationGlobals;

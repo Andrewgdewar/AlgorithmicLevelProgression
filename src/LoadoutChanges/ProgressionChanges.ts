@@ -89,7 +89,10 @@ export default function ProgressionChanges(
         }
         return tradersToInclude.includes(base.nickname)
     })
-
+    botConfig.equipment.pmc.nvgIsActiveChanceNightPercent = 95
+    botConfig.equipment.pmc.lightIsActiveNightChancePercent = 95
+    botConfig.equipment.pmc.laserIsActiveChancePercent = 90
+    botConfig.equipment.pmc.faceShieldIsActiveChancePercent = 100
     botConfig.equipment.pmc.weightingAdjustmentsByBotLevel = buildEmptyWeightAdjustments()
 
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<

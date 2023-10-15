@@ -282,26 +282,31 @@
                 "SniperRifle": [
                     "AssaultScope",
                     "Collimator",
-                    "CompactCollimator"
+                    "CompactCollimator",
+                    "ThermalVision"
                 ],
                 "MarksmanRifle": [
                     "AssaultScope",
                     "Collimator",
-                    "CompactCollimator"
+                    "CompactCollimator",
+                    "ThermalVision"
                 ],
                 "AssaultCarbine": [
                     "AssaultScope",
                     "Collimator",
-                    "CompactCollimator"
+                    "CompactCollimator",
+                    "ThermalVision"
                 ],
                 "AssaultRifle": [
                     "AssaultScope",
                     "Collimator",
-                    "CompactCollimator"
+                    "CompactCollimator",
+                    "ThermalVision"
                 ],
                 "MachineGun": [
                     "Collimator",
-                    "CompactCollimator"
+                    "CompactCollimator",
+                    "ThermalVision"
                 ],
                 "Smg": [
                     "Collimator",
@@ -599,6 +604,7 @@
                     "AssaultScope"
                 ],
                 "AssaultCarbine": [
+                    "OpticScope",
                     "AssaultScope"
                 ],
                 "AssaultRifle": [

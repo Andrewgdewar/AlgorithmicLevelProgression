@@ -61,6 +61,9 @@ export enum SightType {
     Collimator = "55818ad54bdc2ddc698b4569",
     CompactCollimator = "55818acf4bdc2dde698b456b",
     OpticScope = "55818ae44bdc2dde698b456c",
+    SpecialScope = "55818aeb4bdc2ddc698b456a",
+    ThermalVision = "5d21f59b6dbe99052b54ef83",
+    NightVision = "5a2c3a9486f774688b05e574"
 }
 
 
@@ -244,13 +247,14 @@ export const getAmmoWeighting = ({ _props: { PenetrationPower, Damage, InitialSp
     return rating || 3
 }
 
-export const getHeadwearRating = ({ _props: { BlocksEarpiece, headSegments, armorClass, Durability, RicochetParams, Weight }, _id, _name }: ITemplateItem) => {
+export const getHeadwearRating = ({ _props: { Slots, BlocksEarpiece, headSegments, armorClass, Durability, RicochetParams, Weight }, _id, _name }: ITemplateItem) => {
     const blocksEarpiece = BlocksEarpiece
+    const hasNvg = !!Slots.find((slot) => slot._name === "mod_nvg") ? 70 : 0
     const coverageBonus = headSegments?.length || 0
     const helmetBonus = Number(armorClass) * 20
     const durability = Durability * 0.1
     const ricochetChance = ((RicochetParams.x + RicochetParams.y) * RicochetParams.z) * 0.2
-    let rating = helmetBonus - Weight + coverageBonus + ricochetChance + durability
+    let rating = helmetBonus - Weight + coverageBonus + ricochetChance + durability + hasNvg
     if (blocksEarpiece) rating = (rating) * 0.1
     if (rating < 10) rating = 10
     // console.log(_name, Math.round(rating))
@@ -654,50 +658,6 @@ export const setWeightingAdjustments = (
 
 const weaponsToAllowAllMods = { "5ae08f0a5acfc408fb1398a1": true }
 
-const checkForScopeTypeRecursive = (modId: string, items: Record<string, ITemplateItem>, weaponId: string, mods: Mods) => {
-    // if (memo[modId] !== undefined) return memo[modId]
-    if (checkParentRecursive(items[modId]?._parent, items, [sightParent])) {
-        const allowedSightParents = weaponTypes[items[weaponId]?._parent]
-        if (allowedSightParents.length === 0) {
-            // memo[modId] = false
-            return false
-        }
-        // console.log(allowedSightParents)
-        const result = checkParentRecursive(items[modId]?._parent, items, allowedSightParents)
-        // memo[modId] = result
-        return result
-    } else {
-        const isMount = items?.[items?.[modId]?._parent]?._id === mountParent
-        if (isMount) {
-            const newModObject = {}
-            let pass = true
-            if (items[modId]?._props?.Slots?.length > 0) {
-                items[modId]._props.Slots.forEach(mod => {
-                    if (mod._props?.filters?.[0]?.Filter?.length) {
-                        if (mod._name.includes("scope")) {
-                            const allowedItems = mod._props.filters[0].Filter.filter((_tpl) => checkForScopeTypeRecursive(_tpl, items, weaponId, mods))
-                            if (allowedItems.length) {
-                                newModObject[mod._name] = allowedItems
-                            } else {
-                                pass = false
-                            }
-                        } else {
-                            newModObject[mod._name] = mod._props.filters[0].Filter
-                        }
-                    }
-                })
-            }
-
-            if (pass && Object.keys(newModObject).length) {
-                mods[modId] = newModObject
-                // memo[modId] = true
-                return true
-            }
-        }
-        // memo[modId] = false
-        return false
-    }
-}
 
 const addRecursive = (modId: string, items: Record<string, ITemplateItem>, weaponId: string, mods: Mods) => {
     const newModObject = {}
@@ -772,6 +732,7 @@ export const buildOutModsObject = (
                     //TODO: fix helmet mods
                     if (item?._props?.Slots?.length > 0) {
                         item._props.Slots.forEach(mod => {
+                            if (["mod_mount", "mod_equipment"].includes(mod._name)) return;
                             newModObject[mod._name] = mod._props.filters[0].Filter.filter((_tpl) => {
                                 if (!!_tpl && !blacklistedItems.has(_tpl)) {
                                     addRecursive(_tpl, items, id, inventory.mods)
@@ -838,7 +799,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "TacticalVest": [96, 96, 99, 99, 99][index],
                 "Pockets": [25, 45, 59, 69, 80][index],
                 "SecuredContainer": 100,
-                "SecondPrimaryWeapon": [0, 0, 1, 1, 1][index],
+                "SecondPrimaryWeapon": [0, 0, 0, 1, 1][index],
                 "Scabbard": [1, 5, 5, 10, 40][index],
                 "FirstPrimaryWeapon": [85, 98, 99, 99, 99][index],
                 "Holster": [1, 5, 10, 10, 10][index],
@@ -1126,54 +1087,17 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                     "whitelist": botConfig.equipment.pmc.whitelist[index].equipment.mod_magazine
                 },
             },
-            "randomisedWeaponModSlots": [
-                // "mod_barrel",
-                // "mod_scope",
-                // "mod_scope_000",
-                // "mod_scope_001",
-                // "mod_scope_002",
-                // "mod_scope_003",
-                // "mod_handguard",
-                // "mod_magazine",
-                // "mod_muzzle",
-                // "mod_bipod",
-                // "mod_muzzle_000",
-                // "mod_charge",
-                // "mod_reciever",
-                // "mod_trigger",
-                // "mod_gas_block",
-                // "mod_pistol_grip",
-                // "mod_pistol_grip_akms",
-                // "mod_foregrip",
-                // "mod_stock",
-                // "mod_stock_000",
-                // "mod_stock_001",
-                // "mod_stock_akms",
-                // "mod_stock_axis",
-                // "mod_mount_000",
-                // "mod_mount_001",
-                // "mod_mount_002",
-                // "mod_mount_003",
-                // "mod_mount_004",
-                // "mod_mount_005",
-                // "mod_mount_006",
-                // "mod_tactical",
-                // "mod_tactical_2",
-                // "mod_tactical_000",
-                // "mod_tactical_001",
-                // "mod_tactical_002",
-                // "mod_tactical_003"
-            ],
+            "randomisedWeaponModSlots": [],
             "mods": {
                 "mod_barrel": [15, 20, 25, 35, 45][index],
                 "mod_bipod": [1, 10, 5, 11, 50][index],
-                "mod_flashlight": [35, 50, 70, 90, 95][index],
+                "mod_flashlight": [15, 20, 30, 40, 65][index],
                 "mod_foregrip": [30, 60, 70, 90, 95][index],
                 "mod_handguard": [20, 30, 70, 90, 95][index],
                 "mod_launcher": [0, 0, 5, 15, 50][index],
                 "mod_magazine": [50, 60, 80, 90, 95][index],
                 "mod_magazine_000": [0, 0, 25, 35, 50][index],
-                "mod_mount": [95, 95, 100, 100, 100][index],
+                "mod_mount": [85, 95, 100, 100, 100][index],
                 "mod_mount_000": [40, 45, 65, 90, 95][index],
                 "mod_mount_001": [40, 45, 65, 90, 95][index],
                 "mod_mount_002": [40, 45, 65, 90, 95][index],
@@ -1181,14 +1105,14 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                 "mod_mount_004": [40, 45, 65, 90, 95][index],
                 "mod_mount_005": [40, 45, 65, 90, 95][index],
                 "mod_mount_006": [40, 45, 65, 90, 95][index],
-                "mod_muzzle": [5, 25, 45, 65, 99][index],
+                "mod_muzzle": [35, 55, 65, 75, 99][index],
                 "mod_muzzle_000": [15, 35, 65, 85, 99][index],
                 "mod_muzzle_001": [15, 35, 65, 85, 99][index],
                 "mod_equipment": [15, 25, 25, 35, 50][index],
                 "mod_nvg": 0,
-                "mod_equipment_000": [0, 0, 0, 1, 20][index],
-                "mod_equipment_001": [0, 0, 0, 1, 20][index],
-                "mod_equipment_002": [0, 0, 0, 1, 20][index],
+                "mod_equipment_000": [0, 0, 0, 5, 20][index],
+                "mod_equipment_001": [0, 0, 5, 15, 25][index],
+                "mod_equipment_002": [0, 0, 5, 15, 25][index],
                 "mod_pistol_grip_akms": [1, 15, 25, 35, 50][index],
                 "mod_pistol_grip": [1, 15, 25, 35, 50][index],
                 "mod_scope": [90, 95, 100, 100, 100][index],
