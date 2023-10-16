@@ -297,7 +297,7 @@ function ProgressionChanges(container) {
         };
     }
     // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
-    (0, utils_1.saveToFile)(usecInventory, "refDBS/refPMC.json");
+    // saveToFile(usecInventory, "refDBS/refPMC.json")
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
