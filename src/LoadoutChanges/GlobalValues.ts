@@ -61,7 +61,7 @@ export class globalValues {
         const pmcWeighting = finalEquipment.weightingAdjustmentsByBotLevel
         makeMapSpecificWeaponWeightings(location, items, this.originalWeighting, pmcWeighting)
 
-        saveToFile(originalBotTypesCopy.usec.inventory.mods, "updated.json")
+        // saveToFile(originalBotTypesCopy.usec.inventory.mods, "updated.json")
         // saveToFile(originalBotTypesCopy.usec.inventory.mods, "current.json")
         // saveToFile(finalEquipment, "finalEquipment.json")
         // saveToFile(this.originalWeighting, "originalWeighting.json")
