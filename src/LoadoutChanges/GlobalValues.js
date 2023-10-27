@@ -10,13 +10,6 @@ const advancedConfig_json_1 = __importDefault(require("../../config/advancedConf
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
 const OnGameStartUtils_1 = require("./OnGameStartUtils");
 class globalValues {
-    static Logger;
-    static tables;
-    static originalBotTypes;
-    static config = config_json_1.default;
-    static advancedConfig = advancedConfig_json_1.default;
-    static originalWeighting;
-    static configServer;
     static setValuesForLocation(location, hours) {
         if (location === "factory4_day")
             hours = 12;
@@ -39,7 +32,7 @@ class globalValues {
         }
         const finalEquipment = (0, utils_1.cloneDeep)(this.originalWeighting);
         const isNight = hours < 7 || hours >= 19;
-        config_json_1.default.debug && console.log("isNight", isNight ? "YES" : "NO", hours);
+        config_json_1.default.debug && console.log("The server thinks it is ", isNight ? "NIGHT" : "DAY", hours, " do appropriate things.");
         const randomisation = finalEquipment.randomisation;
         (0, OnGameStartUtils_1.makeRandomisationAdjustments)(isNight, this.originalWeighting, randomisation, location);
         const originalBotTypesCopy = (0, utils_1.cloneDeep)(this.originalBotTypes);
@@ -48,8 +41,8 @@ class globalValues {
         originalBotTypesCopy.bear.inventory.mods = originalBotTypesCopy.usec.inventory.mods;
         const pmcWeighting = finalEquipment.weightingAdjustmentsByBotLevel;
         (0, OnGameStartUtils_1.makeMapSpecificWeaponWeightings)(location, items, this.originalWeighting, pmcWeighting);
-        // saveToFile(originalBotTypesCopy.usec.inventory.mods, "updated.json")
-        // saveToFile(originalBotTypesCopy.bear.inventory.mods, "changedInventory.json")
+        (0, utils_1.saveToFile)(originalBotTypesCopy.usec.inventory.mods, "updated.json");
+        // saveToFile(originalBotTypesCopy.usec.inventory.mods, "current.json")
         // saveToFile(finalEquipment, "finalEquipment.json")
         // saveToFile(this.originalWeighting, "originalWeighting.json")
         botConfig.equipment.pmc = finalEquipment;
@@ -57,3 +50,5 @@ class globalValues {
     }
 }
 exports.globalValues = globalValues;
+globalValues.config = config_json_1.default;
+globalValues.advancedConfig = advancedConfig_json_1.default;

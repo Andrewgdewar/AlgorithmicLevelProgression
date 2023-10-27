@@ -125,15 +125,32 @@ const dayTimeCullList = [
     "544909bb4bdc2d6f028b4577"   // tactical_all_insight_anpeq15
 ]
 
+const smgUpperRails = new Set([
+    "5926dad986f7741f82604363",
+    "5a966ec8a2750c00171b3f36",
+    "602e63fb6335467b0c5ac94d",
+    "5894a5b586f77426d2590767",
+    "5de8e67c4a9f347bc92edbd7"
+])
 
+const marksmanUpperRails = new Set(["5df8e4080b92095fd441e594", "5dfcd0e547101c39625f66f9"])
 
 
 export const updateScopes = (mods: Mods, isNight: boolean, items: Record<string, ITemplateItem>, location: keyof typeof advancedConfig.locations) => {
     const weaponTypeMapper = buildOutWeaponTypeMapper(location, isNight)
     for (let key in mods) {
-        if (checkParentRecursive(key, items, [weaponParent])) {
+        if (smgUpperRails.has(key) || marksmanUpperRails.has(key) || checkParentRecursive(key, items, [weaponParent])) {
             const parent = items[key]._parent
-            const scopeTypes = weaponTypeMapper[parent]
+            let scopeTypes = weaponTypeMapper[parent]
+
+            if (smgUpperRails.has(key)) {
+                scopeTypes = weaponTypeMapper[weaponTypeNameToId.Smg]
+            }
+
+            if (marksmanUpperRails.has(key)) {
+                scopeTypes = weaponTypeMapper[weaponTypeNameToId.MarksmanRifle]
+            }
+
             if (!scopeTypes) {
                 // console.log("UNABLE TO FIND PARENT FOR", key, items[key]._name)
                 break;
@@ -150,7 +167,7 @@ export const updateScopes = (mods: Mods, isNight: boolean, items: Record<string,
             if (!!mods[key]?.mod_mount) {
                 const mountResult = mods[key].mod_mount.filter((id) =>
                     scopeTypes.has(items[id]?._parent) ||
-                    checkIfChildHasScopes(id, items, scopeTypes, mods, mods[key].mod_mount.length < 3)
+                    checkIfChildHasScopes(id, items, scopeTypes, mods, true)
                 )
                 // console.log(key, items[key]._name, mods[key].mod_mount.length, mountResult.length)
                 if (mountResult.length) mods[key].mod_mount = mountResult
