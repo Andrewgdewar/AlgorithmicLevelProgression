@@ -9,13 +9,15 @@ import { SetupLocationGlobals } from './LoadoutChanges/SetupLocationGlobals';
 import { LocationUpdater } from './LoadoutChanges/LocationUpdater';
 
 class AlgorithmicLevelProgression implements IPreAkiLoadMod, IPostAkiLoadMod {
-    postAkiLoad(container: DependencyContainer): void {
-        enableProgressionChanges && ProgressionChanges(container)
-        enableProgressionChanges && SetupLocationGlobals(container)
-    }
+
     preAkiLoad(container: DependencyContainer): void {
         enableLevelChanges && BotLevelChanges(container)
         enableProgressionChanges && LocationUpdater(container)
+    }
+
+    postAkiLoad(container: DependencyContainer): void {
+        enableProgressionChanges && ProgressionChanges(container)
+        enableProgressionChanges && SetupLocationGlobals(container)
     }
 }
 

@@ -74,6 +74,8 @@
             7
         ]
     },
+    "applyInternalPMCBlacklist": false,
+    "increaseTierStrictness": false,
     "equipmentRandomness": 20,
     "debug": false
 }

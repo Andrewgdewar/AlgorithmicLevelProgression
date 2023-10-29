@@ -178,7 +178,7 @@ export const updateScopes = (mods: Mods, isNight: boolean, items: Record<string,
                 if (!!mods[key]?.[mountType]) {
                     const mountResult = mods[key][mountType].filter((id) =>
                         !checkParentRecursive(id, items, [mountParent, sightParent]) ||
-                        (items[id]?._parent === mountParent && !mods[id].mod_scope) ||
+                        (items[id]?._parent === mountParent && !mods[id]?.mod_scope) ||
                         scopeTypes.has(items[id]?._parent) ||
                         checkIfChildHasScopes(id, items, scopeTypes, mods, true)
                     )

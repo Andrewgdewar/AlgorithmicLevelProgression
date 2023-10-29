@@ -3,6 +3,7 @@ import { DependencyContainer } from 'tsyringe';
 
 import { ConfigTypes } from '@spt-aki/models/enums/ConfigTypes';
 import { ConfigServer } from '@spt-aki/servers/ConfigServer';
+import { ItemFilterService } from "@spt-aki/services/ItemFilterService"
 import { DatabaseServer } from '@spt-aki/servers/DatabaseServer';
 
 import advancedConfig from '../../config/advancedConfig.json';
@@ -27,6 +28,7 @@ import {
     keyMechanical,
     magParent,
     medsParent,
+    mergeDeep,
     moneyParent,
     numList,
     reduceAmmoChancesTo1,
@@ -42,6 +44,7 @@ import {
 export default function ProgressionChanges(
     container: DependencyContainer
 ): undefined {
+    const itemFilterService = container.resolve<ItemFilterService>("ItemFilterService");
     const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
     const configServer = container.resolve<ConfigServer>("ConfigServer");
     const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
@@ -54,14 +57,14 @@ export default function ProgressionChanges(
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
 
-    // botConfig.secureContainerAmmoStackCount = 200
+    if (botConfig.secureContainerAmmoStackCount < 40) botConfig.secureContainerAmmoStackCount = 40
+    if (!pmcConfig.forceHealingItemsIntoSecure) pmcConfig.forceHealingItemsIntoSecure = true
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
     // console.log(JSON.stringify(tables.bots.types.assault.inventory))
 
     const usecAppearance = tables.bots.types.usec.appearance
     const bearAppearance = tables.bots.types.bear.appearance
-
 
     pmcConfig.looseWeaponInBackpackChancePercent = 1
     pmcConfig.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 }
@@ -89,6 +92,7 @@ export default function ProgressionChanges(
         }
         return tradersToInclude.includes(base.nickname)
     })
+
     botConfig.equipment.pmc.nvgIsActiveChanceNightPercent = 95
     botConfig.equipment.pmc.lightIsActiveNightChancePercent = 95
     botConfig.equipment.pmc.laserIsActiveChancePercent = 90
@@ -97,7 +101,15 @@ export default function ProgressionChanges(
 
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList: TradersMasterList =
-        { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items)) }
+    {
+        1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items).filter(id => {
+            if (blacklistedItems.has(id)) return false
+            if (!config.applyInternalPMCBlacklist) return true
+            const isBlackListed = itemFilterService.isItemBlacklisted(id)
+            if (isBlackListed) blacklistedItems.add(id)
+            return isBlackListed
+        }))
+    }
 
     const mods = { "1": {}, "2": {}, "3": {}, "4": {}, "5": {} }
 
@@ -112,13 +124,14 @@ export default function ProgressionChanges(
 
     traderList.forEach(({ base: { nickname }, questassort, assort: { items: tradeItems, loyal_level_items, barter_scheme } = {}, }, index) => {
         if (!tradeItems || !nickname) return
+
         // if (index === 0) console.log(JSON.stringify(questassort))
         if (config.addCustomTraderItems && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`)
         }
         tradeItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
             if (tradersMasterList[5].has(_tpl)) tradersMasterList[5].delete(_tpl)
-            if (blacklistedItems.has(_tpl) || combinedForbiddenBullets.has(_tpl)) return; //Remove blacklisted items and bullets
+            if (blacklistedItems.has(_tpl)) return; //Remove blacklisted items and bullets
             const item = items[_tpl]
             if (!item) return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const parent = item._parent
@@ -173,6 +186,13 @@ export default function ProgressionChanges(
                     if (!bearInventory.equipment["FirstPrimaryWeapon"]) bearInventory.equipment["FirstPrimaryWeapon"] = {}
                     usecInventory.equipment["FirstPrimaryWeapon"][_tpl] = 1
                     bearInventory.equipment["FirstPrimaryWeapon"][_tpl] = 1
+                    break;
+                // Check if sawed-off shotgun
+                case _tpl === "64748cb8de82c85eaf0a273a":
+                    if (!usecInventory.equipment["Holster"]) usecInventory.equipment["Holster"] = {}
+                    if (!bearInventory.equipment["Holster"]) bearInventory.equipment["Holster"] = {}
+                    usecInventory.equipment["Holster"][_tpl] = 1
+                    bearInventory.equipment["Holster"][_tpl] = 1
                     break;
                 // Add matching equipment
                 case !!equipmentType:
@@ -343,7 +363,7 @@ export default function ProgressionChanges(
     buildInitialRandomization(items, botConfig, tradersMasterList)
 
     Object.keys(advancedConfig.otherBotTypes).forEach(botType => {
-        botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig.otherBotTypes[botType] }
+        mergeDeep(botConfig.equipment[botType], advancedConfig.otherBotTypes[botType])
     })
 
     if (config.removeScavLootForLootingBots && (botConfig?.equipment?.assault?.randomisation?.[0] as any)?.generation) {
@@ -364,14 +384,12 @@ export default function ProgressionChanges(
     }
 
 
-    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
-    // saveToFile(usecInventory, "refDBS/refPMC.json")
-    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
+
+    // saveToFile(botConfig.equipment.assault, "refDBS/refSCAV.json")
+    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
 
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }
-
-
 
 
 

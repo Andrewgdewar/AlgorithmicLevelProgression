@@ -9,13 +9,13 @@ const ProgressionChanges_1 = __importDefault(require("./LoadoutChanges/Progressi
 const SetupLocationGlobals_1 = require("./LoadoutChanges/SetupLocationGlobals");
 const LocationUpdater_1 = require("./LoadoutChanges/LocationUpdater");
 class AlgorithmicLevelProgression {
-    postAkiLoad(container) {
-        config_json_1.enableProgressionChanges && (0, ProgressionChanges_1.default)(container);
-        config_json_1.enableProgressionChanges && (0, SetupLocationGlobals_1.SetupLocationGlobals)(container);
-    }
     preAkiLoad(container) {
         config_json_1.enableLevelChanges && (0, BotLevelChanges_1.default)(container);
         config_json_1.enableProgressionChanges && (0, LocationUpdater_1.LocationUpdater)(container);
+    }
+    postAkiLoad(container) {
+        config_json_1.enableProgressionChanges && (0, ProgressionChanges_1.default)(container);
+        config_json_1.enableProgressionChanges && (0, SetupLocationGlobals_1.SetupLocationGlobals)(container);
     }
 }
 module.exports = { mod: new AlgorithmicLevelProgression() };

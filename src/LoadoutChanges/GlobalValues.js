@@ -10,6 +10,13 @@ const advancedConfig_json_1 = __importDefault(require("../../config/advancedConf
 const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes");
 const OnGameStartUtils_1 = require("./OnGameStartUtils");
 class globalValues {
+    static Logger;
+    static tables;
+    static originalBotTypes;
+    static config = config_json_1.default;
+    static advancedConfig = advancedConfig_json_1.default;
+    static originalWeighting;
+    static configServer;
     static setValuesForLocation(location, hours) {
         if (location === "factory4_day")
             hours = 12;
@@ -41,8 +48,8 @@ class globalValues {
         originalBotTypesCopy.bear.inventory.mods = originalBotTypesCopy.usec.inventory.mods;
         const pmcWeighting = finalEquipment.weightingAdjustmentsByBotLevel;
         (0, OnGameStartUtils_1.makeMapSpecificWeaponWeightings)(location, items, this.originalWeighting, pmcWeighting);
-        (0, utils_1.saveToFile)(originalBotTypesCopy.usec.inventory.mods, "updated.json");
-        // saveToFile(originalBotTypesCopy.usec.inventory.mods, "current.json")
+        // saveToFile(originalBotTypesCopy.usec.inventory.mods, "updated.json")
+        // saveToFile(originalBotTypesCopy.usec.inventory, "refDBS/usecInventoryRef.json")
         // saveToFile(finalEquipment, "finalEquipment.json")
         // saveToFile(this.originalWeighting, "originalWeighting.json")
         botConfig.equipment.pmc = finalEquipment;
@@ -50,5 +57,3 @@ class globalValues {
     }
 }
 exports.globalValues = globalValues;
-globalValues.config = config_json_1.default;
-globalValues.advancedConfig = advancedConfig_json_1.default;

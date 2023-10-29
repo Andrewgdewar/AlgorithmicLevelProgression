@@ -8,6 +8,7 @@ const advancedConfig_json_1 = __importDefault(require("../../config/advancedConf
 const config_json_1 = __importDefault(require("../../config/config.json"));
 const utils_1 = require("./utils");
 function ProgressionChanges(container) {
+    const itemFilterService = container.resolve("ItemFilterService");
     const databaseServer = container.resolve("DatabaseServer");
     const configServer = container.resolve("ConfigServer");
     const botConfig = configServer.getConfig(ConfigTypes_1.ConfigTypes.BOT);
@@ -18,7 +19,10 @@ function ProgressionChanges(container) {
     const traders = tables.traders;
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
-    // botConfig.secureContainerAmmoStackCount = 200
+    if (botConfig.secureContainerAmmoStackCount < 40)
+        botConfig.secureContainerAmmoStackCount = 40;
+    if (!pmcConfig.forceHealingItemsIntoSecure)
+        pmcConfig.forceHealingItemsIntoSecure = true;
     // tables.bots.types.usec.inventory.mods = {}
     // tables.bots.types.bear.inventory.mods = {}
     // console.log(JSON.stringify(tables.bots.types.assault.inventory))
@@ -53,7 +57,18 @@ function ProgressionChanges(container) {
     botConfig.equipment.pmc.faceShieldIsActiveChancePercent = 100;
     botConfig.equipment.pmc.weightingAdjustmentsByBotLevel = (0, utils_1.buildEmptyWeightAdjustments)();
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
-    const tradersMasterList = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items)) };
+    const tradersMasterList = {
+        1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items).filter(id => {
+            if (utils_1.blacklistedItems.has(id))
+                return false;
+            if (!config_json_1.default.applyInternalPMCBlacklist)
+                return true;
+            const isBlackListed = itemFilterService.isItemBlacklisted(id);
+            if (isBlackListed)
+                utils_1.blacklistedItems.add(id);
+            return isBlackListed;
+        }))
+    };
     const mods = { "1": {}, "2": {}, "3": {}, "4": {}, "5": {} };
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = (0, utils_1.setupBaseWhiteList)();
@@ -71,7 +86,7 @@ function ProgressionChanges(container) {
         tradeItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
             if (tradersMasterList[5].has(_tpl))
                 tradersMasterList[5].delete(_tpl);
-            if (utils_1.blacklistedItems.has(_tpl) || utils_1.combinedForbiddenBullets.has(_tpl))
+            if (utils_1.blacklistedItems.has(_tpl))
                 return; //Remove blacklisted items and bullets
             const item = items[_tpl];
             if (!item)
@@ -124,6 +139,15 @@ function ProgressionChanges(container) {
                         bearInventory.equipment["FirstPrimaryWeapon"] = {};
                     usecInventory.equipment["FirstPrimaryWeapon"][_tpl] = 1;
                     bearInventory.equipment["FirstPrimaryWeapon"][_tpl] = 1;
+                    break;
+                // Check if sawed-off shotgun
+                case _tpl === "64748cb8de82c85eaf0a273a":
+                    if (!usecInventory.equipment["Holster"])
+                        usecInventory.equipment["Holster"] = {};
+                    if (!bearInventory.equipment["Holster"])
+                        bearInventory.equipment["Holster"] = {};
+                    usecInventory.equipment["Holster"][_tpl] = 1;
+                    bearInventory.equipment["Holster"][_tpl] = 1;
                     break;
                 // Add matching equipment
                 case !!equipmentType:
@@ -278,7 +302,7 @@ function ProgressionChanges(container) {
     (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
     Object.keys(advancedConfig_json_1.default.otherBotTypes).forEach(botType => {
-        botConfig.equipment[botType] = { ...botConfig.equipment[botType], ...advancedConfig_json_1.default.otherBotTypes[botType] };
+        (0, utils_1.mergeDeep)(botConfig.equipment[botType], advancedConfig_json_1.default.otherBotTypes[botType]);
     });
     if (config_json_1.default.removeScavLootForLootingBots && botConfig?.equipment?.assault?.randomisation?.[0]?.generation) {
         const generation = botConfig.equipment.assault.randomisation[0].generation;
@@ -296,9 +320,8 @@ function ProgressionChanges(container) {
             "whitelist": []
         };
     }
-    // console.log(JSON.stringify(botConfig.equipment.pmc.weightingAdjustments[4]))
-    // saveToFile(usecInventory, "refDBS/refPMC.json")
-    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json")
+    // saveToFile(botConfig.equipment.assault, "refDBS/refSCAV.json")
+    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;

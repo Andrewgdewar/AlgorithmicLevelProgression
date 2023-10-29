@@ -1,4 +1,13 @@
 export default [
+    "544a3f024bdc2d1d388b4568", //ELCAN Specter OS4x assault scope
+    ///
+    "5af99e9186f7747c447120b8", // Bad pockets
+    "60c7272c204bc17802313365",
+    "627a4e6b255f7527fb05a0f6",
+    "64cbd95a29b9b4283e216ff5",
+    ///
+    "622b4f54dc8dcc0ba8742f85", //HK G36 Hensoldt HKV ZF 1.5x carry handle
+    "622b4d7df9cfc87d675d2ded", //HK G36 Hensoldt HKV 3x carry handle
     // armasight vulcan universal base
     // Geissele Super Precision 30mm
     "5aa66a9be5b5b0214e506e89", //Nightforce Magmount 34mm ring scope mount > stupid long scope mount

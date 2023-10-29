@@ -395,15 +395,15 @@
             },
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1.1,
+                    "AssaultCarbine": 1.5,
                     "AssaultRifle": 1,
                     "GrenadeLauncher": 0.8,
-                    "MachineGun": 0.8,
-                    "MarksmanRifle": 1.8,
+                    "MachineGun": 0.7,
+                    "MarksmanRifle": 2,
                     "Revolver": 0.2,
                     "Shotgun": 0.2,
                     "Smg": 0.2,
-                    "SniperRifle": 1.8
+                    "SniperRifle": 2
                 }
             }
         },
@@ -458,15 +458,15 @@
             },
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1.1,
+                    "AssaultCarbine": 1.3,
                     "AssaultRifle": 1,
                     "GrenadeLauncher": 0.8,
                     "MachineGun": 0.8,
-                    "MarksmanRifle": 1.8,
-                    "Revolver": 0.2,
-                    "Shotgun": 0.2,
-                    "Smg": 0.2,
-                    "SniperRifle": 1.8
+                    "MarksmanRifle": 1.6,
+                    "Revolver": 0.3,
+                    "Shotgun": 0.3,
+                    "Smg": 0.5,
+                    "SniperRifle": 1.6
                 }
             }
         },
@@ -518,15 +518,15 @@
             },
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1.1,
+                    "AssaultCarbine": 1.5,
                     "AssaultRifle": 1,
                     "GrenadeLauncher": 0.8,
-                    "MachineGun": 0.8,
-                    "MarksmanRifle": 1.8,
+                    "MachineGun": 0.7,
+                    "MarksmanRifle": 2,
                     "Revolver": 0.2,
                     "Shotgun": 0.2,
                     "Smg": 0.2,
-                    "SniperRifle": 1.8
+                    "SniperRifle": 2
                 }
             }
         },
@@ -642,15 +642,15 @@
             },
             "weightingAdjustments": {
                 "FirstPrimaryWeapon": {
-                    "AssaultCarbine": 1.1,
+                    "AssaultCarbine": 1.5,
                     "AssaultRifle": 1,
                     "GrenadeLauncher": 0.8,
-                    "MachineGun": 0.8,
-                    "MarksmanRifle": 1.8,
+                    "MachineGun": 0.7,
+                    "MarksmanRifle": 2,
                     "Revolver": 0.2,
                     "Shotgun": 0.2,
                     "Smg": 0.2,
-                    "SniperRifle": 1.8
+                    "SniperRifle": 2
                 }
             }
         }
