@@ -31,6 +31,7 @@ exports.blacklistedItems = exports.combinedForbiddenBullets = exports.buildBlack
 const advancedConfig_json_1 = __importDefault(require("../../config/advancedConfig.json"));
 const config_json_1 = __importStar(require("../../config/config.json"));
 const InternalBlacklist_1 = __importDefault(require("./InternalBlacklist"));
+const BackpackLoot_1 = __importDefault(require("./Constants/BackpackLoot"));
 const saveToFile = (data, filePath) => {
     var fs = require('fs');
     let dir = __dirname;
@@ -626,6 +627,24 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
             }
         }
     });
+    const list = {};
+    tradersMasterList[5].forEach(id => {
+        const parent = items[id]?._parent;
+        if (!parent)
+            return;
+        const equipmentType = (0, exports.getEquipmentType)(parent, items);
+        if (equipmentType) {
+            if (!list?.[equipmentType])
+                list[equipmentType] = [];
+            list[equipmentType].push(id);
+        }
+        else if ((0, exports.checkParentRecursive)(parent, items, [exports.AmmoParent])) {
+            if (!list?.["ammo"])
+                list["ammo"] = [];
+            list.ammo.push(id);
+        }
+    });
+    (0, exports.saveToFile)({ list }, "refDBS/tier5.json");
 };
 exports.setWeightingAdjustments = setWeightingAdjustments;
 const addRecursive = (modId, items, weaponId, mods) => {
@@ -1131,18 +1150,15 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                         newItem.generation.grenades["whitelist"] = [...newItem.generation.grenades["whitelist"] || [], id];
                     }
                     break;
-                case (0, exports.checkParentRecursive)(parent, items, config_json_1.default.removePMCLootForLootingBots ? [exports.FoodDrinkParent] : [exports.barterParent, exports.FoodDrinkParent]): //FoodDrink/barter
-                    newItem.generation.backpackLoot["whitelist"] = [...newItem.generation.backpackLoot["whitelist"] || [], id];
-                    newItem.generation.pocketLoot["whitelist"] = [...newItem.generation.pocketLoot["whitelist"] || [], id];
-                    newItem.generation.vestLoot["whitelist"] = [...newItem.generation.vestLoot["whitelist"] || [], id];
-                    break;
-                case (0, exports.checkParentRecursive)(parent, items, [exports.magParent]):
-                    // newItem.generation.magazines["whitelist"] = [...newItem.generation.magazines["whitelist"] || [], id]
-                    break;
                 default:
                     break;
             }
         });
+        const maxIndex = Math.round((BackpackLoot_1.default.length * (num * 0.2)) - 1);
+        const newLootList = BackpackLoot_1.default.slice(0, maxIndex);
+        newItem.generation.backpackLoot["whitelist"] = newLootList;
+        newItem.generation.pocketLoot["whitelist"] = newLootList;
+        newItem.generation.vestLoot["whitelist"] = newLootList;
         Object.keys(newItem.generation).forEach((key) => {
             if (!newItem.generation[key]?.whitelist) {
                 newItem.generation[key] = { ...newItem.generation[key], weights: { "0": 1 } };

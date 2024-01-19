@@ -84,7 +84,7 @@ export default [
     // "59e5f5a486f7746c530b3ce2", 40 round
     // "544a378f4bdc2d30388b4567", 40 round
     // "5d1340bdd7ad1a0e8d245aab", 40-round 556 45
-    "630e295c984633f1fb0e7c30",
+    // "630e295c984633f1fb0e7c30",
     // "5ba26586d4351e44f824b340", MP7 40 
     "5c5db6652e221600113fba51",
     "5cffa483d7ad1a049e54ef1c",
@@ -211,7 +211,6 @@ export default [
     "5c1bc5af2e221602b412949b",
     //long handgun stock
     "5d1c702ad7ad1a632267f429",
-
     "620109578d82e67e7911abf2",// signal pistol
     "62178c4d4ecf221597654e3d",
     "62389aaba63f32501b1b444f",// signal ammo

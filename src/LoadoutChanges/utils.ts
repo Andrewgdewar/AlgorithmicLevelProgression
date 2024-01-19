@@ -19,6 +19,7 @@ import {
     Mods
 } from '../../types/models/eft/common/tables/IBotType';
 import InternalBlacklist from './InternalBlacklist';
+import BackpackLoot from './Constants/BackpackLoot';
 
 export const saveToFile = (data, filePath) => {
     var fs = require('fs');
@@ -508,7 +509,6 @@ export const setWeightingAdjustments = (
             if (num < 4 && combinedForbiddenBullets.has(id)) return //console.log(num, items[id]._name, id)
             const item = items[id]
             const parent = item._parent
-
             // Ammo Parent
             if (checkParentRecursive(parent, items, [AmmoParent])) {
                 const calibre = item._props.Caliber || item._props.ammoCaliber
@@ -655,7 +655,20 @@ export const setWeightingAdjustments = (
         }
     })
 
-
+    const list: { [key: string]: string[] } = {}
+    tradersMasterList[5].forEach(id => {
+        const parent = items[id]?._parent
+        if (!parent) return
+        const equipmentType = getEquipmentType(parent, items)
+        if (equipmentType) {
+            if (!list?.[equipmentType]) list[equipmentType] = []
+            list[equipmentType].push(id)
+        } else if (checkParentRecursive(parent, items, [AmmoParent])) {
+            if (!list?.["ammo"]) list["ammo"] = []
+            list.ammo.push(id)
+        }
+    })
+    saveToFile({ list }, "refDBS/tier5.json")
 }
 
 
@@ -793,7 +806,7 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
             equipment: {
                 "Headwear": [75, 85, 99, 99, 99][index],
                 "Earpiece": [50, 65, 90, 100, 100][index],
-                "FaceCover": [15, 25, 35, 45, 80][index],
+                "FaceCover": [15, 25, 35, 45, 50][index],
                 "ArmorVest": [99, 99, 99, 99, 99][index],
                 "ArmBand": [25, 45, 59, 69, 80][index],
                 "TacticalVest": [96, 96, 99, 99, 99][index],
@@ -1179,18 +1192,16 @@ export const buildInitialRandomization = (items: Record<string, ITemplateItem>, 
                         newItem.generation.grenades["whitelist"] = [...newItem.generation.grenades["whitelist"] || [], id]
                     }
                     break;
-                case checkParentRecursive(parent, items, config.removePMCLootForLootingBots ? [FoodDrinkParent] : [barterParent, FoodDrinkParent]): //FoodDrink/barter
-                    newItem.generation.backpackLoot["whitelist"] = [...newItem.generation.backpackLoot["whitelist"] || [], id]
-                    newItem.generation.pocketLoot["whitelist"] = [...newItem.generation.pocketLoot["whitelist"] || [], id]
-                    newItem.generation.vestLoot["whitelist"] = [...newItem.generation.vestLoot["whitelist"] || [], id]
-                    break;
-                case checkParentRecursive(parent, items, [magParent]):
-                    // newItem.generation.magazines["whitelist"] = [...newItem.generation.magazines["whitelist"] || [], id]
-                    break;
                 default:
                     break;
             }
         })
+
+        const maxIndex = Math.round((BackpackLoot.length * (num * 0.2)) - 1)
+        const newLootList = BackpackLoot.slice(0, maxIndex)
+        newItem.generation.backpackLoot["whitelist"] = newLootList
+        newItem.generation.pocketLoot["whitelist"] = newLootList
+        newItem.generation.vestLoot["whitelist"] = newLootList
 
         Object.keys(newItem.generation).forEach((key) => {
             if (!newItem.generation[key]?.whitelist) {
