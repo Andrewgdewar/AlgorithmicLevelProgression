@@ -38,3 +38,4 @@ function BotLevelChanges(container) {
     config_json_2.default.debug && console.log("Algorthimic Progression: BotLevelGenerator registered");
 }
 exports.default = BotLevelChanges;
+//# sourceMappingURL=BotLevelChanges.js.map

@@ -386,7 +386,7 @@ export default function ProgressionChanges(
 
 
     // saveToFile(botConfig.equipment.assault, "refDBS/refSCAV.json")
-    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
+    saveToFile(botConfig.equipment.pmc, "refDBS/weightings2.json")
 
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }

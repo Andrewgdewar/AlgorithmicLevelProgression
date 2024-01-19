@@ -17,12 +17,12 @@ export const makeRandomisationAdjustments =
             }
             // Silencers??
             if (randomisation?.[index]?.mods?.mod_muzzle !== undefined) {
-                randomisation[index].mods.mod_muzzle += (isNight ? 15 : 0)
+                randomisation[index].mods.mod_muzzle += (isNight ? 25 : 0)
                 if (randomisation[index].mods.mod_muzzle > 100) randomisation[index].mods.mod_muzzle = 100
             }
             // Flashlights
             if (location === "laboratory" || randomisation?.[index]?.mods?.mod_flashlight !== undefined) {
-                randomisation[index].mods.mod_flashlight += (isNight ? 35 : 0)
+                randomisation[index].mods.mod_flashlight += (isNight ? 45 : 0)
                 if (randomisation[index].mods.mod_flashlight > 100) randomisation[index].mods.mod_flashlight = 100
             }
 

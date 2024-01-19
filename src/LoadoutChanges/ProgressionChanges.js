@@ -321,7 +321,7 @@ function ProgressionChanges(container) {
         };
     }
     // saveToFile(botConfig.equipment.assault, "refDBS/refSCAV.json")
-    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
+    (0, utils_1.saveToFile)(botConfig.equipment.pmc, "refDBS/weightings2.json");
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;
@@ -363,3 +363,4 @@ exports.default = ProgressionChanges;
 //         ammoTypes[calibre] = { ...ammoTypes[calibre] || {}, [_name]: { id: _id, Damage, PenetrationPower } }
 //     }
 // })
+//# sourceMappingURL=ProgressionChanges.js.map

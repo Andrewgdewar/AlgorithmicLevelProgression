@@ -475,7 +475,7 @@ const setWeightItem = (weight: WeightingAdjustmentDetails, equipmentType: string
     // } else {
     weight.equipment.edit[equipmentType] = {
         ...weight.equipment.edit[equipmentType] || {},
-        [id]: (multiplyAndRound(rating, tierMultiplier) + config.equipmentRandomness) || 1
+        [id]: multiplyAndRound(rating, tierMultiplier) || 1
     }
     // }
 }
@@ -548,8 +548,9 @@ export const setWeightingAdjustments = (
             if (num > actualNum) return;
             const multi = num / actualNum
             const tierMultiplier = config.increaseTierStrictness ? multi * multi : multi
-            // console.log(tierMultiplier)
+
             const itemList = [...tradersMasterList[num]]
+
             itemList.forEach(id => {
                 const item = items[id]
                 const parent = item._parent
@@ -629,7 +630,32 @@ export const setWeightingAdjustments = (
                 }
             })
         })
+
+        for (const category in weight[index].equipment.edit) {
+            const randomnessMultiplier = config?.randomness?.[category]
+            if (!randomnessMultiplier) return;
+            const list = weight[index].equipment.edit[category]
+            const keys = Object.keys(list)
+            const sortedValues = Object.values(list).sort((a, b) => a - b)
+            const middleIndex = 0 + Math.round((sortedValues.length - 1) / 2)
+            const medianValue = sortedValues[middleIndex]
+            const highestValue = sortedValues[(sortedValues.length - 1)]
+            const lowestValue = sortedValues[0]
+            const betterValue = Math.round((medianValue + highestValue + lowestValue) / 3)
+            if (betterValue > 1) {
+                keys.forEach((key) => {
+                    const valToAdjust = list[key]
+                    const adjustedAmountMax = betterValue - valToAdjust
+                    const amountAfterAdjustment = Math.round(valToAdjust + (adjustedAmountMax * randomnessMultiplier))
+                    if (weight[index].equipment.edit[category][key]) {
+                        weight[index].equipment.edit[category][key] = Math.abs(amountAfterAdjustment)
+                    }
+                })
+            }
+        }
     })
+
+
 }
 
 

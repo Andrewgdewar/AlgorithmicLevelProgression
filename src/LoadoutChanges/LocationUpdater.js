@@ -10,7 +10,6 @@ const LocationUpdater = (container) => {
             action: (_url, info, _sessionId, output) => {
                 const time = weatherGenerator.calculateGameTime({ acceleration: 0, time: "", date: "" }).time;
                 const hours = getTime(time, info.timeVariant === "PAST" ? 12 : 0);
-                // console.log("🚀 hours:", hours)
                 GlobalValues_1.globalValues.setValuesForLocation(info.location.toLowerCase(), hours);
                 return output;
             }
@@ -26,3 +25,4 @@ function getTime(time, hourDiff) {
     }
     return Number(Math.abs(parseInt(h) - hourDiff));
 }
+//# sourceMappingURL=LocationUpdater.js.map

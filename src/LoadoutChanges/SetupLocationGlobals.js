@@ -17,3 +17,4 @@ const SetupLocationGlobals = (container) => {
     // globalValues.setValuesForLocation('woods', 1)
 };
 exports.SetupLocationGlobals = SetupLocationGlobals;
+//# sourceMappingURL=SetupLocationGlobals.js.map

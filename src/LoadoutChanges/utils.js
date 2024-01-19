@@ -463,7 +463,7 @@ const setWeightItem = (weight, equipmentType, id, rating, tierMultiplier) => {
     // } else {
     weight.equipment.edit[equipmentType] = {
         ...weight.equipment.edit[equipmentType] || {},
-        [id]: (multiplyAndRound(rating, tierMultiplier) + config_json_1.default.equipmentRandomness) || 1
+        [id]: multiplyAndRound(rating, tierMultiplier) || 1
     };
     // }
 };
@@ -526,7 +526,6 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
                 return;
             const multi = num / actualNum;
             const tierMultiplier = config_json_1.default.increaseTierStrictness ? multi * multi : multi;
-            // console.log(tierMultiplier)
             const itemList = [...tradersMasterList[num]];
             itemList.forEach(id => {
                 const item = items[id];
@@ -603,6 +602,29 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
                 }
             });
         });
+        for (const category in weight[index].equipment.edit) {
+            const randomnessMultiplier = config_json_1.default?.randomness?.[category];
+            if (!randomnessMultiplier)
+                return;
+            const list = weight[index].equipment.edit[category];
+            const keys = Object.keys(list);
+            const sortedValues = Object.values(list).sort((a, b) => a - b);
+            const middleIndex = 0 + Math.round((sortedValues.length - 1) / 2);
+            const medianValue = sortedValues[middleIndex];
+            const highestValue = sortedValues[(sortedValues.length - 1)];
+            const lowestValue = sortedValues[0];
+            const betterValue = Math.round((medianValue + highestValue + lowestValue) / 3);
+            if (betterValue > 1) {
+                keys.forEach((key) => {
+                    const valToAdjust = list[key];
+                    const adjustedAmountMax = betterValue - valToAdjust;
+                    const amountAfterAdjustment = Math.round(valToAdjust + (adjustedAmountMax * randomnessMultiplier));
+                    if (weight[index].equipment.edit[category][key]) {
+                        weight[index].equipment.edit[category][key] = Math.abs(amountAfterAdjustment);
+                    }
+                });
+            }
+        }
     });
 };
 exports.setWeightingAdjustments = setWeightingAdjustments;
@@ -1338,3 +1360,4 @@ exports.blacklistedItems = new Set([
     ...config_json_1.default.customBlacklist,
     ...InternalBlacklist_1.default
 ]);
+//# sourceMappingURL=utils.js.map
