@@ -3,6 +3,7 @@ import { DependencyContainer } from 'tsyringe';
 
 import { ConfigTypes } from '@spt-aki/models/enums/ConfigTypes';
 import { ConfigServer } from '@spt-aki/servers/ConfigServer';
+import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService"
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService"
 import { DatabaseServer } from '@spt-aki/servers/DatabaseServer';
 
@@ -22,7 +23,6 @@ import {
     buildWeaponSightWhitelist,
     checkParentRecursive,
     cloneDeep,
-    combinedForbiddenBullets,
     deDupeArr,
     getEquipmentType,
     keyMechanical,
@@ -38,9 +38,10 @@ import {
     setupMods,
     setWeightingAdjustments,
     setWhitelists,
-    TradersMasterList
+    TradersMasterList,
+    weaponParent
 } from './utils';
-import Tier5 from './Constants/Tier5';
+import Tier5 from '../Constants/Tier5';
 
 export default function ProgressionChanges(
     container: DependencyContainer
@@ -54,6 +55,8 @@ export default function ProgressionChanges(
     const items = tables.templates.items;
     const customization = tables.templates.customization;
     const traders = tables.traders
+
+
 
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
@@ -373,11 +376,35 @@ export default function ProgressionChanges(
         }
     }
 
+    const RagfairPriceService = container.resolve<RagfairPriceService>("RagfairPriceService");
+    const handbook = tables.templates.handbook
 
+    const prices = tables.templates.prices
 
-    // saveToFile(botConfig.equipment.assault, "refDBS/refSCAV.json")
+    const handbookMapper = {} as Record<string, number>
+
+    handbook.Items.forEach(({ Id, Price }) => {
+        handbookMapper[Id] = Price
+    })
+
+    const getFleaPrice = (itemID: string): number => {
+        const staticprice = RagfairPriceService.getFleaPriceForItem(itemID)
+        if (staticprice) return staticprice
+        if (typeof prices[itemID] != "undefined") return prices[itemID]
+        if (handbookMapper[itemID]) return handbookMapper[itemID]
+    }
+
+    const barterItemsList = Object.keys(items).
+        filter(id => checkParentRecursive(id, items, ["5448e5284bdc2dcb718b4567"]) && Number(items[id]._props.armorClass) > 1).
+        map((id) => ({ name: items[id]._name, id, price: getFleaPrice(id) })).filter(({ price, id }) => price > 5).
+        sort((a, b) => a.price - b.price).map(({ id }) => id)
+    console.log(barterItemsList.length)
+
+    saveToFile({ barterItemsList }, "refDBS/helmet.json")
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings2.json")
 
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }
 
+//59ef13ca86f77445fd0e2483
+//5b4329f05acfc47a86086aa1

@@ -19,7 +19,7 @@ import {
     Mods
 } from '../../types/models/eft/common/tables/IBotType';
 import InternalBlacklist from './InternalBlacklist';
-import BackpackLoot from './Constants/BackpackLoot';
+import BackpackLoot from '../Constants/BackpackLoot';
 
 export const saveToFile = (data, filePath) => {
     var fs = require('fs');
@@ -546,7 +546,9 @@ export const setWeightingAdjustments = (
     numList.forEach((actualNum, index) => {
         numList.forEach((num) => {
             if (num > actualNum) return;
-            const multi = num / actualNum
+            const isLowList = (actualNum - num) >= 3
+            console.log(actualNum, num, isLowList)
+            const multi = isLowList ? 0 : num / actualNum
             const tierMultiplier = config.increaseTierStrictness ? multi * multi : multi
 
             const itemList = [...tradersMasterList[num]]
@@ -645,30 +647,32 @@ export const setWeightingAdjustments = (
             if (betterValue > 1) {
                 keys.forEach((key) => {
                     const valToAdjust = list[key]
-                    const adjustedAmountMax = betterValue - valToAdjust
-                    const amountAfterAdjustment = Math.round(valToAdjust + (adjustedAmountMax * randomnessMultiplier))
-                    if (weight[index].equipment.edit[category][key]) {
-                        weight[index].equipment.edit[category][key] = Math.abs(amountAfterAdjustment)
+                    if (valToAdjust > 5) {
+                        const adjustedAmountMax = betterValue - valToAdjust
+                        const amountAfterAdjustment = Math.round(valToAdjust + (adjustedAmountMax * randomnessMultiplier))
+                        if (weight[index].equipment.edit[category][key]) {
+                            weight[index].equipment.edit[category][key] = Math.abs(amountAfterAdjustment)
+                        }
                     }
                 })
             }
         }
     })
 
-    const list: { [key: string]: string[] } = {}
-    tradersMasterList[5].forEach(id => {
-        const parent = items[id]?._parent
-        if (!parent) return
-        const equipmentType = getEquipmentType(parent, items)
-        if (equipmentType) {
-            if (!list?.[equipmentType]) list[equipmentType] = []
-            list[equipmentType].push(id)
-        } else if (checkParentRecursive(parent, items, [AmmoParent])) {
-            if (!list?.["ammo"]) list["ammo"] = []
-            list.ammo.push(id)
-        }
-    })
-    saveToFile({ list }, "refDBS/tier5.json")
+    // const list: { [key: string]: string[] } = {}
+    // tradersMasterList[5].forEach(id => {
+    //     const parent = items[id]?._parent
+    //     if (!parent) return
+    //     const equipmentType = getEquipmentType(parent, items)
+    //     if (equipmentType) {
+    //         if (!list?.[equipmentType]) list[equipmentType] = []
+    //         list[equipmentType].push(id)
+    //     } else if (checkParentRecursive(parent, items, [AmmoParent])) {
+    //         if (!list?.["ammo"]) list["ammo"] = []
+    //         list.ammo.push(id)
+    //     }
+    // })
+    // saveToFile({ list }, "refDBS/tier5.json")
 }
 
 

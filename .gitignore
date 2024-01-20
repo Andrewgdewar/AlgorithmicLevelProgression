@@ -1,5 +1,11 @@
 node_modules
 dist
 src/refDBS
+src/**/**/*.js
 src/**/*.js
 src/*.js
+src/**/**/*.js.map
+src/**/*.js.map
+src/*.js.map
+src/LoadoutChanges/ProgressionChanges.js.map
+src/LoadoutChanges/ProgressionChanges.js
