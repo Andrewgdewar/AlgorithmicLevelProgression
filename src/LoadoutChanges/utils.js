@@ -27,11 +27,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.arrSum = exports.numList = exports.getCurrentLevelRange = exports.equipmentIdMapper = exports.getTacticalVestValue = exports.getBackPackInternalGridValue = exports.getWeaponWeighting = exports.getHighestScoringAmmoValue = exports.getEquipmentType = exports.getHeadwearRating = exports.getAmmoWeighting = exports.getArmorRating = exports.mergeDeep = exports.isObject = exports.cloneDeep = exports.checkParentRecursive = exports.deDupeArr = exports.reduceAmmoChancesTo1 = exports.reduceEquipmentChancesTo1 = exports.setupMods = exports.addKeysToPockets = exports.addToModsObject = exports.weaponTypeNameToId = exports.SightType = exports.weaponParent = exports.mountParent = exports.chargeParent = exports.handguardParent = exports.barrelParent = exports.gasblockParent = exports.receiverParent = exports.muzzleParent = exports.pistolGripParent = exports.stockParent = exports.sightParent = exports.moneyParent = exports.masterMod = exports.modParent = exports.medsParent = exports.FoodDrinkParent = exports.medKitParent = exports.medicalParent = exports.painKillerParent = exports.stimParent = exports.keyMechanical = exports.barterParent = exports.magParent = exports.AmmoParent = exports.headwearParent = exports.saveToFile = void 0;
-exports.blacklistedItems = exports.combinedForbiddenBullets = exports.buildBlacklist = exports.buildWeaponSightWhitelist = exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.buildEmptyWeightAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = void 0;
+exports.blacklistedItems = exports.combinedForbiddenBullets = exports.deleteBlacklistedItemsFromInventory = exports.buildBlacklist = exports.buildWeaponSightWhitelist = exports.weaponTypes = exports.buildClothingWeighting = exports.buildInitialBearAppearance = exports.buildInitialUsecAppearance = exports.buildInitialRandomization = exports.buildOutModsObject = exports.setWeightingAdjustments = exports.buildEmptyWeightAdjustments = exports.setWhitelists = exports.setupBaseWhiteList = void 0;
 const advancedConfig_json_1 = __importDefault(require("../../config/advancedConfig.json"));
 const config_json_1 = __importStar(require("../../config/config.json"));
 const InternalBlacklist_1 = __importDefault(require("./InternalBlacklist"));
-const BackpackLoot_1 = __importDefault(require("./Constants/BackpackLoot"));
+const BackpackLoot_1 = __importDefault(require("../Constants/BackpackLoot"));
 const saveToFile = (data, filePath) => {
     var fs = require('fs');
     let dir = __dirname;
@@ -246,7 +246,7 @@ const getAmmoWeighting = ({ _props: { PenetrationPower, Damage, InitialSpeed, Pr
     let penBonus = ((PenetrationPower - 20) * 10);
     if (penBonus < 0)
         penBonus = 0;
-    const damBonus = (ProjectileCount ? (Damage * ProjectileCount) * 0.1 : Damage);
+    const damBonus = (ProjectileCount > 1 ? (Damage * ProjectileCount) * 0.1 : Damage);
     let speedBonus = InitialSpeed > 600 ? 10 : 0;
     const rating = Math.round(penBonus + speedBonus + damBonus);
     // if (rating > 20) console.log(rating || 3, _name)
@@ -525,13 +525,15 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
         exports.numList.forEach((num) => {
             if (num > actualNum)
                 return;
-            const multi = num / actualNum;
-            const tierMultiplier = config_json_1.default.increaseTierStrictness ? multi * multi : multi;
             const itemList = [...tradersMasterList[num]];
             itemList.forEach(id => {
                 const item = items[id];
                 const parent = item._parent;
                 const equipmentType = (0, exports.getEquipmentType)(parent, items);
+                const itemIsArmor = Number(item._props.armorClass) > 0;
+                const isLowList = (actualNum - num) >= (itemIsArmor ? 1 : 3);
+                const multi = isLowList ? 0 : num / actualNum;
+                const tierMultiplier = config_json_1.default.increaseTierStrictness ? multi * multi : multi;
                 if (equipmentType) {
                     if (!weight[index]?.equipment?.edit?.[equipmentType]) {
                         weight[index].equipment.edit = { ...weight[index].equipment.edit, [equipmentType]: {} };
@@ -618,33 +620,31 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
             if (betterValue > 1) {
                 keys.forEach((key) => {
                     const valToAdjust = list[key];
-                    const adjustedAmountMax = betterValue - valToAdjust;
-                    const amountAfterAdjustment = Math.round(valToAdjust + (adjustedAmountMax * randomnessMultiplier));
-                    if (weight[index].equipment.edit[category][key]) {
-                        weight[index].equipment.edit[category][key] = Math.abs(amountAfterAdjustment);
+                    if (valToAdjust > 5) {
+                        const adjustedAmountMax = betterValue - valToAdjust;
+                        const amountAfterAdjustment = Math.round(valToAdjust + (adjustedAmountMax * randomnessMultiplier));
+                        if (weight[index].equipment.edit[category][key]) {
+                            weight[index].equipment.edit[category][key] = Math.abs(amountAfterAdjustment);
+                        }
                     }
                 });
             }
         }
     });
-    const list = {};
-    tradersMasterList[5].forEach(id => {
-        const parent = items[id]?._parent;
-        if (!parent)
-            return;
-        const equipmentType = (0, exports.getEquipmentType)(parent, items);
-        if (equipmentType) {
-            if (!list?.[equipmentType])
-                list[equipmentType] = [];
-            list[equipmentType].push(id);
-        }
-        else if ((0, exports.checkParentRecursive)(parent, items, [exports.AmmoParent])) {
-            if (!list?.["ammo"])
-                list["ammo"] = [];
-            list.ammo.push(id);
-        }
-    });
-    (0, exports.saveToFile)({ list }, "refDBS/tier5.json");
+    // const list: { [key: string]: string[] } = {}
+    // tradersMasterList[5].forEach(id => {
+    //     const parent = items[id]?._parent
+    //     if (!parent) return
+    //     const equipmentType = getEquipmentType(parent, items)
+    //     if (equipmentType) {
+    //         if (!list?.[equipmentType]) list[equipmentType] = []
+    //         list[equipmentType].push(id)
+    //     } else if (checkParentRecursive(parent, items, [AmmoParent])) {
+    //         if (!list?.["ammo"]) list["ammo"] = []
+    //         list.ammo.push(id)
+    //     }
+    // })
+    // saveToFile({ list }, "refDBS/tier5.json")
 };
 exports.setWeightingAdjustments = setWeightingAdjustments;
 const addRecursive = (modId, items, weaponId, mods) => {
@@ -773,7 +773,7 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
             equipment: {
                 "Headwear": [75, 85, 99, 99, 99][index],
                 "Earpiece": [50, 65, 90, 100, 100][index],
-                "FaceCover": [15, 25, 35, 45, 80][index],
+                "FaceCover": [15, 25, 35, 45, 50][index],
                 "ArmorVest": [99, 99, 99, 99, 99][index],
                 "ArmBand": [25, 45, 59, 69, 80][index],
                 "TacticalVest": [96, 96, 99, 99, 99][index],
@@ -1072,7 +1072,7 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 "mod_launcher": [0, 0, 5, 15, 50][index],
                 "mod_magazine": [50, 60, 80, 90, 95][index],
                 "mod_magazine_000": [0, 0, 25, 35, 50][index],
-                "mod_mount": [85, 95, 100, 100, 100][index],
+                "mod_mount": [75, 95, 100, 100, 100][index],
                 "mod_mount_000": [40, 45, 65, 90, 95][index],
                 "mod_mount_001": [40, 45, 65, 90, 95][index],
                 "mod_mount_002": [40, 45, 65, 90, 95][index],
@@ -1080,7 +1080,7 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 "mod_mount_004": [40, 45, 65, 90, 95][index],
                 "mod_mount_005": [40, 45, 65, 90, 95][index],
                 "mod_mount_006": [40, 45, 65, 90, 95][index],
-                "mod_muzzle": [35, 55, 65, 75, 99][index],
+                "mod_muzzle": [45, 55, 65, 75, 99][index],
                 "mod_muzzle_000": [15, 35, 65, 85, 99][index],
                 "mod_muzzle_001": [15, 35, 65, 85, 99][index],
                 "mod_equipment": [15, 25, 25, 35, 50][index],
@@ -1091,10 +1091,10 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 "mod_pistol_grip_akms": [1, 15, 25, 35, 50][index],
                 "mod_pistol_grip": [1, 15, 25, 35, 50][index],
                 "mod_scope": [90, 95, 100, 100, 100][index],
-                "mod_scope_000": [90, 95, 100, 100, 100][index],
-                "mod_scope_001": [90, 95, 100, 100, 100][index],
-                "mod_scope_002": [90, 95, 100, 100, 100][index],
-                "mod_scope_003": [90, 95, 100, 100, 100][index],
+                "mod_scope_000": [60, 90, 100, 100, 100][index],
+                "mod_scope_001": [60, 90, 100, 100, 100][index],
+                "mod_scope_002": [60, 90, 100, 100, 100][index],
+                "mod_scope_003": [60, 90, 100, 100, 100][index],
                 "mod_tactical": [15, 30, 35, 50, 75][index],
                 "mod_tactical_2": 0,
                 "mod_tactical001": [15, 30, 35, 50, 75][index],
@@ -1192,9 +1192,6 @@ const buildInitialUsecAppearance = (appearance, items) => {
                     if (!appearance.hands.includes(itemId))
                         appearance.hands.push(itemId);
                     break;
-                // case item._parent === "5fc100cf95572123ae738483": // this adds voices
-                //     if (!appearance.voice.includes(item._name)) appearance.voice.push(item._name)
-                //     break;
                 default:
                     break;
             }
@@ -1232,27 +1229,7 @@ exports.buildInitialBearAppearance = buildInitialBearAppearance;
 const buildClothingWeighting = (suit, items, botConfig, usecAppearance, bearAppearance) => {
     (0, exports.buildInitialUsecAppearance)(usecAppearance, items);
     (0, exports.buildInitialBearAppearance)(bearAppearance, items);
-    // const levelSet = [...new Set(suit.map(value => value.requirements.profileLevel))].sort((a, b) => a - b)
     const levels = Object.values(config_json_1.levelRange);
-    // const levels: number[][] = []
-    // for (let index = 0; index < levelSet.length; index++) {
-    //     let aPointer = levelSet[index] || 1;
-    //     let bPointer = levelSet[index + 1];
-    //     if (bPointer === 1) {
-    //         bPointer = levelSet[index + 2]
-    //         index++
-    //     }
-    //     const prevPointer = levelSet[index - 1]
-    //     if (index > 0 && prevPointer + 1 !== aPointer) aPointer = prevPointer + 1
-    //     if (aPointer + 1 === bPointer) {
-    //         levels.push([aPointer, bPointer])
-    //     } else {
-    //         if (isNaN(bPointer) || (levelSet.length - 2) === index) bPointer = 100
-    //         levels.push([aPointer, bPointer])
-    //     } index++
-    // }
-    // console.log(levels)
-    // botConfig.equipment.pmc.clothing = buildEmptyClothingAdjustments(levels)
     suit.forEach(({ suiteId, requirements: { profileLevel, loyaltyLevel } = {} }) => {
         if (!profileLevel || !suiteId || loyaltyLevel === undefined)
             return;
@@ -1370,6 +1347,24 @@ const buildBlacklist = (items, botConfig, mods) => {
     });
 };
 exports.buildBlacklist = buildBlacklist;
+const deleteBlacklistedItemsFromInventory = (inventory) => {
+    Object.keys(inventory.items).forEach(key => {
+        inventory.items[key] = inventory.items[key].filter((id) => !exports.blacklistedItems.has(id));
+    });
+    Object.keys(inventory.mods).forEach(key => {
+        if (exports.blacklistedItems.has(key)) {
+            delete inventory.mods[key];
+        }
+        else {
+            Object.keys(inventory.mods?.[key]).forEach(modtype => {
+                if (inventory.mods[key][modtype]?.length) {
+                    inventory.mods[key][modtype].filter(id => !exports.blacklistedItems.has(id));
+                }
+            });
+        }
+    });
+};
+exports.deleteBlacklistedItemsFromInventory = deleteBlacklistedItemsFromInventory;
 exports.combinedForbiddenBullets = new Set(Object.values(advancedConfig_json_1.default.forbiddenBullets).flat(1));
 exports.blacklistedItems = new Set([
     ...config_json_1.default.addDangerousBulletsToTier4Bots ? [] : exports.combinedForbiddenBullets,

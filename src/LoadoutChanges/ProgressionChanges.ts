@@ -24,6 +24,7 @@ import {
     checkParentRecursive,
     cloneDeep,
     deDupeArr,
+    deleteBlacklistedItemsFromInventory,
     getEquipmentType,
     keyMechanical,
     magParent,
@@ -376,32 +377,36 @@ export default function ProgressionChanges(
         }
     }
 
-    const RagfairPriceService = container.resolve<RagfairPriceService>("RagfairPriceService");
-    const handbook = tables.templates.handbook
+    deleteBlacklistedItemsFromInventory(usecInventory)
+    deleteBlacklistedItemsFromInventory(bearInventory)
 
-    const prices = tables.templates.prices
+    // const RagfairPriceService = container.resolve<RagfairPriceService>("RagfairPriceService");
+    // const handbook = tables.templates.handbook
 
-    const handbookMapper = {} as Record<string, number>
+    // const prices = tables.templates.prices
 
-    handbook.Items.forEach(({ Id, Price }) => {
-        handbookMapper[Id] = Price
-    })
+    // const handbookMapper = {} as Record<string, number>
 
-    const getFleaPrice = (itemID: string): number => {
-        const staticprice = RagfairPriceService.getFleaPriceForItem(itemID)
-        if (staticprice) return staticprice
-        if (typeof prices[itemID] != "undefined") return prices[itemID]
-        if (handbookMapper[itemID]) return handbookMapper[itemID]
-    }
+    // handbook.Items.forEach(({ Id, Price }) => {
+    //     handbookMapper[Id] = Price
+    // })
 
-    const barterItemsList = Object.keys(items).
-        filter(id => checkParentRecursive(id, items, ["5448e5284bdc2dcb718b4567"]) && Number(items[id]._props.armorClass) > 1).
-        map((id) => ({ name: items[id]._name, id, price: getFleaPrice(id) })).filter(({ price, id }) => price > 5).
-        sort((a, b) => a.price - b.price).map(({ id }) => id)
-    console.log(barterItemsList.length)
+    // const getFleaPrice = (itemID: string): number => {
+    //     const staticprice = RagfairPriceService.getFleaPriceForItem(itemID)
+    //     if (staticprice) return staticprice
+    //     if (typeof prices[itemID] != "undefined") return prices[itemID]
+    //     if (handbookMapper[itemID]) return handbookMapper[itemID]
+    // }
 
-    saveToFile({ barterItemsList }, "refDBS/helmet.json")
-    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings2.json")
+    // const barterItemsList = Object.keys(items).
+    //     filter(id => checkParentRecursive(id, items, [AmmoParent]) && !blacklistedItems.has(id)).
+    //     map((id) => ({ name: items[id]._name, id, rating: getAmmoWeighting(items[id]) })).filter(({ rating, id }) => rating >= 5).
+    //     sort((a, b) => a.rating - b.rating).map(({ id }) => id)
+
+    // console.log(barterItemsList.length)
+
+    // saveToFile(usecInventory, "refDBS/items2.json")
+    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
 
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }

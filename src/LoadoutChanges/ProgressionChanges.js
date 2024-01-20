@@ -7,7 +7,7 @@ const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes"
 const advancedConfig_json_1 = __importDefault(require("../../config/advancedConfig.json"));
 const config_json_1 = __importDefault(require("../../config/config.json"));
 const utils_1 = require("./utils");
-const Tier5_1 = __importDefault(require("./Constants/Tier5"));
+const Tier5_1 = __importDefault(require("../Constants/Tier5"));
 function ProgressionChanges(container) {
     const itemFilterService = container.resolve("ItemFilterService");
     const databaseServer = container.resolve("DatabaseServer");
@@ -306,9 +306,31 @@ function ProgressionChanges(container) {
             "whitelist": []
         };
     }
-    // saveToFile(botConfig.equipment.assault, "refDBS/refSCAV.json")
-    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings2.json")
+    // const RagfairPriceService = container.resolve<RagfairPriceService>("RagfairPriceService");
+    // const handbook = tables.templates.handbook
+    // const prices = tables.templates.prices
+    // const handbookMapper = {} as Record<string, number>
+    // handbook.Items.forEach(({ Id, Price }) => {
+    //     handbookMapper[Id] = Price
+    // })
+    // const getFleaPrice = (itemID: string): number => {
+    //     const staticprice = RagfairPriceService.getFleaPriceForItem(itemID)
+    //     if (staticprice) return staticprice
+    //     if (typeof prices[itemID] != "undefined") return prices[itemID]
+    //     if (handbookMapper[itemID]) return handbookMapper[itemID]
+    // }
+    // const barterItemsList = Object.keys(items).
+    //     filter(id => checkParentRecursive(id, items, [AmmoParent]) && !blacklistedItems.has(id)).
+    //     map((id) => ({ name: items[id]._name, id, rating: getAmmoWeighting(items[id]) })).filter(({ rating, id }) => rating >= 5).
+    //     sort((a, b) => a.rating - b.rating).map(({ id }) => id)
+    // console.log(barterItemsList.length)
+    (0, utils_1.deleteBlacklistedItemsFromInventory)(usecInventory);
+    (0, utils_1.deleteBlacklistedItemsFromInventory)(bearInventory);
+    // saveToFile(usecInventory, "refDBS/items2.json")
+    (0, utils_1.saveToFile)(botConfig.equipment.pmc, "refDBS/weightings3.json");
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;
+//59ef13ca86f77445fd0e2483
+//5b4329f05acfc47a86086aa1
 //# sourceMappingURL=ProgressionChanges.js.map

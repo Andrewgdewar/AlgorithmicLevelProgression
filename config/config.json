@@ -64,7 +64,7 @@
             6,
             8,
             10,
-            5
+            4
         ],
         "5": [
             2,
@@ -78,13 +78,13 @@
     "increaseTierStrictness": false,
     "randomness": {
         "Holster": 0.3,
-        "Headwear": 0.2,
-        "FirstPrimaryWeapon": 0.3,
+        "Headwear": 0.1,
+        "FirstPrimaryWeapon": 0.4,
         "Earpiece": 0.3,
-        "Backpack": 0.3,
+        "Backpack": 0.2,
         "Eyewear": 0.2,
-        "TacticalVest": 0.3,
-        "ArmorVest": 0.3,
+        "TacticalVest": 0.1,
+        "ArmorVest": 0.1,
         "FaceCover": 0.2
     },
     "debug": false
