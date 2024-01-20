@@ -327,7 +327,7 @@ function ProgressionChanges(container) {
     //     sort((a, b) => a.rating - b.rating).map(({ id }) => id)
     // console.log(barterItemsList.length)
     // saveToFile(usecInventory, "refDBS/items2.json")
-    (0, utils_1.saveToFile)(botConfig.equipment.pmc, "refDBS/weightings4.json");
+    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;

@@ -35,7 +35,6 @@ Example order.json with recommended mods:
     // PMCS will wear level appropriate clothing (IE level 34 will wear plaid)
     "leveledClothing": true,
 
-
     // These two "shift" items that would be unlocked at a certain loyalty level to a later level
     // For example if you needed to finish a quest at tier 2 traders to unlock some ammo, it would be shifted to tier 3
  
@@ -43,12 +42,29 @@ Example order.json with recommended mods:
 
     // This is much the same as the above, this shifts traded items
     // For example if you could trade for some armor at tier 2, it would be shifted to tier 3 
+    // In general, turning this on can make pmcs better equiped sooner. 
     "tradedItemsShifted": true,
 
-    // In general, turning the above off can make bots create weird meta builds and in general makes pmcs better equiped sooner. 
-
     // Allows bots to use items from custom traders like Priscillu
-    "addCustomTraders": false,
+    "addCustomTraderItems": false,
+
+    // If the above item is selected, you can write the name of the trader to exclude before.
+    // A note, the console will print the name of traders when addCustomTraderItems, is on. 
+    // Use the name in the console exactly, or the trader will not be excluded.
+    "customTradersToExclude": [
+        "insertTheTraderNameToIgnoreTheirItems",
+        "CustomTradersNamesWillPrintToConsoleIfFoundAndaddCustomTraderItemsIsSetToTrue"
+    ],
+
+    // Add Id's of things you don't want any pmc to use.
+    "customBlacklist": [
+        "get id's from here https://db.sp-tarkov.com/search/",
+        "5example3208of34not8f83real8a1id"
+    ],
+
+    // Turn both of the below on if you use looting bots.
+    "removePMCLootForLootingBots": false,
+    "removeScavLootForLootingBots": false,
 
     // This dictates at what level bots obtain trader tiers. 
     // 1 - 14 for example are for tier 1 traders
@@ -106,5 +122,28 @@ Example order.json with recommended mods:
             7
         ]
     },
+    
+    // The below is how one can adjust equipment weightings for each category.
+    // 0 is meta, 1 is completely random, 2 will make pmcs prioritize the worst gear.
+    // Imagine a pmc can wear a usec hat, or a Ulach helmet, the weighting may look like this: 
+    // weight > 5, Ulach  > 150,
+    // A setting of 0 below would result in a much greater chance for a pmc to choose the ulach.
+    // At 0.5, the top and bottom chances are smoothed around a median, like so: 
+    // weight > 35, Ulach  > 100,
+    // And at 1, all items within that category will have equal chances: 
+    // weight > 54, Ulach  > 54,
+
+    "randomness": {
+        "Holster": 0.3,
+        "Headwear": 0.1,
+        "FirstPrimaryWeapon": 0.4,
+        "Earpiece": 0.3,
+        "Backpack": 0.3,
+        "Eyewear": 0.2,
+        "TacticalVest": 0.1,
+        "ArmorVest": 0.1,
+        "FaceCover": 0.2
+    },
+
     // Just keep this off
     "debug": false
