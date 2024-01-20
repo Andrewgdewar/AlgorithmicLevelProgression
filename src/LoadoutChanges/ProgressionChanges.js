@@ -7,6 +7,7 @@ const ConfigTypes_1 = require("C:/snapshot/project/obj/models/enums/ConfigTypes"
 const advancedConfig_json_1 = __importDefault(require("../../config/advancedConfig.json"));
 const config_json_1 = __importDefault(require("../../config/config.json"));
 const utils_1 = require("./utils");
+const Tier5_1 = __importDefault(require("../Constants/Tier5"));
 function ProgressionChanges(container) {
     const itemFilterService = container.resolve("ItemFilterService");
     const databaseServer = container.resolve("DatabaseServer");
@@ -58,16 +59,7 @@ function ProgressionChanges(container) {
     botConfig.equipment.pmc.weightingAdjustmentsByBotLevel = (0, utils_1.buildEmptyWeightAdjustments)();
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = {
-        1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items).filter(id => {
-            if (utils_1.blacklistedItems.has(id))
-                return false;
-            if (!config_json_1.default.applyInternalPMCBlacklist)
-                return true;
-            const isBlackListed = itemFilterService.isItemBlacklisted(id);
-            if (isBlackListed)
-                utils_1.blacklistedItems.add(id);
-            return isBlackListed;
-        }))
+        1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.values(Tier5_1.default).flat(1))
     };
     const mods = { "1": {}, "2": {}, "3": {}, "4": {}, "5": {} };
     // SetBaseWhitelist
@@ -84,8 +76,6 @@ function ProgressionChanges(container) {
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`);
         }
         tradeItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
-            if (tradersMasterList[5].has(_tpl))
-                tradersMasterList[5].delete(_tpl);
             if (utils_1.blacklistedItems.has(_tpl))
                 return; //Remove blacklisted items and bullets
             const item = items[_tpl];
@@ -214,7 +204,7 @@ function ProgressionChanges(container) {
     });
     //Setup beast mod level 5
     tradersMasterList[5].forEach(id => {
-        if (utils_1.blacklistedItems.has(id) || utils_1.combinedForbiddenBullets.has(id) || !items[id]._parent || !items[id]._props || !items[id]._name) {
+        if (utils_1.blacklistedItems.has(id)) {
             tradersMasterList[5].delete(id);
         }
         else {
@@ -232,10 +222,6 @@ function ProgressionChanges(container) {
                         bearInventory.Ammo[calibre] =
                             { ...bearInventory.Ammo[calibre] || {}, [id]: 1 };
                     }
-                    break;
-                case equipmentType === "Pockets":
-                    // This is wierd sized pockets
-                    // console.log(item._name, item._props.ShortName)
                     break;
                 case !!equipmentType:
                     if (!usecInventory.equipment[equipmentType])
@@ -320,46 +306,31 @@ function ProgressionChanges(container) {
             "whitelist": []
         };
     }
-    // saveToFile(botConfig.equipment.assault, "refDBS/refSCAV.json")
-    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
+    (0, utils_1.deleteBlacklistedItemsFromInventory)(usecInventory);
+    (0, utils_1.deleteBlacklistedItemsFromInventory)(bearInventory);
+    // const RagfairPriceService = container.resolve<RagfairPriceService>("RagfairPriceService");
+    // const handbook = tables.templates.handbook
+    // const prices = tables.templates.prices
+    // const handbookMapper = {} as Record<string, number>
+    // handbook.Items.forEach(({ Id, Price }) => {
+    //     handbookMapper[Id] = Price
+    // })
+    // const getFleaPrice = (itemID: string): number => {
+    //     const staticprice = RagfairPriceService.getFleaPriceForItem(itemID)
+    //     if (staticprice) return staticprice
+    //     if (typeof prices[itemID] != "undefined") return prices[itemID]
+    //     if (handbookMapper[itemID]) return handbookMapper[itemID]
+    // }
+    // const barterItemsList = Object.keys(items).
+    //     filter(id => checkParentRecursive(id, items, [AmmoParent]) && !blacklistedItems.has(id)).
+    //     map((id) => ({ name: items[id]._name, id, rating: getAmmoWeighting(items[id]) })).filter(({ rating, id }) => rating >= 5).
+    //     sort((a, b) => a.rating - b.rating).map(({ id }) => id)
+    // console.log(barterItemsList.length)
+    // saveToFile(usecInventory, "refDBS/items2.json")
+    (0, utils_1.saveToFile)(botConfig.equipment.pmc, "refDBS/weightings4.json");
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;
-// // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<
-// interface ItemNode {
-//     name: string;
-//     id: string;
-//     parent: string;
-//     nodes: Nodes
-// }
-// type Nodes = {
-//     [id: string]: ItemNode
-// }
-// const buildDBObject = (parent: string, items: Record<string, ITemplateItem>): Nodes => {
-//     const itemList = Object.keys(items);
-//     const dbObject = {} as Nodes
-//     itemList.forEach((itemID) => {
-//         const item = items[itemID]
-//         if (item._parent === parent) {
-//             dbObject[item._name] = {
-//                 name: item._name,
-//                 id: item._id,
-//                 parent: item._parent,
-//                 nodes: buildDBObject(item._id, items)
-//             }
-//         }
-//     })
-//     return dbObject
-// }
-// const nodes = buildDBObject("54009119af1c881c07000029", items)
-// // const getAmmoWeighting = (pen, dam) => (pen * 2) + (dam * 0.2)
-// // Build Ammo types
-// // >>>>>>>>>>>>>>> Ammo DB <<<<<<<<<<<<<<<<<<
-// const ammoTypes = {}
-// const ammo = Object.values(nodes?.StackableItem?.nodes?.Ammo?.nodes || {}).map(({ id }) => items[id])
-// ammo.forEach(({ _props: { Damage, PenetrationPower }, _name, _id }) => {
-//     if (_name.includes("patron")) {
-//         const calibre = _name.split("_")[1].toLowerCase()
-//         ammoTypes[calibre] = { ...ammoTypes[calibre] || {}, [_name]: { id: _id, Damage, PenetrationPower } }
-//     }
-// })
+//59ef13ca86f77445fd0e2483
+//5b4329f05acfc47a86086aa1
+//# sourceMappingURL=ProgressionChanges.js.map

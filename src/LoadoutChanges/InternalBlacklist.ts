@@ -84,7 +84,7 @@ export default [
     // "59e5f5a486f7746c530b3ce2", 40 round
     // "544a378f4bdc2d30388b4567", 40 round
     // "5d1340bdd7ad1a0e8d245aab", 40-round 556 45
-    "630e295c984633f1fb0e7c30",
+    // "630e295c984633f1fb0e7c30",
     // "5ba26586d4351e44f824b340", MP7 40 
     "5c5db6652e221600113fba51",
     "5cffa483d7ad1a049e54ef1c",
@@ -211,12 +211,32 @@ export default [
     "5c1bc5af2e221602b412949b",
     //long handgun stock
     "5d1c702ad7ad1a632267f429",
-
     "620109578d82e67e7911abf2",// signal pistol
     "62178c4d4ecf221597654e3d",
+    "624c0570c9b794431568f5d5",
+    "624c09da2cec124eb67c1046",
+    "624c09e49b98e019a3315b66",
+    "624c09cfbc2e27219346d955",
     "62389aaba63f32501b1b444f",// signal ammo
     "62389ba9a63f32501b1b4451",
     "62389bc9423ed1685422dc57",
     "62389be94d5d474bf712e709",
-    "635267f063651329f75a4ee8"
+    "635267f063651329f75a4ee8",
+    "633a98eab8b0506e48497c1a", // sr-2m 20 round mag
+    "5caf1041ae92157c28402e3f", // ash12 10 round
+    "5d0a29fed7ad1a002769ad08",
+    "62811f461d5df4475f46a332",
+    "6275303a9f372d6ea97f9ec7", //revolver grenadeLauncher
+    "6422e1ea3c0f06190302161a", //SVT-40 7.62x54R 10-round magazine
+    "5c471c442e221602b542a6f8", //SVD 7.62x54R 10-round magazine
+    "57d14e1724597714010c3f4b", //PP-91 "Kedr" 9x18PM 20-round magazine
+    "5d2f213448f0355009199284" //HK MP5 9x19 20-round magazine
 ]
+
+//5d0a29fed7ad1a002769ad08
+//62811f461d5df4475f46a332
+
+//56ea70acd2720b844b8b4594 optic
+
+
+// 6275303a9f372d6ea97f9ec7

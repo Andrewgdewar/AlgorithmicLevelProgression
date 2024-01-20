@@ -19,3 +19,4 @@ class AlgorithmicLevelProgression {
     }
 }
 module.exports = { mod: new AlgorithmicLevelProgression() };
+//# sourceMappingURL=mod.js.map

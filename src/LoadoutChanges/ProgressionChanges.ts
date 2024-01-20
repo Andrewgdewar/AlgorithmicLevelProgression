@@ -3,6 +3,7 @@ import { DependencyContainer } from 'tsyringe';
 
 import { ConfigTypes } from '@spt-aki/models/enums/ConfigTypes';
 import { ConfigServer } from '@spt-aki/servers/ConfigServer';
+import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService"
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService"
 import { DatabaseServer } from '@spt-aki/servers/DatabaseServer';
 
@@ -22,8 +23,8 @@ import {
     buildWeaponSightWhitelist,
     checkParentRecursive,
     cloneDeep,
-    combinedForbiddenBullets,
     deDupeArr,
+    deleteBlacklistedItemsFromInventory,
     getEquipmentType,
     keyMechanical,
     magParent,
@@ -38,8 +39,10 @@ import {
     setupMods,
     setWeightingAdjustments,
     setWhitelists,
-    TradersMasterList
+    TradersMasterList,
+    weaponParent
 } from './utils';
+import Tier5 from '../Constants/Tier5';
 
 export default function ProgressionChanges(
     container: DependencyContainer
@@ -53,6 +56,8 @@ export default function ProgressionChanges(
     const items = tables.templates.items;
     const customization = tables.templates.customization;
     const traders = tables.traders
+
+
 
     const usecInventory = tables.bots.types.usec.inventory
     const bearInventory = tables.bots.types.bear.inventory
@@ -102,13 +107,7 @@ export default function ProgressionChanges(
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList: TradersMasterList =
     {
-        1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.keys(items).filter(id => {
-            if (blacklistedItems.has(id)) return false
-            if (!config.applyInternalPMCBlacklist) return true
-            const isBlackListed = itemFilterService.isItemBlacklisted(id)
-            if (isBlackListed) blacklistedItems.add(id)
-            return isBlackListed
-        }))
+        1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.values(Tier5).flat(1))
     }
 
     const mods = { "1": {}, "2": {}, "3": {}, "4": {}, "5": {} }
@@ -130,7 +129,6 @@ export default function ProgressionChanges(
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`)
         }
         tradeItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
-            if (tradersMasterList[5].has(_tpl)) tradersMasterList[5].delete(_tpl)
             if (blacklistedItems.has(_tpl)) return; //Remove blacklisted items and bullets
             const item = items[_tpl]
             if (!item) return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
@@ -267,7 +265,7 @@ export default function ProgressionChanges(
 
     //Setup beast mod level 5
     tradersMasterList[5].forEach(id => {
-        if (blacklistedItems.has(id) || combinedForbiddenBullets.has(id) || !items[id]._parent || !items[id]._props || !items[id]._name) {
+        if (blacklistedItems.has(id)) {
             tradersMasterList[5].delete(id)
         } else {
             const item = items[id]
@@ -284,10 +282,6 @@ export default function ProgressionChanges(
                         bearInventory.Ammo[calibre] =
                             { ...bearInventory.Ammo[calibre] || {}, [id]: 1 }
                     }
-                    break;
-                case equipmentType === "Pockets":
-                    // This is wierd sized pockets
-                    // console.log(item._name, item._props.ShortName)
                     break;
                 case !!equipmentType:
                     if (!usecInventory.equipment[equipmentType]) usecInventory.equipment[equipmentType] = {}
@@ -383,61 +377,39 @@ export default function ProgressionChanges(
         }
     }
 
+    deleteBlacklistedItemsFromInventory(usecInventory)
+    deleteBlacklistedItemsFromInventory(bearInventory)
 
+    // const RagfairPriceService = container.resolve<RagfairPriceService>("RagfairPriceService");
+    // const handbook = tables.templates.handbook
 
-    // saveToFile(botConfig.equipment.assault, "refDBS/refSCAV.json")
+    // const prices = tables.templates.prices
+
+    // const handbookMapper = {} as Record<string, number>
+
+    // handbook.Items.forEach(({ Id, Price }) => {
+    //     handbookMapper[Id] = Price
+    // })
+
+    // const getFleaPrice = (itemID: string): number => {
+    //     const staticprice = RagfairPriceService.getFleaPriceForItem(itemID)
+    //     if (staticprice) return staticprice
+    //     if (typeof prices[itemID] != "undefined") return prices[itemID]
+    //     if (handbookMapper[itemID]) return handbookMapper[itemID]
+    // }
+
+    // const barterItemsList = Object.keys(items).
+    //     filter(id => checkParentRecursive(id, items, [AmmoParent]) && !blacklistedItems.has(id)).
+    //     map((id) => ({ name: items[id]._name, id, rating: getAmmoWeighting(items[id]) })).filter(({ rating, id }) => rating >= 5).
+    //     sort((a, b) => a.rating - b.rating).map(({ id }) => id)
+
+    // console.log(barterItemsList.length)
+
+    // saveToFile(usecInventory, "refDBS/items2.json")
     // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
 
     config.debug && console.log("Algorthimic Progression: Equipment DB updated")
 }
 
-
-
-// // >>>>>>>>>>>>>>> Working DB <<<<<<<<<<<<<<<<<<
-
-// interface ItemNode {
-//     name: string;
-//     id: string;
-//     parent: string;
-//     nodes: Nodes
-// }
-
-// type Nodes = {
-//     [id: string]: ItemNode
-// }
-
-// const buildDBObject = (parent: string, items: Record<string, ITemplateItem>): Nodes => {
-//     const itemList = Object.keys(items);
-//     const dbObject = {} as Nodes
-
-//     itemList.forEach((itemID) => {
-//         const item = items[itemID]
-//         if (item._parent === parent) {
-//             dbObject[item._name] = {
-//                 name: item._name,
-//                 id: item._id,
-//                 parent: item._parent,
-//                 nodes: buildDBObject(item._id, items)
-//             }
-//         }
-//     })
-//     return dbObject
-// }
-
-// const nodes = buildDBObject("54009119af1c881c07000029", items)
-
-
-// // const getAmmoWeighting = (pen, dam) => (pen * 2) + (dam * 0.2)
-
-// // Build Ammo types
-// // >>>>>>>>>>>>>>> Ammo DB <<<<<<<<<<<<<<<<<<
-// const ammoTypes = {}
-
-// const ammo = Object.values(nodes?.StackableItem?.nodes?.Ammo?.nodes || {}).map(({ id }) => items[id])
-
-// ammo.forEach(({ _props: { Damage, PenetrationPower }, _name, _id }) => {
-//     if (_name.includes("patron")) {
-//         const calibre = _name.split("_")[1].toLowerCase()
-//         ammoTypes[calibre] = { ...ammoTypes[calibre] || {}, [_name]: { id: _id, Damage, PenetrationPower } }
-//     }
-// })
+//59ef13ca86f77445fd0e2483
+//5b4329f05acfc47a86086aa1

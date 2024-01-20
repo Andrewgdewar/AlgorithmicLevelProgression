@@ -8,21 +8,21 @@ import InternalBlacklist from "./InternalBlacklist"
 
 export const makeRandomisationAdjustments =
     (isNight: boolean, originalWeight: EquipmentFilters, randomisation: RandomisationDetails[], location: keyof typeof advancedConfig.locations) => {
+        const noNvgNeeded = ["factory4_day", "factory4_night", "laboratory"].includes(location)
         originalWeight.randomisation.forEach((_, index) => {
-
             // NVG's
-            if (randomisation?.[index]?.mods?.mod_nvg !== undefined) {
-                randomisation[index].mods.mod_nvg = (isNight ? (index + 1) * 25 : 0)
+            if (!noNvgNeeded && randomisation?.[index]?.mods?.mod_nvg !== undefined) {
+                randomisation[index].mods.mod_nvg = (isNight ? (index + 1) * 18 : 0)
                 if (randomisation[index].mods.mod_nvg > 100) randomisation[index].mods.mod_nvg = 100
             }
             // Silencers??
             if (randomisation?.[index]?.mods?.mod_muzzle !== undefined) {
-                randomisation[index].mods.mod_muzzle += (isNight ? 15 : 0)
+                randomisation[index].mods.mod_muzzle += (isNight ? 18 : 0)
                 if (randomisation[index].mods.mod_muzzle > 100) randomisation[index].mods.mod_muzzle = 100
             }
             // Flashlights
             if (location === "laboratory" || randomisation?.[index]?.mods?.mod_flashlight !== undefined) {
-                randomisation[index].mods.mod_flashlight += (isNight ? 35 : 0)
+                randomisation[index].mods.mod_flashlight += (isNight ? 45 : 0)
                 if (randomisation[index].mods.mod_flashlight > 100) randomisation[index].mods.mod_flashlight = 100
             }
 
