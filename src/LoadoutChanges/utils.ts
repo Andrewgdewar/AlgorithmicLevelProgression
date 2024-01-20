@@ -497,9 +497,7 @@ export const setWeightingAdjustments = (
         const itemList = [...tradersMasterList[loyalty]]
         const finalList = [
             ...new Set([
-                ...num === 4 ?
-                    (config.addDangerousBulletsToTier4Bots ? advancedConfig.forbiddenBullets[num] : [])
-                    : (advancedConfig.forbiddenBullets[num] || []),
+                ...(advancedConfig.forbiddenBullets[num] || []),
                 ...itemsForNextLevel[num] || [],
                 ...itemList,
             ])]
@@ -556,8 +554,7 @@ export const setWeightingAdjustments = (
                 const itemIsArmor = Number(item._props.armorClass) > 0
 
                 const isLowList = (actualNum - num) >= (itemIsArmor ? 1 : 3)
-                const multi = isLowList ? 0 : num / actualNum
-                const tierMultiplier = config.increaseTierStrictness ? multi * multi : multi
+                const tierMultiplier = isLowList ? 0 : num / actualNum
 
                 if (equipmentType) {
                     if (!weight[index]?.equipment?.edit?.[equipmentType]) {
@@ -1429,7 +1426,6 @@ export const deleteBlacklistedItemsFromInventory = (inventory: Inventory) => {
 export const combinedForbiddenBullets = new Set(Object.values(advancedConfig.forbiddenBullets).flat(1))
 
 export const blacklistedItems = new Set([
-    ...config.addDangerousBulletsToTier4Bots ? [] : combinedForbiddenBullets,
     ...config.customBlacklist,
     ...InternalBlacklist
 ])

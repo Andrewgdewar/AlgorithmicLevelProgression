@@ -476,9 +476,7 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
         const itemList = [...tradersMasterList[loyalty]];
         const finalList = [
             ...new Set([
-                ...num === 4 ?
-                    (config_json_1.default.addDangerousBulletsToTier4Bots ? advancedConfig_json_1.default.forbiddenBullets[num] : [])
-                    : (advancedConfig_json_1.default.forbiddenBullets[num] || []),
+                ...(advancedConfig_json_1.default.forbiddenBullets[num] || []),
                 ...itemsForNextLevel[num] || [],
                 ...itemList,
             ])
@@ -532,8 +530,7 @@ const setWeightingAdjustments = (items, botConfig, tradersMasterList, mods) => {
                 const equipmentType = (0, exports.getEquipmentType)(parent, items);
                 const itemIsArmor = Number(item._props.armorClass) > 0;
                 const isLowList = (actualNum - num) >= (itemIsArmor ? 1 : 3);
-                const multi = isLowList ? 0 : num / actualNum;
-                const tierMultiplier = config_json_1.default.increaseTierStrictness ? multi * multi : multi;
+                const tierMultiplier = isLowList ? 0 : num / actualNum;
                 if (equipmentType) {
                     if (!weight[index]?.equipment?.edit?.[equipmentType]) {
                         weight[index].equipment.edit = { ...weight[index].equipment.edit, [equipmentType]: {} };
@@ -1064,22 +1061,22 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
             },
             "randomisedWeaponModSlots": [],
             "mods": {
-                "mod_barrel": [15, 20, 25, 35, 45][index],
+                "mod_barrel": [5, 20, 25, 35, 45][index],
                 "mod_bipod": [1, 10, 5, 11, 50][index],
-                "mod_flashlight": [15, 20, 30, 40, 65][index],
-                "mod_foregrip": [30, 60, 70, 90, 95][index],
-                "mod_handguard": [20, 30, 70, 90, 95][index],
+                "mod_flashlight": [5, 20, 30, 40, 65][index],
+                "mod_foregrip": [20, 40, 50, 90, 95][index],
+                "mod_handguard": [5, 30, 50, 90, 95][index],
                 "mod_launcher": [0, 0, 5, 15, 50][index],
                 "mod_magazine": [50, 60, 80, 90, 95][index],
                 "mod_magazine_000": [0, 0, 25, 35, 50][index],
                 "mod_mount": [75, 95, 100, 100, 100][index],
-                "mod_mount_000": [40, 45, 65, 90, 95][index],
-                "mod_mount_001": [40, 45, 65, 90, 95][index],
-                "mod_mount_002": [40, 45, 65, 90, 95][index],
-                "mod_mount_003": [40, 45, 65, 90, 95][index],
-                "mod_mount_004": [40, 45, 65, 90, 95][index],
-                "mod_mount_005": [40, 45, 65, 90, 95][index],
-                "mod_mount_006": [40, 45, 65, 90, 95][index],
+                "mod_mount_000": [20, 45, 65, 90, 95][index],
+                "mod_mount_001": [20, 45, 65, 90, 95][index],
+                "mod_mount_002": [20, 45, 65, 90, 95][index],
+                "mod_mount_003": [20, 45, 65, 90, 95][index],
+                "mod_mount_004": [20, 45, 65, 90, 95][index],
+                "mod_mount_005": [20, 45, 65, 90, 95][index],
+                "mod_mount_006": [20, 45, 65, 90, 95][index],
                 "mod_muzzle": [45, 55, 65, 75, 99][index],
                 "mod_muzzle_000": [15, 35, 65, 85, 99][index],
                 "mod_muzzle_001": [15, 35, 65, 85, 99][index],
@@ -1097,8 +1094,8 @@ const buildInitialRandomization = (items, botConfig, traderList) => {
                 "mod_scope_003": [60, 90, 100, 100, 100][index],
                 "mod_tactical": [15, 30, 35, 50, 75][index],
                 "mod_tactical_2": 0,
-                "mod_tactical001": [15, 30, 35, 50, 75][index],
-                "mod_tactical002": [15, 30, 35, 50, 75][index],
+                "mod_tactical001": [5, 20, 35, 50, 75][index],
+                "mod_tactical002": [5, 20, 35, 50, 75][index],
                 "mod_tactical_000": [1, 5, 5, 10, 15][index],
                 "mod_tactical_001": [1, 5, 5, 10, 15][index],
                 "mod_tactical_002": [15, 30, 35, 50, 75][index],
@@ -1367,7 +1364,6 @@ const deleteBlacklistedItemsFromInventory = (inventory) => {
 exports.deleteBlacklistedItemsFromInventory = deleteBlacklistedItemsFromInventory;
 exports.combinedForbiddenBullets = new Set(Object.values(advancedConfig_json_1.default.forbiddenBullets).flat(1));
 exports.blacklistedItems = new Set([
-    ...config_json_1.default.addDangerousBulletsToTier4Bots ? [] : exports.combinedForbiddenBullets,
     ...config_json_1.default.customBlacklist,
     ...InternalBlacklist_1.default
 ]);

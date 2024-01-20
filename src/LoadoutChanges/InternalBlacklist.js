@@ -228,7 +228,11 @@ exports.default = [
     "5caf1041ae92157c28402e3f",
     "5d0a29fed7ad1a002769ad08",
     "62811f461d5df4475f46a332",
-    "6275303a9f372d6ea97f9ec7" //revolver grenadeLauncher
+    "6275303a9f372d6ea97f9ec7",
+    "6422e1ea3c0f06190302161a",
+    "5c471c442e221602b542a6f8",
+    "57d14e1724597714010c3f4b",
+    "5d2f213448f0355009199284" //HK MP5 9x19 20-round magazine
 ];
 //5d0a29fed7ad1a002769ad08
 //62811f461d5df4475f46a332

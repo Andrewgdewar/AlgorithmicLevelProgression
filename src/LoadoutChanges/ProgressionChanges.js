@@ -306,6 +306,8 @@ function ProgressionChanges(container) {
             "whitelist": []
         };
     }
+    (0, utils_1.deleteBlacklistedItemsFromInventory)(usecInventory);
+    (0, utils_1.deleteBlacklistedItemsFromInventory)(bearInventory);
     // const RagfairPriceService = container.resolve<RagfairPriceService>("RagfairPriceService");
     // const handbook = tables.templates.handbook
     // const prices = tables.templates.prices
@@ -324,10 +326,8 @@ function ProgressionChanges(container) {
     //     map((id) => ({ name: items[id]._name, id, rating: getAmmoWeighting(items[id]) })).filter(({ rating, id }) => rating >= 5).
     //     sort((a, b) => a.rating - b.rating).map(({ id }) => id)
     // console.log(barterItemsList.length)
-    (0, utils_1.deleteBlacklistedItemsFromInventory)(usecInventory);
-    (0, utils_1.deleteBlacklistedItemsFromInventory)(bearInventory);
     // saveToFile(usecInventory, "refDBS/items2.json")
-    (0, utils_1.saveToFile)(botConfig.equipment.pmc, "refDBS/weightings3.json");
+    (0, utils_1.saveToFile)(botConfig.equipment.pmc, "refDBS/weightings4.json");
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;

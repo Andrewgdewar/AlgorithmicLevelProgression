@@ -4,10 +4,10 @@
     "leveledClothing": true,
     "questUnlockedItemsShifted": true,
     "tradedItemsShifted": true,
-    "addDangerousBulletsToTier4Bots": true,
     "addCustomTraderItems": false,
     "customTradersToExclude": [
-        "insertTheTraderNameToIgnoreTheirItems"
+        "insertTheTraderNameToIgnoreTheirItems",
+        "CustomTradersNamesWillPrintToConsoleIfFoundAndaddCustomTraderItemsIsSetToTrue"
     ],
     "customBlacklist": [
         "get id's from here https://db.sp-tarkov.com/search/",
@@ -74,14 +74,12 @@
             8
         ]
     },
-    "applyInternalPMCBlacklist": false,
-    "increaseTierStrictness": false,
     "randomness": {
         "Holster": 0.3,
         "Headwear": 0.1,
         "FirstPrimaryWeapon": 0.4,
         "Earpiece": 0.3,
-        "Backpack": 0.2,
+        "Backpack": 0.3,
         "Eyewear": 0.2,
         "TacticalVest": 0.1,
         "ArmorVest": 0.1,
