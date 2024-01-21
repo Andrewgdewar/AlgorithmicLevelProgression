@@ -31,6 +31,7 @@ const ignoreList = [
     // "node_modules/!(weighted|glob)", // Instead of excluding the entire node_modules directory, allow two node modules.
     "src/refDBS",
     "src/**/*.js",
+    "src/**/*.js.map",
     "types/",
     ".git/",
     ".gitea/",
