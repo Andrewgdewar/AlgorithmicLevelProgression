@@ -10,3 +10,14 @@ src/*.js.map
 src/**/**.js.map
 src/**/**.js
 src/NonPmcBotChanges/botsRef
+src/LoadoutChanges/ProgressionChanges.js.map
+src/LoadoutChanges/ProgressionChanges.js
+src/NonPMCBotChanges/botsRef
+.gitignore
+src/LevelChanges/BotLevelChanges.js
+src/LoadoutChanges/GlobalValues.js
+src/LoadoutChanges/ProgressionChanges.js
+src/LoadoutChanges/ProgressionChanges.js.map
+src/LoadoutChanges/utils.js
+src/mod.js
+src/mod.js.map
