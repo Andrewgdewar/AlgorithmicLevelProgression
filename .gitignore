@@ -7,6 +7,6 @@ src/*.js
 src/**/**/*.js.map
 src/**/*.js.map
 src/*.js.map
-src/LoadoutChanges/ProgressionChanges.js.map
-src/LoadoutChanges/ProgressionChanges.js
+src/**/**.js.map
+src/**/**.js
 src/NonPmcBotChanges/botsRef
