@@ -287,7 +287,7 @@ export const getHeadwearRating = ({
   _id,
   _name,
 }: ITemplateItem) => {
-  if (Number(armorClass) <= 1) return 5;
+  if (Number(armorClass) <= 1) return 15;
   const hasNvg = !!Slots.find((slot) => slot._name === "mod_nvg") ? 70 : 0;
   const helmetBonus = Number(armorClass) * 30;
   const durability = Durability * 0.1;
@@ -296,7 +296,7 @@ export const getHeadwearRating = ({
   let rating = helmetBonus - Weight + (ricochetChance + durability + hasNvg);
   if (BlocksEarpiece) rating *= 0.3;
   if (rating < 10) rating = 10;
-  //   console.log(_name, Math.round(rating));
+  // console.log(_name, Math.round(rating));
   return Math.round(rating);
 };
 
@@ -1023,8 +1023,8 @@ export const buildInitialRandomization = (
       levelRange: range,
       equipment: {
         Headwear: [75, 85, 99, 99, 99][index],
-        Earpiece: [65, 75, 95, 100, 100][index],
-        FaceCover: [30, 45, 65, 75, 80][index],
+        Earpiece: [55, 75, 95, 100, 100][index],
+        FaceCover: [25, 35, 65, 75, 80][index],
         ArmorVest: [99, 99, 99, 99, 99][index],
         ArmBand: [25, 45, 59, 69, 80][index],
         TacticalVest: [96, 96, 99, 99, 99][index],
@@ -1035,7 +1035,7 @@ export const buildInitialRandomization = (
         FirstPrimaryWeapon: [85, 98, 99, 99, 99][index],
         Holster: [1, 5, 10, 10, 10][index],
         Eyewear: [15, 25, 40, 60, 75][index],
-        Backpack: [70, 80, 90, 99, 99][index],
+        Backpack: [70, 85, 90, 99, 99][index],
       },
       generation: {
         stims: {
@@ -1394,7 +1394,7 @@ export const buildInitialRandomization = (
       mods: {
         mod_barrel: [5, 20, 25, 35, 45][index],
         mod_bipod: [1, 10, 5, 11, 50][index],
-        mod_flashlight: [5, 20, 30, 40, 65][index],
+        mod_flashlight: [5, 25, 35, 45, 70][index],
         mod_foregrip: [10, 30, 50, 90, 95][index],
         mod_handguard: [5, 30, 50, 90, 95][index],
         mod_launcher: [0, 0, 5, 15, 50][index],
@@ -1418,11 +1418,11 @@ export const buildInitialRandomization = (
         mod_equipment_002: [0, 0, 5, 15, 25][index],
         mod_pistol_grip_akms: [1, 15, 25, 35, 50][index],
         mod_pistol_grip: [1, 15, 25, 35, 50][index],
-        mod_scope: [50, 75, 100, 100, 100][index],
-        mod_scope_000: [30, 70, 100, 100, 100][index],
-        mod_scope_001: [30, 70, 100, 100, 100][index],
-        mod_scope_002: [30, 70, 100, 100, 100][index],
-        mod_scope_003: [30, 70, 100, 100, 100][index],
+        mod_scope: [50, 80, 100, 100, 100][index],
+        mod_scope_000: [30, 80, 100, 100, 100][index],
+        mod_scope_001: [30, 80, 100, 100, 100][index],
+        mod_scope_002: [30, 80, 100, 100, 100][index],
+        mod_scope_003: [30, 80, 100, 100, 100][index],
         mod_tactical: [15, 30, 35, 50, 75][index],
         mod_tactical_2: 0,
         mod_tactical001: [5, 20, 35, 50, 75][index],
@@ -1533,6 +1533,7 @@ export const buildInitialRandomization = (
     randomizationItems.push(newItem);
   });
   // console.log(JSON.stringify(botConfig.equipment.pmc.randomisation))
+  botConfig.equipment.pmc["forceStock"] = advancedConfig.forceStock;
   botConfig.equipment.pmc.randomisation = randomizationItems;
 };
 

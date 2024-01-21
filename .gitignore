@@ -9,3 +9,4 @@ src/**/*.js.map
 src/*.js.map
 src/LoadoutChanges/ProgressionChanges.js.map
 src/LoadoutChanges/ProgressionChanges.js
+src/NonPmcBotChanges/botsRef
