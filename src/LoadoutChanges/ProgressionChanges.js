@@ -20,8 +20,8 @@ function ProgressionChanges(container) {
     const traders = tables.traders;
     const usecInventory = tables.bots.types.usec.inventory;
     const bearInventory = tables.bots.types.bear.inventory;
-    if (botConfig.secureContainerAmmoStackCount < 40)
-        botConfig.secureContainerAmmoStackCount = 40;
+    if (botConfig.secureContainerAmmoStackCount < 80)
+        botConfig.secureContainerAmmoStackCount = 80;
     if (!pmcConfig.forceHealingItemsIntoSecure)
         pmcConfig.forceHealingItemsIntoSecure = true;
     // tables.bots.types.usec.inventory.mods = {}
@@ -32,19 +32,19 @@ function ProgressionChanges(container) {
     pmcConfig.looseWeaponInBackpackChancePercent = 1;
     pmcConfig.looseWeaponInBackpackLootMinMax = { min: 0, max: 1 };
     const tradersToInclude = [
-        'Prapor',
-        'Therapist',
-        'Skier',
-        'Peacekeeper',
-        'Mechanic',
-        'Ragman',
-        'Jaeger',
+        "Prapor",
+        "Therapist",
+        "Skier",
+        "Peacekeeper",
+        "Mechanic",
+        "Ragman",
+        "Jaeger",
     ];
     const tradersToExclude = [
         "Unknown",
         "caretaker",
-        'Fence',
-        ...config_json_1.default.customTradersToExclude
+        "Fence",
+        ...config_json_1.default.customTradersToExclude,
     ];
     const traderList = Object.values(traders).filter(({ base }) => {
         if (config_json_1.default.addCustomTraderItems) {
@@ -56,15 +56,23 @@ function ProgressionChanges(container) {
     botConfig.equipment.pmc.lightIsActiveNightChancePercent = 95;
     botConfig.equipment.pmc.laserIsActiveChancePercent = 90;
     botConfig.equipment.pmc.faceShieldIsActiveChancePercent = 100;
-    botConfig.equipment.pmc.weightingAdjustmentsByBotLevel = (0, utils_1.buildEmptyWeightAdjustments)();
+    botConfig.equipment.pmc.weightingAdjustmentsByBotLevel =
+        (0, utils_1.buildEmptyWeightAdjustments)();
     // >>>>>>>>>>>>>>> Working tradersMasterList <<<<<<<<<<<<<<<<<<
     const tradersMasterList = {
-        1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set(Object.values(Tier5_1.default).flat(1))
+        1: new Set(["572b7adb24597762ae139821", "5fd4c4fa16cac650092f6771"]),
+        2: new Set(),
+        3: new Set(),
+        4: new Set(),
+        5: new Set(Object.values(Tier5_1.default).flat(1)),
     };
     const mods = { "1": {}, "2": {}, "3": {}, "4": {}, "5": {} };
     // SetBaseWhitelist
     botConfig.equipment.pmc.whitelist = (0, utils_1.setupBaseWhiteList)();
-    let allTradersSuits = Object.values(traders).filter(({ suits }) => !!suits?.length).map(({ suits }) => suits).flat(1);
+    let allTradersSuits = Object.values(traders)
+        .filter(({ suits }) => !!suits?.length)
+        .map(({ suits }) => suits)
+        .flat(1);
     if (config_json_1.default?.leveledClothing) {
         (0, utils_1.buildClothingWeighting)(allTradersSuits, customization, botConfig, usecAppearance, bearAppearance);
     }
@@ -72,10 +80,11 @@ function ProgressionChanges(container) {
         if (!tradeItems || !nickname)
             return;
         // if (index === 0) console.log(JSON.stringify(questassort))
-        if (config_json_1.default.addCustomTraderItems && ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
+        if (config_json_1.default.addCustomTraderItems &&
+            ![...tradersToExclude, ...tradersToInclude].includes(nickname)) {
             console.log(`\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`);
         }
-        tradeItems.forEach(({ _tpl, _id, parentId, slotId, }) => {
+        tradeItems.forEach(({ _tpl, _id, parentId, slotId }) => {
             if (utils_1.blacklistedItems.has(_tpl))
                 return; //Remove blacklisted items and bullets
             const item = items[_tpl];
@@ -86,7 +95,12 @@ function ProgressionChanges(container) {
                 return console.log("AlgorithmicLevelProgression: Skipping custom item: ", _tpl, " for trader: ", nickname);
             const equipmentType = (0, utils_1.getEquipmentType)(parent, items);
             switch (true) {
-                case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.barterParent, utils_1.keyMechanical, utils_1.medsParent, utils_1.moneyParent]):
+                case (0, utils_1.checkParentRecursive)(parent, items, [
+                    utils_1.barterParent,
+                    utils_1.keyMechanical,
+                    utils_1.medsParent,
+                    utils_1.moneyParent,
+                ]):
                     usecInventory.items.Pockets.push(_tpl);
                     bearInventory.items.Pockets.push(_tpl);
                     usecInventory.items.TacticalVest.push(_tpl);
@@ -98,10 +112,14 @@ function ProgressionChanges(container) {
                 case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.AmmoParent]):
                     const calibre = item._props.Caliber || item._props.ammoCaliber;
                     if (calibre) {
-                        usecInventory.Ammo[calibre] =
-                            { ...usecInventory.Ammo[calibre] || {}, [_tpl]: 1 };
-                        bearInventory.Ammo[calibre] =
-                            { ...bearInventory.Ammo[calibre] || {}, [_tpl]: 1 };
+                        usecInventory.Ammo[calibre] = {
+                            ...(usecInventory.Ammo[calibre] || {}),
+                            [_tpl]: 1,
+                        };
+                        bearInventory.Ammo[calibre] = {
+                            ...(bearInventory.Ammo[calibre] || {}),
+                            [_tpl]: 1,
+                        };
                         // usecInventory.items.Pockets.push(_tpl)
                         // bearInventory.items.Pockets.push(_tpl)
                         // usecInventory.items.Backpack.push(_tpl)
@@ -157,7 +175,8 @@ function ProgressionChanges(container) {
                 const barterSchemeRef = barter_scheme[_id] || barter_scheme[parentId];
                 switch (true) {
                     // If large magazine
-                    case (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) && item?._props?.Cartridges?.[0]?._max_count > 39:
+                    case (0, utils_1.checkParentRecursive)(_tpl, items, [utils_1.magParent]) &&
+                        item?._props?.Cartridges?.[0]?._max_count > 39:
                         // if (item?._props?.Cartridges?.[0]?._max_count > 39) {
                         //     tradersMasterList[5].add(_tpl)
                         //     return
@@ -165,7 +184,7 @@ function ProgressionChanges(container) {
                         // tradersMasterList[loyaltyLevel].add(_tpl)
                         // addToModsObject(mods, _tpl, items, loyaltyLevel, slotId)
                         break;
-                    // Check if its a quest unlocked trade    
+                    // Check if its a quest unlocked trade
                     case !!questassort.success[_id]:
                         if (!config_json_1.default?.questUnlockedItemsShifted) {
                             tradersMasterList[loyaltyLevel].add(_tpl);
@@ -183,13 +202,14 @@ function ProgressionChanges(container) {
                         }
                         break;
                     // Only add the item if it's a cash trade or if tradeItems are not shifted
-                    case items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent === utils_1.moneyParent || !config_json_1.default?.tradedItemsShifted:
+                    case items[barterSchemeRef?.[0]?.[0]?._tpl]?._parent ===
+                        utils_1.moneyParent || !config_json_1.default?.tradedItemsShifted:
                         tradersMasterList[loyaltyLevel].add(_tpl);
                         (0, utils_1.addToModsObject)(mods, _tpl, items, loyaltyLevel, slotId);
                         break;
                     // Then it's a tradeItem
                     default:
-                        if ((loyaltyLevel + 2) > 4) {
+                        if (loyaltyLevel + 2 > 4) {
                             tradersMasterList[4].add(_tpl);
                             (0, utils_1.addToModsObject)(mods, _tpl, items, 4, slotId);
                         }
@@ -203,7 +223,7 @@ function ProgressionChanges(container) {
         });
     });
     //Setup beast mod level 5
-    tradersMasterList[5].forEach(id => {
+    tradersMasterList[5].forEach((id) => {
         if (utils_1.blacklistedItems.has(id)) {
             tradersMasterList[5].delete(id);
         }
@@ -217,10 +237,14 @@ function ProgressionChanges(container) {
                 case (0, utils_1.checkParentRecursive)(parent, items, [utils_1.AmmoParent]):
                     const calibre = item._props.Caliber || item._props.ammoCaliber;
                     if (calibre) {
-                        usecInventory.Ammo[calibre] =
-                            { ...usecInventory.Ammo[calibre] || {}, [id]: 1 };
-                        bearInventory.Ammo[calibre] =
-                            { ...bearInventory.Ammo[calibre] || {}, [id]: 1 };
+                        usecInventory.Ammo[calibre] = {
+                            ...(usecInventory.Ammo[calibre] || {}),
+                            [id]: 1,
+                        };
+                        bearInventory.Ammo[calibre] = {
+                            ...(bearInventory.Ammo[calibre] || {}),
+                            [id]: 1,
+                        };
                     }
                     break;
                 case !!equipmentType:
@@ -236,9 +260,17 @@ function ProgressionChanges(container) {
             }
         }
     });
-    const combinedNumList = new Set([...tradersMasterList[1], ...tradersMasterList[2], ...tradersMasterList[3], ...tradersMasterList[4]]);
+    const combinedNumList = new Set([
+        ...tradersMasterList[1],
+        ...tradersMasterList[2],
+        ...tradersMasterList[3],
+        ...tradersMasterList[4],
+    ]);
     //TODO: keep an eye on this.. this might be a bad idea.
-    const combinedNumWith5List = new Set([...combinedNumList, ...tradersMasterList[5]]);
+    const combinedNumWith5List = new Set([
+        ...combinedNumList,
+        ...tradersMasterList[5],
+    ]);
     (0, utils_1.buildWeaponSightWhitelist)(items, botConfig, tradersMasterList);
     (0, utils_1.buildOutModsObject)(combinedNumWith5List, items, usecInventory, botConfig);
     bearInventory.mods = (0, utils_1.cloneDeep)(usecInventory.mods);
@@ -249,8 +281,12 @@ function ProgressionChanges(container) {
     // Remove duplicate items for all arrays
     usecInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(usecInventory.items.SecuredContainer);
     bearInventory.items.SecuredContainer = (0, utils_1.deDupeArr)(bearInventory.items.SecuredContainer);
-    usecInventory.items.Backpack = config_json_1.default.removePMCLootForLootingBots ? [] : (0, utils_1.deDupeArr)(usecInventory.items.Backpack);
-    bearInventory.items.Backpack = config_json_1.default.removePMCLootForLootingBots ? [] : (0, utils_1.deDupeArr)(bearInventory.items.Backpack);
+    usecInventory.items.Backpack = config_json_1.default.removePMCLootForLootingBots
+        ? []
+        : (0, utils_1.deDupeArr)(usecInventory.items.Backpack);
+    bearInventory.items.Backpack = config_json_1.default.removePMCLootForLootingBots
+        ? []
+        : (0, utils_1.deDupeArr)(bearInventory.items.Backpack);
     usecInventory.items.Pockets = (0, utils_1.deDupeArr)(usecInventory.items.Pockets);
     bearInventory.items.Pockets = (0, utils_1.deDupeArr)(bearInventory.items.Pockets);
     usecInventory.items.TacticalVest = (0, utils_1.deDupeArr)(usecInventory.items.TacticalVest);
@@ -265,7 +301,7 @@ function ProgressionChanges(container) {
     // Eliminates duplicate id's in later levels
     utils_1.numList.forEach((num) => {
         tradersMasterList[num].forEach((id) => {
-            utils_1.numList.slice(num, 5).forEach(numListNum => {
+            utils_1.numList.slice(num, 5).forEach((numListNum) => {
                 tradersMasterList[numListNum].delete(id);
             });
         });
@@ -287,47 +323,69 @@ function ProgressionChanges(container) {
     (0, utils_1.setWhitelists)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.setWeightingAdjustments)(items, botConfig, tradersMasterList, mods);
     (0, utils_1.buildInitialRandomization)(items, botConfig, tradersMasterList);
-    Object.keys(advancedConfig_json_1.default.otherBotTypes).forEach(botType => {
+    Object.keys(advancedConfig_json_1.default.otherBotTypes).forEach((botType) => {
         (0, utils_1.mergeDeep)(botConfig.equipment[botType], advancedConfig_json_1.default.otherBotTypes[botType]);
     });
-    if (config_json_1.default.removeScavLootForLootingBots && botConfig?.equipment?.assault?.randomisation?.[0]?.generation) {
-        const generation = botConfig.equipment.assault.randomisation[0].generation;
+    if (config_json_1.default.removeScavLootForLootingBots &&
+        botConfig?.equipment?.assault?.randomisation?.[0]?.generation) {
+        const generation = botConfig.equipment.assault.randomisation[0]
+            .generation;
         generation.backpackLoot = {
-            ...generation.looseLoot || {},
-            "weights": { "0": 1 }, "whitelist": []
+            ...(generation.looseLoot || {}),
+            weights: { "0": 1 },
+            whitelist: [],
         };
         generation.pocketLoot = {
-            ...generation.looseLoot || {},
-            "weights": { "0": 1 }, "whitelist": []
+            ...(generation.looseLoot || {}),
+            weights: { "0": 1 },
+            whitelist: [],
         };
         generation.vestLoot = {
-            ...generation.looseLoot || {},
-            "weights": { "0": 1 },
-            "whitelist": []
+            ...(generation.looseLoot || {}),
+            weights: { "0": 1 },
+            whitelist: [],
         };
     }
     (0, utils_1.deleteBlacklistedItemsFromInventory)(usecInventory);
     (0, utils_1.deleteBlacklistedItemsFromInventory)(bearInventory);
-    // const RagfairPriceService = container.resolve<RagfairPriceService>("RagfairPriceService");
-    // const handbook = tables.templates.handbook
-    // const prices = tables.templates.prices
-    // const handbookMapper = {} as Record<string, number>
+    (0, utils_1.ensureAllAmmoInSecureContainer)(usecInventory);
+    (0, utils_1.ensureAllAmmoInSecureContainer)(bearInventory);
+    (0, utils_1.addAllSecureContainers)(usecInventory);
+    (0, utils_1.addAllSecureContainers)(bearInventory);
+    //   deleteBlacklistedItemsFromInventory(bearInventory);
+    // const RagfairPriceService = container.resolve<RagfairPriceService>(
+    //   "RagfairPriceService"
+    // );
+    // const handbook = tables.templates.handbook;
+    // const prices = tables.templates.prices;
+    // const handbookMapper = {} as Record<string, number>;
     // handbook.Items.forEach(({ Id, Price }) => {
-    //     handbookMapper[Id] = Price
-    // })
+    //   handbookMapper[Id] = Price;
+    // });
     // const getFleaPrice = (itemID: string): number => {
-    //     const staticprice = RagfairPriceService.getFleaPriceForItem(itemID)
-    //     if (staticprice) return staticprice
-    //     if (typeof prices[itemID] != "undefined") return prices[itemID]
-    //     if (handbookMapper[itemID]) return handbookMapper[itemID]
-    // }
-    // const barterItemsList = Object.keys(items).
-    //     filter(id => checkParentRecursive(id, items, [AmmoParent]) && !blacklistedItems.has(id)).
-    //     map((id) => ({ name: items[id]._name, id, rating: getAmmoWeighting(items[id]) })).filter(({ rating, id }) => rating >= 5).
-    //     sort((a, b) => a.rating - b.rating).map(({ id }) => id)
+    //   const staticprice = RagfairPriceService.getFleaPriceForItem(itemID);
+    //   if (staticprice) return staticprice;
+    //   if (typeof prices[itemID] != "undefined") return prices[itemID];
+    //   if (handbookMapper[itemID]) return handbookMapper[itemID];
+    // };
+    // const barterItemsList = Object.keys(items)
+    //   .filter(
+    //     (id) =>
+    //       checkParentRecursive(id, items, [headwearParent]) &&
+    //       !blacklistedItems.has(id) &&
+    //       Number(items[id]._props.armorClass) <= 1
+    //   )
+    //   .map((id) => ({
+    //     name: items[id]._name,
+    //     id,
+    //     rating: getFleaPrice(id),
+    //   }))
+    //   // .filter(({ rating, id }) => rating >= 5)
+    //   .sort((a, b) => a.rating - b.rating);
+    // .map(({ id }) => id);
     // console.log(barterItemsList.length)
-    // saveToFile(usecInventory, "refDBS/items2.json")
-    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json")
+    // saveToFile(barterItemsList, "refDBS/hats.json");
+    // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json");
     config_json_1.default.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }
 exports.default = ProgressionChanges;
