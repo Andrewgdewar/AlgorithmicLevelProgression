@@ -428,7 +428,7 @@
             "FaceCover": 25,
             "ArmorVest": 50,
             "ArmBand": 5,
-            "TacticalVest": 100,
+            "TacticalVest": 90,
             "Pockets": 25,
             "SecondPrimaryWeapon": 1,
             "Scabbard": 35,
@@ -437,7 +437,6 @@
             "Eyewear": 30,
             "Backpack": 25
           },
-          "randomisedWeaponModSlots": [],
           "mods": {
             "mod_reciever": 99,
             "mod_stock_akms": 90,

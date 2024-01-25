@@ -1765,7 +1765,7 @@ export const deleteBlacklistedItemsFromInventory = (inventory: Inventory) => {
     Object.keys(inventory.Ammo[calibre]).forEach((ammoKey) => {
       if (blacklistedItems.has(ammoKey)) {
         delete inventory.Ammo[calibre][ammoKey];
-        console.log(calibre, ammoKey, inventory.Ammo[calibre][ammoKey]);
+        // console.log(calibre, ammoKey, inventory.Ammo[calibre][ammoKey]);
       }
     });
   });
