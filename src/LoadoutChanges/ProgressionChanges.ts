@@ -11,7 +11,7 @@ import advancedConfig from "../../config/advancedConfig.json";
 import config from "../../config/config.json";
 import { IBotConfig } from "../../types/models/spt/config/IBotConfig.d";
 import {
-  addAllSecureContainers,
+  addBossSecureContainer,
   addKeysToPockets,
   addToModsObject,
   AmmoParent,
@@ -493,8 +493,8 @@ export default function ProgressionChanges(
   ensureAllAmmoInSecureContainer(usecInventory);
   ensureAllAmmoInSecureContainer(bearInventory);
 
-  addAllSecureContainers(usecInventory);
-  addAllSecureContainers(bearInventory);
+  addBossSecureContainer(usecInventory);
+  addBossSecureContainer(bearInventory);
   //   deleteBlacklistedItemsFromInventory(bearInventory);
   // const RagfairPriceService = container.resolve<RagfairPriceService>(
   //   "RagfairPriceService"
@@ -535,7 +535,12 @@ export default function ProgressionChanges(
   // console.log(barterItemsList.length)
 
   // saveToFile(barterItemsList, "refDBS/hats.json");
-  // saveToFile(botConfig.equipment.pmc, "refDBS/weightings3.json");
+  // saveToFile(usecInventory, "refDBS/usecInventoryRef3.json");
+
+  // saveToFile(
+  //   tables.bots.types["assault"]?.inventory,
+  //   `NonPmcBotChanges/botsRef/${"assault"}-inventory.json`
+  // );
 
   config.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }

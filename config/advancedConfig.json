@@ -428,7 +428,7 @@
             "FaceCover": 25,
             "ArmorVest": 50,
             "ArmBand": 5,
-            "TacticalVest": 100,
+            "TacticalVest": 90,
             "Pockets": 25,
             "SecondPrimaryWeapon": 1,
             "Scabbard": 35,
@@ -437,7 +437,6 @@
             "Eyewear": 30,
             "Backpack": 25
           },
-          "randomisedWeaponModSlots": [],
           "mods": {
             "mod_reciever": 99,
             "mod_stock_akms": 90,
@@ -523,5 +522,97 @@
         }
       ]
     }
-  }
+  },
+  "botAmmoRandomness": 0,
+  "botEquipmentRandomness": 0,
+  "botsToUpdate": [
+    {
+      "name": "assault",
+      "division": 4,
+      "maxLevelRange": 50,
+      "addEquipment": true,
+      "equipmentStart": 0,
+      "equipmentEnd": 0.3,
+      "addAmmo": true,
+      "ammoStart": 0,
+      "ammoEnd": 0.5
+    },
+    {
+      "name": "marksman",
+      "division": 3,
+      "maxLevelRange": 50,
+      "addEquipment": true,
+      "equipmentStart": 0,
+      "equipmentEnd": 0.4,
+      "addAmmo": true,
+      "ammoStart": 0,
+      "ammoEnd": 0.7
+    },
+    {
+      "name": "arenafighterevent",
+      "division": 4,
+      "maxLevelRange": 50,
+      "addEquipment": true,
+      "equipmentStart": 0.2,
+      "equipmentEnd": 0.5,
+      "addAmmo": true,
+      "ammoStart": 0,
+      "ammoEnd": 0.5
+    },
+    {
+      "name": "arenafighter",
+      "division": 4,
+      "maxLevelRange": 50,
+      "addEquipment": true,
+      "equipmentStart": 0.2,
+      "equipmentEnd": 0.5,
+      "addAmmo": true,
+      "ammoStart": 0,
+      "ammoEnd": 0.5
+    },
+    {
+      "name": "pmcbot",
+      "division": 4,
+      "maxLevelRange": 50,
+      "addEquipment": true,
+      "equipmentStart": 0.3,
+      "equipmentEnd": 0.8,
+      "addAmmo": true,
+      "ammoStart": 0.2,
+      "ammoEnd": 1
+    },
+    {
+      "name": "exusec",
+      "division": 4,
+      "maxLevelRange": 50,
+      "addEquipment": true,
+      "equipmentStart": 0.3,
+      "equipmentEnd": 0.8,
+      "addAmmo": true,
+      "ammoStart": 0.2,
+      "ammoEnd": 1
+    },
+    {
+      "name": "allBossFollowers",
+      "division": 4,
+      "maxLevelRange": 50,
+      "addEquipment": true,
+      "equipmentStart": 0.3,
+      "equipmentEnd": 0.5,
+      "addAmmo": true,
+      "ammoStart": 0.2,
+      "ammoEnd": 0.7
+    },
+    {
+      "name": "allBosses",
+      "division": 4,
+      "maxLevelRange": 50,
+      "addEquipment": false,
+      "equipmentStart": 0,
+      "equipmentEnd": 0,
+      "addAmmo": true,
+      "ammoStart": 0.3,
+      "ammoEnd": 0.8
+    }
+  ]
 }

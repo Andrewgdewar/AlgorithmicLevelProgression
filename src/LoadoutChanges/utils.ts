@@ -243,7 +243,7 @@ export const mergeDeep = (target, ...sources) => {
 };
 
 export const getArmorRating = ({
-  _props: { RepairCost, Durability, armorClass, armorZone, Weight },
+  _props: { Durability, armorClass, armorZone, Weight },
   _name,
   _id,
 }: any): number => {
@@ -1353,6 +1353,16 @@ export const buildInitialRandomization = (
           weights: [
             {
               "0": 0,
+              "1": 1,
+              "2": 1,
+            },
+            {
+              "0": 0,
+              "1": 1,
+              "2": 1,
+            },
+            {
+              "0": 0,
               "1": 0,
               "2": 1,
               "3": 1,
@@ -1366,24 +1376,9 @@ export const buildInitialRandomization = (
             {
               "0": 0,
               "1": 0,
-              "2": 0,
+              "2": 1,
               "3": 1,
               "4": 1,
-            },
-            {
-              "0": 0,
-              "1": 0,
-              "2": 0,
-              "3": 1,
-              "4": 1,
-            },
-            {
-              "0": 0,
-              "1": 0,
-              "2": 0,
-              "3": 1,
-              "4": 1,
-              "5": 1,
             },
           ][index],
           whitelist:
@@ -1766,6 +1761,15 @@ export const deleteBlacklistedItemsFromInventory = (inventory: Inventory) => {
     );
   });
 
+  Object.keys(inventory.Ammo).forEach((calibre) => {
+    Object.keys(inventory.Ammo[calibre]).forEach((ammoKey) => {
+      if (blacklistedItems.has(ammoKey)) {
+        delete inventory.Ammo[calibre][ammoKey];
+        // console.log(calibre, ammoKey, inventory.Ammo[calibre][ammoKey]);
+      }
+    });
+  });
+
   Object.keys(inventory.mods).forEach((key) => {
     if (blacklistedItems.has(key)) {
       delete inventory.mods[key];
@@ -1780,6 +1784,7 @@ export const deleteBlacklistedItemsFromInventory = (inventory: Inventory) => {
     }
   });
 };
+
 export const ensureAllAmmoInSecureContainer = (inventory: Inventory) => {
   const ammo = Object.keys(inventory.Ammo)
     .map((calbr) => Object.keys(inventory.Ammo[calbr]))
@@ -1800,13 +1805,9 @@ export const ensureAllAmmoInSecureContainer = (inventory: Inventory) => {
   //   saveToFile({ sortedAmmo }, "refDBS/ammoList.json");
 };
 
-export const addAllSecureContainers = (inventory: Inventory) => {
+export const addBossSecureContainer = (inventory: Inventory) => {
   inventory.equipment.SecuredContainer = {
-    "544a11ac4bdc2d470e8b456a": 3,
-    "5857a8b324597729ab0a0e7d": 3,
-    "59db794186f77448bc595262": 3,
-    "5857a8bc2459772bad15db29": 1,
-    "5c093ca986f7740a1867ab12": 1,
+    "5c0a794586f77461c458f892": 1,
   };
 };
 
