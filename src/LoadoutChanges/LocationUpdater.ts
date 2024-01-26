@@ -5,7 +5,7 @@ import { WeatherGenerator } from "@spt-aki/generators/WeatherGenerator";
 import { saveToFile } from "./utils";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
-import SetupNonPMCBotChanges from "src/NonPmcBotChanges/SetupNonPMCBotChanges";
+import { enableNonPMCBotChanges } from "../../config/config.json";
 
 export const LocationUpdater = (container: DependencyContainer): undefined => {
   const staticRouterModService = container.resolve<StaticRouterModService>(
@@ -21,8 +21,6 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
       {
         url: "/client/raid/configuration",
         action: (_url, info, sessionId, output) => {
-          const pmcData = globalValues.profileHelper.getPmcProfile(sessionId);
-          globalValues.updateInventory(pmcData?.Info?.Level);
           // console.log(pmcData?.Info?.Level);
           const time = weatherGenerator.calculateGameTime({
             acceleration: 0,
@@ -34,12 +32,13 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
             ConfigTypes.BOT
           );
 
-          // SetupNonPMCBotChanges(botConfig, globalValues.tables, pmcData?.Info?.Level);
-
           const hours = getTime(time, info.timeVariant === "PAST" ? 12 : 0);
 
           globalValues.setValuesForLocation(info.location.toLowerCase(), hours);
-          globalValues.updateInventory(pmcData?.Info?.Level);
+          if (enableNonPMCBotChanges) {
+            const pmcData = globalValues.profileHelper.getPmcProfile(sessionId);
+            globalValues.updateInventory(pmcData?.Info?.Level);
+          }
           return output;
         },
       },

@@ -2,7 +2,7 @@
   "enableProgressionChanges": true,
   "enableLevelChanges": true,
   "leveledClothing": true,
-  "enableNonPMCBotChanges": true,
+  "enableNonPMCBotChanges": false,
   "questUnlockedItemsShifted": true,
   "tradedItemsShifted": true,
   "addCustomTraderItems": false,

@@ -4,16 +4,17 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import config from "../../config/config.json";
+import advancedConfig from "../../config/advancedConfig.json";
 import { IBotConfig } from "../../types/models/spt/config/IBotConfig";
 
 import {
-  BotUpdateInterface,
   addItemsToBotInventory,
   applyValuesToStoredEquipment,
   buildEmptyWeightAdjustmentsByDevision,
   normalizeMedianInventoryValues,
 } from "./NonPmcUtils";
 import { globalValues } from "../LoadoutChanges/GlobalValues";
+import { saveToFile } from "../LoadoutChanges/utils";
 
 const bosses = [
   "bossbully",
@@ -44,48 +45,52 @@ const followers = [
   "bossboarsniper",
 ];
 
-const bots = [
-  // BloodHounds
-  "arenafighterevent",
-  "arenafighter",
-  //rogues
-  "exusec",
-  //Scavs
-  "assault",
-  "assaultgroup", // Uses assault inventory
-  "cursedassault",
-  //Snipers
-  "marksman",
-  //raiders
-  "pmcbot",
-];
+// const bots = [
+//   // BloodHounds
+//   "arenafighterevent",
+//   "arenafighter",
+//   //rogues
+//   "exusec", //
+//   //Scavs
+//   "assault", //
+//   "assaultgroup", // Uses assault inventory
+//   "cursedassault",
+//   //Snipers
+//   "marksman", //
+//   //raiders
+//   "pmcbot", //
+// ];
 
 export default function SetupNonPMCBotChanges(
   container: DependencyContainer
 ): undefined {
   const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
-  const configServer = container.resolve<ConfigServer>("ConfigServer");
-  const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
   const tables = databaseServer.getTables();
   const items = tables.templates.items;
 
-  const combinedBotList = new Set([...bosses, ...followers, ...bots]);
+  const botsToAdd = [];
 
-  const botsToUpdate: BotUpdateInterface[] = [
-    {
-      name: "assault",
-      division: 3,
-      maxLevelRange: 50,
-      addEquipment: true,
-      equipmentStart: 0,
-      equipmentEnd: 0.3,
-      addAmmo: true,
-      ammoStart: 0,
-      ammoEnd: 0.5,
-    },
-  ];
+  const botsForUpdate = advancedConfig?.botsToUpdate.filter(
+    ({ name, ...rest }) => {
+      if (name === "allBossFollowers") {
+        followers.forEach((followerName) =>
+          botsToAdd.push({ name: followerName, ...rest })
+        );
+        return false;
+      }
+      if (name === "allBosses") {
+        bosses.forEach((followerName) =>
+          botsToAdd.push({ name: followerName, ...rest })
+        );
+        return false;
+      }
+      return true;
+    }
+  );
 
-  botsToUpdate.forEach((updateInfo) => {
+  botsForUpdate.push(...botsToAdd);
+
+  botsForUpdate.forEach((updateInfo) => {
     const { name } = updateInfo;
 
     if (!tables.bots.types[name]?.inventory?.Ammo) return;
@@ -102,24 +107,21 @@ export default function SetupNonPMCBotChanges(
 
     globalValues.storedEquipmentValues[name] = storedEquipmentValues;
 
-    globalValues.updateInventory(45);
+    // globalValues.updateInventory(1);
     // const botConfig2 = globalValues.configServer.getConfig<IBotConfig>(
     //   ConfigTypes.BOT
-    // );
-    // saveToFile(
-    //   botConfig2.equipment[updateInfo.name],
-    //   `NonPmcBotChanges/botsRef/${updateInfo.name}-equipment1.json`
     // );
     // tables.bots.types[updateInfo.name]?.inventory &&
     //   saveToFile(
     //     tables.bots.types[updateInfo.name]?.inventory,
     //     `NonPmcBotChanges/botsRef/${updateInfo.name}-inventory3.json`
     //   );
-    // saveToFile(
-    //   storedEquipmentValues,
-    //   `NonPmcBotChanges/botsRef/${updateInfo.name}-storedValues2.json`
-    // );
   });
 
-  config.debug && console.log("Algorthimic Progression: Equipment DB updated");
+  // saveToFile(
+  //   globalValues.storedEquipmentValues,
+  //   `NonPmcBotChanges/botsRef/storedEquipmentValues1.json`
+  // );
+  config.debug &&
+    console.log("Algorthimic Progression: All bots equipment stored!");
 }

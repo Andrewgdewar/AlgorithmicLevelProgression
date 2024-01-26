@@ -180,7 +180,7 @@ export const buffGearAsLevel = (
     "Eyewear",
     "Backpack",
   ].forEach((key) => {
-    randomizationToUpdate.equipment[key] += index * 15;
+    randomizationToUpdate.equipment[key] += index;
     if (randomizationToUpdate.equipment[key] > 99)
       randomizationToUpdate.equipment[key] = 99;
   });
@@ -338,22 +338,91 @@ export const applyValuesToStoredEquipment = (
               weight.ammo[caliber][id] * 0.5
             );
           } else {
-            const modifier =
-              ((caliberList.length - rank) / caliberList.length + 1) / 2;
+            const modifier = (caliberList.length - rank) / caliberList.length;
             weight.ammo[caliber][id] =
               Math.round(weight.ammo[caliber][id] * modifier) || 1;
           }
         }
       });
     });
-  });
 
-  // storedWeightingAdjustmentDetails.forEach((_, index) => {
-  //   storedWeightingAdjustmentDetails.forEach((_, internalIndex) => {
-  //     if (internalIndex >= index) return;
-  //     console.log(index, internalIndex);
-  //     const current = storedWeightingAdjustmentDetails[index];
-  //     const previous = storedWeightingAdjustmentDetails[internalIndex];
-  //   });
-  // });
+    // Apply randomness
+    for (const category in weight.ammo) {
+      const randomnessMultiplier = advancedConfig.botAmmoRandomness;
+      if (!randomnessMultiplier) return;
+      const list = weight.ammo[category];
+      const keys = Object.keys(list);
+      const sortedValues = Object.values(list).sort((a, b) => a - b);
+      const middleIndex = 0 + Math.round((sortedValues.length - 1) / 2);
+      const medianValue = sortedValues[middleIndex];
+      const highestValue = sortedValues[sortedValues.length - 1];
+      const lowestValue = sortedValues[0];
+      const betterValue = Math.round(
+        (medianValue + highestValue + lowestValue) / 3
+      );
+      if (betterValue > 1) {
+        keys.forEach((key) => {
+          const valToAdjust = list[key];
+          if (valToAdjust > 5) {
+            const adjustedAmountMax = betterValue - valToAdjust;
+            const amountAfterAdjustment = Math.round(
+              valToAdjust + adjustedAmountMax * randomnessMultiplier
+            );
+            if (weight.ammo[category][key]) {
+              weight.ammo[category][key] = Math.abs(amountAfterAdjustment);
+            }
+          }
+        });
+      }
+    }
+
+    // Fix weapon weightings
+    Object.keys(weight.equipment?.FirstPrimaryWeapon || []).forEach((id) => {
+      const calibre =
+        items[id]?._props?.Caliber || items[id]?._props?.ammoCaliber;
+      if (calibre && weight.ammo[calibre]) {
+        let highestRating = 0;
+        Object.keys(weight.ammo[calibre]).forEach((key) => {
+          if (weight.ammo[calibre][key] > highestRating) {
+            highestRating = weight.ammo[calibre][key];
+          }
+        });
+        if (highestRating) {
+          weight.equipment.FirstPrimaryWeapon[id] = getWeaponWeighting(
+            items[id],
+            highestRating
+          );
+        }
+      }
+    });
+
+    for (const category in weight.equipment) {
+      const randomnessMultiplier = advancedConfig.botEquipmentRandomness;
+      if (!randomnessMultiplier) return;
+      const list = weight.equipment[category];
+      const keys = Object.keys(list);
+      const sortedValues = Object.values(list).sort((a, b) => a - b);
+      const middleIndex = 0 + Math.round((sortedValues.length - 1) / 2);
+      const medianValue = sortedValues[middleIndex];
+      const highestValue = sortedValues[sortedValues.length - 1];
+      const lowestValue = sortedValues[0];
+      const betterValue = Math.round(
+        (medianValue + highestValue + lowestValue) / 3
+      );
+      if (betterValue > 1) {
+        keys.forEach((key) => {
+          const valToAdjust = list[key];
+          if (valToAdjust > 5) {
+            const adjustedAmountMax = betterValue - valToAdjust;
+            const amountAfterAdjustment = Math.round(
+              valToAdjust + adjustedAmountMax * randomnessMultiplier
+            );
+            if (weight.equipment[category][key]) {
+              weight.equipment[category][key] = Math.abs(amountAfterAdjustment);
+            }
+          }
+        });
+      }
+    }
+  });
 };
