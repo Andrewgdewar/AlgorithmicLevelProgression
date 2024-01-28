@@ -144,3 +144,60 @@ Example order.json with recommended mods:
 
     // Just keep this off
     "debug": false
+
+  nonPMCBotConfig 
+  
+  // These values increase the randomness of the ammo or equipment used by bots 
+  // (1 = 100% randomness, 0.5 = 80% randomness... it's confusing)
+  // Basically be careful here, this is highly sensitive 
+  // Even slightly increasing this will produce dramatic effects
+  // I recommend to keep it off, or below 0.2, try increments of 0.05
+  "botAmmoRandomness": 0, 
+  "botEquipmentRandomness": 0, 
+
+  // This is the configuration for nonPmcBots
+  "nonPmcBots": [
+     {
+      // Name of the bot, or bot group (see below for bot group explanation)
+      "name": "assault",  
+
+      // These are this bots tiers
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+
+      // These values add equipment to bots, this can be best explained like so. 
+      // There is a "Constants" folder with lists of items, prioritized from worst > best
+      // The numbers below specify how much and which portion of that list is added to a bot.
+      // 0,3 > would result in the bottom 30% of that equipment type being added to that bot.
+      // 0.5,1 > the same but the top 50% of that equipment type.
+      // 0,1 > All of that equipment type that exists (largely) will be added to that bots spawn pool.
+      "Headwear": [0, 0.3],
+      "ArmorVest": [0, 0.3],
+      "TacticalVest": [0, 0.3],
+      "Backpack": [0, 0.3],
+      "Ammo": [0, 0.5]
+    },
+    ]
+
+    Bot groups are lists of bots that can have the same nonPmcBot configurations.
+    If you understand JSON than the examples are quite obvious. 
+    allBossFollowers is under nonPmcBots, and is comprised of a list of that type. 
+
+    TO PREVENT WIERDNESS, ONLY ADD EACH BOTTYPE TO EITHER A GROUP OR THE "nonPMCBots" LIST, not both.
+   
+    EXAMPLE: 
+    IF you wanted to add a custom setting for "bosssanitar", you would first remove him from the
+    "allBosses" list, then add him to the "nonPmcBots" list, with his own custom config.
+
+    Creating your own groups is easy, create a new list similar to "allBosses" but named "whatever"
+    Then move the bottype names over that you want your new configuration to effect.
+    When done add your "whatever" config to the "nonPmcBots" list. 
+
+    Do not ask for help in the forums, the answers you seek 
+    are above for those with the aptitude to understand them.
+
+    If you have feedback, ping me on discord

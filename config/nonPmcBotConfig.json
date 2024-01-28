@@ -1,0 +1,157 @@
+{
+  "botAmmoRandomness": 0,
+  "botEquipmentRandomness": 0,
+  "nonPmcBots": [
+    {
+      "name": "assault",
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+      "Headwear": [0, 0.3],
+      "ArmorVest": [0, 0.3],
+      "TacticalVest": [0, 0.3],
+      "Backpack": [0, 0.3],
+      "Ammo": [0, 0.5]
+    },
+    {
+      "name": "marksman",
+      "tiers": [
+        [1, 14],
+        [15, 34],
+        [35, 100]
+      ],
+      "Headwear": [0, 0.4],
+      "ArmorVest": [0, 0.4],
+      "TacticalVest": [0, 0.4],
+      "Backpack": [0, 0.4],
+      "Ammo": [0, 0.7]
+    },
+    {
+      "name": "arenafighterevent",
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+      "Headwear": [0.2, 0.5],
+      "ArmorVest": [0.2, 0.5],
+      "TacticalVest": [0.2, 0.5],
+      "Backpack": [0.2, 0.5],
+      "Ammo": [0, 0.5]
+    },
+    {
+      "name": "arenafighter",
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+      "Headwear": [0.2, 0.5],
+      "ArmorVest": [0.2, 0.5],
+      "TacticalVest": [0.2, 0.5],
+      "Backpack": [0.2, 0.5],
+      "Ammo": [0, 0.5]
+    },
+    {
+      "name": "pmcbot",
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+      "Headwear": [0.3, 0.8],
+      "ArmorVest": [0.3, 0.8],
+      "TacticalVest": [0.3, 0.8],
+      "Backpack": [0.3, 0.8],
+      "Ammo": [0.2, 0.8]
+    },
+    {
+      "name": "exusec",
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+      "Headwear": [0.3, 0.8],
+      "ArmorVest": [0.3, 0.8],
+      "TacticalVest": [0.3, 0.8],
+      "Backpack": [0.3, 0.8],
+      "Ammo": [0.2, 0.8]
+    },
+    {
+      "name": "allBossFollowers",
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+      "Headwear": [0.3, 0.5],
+      "ArmorVest": [0.3, 0.5],
+      "TacticalVest": [0.3, 0.5],
+      "Backpack": [0.3, 0.5],
+      "Ammo": [0.2, 0.7]
+    },
+    {
+      "name": "allBosses",
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+      "Headwear": [0, 0],
+      "ArmorVest": [0, 0],
+      "TacticalVest": [0, 0],
+      "Backpack": [0, 0],
+      "Ammo": [0.3, 0.8]
+    },
+    {
+      "name": "bossbully",
+      "tiers": [
+        [1, 14],
+        [15, 30],
+        [31, 45],
+        [46, 100]
+      ],
+      "Headwear": [0, 0],
+      "ArmorVest": [0, 0.2],
+      "TacticalVest": [0, 0],
+      "Backpack": [0, 0],
+      "Ammo": [0.3, 0.8]
+    }
+  ],
+  "allBossFollowers": [
+    "followerbully",
+    "followergluharassault",
+    "followergluharscout",
+    "followergluharsecurity",
+    "followerboar",
+    "followergluharsnipe",
+    "followerkojaniy",
+    "followersanitar",
+    "followertagilla",
+    "followertest",
+    "followerzryachiy"
+  ],
+  "allBosses": [
+    "bossgluhar",
+    "bossboar",
+    "bosskilla",
+    "bosskojaniy",
+    "bosssanitar",
+    "bosstagilla",
+    "bossknight",
+    "bosszryachiy",
+    "followerbirdeye",
+    "followerbigpipe",
+    "bossboarsniper"
+  ]
+}

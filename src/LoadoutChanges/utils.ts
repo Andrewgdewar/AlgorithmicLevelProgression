@@ -294,7 +294,7 @@ export const getHeadwearRating = ({
   const ricochetChance =
     (RicochetParams.x + RicochetParams.y) * RicochetParams.z * 0.2;
   let rating = helmetBonus - Weight + (ricochetChance + durability + hasNvg);
-  if (BlocksEarpiece) rating *= 0.3;
+  if (BlocksEarpiece) rating *= 0.1;
   if (rating < 10) rating = 10;
   // console.log(_name, Math.round(rating));
   return Math.round(rating);

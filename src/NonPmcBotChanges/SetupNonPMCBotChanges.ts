@@ -4,7 +4,7 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import config from "../../config/config.json";
-import advancedConfig from "../../config/advancedConfig.json";
+import nonPmcBotConfig from "../../config/nonPmcBotConfig.json";
 import { IBotConfig } from "../../types/models/spt/config/IBotConfig";
 
 import {
@@ -15,35 +15,6 @@ import {
 } from "./NonPmcUtils";
 import { globalValues } from "../LoadoutChanges/GlobalValues";
 import { saveToFile } from "../LoadoutChanges/utils";
-
-const bosses = [
-  "bossbully",
-  "bossgluhar",
-  "bossboar",
-  "bosskilla",
-  "bosskojaniy",
-  "bosssanitar",
-  "bosstagilla",
-  "bossknight",
-  "bosszryachiy",
-];
-
-const followers = [
-  "followerbirdeye",
-  "followerbully",
-  "followergluharassault",
-  "followergluharscout",
-  "followergluharsecurity",
-  "followerboar",
-  "followergluharsnipe",
-  "followerkojaniy",
-  "followersanitar",
-  "followertagilla",
-  "followertest",
-  "followerzryachiy",
-  "followerbigpipe",
-  "bossboarsniper",
-];
 
 // const bots = [
 //   // BloodHounds
@@ -70,17 +41,11 @@ export default function SetupNonPMCBotChanges(
 
   const botsToAdd = [];
 
-  const botsForUpdate = advancedConfig?.botsToUpdate.filter(
+  const botsForUpdate = nonPmcBotConfig?.nonPmcBots.filter(
     ({ name, ...rest }) => {
-      if (name === "allBossFollowers") {
-        followers.forEach((followerName) =>
-          botsToAdd.push({ name: followerName, ...rest })
-        );
-        return false;
-      }
-      if (name === "allBosses") {
-        bosses.forEach((followerName) =>
-          botsToAdd.push({ name: followerName, ...rest })
+      if (nonPmcBotConfig[name]?.length) {
+        nonPmcBotConfig[name].forEach((listName) =>
+          botsToAdd.push({ name: listName, ...rest })
         );
         return false;
       }
@@ -123,5 +88,5 @@ export default function SetupNonPMCBotChanges(
   //   `NonPmcBotChanges/botsRef/storedEquipmentValues1.json`
   // );
   config.debug &&
-    console.log("Algorthimic Progression: All bots equipment stored!");
+    console.log("Algorthimic Progression: nonPmcBots equipment stored!");
 }

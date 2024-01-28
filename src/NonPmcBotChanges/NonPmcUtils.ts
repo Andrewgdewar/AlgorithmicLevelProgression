@@ -22,29 +22,30 @@ import {
 } from "../LoadoutChanges/utils";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import advancedConfig from "../../config/advancedConfig.json";
+import nonPmcBotConfig from "../../config/nonPmcBotConfig.json";
 import Armor from "../Constants/Armor";
 import Helmets from "../Constants/Helmets";
 import Vests from "../Constants/Vests";
 import ArmoredRigs from "../Constants/ArmoredRigs";
 import Ammo from "../Constants/Ammo";
 import { MinMax } from "@spt-aki/models/common/MinMax";
+import Backpacks from "../Constants/Backpacks";
 
 export interface BotUpdateInterface {
   name: string;
-  division: number;
-  maxLevelRange: number;
-  addEquipment?: boolean;
-  equipmentStart?: number;
-  equipmentEnd?: number;
-  addAmmo?: boolean;
-  ammoStart?: number;
-  ammoEnd?: number;
+  tiers: Array<number[]>;
+  Headwear: number[];
+  ArmorVest: number[];
+  TacticalVest: number[];
+  Backpack: number[];
+  Ammo: number[];
 }
 
 const equipmentToAdd = {
   Headwear: Helmets,
   ArmorVest: Armor,
   TacticalVest: Vests,
+  Backpack: Backpacks,
 };
 
 const equipmentTypesTochange = new Set([
@@ -107,18 +108,12 @@ export const addItemsToBotInventory = (
   botToUpdate: BotUpdateInterface,
   items: Record<string, ITemplateItem>
 ) => {
-  const {
-    name,
-    addEquipment,
-    equipmentStart,
-    equipmentEnd,
-    addAmmo,
-    ammoStart,
-    ammoEnd,
-  } = botToUpdate;
+  const { name, Ammo: botToUpdateAmmo, ...equipment } = botToUpdate;
 
-  if (addEquipment) {
-    Object.keys(equipmentToAdd).forEach((key) => {
+  Object.keys(equipmentToAdd).forEach((key) => {
+    const equipmentStart = equipment[key][0];
+    const equipmentEnd = equipment[key][1];
+    if (equipmentStart || equipmentEnd) {
       const startIndex = Math.floor(
         equipmentToAdd[key].length * equipmentStart
       );
@@ -139,10 +134,12 @@ export const addItemsToBotInventory = (
           }
         });
       }
-    });
-  }
+    }
+  });
 
-  if (addAmmo) {
+  const ammoStart = botToUpdateAmmo[0];
+  const ammoEnd = botToUpdateAmmo[1];
+  if (ammoStart || ammoEnd) {
     const startIndex = Math.floor(Ammo.length * ammoStart);
     const endIndex = Math.floor(Ammo.length * ammoEnd);
     Ammo.slice(startIndex, endIndex).forEach((id: string) => {
@@ -193,20 +190,6 @@ export const buffGearAsLevel = (
   equipmentFilters.randomisation[0] = randomizationToUpdate;
 };
 
-// "Headwear": 40,
-// "Earpiece": 20,
-// "FaceCover": 35,
-// "ArmorVest": 50,
-// "ArmBand": 5,
-// "TacticalVest": 100,
-// "Pockets": 25,
-// "SecondPrimaryWeapon": 1,
-// "Scabbard": 45,
-// "FirstPrimaryWeapon": 95,
-// "Holster": 1,
-// "Eyewear": 30,
-// "Backpack": 25
-
 export interface StoredWeightingAdjustmentDetails {
   levelRange: MinMax;
   ammo: Record<string, Record<string, number>>;
@@ -216,19 +199,20 @@ export interface StoredWeightingAdjustmentDetails {
 export const buildEmptyWeightAdjustmentsByDevision = (
   botToUpdate: BotUpdateInterface
 ): StoredWeightingAdjustmentDetails[] => {
-  const { division, maxLevelRange } = botToUpdate;
-  const unitOfJump = Math.round(maxLevelRange / division);
+  const { tiers } = botToUpdate;
   const result = [];
-  for (let index = 1; index <= division; index++) {
+
+  tiers.forEach((tier) => {
     result.push({
       levelRange: {
-        min: index === 1 ? index : unitOfJump * (index - 1) + 1,
-        max: index === division ? 100 : unitOfJump * index,
+        min: tier[0],
+        max: tier[1],
       },
       ammo: {},
       equipment: {},
     });
-  }
+  });
+
   return result as StoredWeightingAdjustmentDetails[];
 };
 
@@ -348,7 +332,7 @@ export const applyValuesToStoredEquipment = (
 
     // Apply randomness
     for (const category in weight.ammo) {
-      const randomnessMultiplier = advancedConfig.botAmmoRandomness;
+      const randomnessMultiplier = nonPmcBotConfig.botAmmoRandomness;
       if (!randomnessMultiplier) return;
       const list = weight.ammo[category];
       const keys = Object.keys(list);
@@ -397,7 +381,7 @@ export const applyValuesToStoredEquipment = (
     });
 
     for (const category in weight.equipment) {
-      const randomnessMultiplier = advancedConfig.botEquipmentRandomness;
+      const randomnessMultiplier = nonPmcBotConfig.botEquipmentRandomness;
       if (!randomnessMultiplier) return;
       const list = weight.equipment[category];
       const keys = Object.keys(list);

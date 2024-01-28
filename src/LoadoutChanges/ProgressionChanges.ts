@@ -27,6 +27,7 @@ import {
   deDupeArr,
   deleteBlacklistedItemsFromInventory,
   ensureAllAmmoInSecureContainer,
+  getBackPackInternalGridValue,
   getEquipmentType,
   headwearParent,
   keyMechanical,
@@ -515,26 +516,32 @@ export default function ProgressionChanges(
   //   if (typeof prices[itemID] != "undefined") return prices[itemID];
   //   if (handbookMapper[itemID]) return handbookMapper[itemID];
   // };
-
-  // const barterItemsList = Object.keys(items)
+  // const setthing = new Set([
+  //   ...blacklistedItems,
+  //   "61b9e1aaef9a1b5d6a79899a",
+  //   "5448e53e4bdc2d60728b4567",
+  //   "5e4abc6786f77406812bd572",
+  //   "628bc7fb408e2b2e9c0801b1",
+  //   "5e997f0b86f7741ac73993e2",
+  // ]);
+  // const listToStore = Object.keys(items)
   //   .filter(
   //     (id) =>
-  //       checkParentRecursive(id, items, [headwearParent]) &&
-  //       !blacklistedItems.has(id) &&
-  //       Number(items[id]._props.armorClass) <= 1
+  //       checkParentRecursive(id, items, ["5448e53e4bdc2d60728b4567"]) &&
+  //       !setthing.has(id)
   //   )
   //   .map((id) => ({
   //     name: items[id]._name,
   //     id,
-  //     rating: getFleaPrice(id),
+  //     rating: getBackPackInternalGridValue(items[id]),
   //   }))
   //   // .filter(({ rating, id }) => rating >= 5)
-  //   .sort((a, b) => a.rating - b.rating);
-  // .map(({ id }) => id);
+  //   .sort((a, b) => a.rating - b.rating)
+  //   .map(({ id }) => id);
 
-  // console.log(barterItemsList.length)
+  // // console.log(listToStore.length)
 
-  // saveToFile(barterItemsList, "refDBS/hats.json");
+  // saveToFile(listToStore, "refDBS/hats.json");
   // saveToFile(usecInventory, "refDBS/usecInventoryRef3.json");
 
   // saveToFile(
