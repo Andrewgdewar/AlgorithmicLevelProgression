@@ -251,9 +251,8 @@ export const applyValuesToStoredEquipment = (
           );
           equipmentList[key].push({
             id,
-            rating:
-              ratingFunc(items[id], defAmmoWeight) +
-              inventory.equipment[key][id],
+            rating: ratingFunc(items[id], defAmmoWeight),
+            // +  inventory.equipment[key][id],
           });
         } else {
           equipmentList[key].push({

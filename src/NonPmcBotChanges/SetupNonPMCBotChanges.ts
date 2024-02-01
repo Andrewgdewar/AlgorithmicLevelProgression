@@ -73,13 +73,9 @@ export default function SetupNonPMCBotChanges(
     globalValues.storedEquipmentValues[name] = storedEquipmentValues;
 
     // globalValues.updateInventory(1);
-    // const botConfig2 = globalValues.configServer.getConfig<IBotConfig>(
-    //   ConfigTypes.BOT
-    // );
-    // tables.bots.types[updateInfo.name]?.inventory &&
     //   saveToFile(
-    //     tables.bots.types[updateInfo.name]?.inventory,
-    //     `NonPmcBotChanges/botsRef/${updateInfo.name}-inventory3.json`
+    //     globalValues.tables.bots.types[updateInfo.name]?.inventory,
+    //     `NonPmcBotChanges/botsRef/${updateInfo.name}-inventory1.json`
     //   );
   });
 

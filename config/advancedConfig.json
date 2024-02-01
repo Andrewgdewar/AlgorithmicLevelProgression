@@ -423,19 +423,19 @@
             }
           },
           "equipment": {
-            "Headwear": 40,
+            "Headwear": 45,
             "Earpiece": 10,
-            "FaceCover": 25,
-            "ArmorVest": 50,
+            "FaceCover": 33,
+            "ArmorVest": 55,
             "ArmBand": 5,
             "TacticalVest": 90,
-            "Pockets": 25,
+            "Pockets": 30,
             "SecondPrimaryWeapon": 1,
             "Scabbard": 35,
             "FirstPrimaryWeapon": 95,
             "Holster": 1,
             "Eyewear": 30,
-            "Backpack": 25
+            "Backpack": 30
           },
           "mods": {
             "mod_reciever": 99,
