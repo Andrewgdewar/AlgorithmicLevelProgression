@@ -14,7 +14,7 @@
       "ArmorVest": [0, 0.3],
       "TacticalVest": [0, 0.3],
       "Backpack": [0, 0.3],
-      "Ammo": [0, 0.5]
+      "Ammo": [0, 0.4]
     },
     {
       "name": "marksman",

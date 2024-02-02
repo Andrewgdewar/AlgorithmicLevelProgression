@@ -58,6 +58,17 @@ export default function SetupNonPMCBotChanges(
   botsForUpdate.forEach((updateInfo) => {
     const { name } = updateInfo;
 
+    if (name === "assault") {
+      const botConfig = globalValues.configServer.getConfig<IBotConfig>(
+        ConfigTypes.BOT
+      );
+      delete botConfig.equipment.assault.weightingAdjustmentsByPlayerLevel;
+      // saveToFile(
+      //   botConfig.equipment.assault,
+      //   `NonPmcBotChanges/botsRef/assaultWeighting.json`
+      // );
+    }
+
     if (!tables.bots.types[name]?.inventory?.Ammo) return;
     const inventory = tables.bots.types[name].inventory;
 
@@ -77,6 +88,7 @@ export default function SetupNonPMCBotChanges(
     //     globalValues.tables.bots.types[updateInfo.name]?.inventory,
     //     `NonPmcBotChanges/botsRef/${updateInfo.name}-inventory1.json`
     //   );
+    // saveToFile(globalValues.tables.botConfig.equipment.assault, "refDBS/weightings.json");
   });
 
   // saveToFile(

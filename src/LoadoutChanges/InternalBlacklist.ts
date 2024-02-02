@@ -232,7 +232,7 @@ export default [
   "57d14e1724597714010c3f4b", //PP-91 "Kedr" 9x18PM 20-round magazine
   "5d2f213448f0355009199284", //HK MP5 9x19 20-round magazine
   "5a43957686f7742a2c2f11b0", //Santahat
-  "5fd4c4fa16cac650092f6771", // IDEA RIG
+  // "5fd4c4fa16cac650092f6771", // IDEA RIG
 ];
 
 //5d0a29fed7ad1a002769ad08

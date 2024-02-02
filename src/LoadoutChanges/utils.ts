@@ -1706,7 +1706,8 @@ export const buildWeaponSightWhitelist = (
   botConfig: IBotConfig,
   { 1: a, 2: b, 3: c, 4: d, 5: e }: TradersMasterList
 ) => {
-  botConfig.equipment.pmc.weaponSightWhitelist = {};
+  delete botConfig.equipment.pmc.weaponSightWhitelist;
+  // botConfig.equipment.pmc.weaponSightWhitelist = {};
   return;
   const sightWhitelist = botConfig.equipment.pmc.weaponSightWhitelist;
   const traderItems = [...new Set([...a, ...b, ...c, ...d, ...e])]; //, ...d
