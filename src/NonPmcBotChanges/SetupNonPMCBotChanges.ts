@@ -58,15 +58,12 @@ export default function SetupNonPMCBotChanges(
   botsForUpdate.forEach((updateInfo) => {
     const { name } = updateInfo;
 
-    if (name === "assault") {
-      const botConfig = globalValues.configServer.getConfig<IBotConfig>(
-        ConfigTypes.BOT
-      );
-      delete botConfig.equipment.assault.weightingAdjustmentsByPlayerLevel;
-      // saveToFile(
-      //   botConfig.equipment.assault,
-      //   `NonPmcBotChanges/botsRef/assaultWeighting.json`
-      // );
+    const botConfig = globalValues.configServer.getConfig<IBotConfig>(
+      ConfigTypes.BOT
+    );
+
+    if (botConfig.equipment.assault.weightingAdjustmentsByPlayerLevel) {
+      botConfig.equipment.assault.weightingAdjustmentsByPlayerLevel = [];
     }
 
     if (!tables.bots.types[name]?.inventory?.Ammo) return;
