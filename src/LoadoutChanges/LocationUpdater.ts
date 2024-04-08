@@ -26,6 +26,7 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
             acceleration: 0,
             time: "",
             date: "",
+            winterEventEnabled: true,
           }).time;
 
           const botConfig = globalValues.configServer.getConfig<IBotConfig>(

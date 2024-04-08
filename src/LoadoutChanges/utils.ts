@@ -159,14 +159,14 @@ export const addKeysToPockets = (
       items[id]?._parent &&
       checkParentRecursive(id, items, [keyMechanical])
     ) {
-      inventory.items.Pockets.push(id);
-      inventory.items.Backpack.push(id);
-      inventory.items.TacticalVest.push(id);
+      inventory.items.Pockets[id] = 1;
+      inventory.items.Backpack[id] = 1;
+      inventory.items.TacticalVest[id] = 1;
     }
   });
-  inventory.items.Pockets = deDupeArr(inventory.items.Pockets);
-  inventory.items.Backpack = deDupeArr(inventory.items.Backpack);
-  inventory.items.TacticalVest = deDupeArr(inventory.items.TacticalVest);
+  // inventory.items.Pockets = deDupeArr(inventory.items.Pockets);
+  // inventory.items.Backpack = deDupeArr(inventory.items.Backpack);
+  // inventory.items.TacticalVest = deDupeArr(inventory.items.TacticalVest);
 };
 
 export const setupMods = (mods: Record<string, Record<string, string[]>>) => {
@@ -1065,7 +1065,7 @@ export const buildInitialRandomization = (
           ][index],
           whitelist: randomizationItems[index - 1]?.generation?.stims?.whitelist
             ? randomizationItems[index - 1].generation.stims.whitelist
-            : [],
+            : {},
         },
         drugs: {
           weights: [
@@ -1094,7 +1094,7 @@ export const buildInitialRandomization = (
           ][index],
           whitelist: randomizationItems[index - 1]?.generation?.drugs?.whitelist
             ? randomizationItems[index - 1].generation.drugs.whitelist
-            : [],
+            : {},
         },
         healing: {
           weights: [
@@ -1124,7 +1124,7 @@ export const buildInitialRandomization = (
           whitelist: randomizationItems[index - 1]?.generation?.healing
             ?.whitelist
             ? randomizationItems[index - 1].generation.healing.whitelist
-            : [],
+            : {},
         },
         grenades: {
           weights: [
@@ -1157,7 +1157,7 @@ export const buildInitialRandomization = (
           whitelist: randomizationItems[index - 1]?.generation?.grenades
             ?.whitelist
             ? randomizationItems[index - 1].generation.grenades.whitelist
-            : [],
+            : {},
         },
         backpackLoot: {
           weights: config.removePMCLootForLootingBots
@@ -1231,7 +1231,7 @@ export const buildInitialRandomization = (
                   "8": 2,
                 },
               ][index],
-          whitelist: [],
+          whitelist: {},
         },
         pocketLoot: {
           weights: config.removePMCLootForLootingBots
@@ -1287,7 +1287,7 @@ export const buildInitialRandomization = (
                   "3": 1,
                 },
               ][index],
-          whitelist: [],
+          whitelist: {},
         },
         vestLoot: {
           weights: config.removePMCLootForLootingBots
@@ -1347,7 +1347,7 @@ export const buildInitialRandomization = (
                   "4": 1,
                 },
               ][index],
-          whitelist: [],
+          whitelist: {},
         },
         magazines: {
           weights: [
@@ -1381,12 +1381,22 @@ export const buildInitialRandomization = (
               "4": 1,
             },
           ][index],
-          whitelist:
-            botConfig.equipment.pmc.whitelist[index].equipment.mod_magazine,
+          whitelist: botConfig.equipment.pmc.whitelist[index].equipment
+            .mod_magazine
+            ? (() => {
+                const result = {};
+                botConfig.equipment.pmc.whitelist[
+                  index
+                ]?.equipment?.mod_magazine.forEach((item) => {
+                  result[item] = 1;
+                });
+                return result;
+              })()
+            : {},
         },
       },
       randomisedWeaponModSlots: [],
-      mods: {
+      weaponMods: {
         mod_barrel: [5, 20, 25, 35, 45][index],
         mod_bipod: [1, 10, 5, 11, 50][index],
         mod_flashlight: [5, 25, 35, 45, 70][index],
@@ -1407,7 +1417,6 @@ export const buildInitialRandomization = (
         mod_muzzle_000: [15, 45, 99, 100, 100][index],
         mod_muzzle_001: [15, 45, 99, 100, 100][index],
         mod_equipment: [15, 25, 25, 35, 50][index],
-        mod_nvg: 0,
         mod_equipment_000: [0, 0, 0, 5, 20][index],
         mod_equipment_001: [0, 0, 5, 15, 25][index],
         mod_equipment_002: [0, 0, 5, 15, 25][index],
@@ -1439,6 +1448,14 @@ export const buildInitialRandomization = (
         // "mod_trigger": 1,
         // "mod_hammer": 1,
         // "mod_catch": 1
+      },
+      equipmentMods: {
+        mod_nvg: 0,
+        mod_flashlight: [5, 25, 35, 45, 70][index],
+        mod_equipment: [15, 25, 25, 35, 50][index],
+        mod_equipment_000: [0, 0, 0, 5, 20][index],
+        mod_equipment_001: [0, 0, 5, 15, 25][index],
+        mod_equipment_002: [0, 0, 5, 15, 25][index],
       },
     };
 
@@ -1475,30 +1492,21 @@ export const buildInitialRandomization = (
           items,
           num >= 3 ? [painKillerParent, stimParent] : [painKillerParent]
         ): //stims
-          newItem.generation.stims["whitelist"] = [
-            ...(newItem.generation.stims["whitelist"] || []),
-            id,
-          ];
+          newItem.generation.stims.whitelist[id] = 1;
           break;
         case checkParentRecursive(parent, items, [medicalParent]): //drugs
-          newItem.generation.drugs["whitelist"] = [
-            ...(newItem.generation.drugs["whitelist"] || []),
-            id,
-          ];
+          newItem.generation.drugs.whitelist[id] = 1;
           break;
         case checkParentRecursive(parent, items, [medKitParent]): //meds
-          newItem.generation.healing["whitelist"] = [
-            ...medkitsAdd[num],
-            ...(newItem.generation.healing["whitelist"] || []),
-            id,
-          ].filter((medKitID) => !medkitsRemove[num].has(medKitID));
+          newItem.generation.healing.whitelist[id] = 1;
+          medkitsRemove[num].forEach((removeId: string) => {
+            delete newItem.generation.healing.whitelist[removeId];
+          });
+
           break;
         case checkParentRecursive(parent, items, ["543be6564bdc2df4348b4568"]): //ThrowWeap
           if (items[id]._props.ThrowType !== "smoke_grenade") {
-            newItem.generation.grenades["whitelist"] = [
-              ...(newItem.generation.grenades["whitelist"] || []),
-              id,
-            ];
+            newItem.generation.grenades.whitelist[id] = 1;
           }
           break;
         default:
@@ -1508,9 +1516,12 @@ export const buildInitialRandomization = (
 
     const maxIndex = Math.round(BackpackLoot.length * (num * 0.2) - 1);
     const newLootList = BackpackLoot.slice(0, maxIndex);
-    newItem.generation.backpackLoot["whitelist"] = newLootList;
-    newItem.generation.pocketLoot["whitelist"] = newLootList;
-    newItem.generation.vestLoot["whitelist"] = newLootList;
+
+    newLootList.forEach((backpackLootId) => {
+      newItem.generation.backpackLoot.whitelist[backpackLootId] = 1;
+      newItem.generation.pocketLoot.whitelist[backpackLootId] = 1;
+      newItem.generation.vestLoot.whitelist[backpackLootId] = 1;
+    });
 
     Object.keys(newItem.generation).forEach((key) => {
       if (!newItem.generation[key]?.whitelist) {
@@ -1519,9 +1530,9 @@ export const buildInitialRandomization = (
           weights: { "0": 1 },
         };
       } else {
-        newItem.generation[key].whitelist = deDupeArr(
-          newItem.generation[key].whitelist
-        );
+        // newItem.generation[key].whitelist = deDupeArr(
+        //   newItem.generation[key].whitelist
+        // );
       }
     });
 
@@ -1547,10 +1558,10 @@ export const buildInitialUsecAppearance = (
     if (item?._props?.Side?.includes("Usec"))
       switch (true) {
         case item._props.BodyPart === "Head":
-          if (!appearance.head.includes(itemId)) appearance.head.push(itemId);
+          if (!appearance.head[itemId]) appearance.head[itemId] = 10;
           break;
         case item._props.BodyPart === "Hands":
-          if (!appearance.hands.includes(itemId)) appearance.hands.push(itemId);
+          if (!appearance.hands[itemId]) appearance.hands[itemId] = 10;
           break;
         default:
           break;
@@ -1573,10 +1584,10 @@ export const buildInitialBearAppearance = (
     if (item?._props?.Side?.includes("Bear"))
       switch (true) {
         case item._props.BodyPart === "Head":
-          if (!appearance.head.includes(itemId)) appearance.head.push(itemId);
+          if (!appearance.head[itemId]) appearance.head[itemId] = 10;
           break;
         case item._props.BodyPart === "Hands":
-          if (!appearance.hands.includes(itemId)) appearance.hands.push(itemId);
+          if (!appearance.hands[itemId]) appearance.hands[itemId] = 10;
           break;
         // case item._parent === "5fc100cf95572123ae738483":
         //     if (!appearance.voice.includes(item._name)) appearance.voice.push(item._name)
@@ -1757,9 +1768,9 @@ export const buildBlacklist = (
 
 export const deleteBlacklistedItemsFromInventory = (inventory: Inventory) => {
   Object.keys(inventory.items).forEach((key) => {
-    inventory.items[key] = inventory.items[key].filter(
-      (id: string) => !blacklistedItems.has(id)
-    );
+    Object.keys(inventory.items[key]).forEach((id) => {
+      if (blacklistedItems.has(id)) delete inventory.items[key][id];
+    });
   });
 
   Object.keys(inventory.Ammo).forEach((calibre) => {
@@ -1791,13 +1802,11 @@ export const ensureAllAmmoInSecureContainer = (inventory: Inventory) => {
     .map((calbr) => Object.keys(inventory.Ammo[calbr]))
     .flat();
 
-  const securContainerListSet = new Set(
-    inventory?.items?.SecuredContainer || []
-  );
+  inventory?.items?.SecuredContainer || {};
 
   ammo.forEach((id) => {
-    if (!securContainerListSet.has(id)) {
-      inventory.items.SecuredContainer.push(id);
+    if (!inventory?.items?.SecuredContainer?.[id]) {
+      inventory.items.SecuredContainer[id] = 1;
     }
   });
   //   const sortedAmmo = ammo.sort(
