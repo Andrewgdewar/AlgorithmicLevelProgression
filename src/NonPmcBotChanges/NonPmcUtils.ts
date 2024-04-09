@@ -60,14 +60,17 @@ const equipmentTypesTochange = new Set([
   "Holster",
 ]);
 
-const getRatingFuncForEquipmentType = (equipmentType: keyof Equipment) => {
+const getRatingFuncForEquipmentType = (
+  equipmentType: keyof Equipment,
+  items: Record<string, ITemplateItem>
+) => {
   const equipmentFunctions = {
     Backpack: (item) => getBackPackInternalGridValue(item) * 10,
     Headwear: getHeadwearRating,
-    ArmorVest: getArmorRating,
+    ArmorVest: (item: ITemplateItem) => getArmorRating(item, items),
     FirstPrimaryWeapon: getWeaponWeighting,
     Holster: getWeaponWeighting,
-    TacticalVest: getTacticalVestValue,
+    TacticalVest: (item: ITemplateItem) => getTacticalVestValue(item, items),
   };
   return equipmentFunctions[equipmentType];
 };
@@ -332,7 +335,7 @@ export const applyValuesToStoredEquipment = (
 
   Object.keys(inventory.equipment).forEach((key: keyof Equipment) => {
     if (equipmentTypesTochange.has(key)) {
-      const ratingFunc = getRatingFuncForEquipmentType(key);
+      const ratingFunc = getRatingFuncForEquipmentType(key, items);
       equipmentList[key] = [];
       Object.keys(inventory.equipment[key]).forEach((id) => {
         //Zero out equipment

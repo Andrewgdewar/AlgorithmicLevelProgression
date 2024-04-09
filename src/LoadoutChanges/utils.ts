@@ -244,20 +244,30 @@ export const mergeDeep = (target, ...sources) => {
   return mergeDeep(target, ...sources);
 };
 
-export const getArmorRating = ({
-  _props: { Durability, armorClass, armorZone, Weight },
-  _name,
-  _id,
-}: any): number => {
-  const armorZoneCoverage = armorZone?.length || 0;
-  const durability = Durability * 0.1;
-  const total = Math.round(
-    armorClass * 30 + durability + armorZoneCoverage * 3 - Weight
-  );
+export const getArmorRating = (
+  { _props: { Slots, Weight }, _name, _id }: ITemplateItem,
+  items: Record<string, ITemplateItem>
+): number => {
+  let armorClassWithCoverage = 1;
+  if (Slots?.length > 0) {
+    Slots.forEach((mod) => {
+      const multiplier =
+        mod._props.filters[0]?.armorColliders?.length ||
+        mod._props.filters[0]?.armorPlateColliders?.length;
 
-  if (total < 1) return 1;
-  // console.log(_name, total)
-  return total;
+      if (mod._props.filters[0]?.Plate) {
+        const plateId = mod._props.filters[0].Plate;
+        const armorClass = Number(items[plateId]?._props?.armorClass || 0);
+        if (armorClass > 0) {
+          armorClassWithCoverage += armorClass * multiplier;
+          if (armorClass >= 3) armorClassWithCoverage += multiplier;
+        }
+      }
+    });
+  }
+
+  // console.log(armorClassWithCoverage, _name, _id);
+  return armorClassWithCoverage;
 };
 
 export const getAmmoWeighting = ({
@@ -393,23 +403,20 @@ export const getBackPackInternalGridValue = ({
   return total > 1 ? total : 1;
 };
 
-export const getTacticalVestValue = (item: ITemplateItem): number => {
+export const getTacticalVestValue = (
+  item: ITemplateItem,
+  items: Record<string, ITemplateItem>
+): number => {
   const { Grids } = item._props;
   let spaceTotal = 0;
   Grids.forEach(({ _props }) => {
     spaceTotal += _props?.cellsH * _props?.cellsV;
   });
   spaceTotal = Math.round(spaceTotal) - item._props.Weight || 3;
-  if (spaceTotal < 5) spaceTotal = 5;
-  const armorRating = getArmorRating(item) * 0.8;
-  //   if (armorRating < 5)
-  //   console.log(
-  //     item._name,
-  //     item._id,
-  //     " - ",
-  //     armorRating > 5 ? armorRating : spaceTotal * 10
-  //   );
-  return Math.round(armorRating > 5 ? armorRating : spaceTotal * 10);
+  if (spaceTotal < 3) spaceTotal = 3;
+  const armorRating = getArmorRating(item, items) * 0.8;
+
+  return Math.round(armorRating > 5 ? armorRating + spaceTotal : spaceTotal);
 };
 
 export const equipmentIdMapper = {
@@ -749,7 +756,7 @@ export const setWeightingAdjustments = (
             );
             break;
           case "ArmorVest":
-            const armorRating = getArmorRating(item);
+            const armorRating = getArmorRating(item, items);
             setWeightItem(
               weight[index],
               equipmentType,
@@ -787,7 +794,7 @@ export const setWeightingAdjustments = (
             );
             break;
           case "TacticalVest":
-            const tacticalVestWeighting = getTacticalVestValue(item);
+            const tacticalVestWeighting = getTacticalVestValue(item, items);
             setWeightItem(
               weight[index],
               equipmentType,
