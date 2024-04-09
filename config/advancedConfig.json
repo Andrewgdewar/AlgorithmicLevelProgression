@@ -343,7 +343,7 @@
               "weights": {
                 "0": 1
               },
-              "whitelist": []
+              "whitelist": {}
             },
             "healing": {
               "weights": {
@@ -351,21 +351,21 @@
                 "1": 2,
                 "2": 1
               },
-              "whitelist": []
+              "whitelist": {}
             },
             "drugs": {
               "weights": {
                 "0": 4,
                 "1": 2
               },
-              "whitelist": []
+              "whitelist": {}
             },
             "stims": {
               "weights": {
                 "0": 9,
                 "1": 1
               },
-              "whitelist": []
+              "whitelist": {}
             },
             "backpackLoot": {
               "weights": {
@@ -377,7 +377,7 @@
                 "5": 1,
                 "6": 1
               },
-              "whitelist": []
+              "whitelist": {}
             },
             "pocketLoot": {
               "weights": {
@@ -387,7 +387,7 @@
                 "3": 1,
                 "4": 1
               },
-              "whitelist": []
+              "whitelist": {}
             },
             "vestLoot": {
               "weights": {
@@ -396,7 +396,7 @@
                 "2": 2,
                 "3": 1
               },
-              "whitelist": []
+              "whitelist": {}
             },
             "magazines": {
               "weights": {
@@ -406,20 +406,20 @@
                 "3": 3,
                 "4": 1
               },
-              "whitelist": []
+              "whitelist": {}
             },
             "grenades": {
               "weights": {
                 "0": 3,
                 "1": 1
               },
-              "whitelist": [
-                "5710c24ad2720bc3458b45a3",
-                "5a0c27731526d80618476ac4",
-                "619256e5f8af2c1a4e1f5d92",
-                "5e32f56fcb6d5863cc5e5ee4",
-                "5e340dcdcb6d5863cc5e5efb"
-              ]
+              "whitelist": {
+                "5710c24ad2720bc3458b45a3": 1,
+                "5a0c27731526d80618476ac4": 1,
+                "619256e5f8af2c1a4e1f5d92": 1,
+                "5e32f56fcb6d5863cc5e5ee4": 1,
+                "5e340dcdcb6d5863cc5e5efb": 1
+              }
             }
           },
           "equipment": {
@@ -437,7 +437,17 @@
             "Eyewear": 30,
             "Backpack": 30
           },
-          "mods": {
+          "equipmentMods": {
+            "front_plate": 30,
+            "back_plate": 30,
+            "left_side_plate": 5,
+            "right_side_plate": 5,
+            "mod_equipment": 0,
+            "mod_equipment_000": 0,
+            "mod_equipment_001": 0,
+            "mod_equipment_002": 0
+          },
+          "weaponMods": {
             "mod_reciever": 99,
             "mod_stock_akms": 90,
             "mod_stock": 90,
@@ -489,6 +499,47 @@
             "mod_trigger": 0,
             "mod_hammer": 0,
             "mod_catch": 0
+          },
+          "armorPlateWeighting": {
+            "levelRange": {
+              "min": 1,
+              "max": 99
+            },
+            "front_plate": {
+              "2": 25,
+              "3": 5,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "back_plate": {
+              "2": 25,
+              "3": 5,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "side_plate": {
+              "2": 25,
+              "3": 5,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "left_side_plate": {
+              "2": 25,
+              "3": 5,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "right_side_plate": {
+              "2": 25,
+              "3": 5,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            }
           }
         }
       ],

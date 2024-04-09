@@ -60,6 +60,8 @@ export const handguardParent = "55818a104bdc2db9688b4569";
 export const chargeParent = "55818a104bdc2db9688b4569";
 export const mountParent = "55818b224bdc2dde698b456f";
 export const weaponParent = "5422acb9af1c889c16000029";
+export const armorParent = "57bef4c42459772e8d35a53b";
+export const rigParent = "5448e5284bdc2dcb718b4567";
 
 export enum SightType {
   AssaultScope = "55818add4bdc2d5b648b456f",
@@ -955,6 +957,22 @@ export const buildOutModsObject = (
                     return true;
                   }
                   return false;
+                }
+              );
+            });
+          }
+          inventory.mods[id] = newModObject;
+          break;
+        case checkParentRecursive(item._parent, items, [
+          armorParent,
+          rigParent,
+        ]): //armor/vest
+          if (item?._props?.Slots?.length > 0) {
+            item._props.Slots.forEach((mod) => {
+              if (!mod._props.filters[0]?.Plate) return;
+              newModObject[mod._name] = mod._props.filters[0].Filter.filter(
+                (_tpl) => {
+                  return !!_tpl && !blacklistedItems.has(_tpl);
                 }
               );
             });

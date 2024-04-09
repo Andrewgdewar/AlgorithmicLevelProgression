@@ -10,7 +10,10 @@ import {
   WeightingAdjustmentDetails,
 } from "@spt-aki/models/spt/config/IBotConfig";
 import {
+  armorParent,
+  blacklistedItems,
   buildEmptyWeightAdjustments,
+  checkParentRecursive,
   cloneDeep,
   getAmmoWeighting,
   getArmorRating,
@@ -19,6 +22,7 @@ import {
   getTacticalVestValue,
   getWeaponWeighting,
   mergeDeep,
+  rigParent,
 } from "../LoadoutChanges/utils";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import advancedConfig from "../../config/advancedConfig.json";
@@ -32,7 +36,6 @@ import { MinMax } from "@spt-aki/models/common/MinMax";
 import Backpacks from "../Constants/Backpacks";
 
 export interface BotUpdateInterface {
-  name: string;
   tiers: Array<number[]>;
   Headwear: number[];
   ArmorVest: number[];
@@ -108,21 +111,44 @@ export const addItemsToBotInventory = (
   botToUpdate: BotUpdateInterface,
   items: Record<string, ITemplateItem>
 ) => {
-  const { name, Ammo: botToUpdateAmmo, ...equipment } = botToUpdate;
+  const { Ammo: botToUpdateAmmo, ...equipment } = botToUpdate;
 
   Object.keys(equipmentToAdd).forEach((key) => {
     const equipmentStart = equipment[key][0];
     const equipmentEnd = equipment[key][1];
+
     if (equipmentStart || equipmentEnd) {
       const startIndex = Math.floor(
         equipmentToAdd[key].length * equipmentStart
       );
+
       const endIndex = Math.floor(equipmentToAdd[key].length * equipmentEnd);
       equipmentToAdd[key].slice(startIndex, endIndex).forEach((id: string) => {
         if (!inventory.equipment[key][id]) {
+          const item = items[id];
+
+          if (
+            !inventory.mods[id] &&
+            checkParentRecursive(item._parent, items, [armorParent, rigParent])
+          ) {
+            if (item?._props?.Slots?.length > 0) {
+              const newModObject = {};
+              item._props.Slots.forEach((mod) => {
+                if (mod._props.filters[0]?.Plate) {
+                  newModObject[mod._name] = mod._props.filters[0].Filter.filter(
+                    (_tpl) => {
+                      return !!_tpl && !blacklistedItems.has(_tpl);
+                    }
+                  );
+                }
+              });
+              inventory.mods[id] = newModObject;
+            }
+          }
           inventory.equipment[key][id] = 1;
         }
       });
+
       if (key === "TacticalVest") {
         const startIndx = Math.floor(ArmoredRigs.length * equipmentStart);
 
@@ -157,7 +183,72 @@ export const addItemsToBotInventory = (
   }
 };
 
-export const buffGearAsLevel = (
+const defaultRandomisation = [
+  {
+    levelRange: {
+      min: 1,
+      max: 100,
+    },
+    equipmentMods: {},
+    armorPlateWeighting: {},
+  },
+];
+
+export const setPlateWeightings = (
+  name: string,
+  equipmentFilters: EquipmentFilters,
+  index: number
+) => {
+  if (
+    !nonPmcBotConfig.nonPmcBots?.[name]?.BasePlateChance &&
+    !nonPmcBotConfig.nonPmcBots?.[name]?.PlateWeightings
+  ) {
+    // console.log(name);
+    return;
+  }
+
+  if (!equipmentFilters?.randomisation) {
+    equipmentFilters.randomisation = defaultRandomisation;
+  }
+
+  const randomizationToUpdate = cloneDeep(equipmentFilters.randomisation[0]);
+
+  if (
+    nonPmcBotConfig.nonPmcBots?.[name]?.BasePlateChance &&
+    nonPmcBotConfig.nonPmcBots[name].BasePlateChance < 100
+  ) {
+    ["front_plate", "back_plate"].forEach((key) => {
+      let value = nonPmcBotConfig.nonPmcBots[name].BasePlateChance + index * 10;
+      if (value > 100) value = 100;
+      randomizationToUpdate.equipmentMods[key] = value;
+    });
+
+    ["left_side_plate", "right_side_plate"].forEach((key) => {
+      let value =
+        nonPmcBotConfig.nonPmcBots[name].BasePlateChance - 25 + index * 10;
+      if (value > 100) value = 100;
+      if (value < 0) value = 0;
+      randomizationToUpdate.equipmentMods[key] = value;
+    });
+  }
+
+  if (nonPmcBotConfig.nonPmcBots?.[name]?.PlateWeightings) {
+    [
+      "front_plate",
+      "back_plate",
+      "side_plate",
+      "left_side_plate",
+      "right_side_plate",
+    ].forEach((key) => {
+      randomizationToUpdate.armorPlateWeighting[key] =
+        nonPmcBotConfig.nonPmcBots[name].PlateWeightings[index];
+    });
+  }
+
+  equipmentFilters.randomisation[0] = randomizationToUpdate;
+};
+
+export const buffScavGearAsLevel = (
   equipmentFilters: EquipmentFilters,
   index: number
 ) => {

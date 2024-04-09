@@ -46,6 +46,7 @@ import {
   TradersMasterList,
 } from "./utils";
 import Tier5 from "../Constants/Tier5";
+import { IGlobals } from "@spt-aki/models/eft/common/IGlobals";
 
 export default function ProgressionChanges(
   container: DependencyContainer
@@ -54,12 +55,16 @@ export default function ProgressionChanges(
     container.resolve<ItemFilterService>("ItemFilterService");
   const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
   const configServer = container.resolve<ConfigServer>("ConfigServer");
+
   const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
   const pmcConfig = configServer.getConfig<IPmcConfig>(ConfigTypes.PMC);
+
   const tables = databaseServer.getTables();
   const items = tables.templates.items;
   const customization = tables.templates.customization;
   const traders = tables.traders;
+
+  const globals = tables.globals; //TODO: Fix default weapons
 
   const usecInventory = tables.bots.types.usec.inventory;
   const bearInventory = tables.bots.types.bear.inventory;
@@ -475,17 +480,17 @@ export default function ProgressionChanges(
     generation.backpackLoot = {
       ...(generation.looseLoot || {}),
       weights: { "0": 1 },
-      whitelist: [],
+      whitelist: {},
     };
     generation.pocketLoot = {
       ...(generation.looseLoot || {}),
       weights: { "0": 1 },
-      whitelist: [],
+      whitelist: {},
     };
     generation.vestLoot = {
       ...(generation.looseLoot || {}),
       weights: { "0": 1 },
-      whitelist: [],
+      whitelist: {},
     };
   }
 
@@ -497,6 +502,9 @@ export default function ProgressionChanges(
 
   addBossSecureContainer(usecInventory);
   addBossSecureContainer(bearInventory);
+  // armorPlateWeighting
+  // addDefaultWeaponValues(bearInventory, globals.ItemPresets);
+
   //   deleteBlacklistedItemsFromInventory(bearInventory);
   // const RagfairPriceService = container.resolve<RagfairPriceService>(
   //   "RagfairPriceService"

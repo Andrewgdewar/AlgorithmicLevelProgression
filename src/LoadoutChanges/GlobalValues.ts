@@ -19,7 +19,8 @@ import {
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import {
   StoredWeightingAdjustmentDetails,
-  buffGearAsLevel,
+  buffScavGearAsLevel,
+  setPlateWeightings,
 } from "../NonPmcBotChanges/NonPmcUtils";
 
 export class globalValues {
@@ -39,7 +40,7 @@ export class globalValues {
   public static updateInventory(currentLevel: number) {
     const nameList = Object.keys(this.storedEquipmentValues);
     if (!nameList.length || !currentLevel) return;
-
+    const botConfig = this.configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
     nameList.forEach((name) => {
       const currentLevelIndex = this.storedEquipmentValues[name].findIndex(
         ({ levelRange: { min, max } }) =>
@@ -61,11 +62,9 @@ export class globalValues {
         );
       }
       if (name === "assault") {
-        const botConfig = this.configServer.getConfig<IBotConfig>(
-          ConfigTypes.BOT
-        );
-        buffGearAsLevel(botConfig.equipment[name], currentLevelIndex);
+        buffScavGearAsLevel(botConfig.equipment[name], currentLevelIndex);
       }
+      setPlateWeightings(name, botConfig.equipment[name], currentLevelIndex);
     });
   }
 

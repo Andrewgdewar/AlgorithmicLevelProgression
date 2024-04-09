@@ -29,9 +29,9 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
             winterEventEnabled: true,
           }).time;
 
-          const botConfig = globalValues.configServer.getConfig<IBotConfig>(
-            ConfigTypes.BOT
-          );
+          // const botConfig = globalValues.configServer.getConfig<IBotConfig>(
+          //   ConfigTypes.BOT
+          // );
 
           const hours = getTime(time, info.timeVariant === "PAST" ? 12 : 0);
 
