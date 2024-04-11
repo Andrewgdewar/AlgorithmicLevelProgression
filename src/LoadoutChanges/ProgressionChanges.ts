@@ -64,8 +64,6 @@ export default function ProgressionChanges(
   const customization = tables.templates.customization;
   const traders = tables.traders;
 
-  const globals = tables.globals; //TODO: Fix default weapons
-
   const usecInventory = tables.bots.types.usec.inventory;
   const bearInventory = tables.bots.types.bear.inventory;
 
@@ -502,8 +500,6 @@ export default function ProgressionChanges(
 
   addBossSecureContainer(usecInventory);
   addBossSecureContainer(bearInventory);
-  // armorPlateWeighting
-  // addDefaultWeaponValues(bearInventory, globals.ItemPresets);
 
   //   deleteBlacklistedItemsFromInventory(bearInventory);
   // const RagfairPriceService = container.resolve<RagfairPriceService>(
@@ -551,12 +547,9 @@ export default function ProgressionChanges(
   // // console.log(listToStore.length)
 
   // saveToFile(listToStore, "refDBS/hats.json");
-  // saveToFile(usecInventory, "refDBS/usecInventoryRef3.json");
+  // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json");
 
-  // saveToFile(
-  //   tables.bots.types["assault"]?.inventory,
-  //   `NonPmcBotChanges/botsRef/${"assault"}-inventory.json`
-  // );
+  // saveToFile(usecInventory, `NonPmcBotChanges/botsRef/usec-inventory1.json`);
 
   config.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }

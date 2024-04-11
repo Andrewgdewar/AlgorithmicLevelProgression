@@ -72,16 +72,17 @@ export default function SetupNonPMCBotChanges(
 
     globalValues.storedEquipmentValues[name] = storedEquipmentValues;
   });
-  // globalValues.updateInventory(25);
+
+  // globalValues.updateInventory(90);
   // saveToFile(
-  //   globalValues.tables.bots.types["assault"]?.inventory,
-  //   `NonPmcBotChanges/botsRef/${"assault"}-inventory.json`
+  //   globalValues.storedEquipmentValues["assault"],
+  //   `NonPmcBotChanges/botsRef/stored.json`
   // );
 
-  // saveToFile(botConfig.equipment.marksman, "refDBS/weightings.json");
+  // saveToFile(botConfig.equipment.pmc, "refDBS/weightings2.json");
   // saveToFile(
-  //   globalValues.storedEquipmentValues,
-  //   `NonPmcBotChanges/botsRef/storedEquipmentValues1.json`
+  //   globalValues.tables.bots.types["usec"]?.inventory,
+  //   `NonPmcBotChanges/botsRef/storedAssault.json`
   // );
 
   config.debug &&

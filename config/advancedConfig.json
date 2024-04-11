@@ -360,6 +360,7 @@
   },
   "otherBotTypes": {
     "assault": {
+      "filterPlatesByLevel": false,
       "randomisation": [
         {
           "levelRange": {
@@ -456,7 +457,7 @@
             "FaceCover": 33,
             "ArmorVest": 55,
             "ArmBand": 5,
-            "TacticalVest": 90,
+            "TacticalVest": 95,
             "Pockets": 30,
             "SecondPrimaryWeapon": 1,
             "Scabbard": 35,
@@ -470,10 +471,12 @@
             "back_plate": 30,
             "left_side_plate": 5,
             "right_side_plate": 5,
-            "mod_equipment": 0,
+            "mod_equipment": 5,
             "mod_equipment_000": 0,
             "mod_equipment_001": 0,
-            "mod_equipment_002": 0
+            "mod_equipment_002": 0,
+            "mod_mount": 0,
+            "mod_nvg": 0
           },
           "weaponMods": {
             "mod_reciever": 99,
@@ -527,47 +530,49 @@
             "mod_trigger": 0,
             "mod_hammer": 0,
             "mod_catch": 0
+          }
+        }
+      ],
+      "armorPlateWeighting": [
+        {
+          "levelRange": {
+            "min": 1,
+            "max": 99
           },
-          "armorPlateWeighting": {
-            "levelRange": {
-              "min": 1,
-              "max": 99
-            },
-            "front_plate": {
-              "2": 25,
-              "3": 5,
-              "4": 1,
-              "5": 0,
-              "6": 0
-            },
-            "back_plate": {
-              "2": 25,
-              "3": 5,
-              "4": 1,
-              "5": 0,
-              "6": 0
-            },
-            "side_plate": {
-              "2": 25,
-              "3": 5,
-              "4": 1,
-              "5": 0,
-              "6": 0
-            },
-            "left_side_plate": {
-              "2": 25,
-              "3": 5,
-              "4": 1,
-              "5": 0,
-              "6": 0
-            },
-            "right_side_plate": {
-              "2": 25,
-              "3": 5,
-              "4": 1,
-              "5": 0,
-              "6": 0
-            }
+          "front_plate": {
+            "2": 25,
+            "3": 5,
+            "4": 1,
+            "5": 1,
+            "6": 1
+          },
+          "back_plate": {
+            "2": 25,
+            "3": 5,
+            "4": 1,
+            "5": 1,
+            "6": 1
+          },
+          "side_plate": {
+            "2": 25,
+            "3": 5,
+            "4": 1,
+            "5": 1,
+            "6": 1
+          },
+          "left_side_plate": {
+            "2": 25,
+            "3": 5,
+            "4": 1,
+            "5": 1,
+            "6": 1
+          },
+          "right_side_plate": {
+            "2": 25,
+            "3": 5,
+            "4": 1,
+            "5": 1,
+            "6": 1
           }
         }
       ],
