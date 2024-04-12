@@ -120,6 +120,10 @@ Example order.json with recommended mods:
         ]
     },
 
+    // This makes the tiering more strict
+    // IE makes it so there is no chance a pmc will use gear beyond their level
+    "strictEquipmentTiering": false,
+
     // The below is how one can adjust equipment weightings for each category.
     // 0 is meta, 1 is completely random, 2 will make pmcs prioritize the worst gear.
     // Imagine a pmc can wear a usec hat, or a Ulach helmet, the weighting may look like this:
@@ -145,15 +149,7 @@ Example order.json with recommended mods:
     // Just keep this off
     "debug": false
 
-  nonPMCBotConfig 
-  
-  // These values increase the randomness of the ammo or equipment used by bots 
-  // (1 = 100% randomness, 0.5 = 80% randomness... it's confusing)
-  // Basically be careful here, this is highly sensitive 
-  // Even slightly increasing this will produce dramatic effects
-  // I recommend to keep it off, or below 0.2, try increments of 0.05
-  "botAmmoRandomness": 0, 
-  "botEquipmentRandomness": 0, 
+
 
   // This is the configuration for nonPmcBots
   "nonPmcBots": [
