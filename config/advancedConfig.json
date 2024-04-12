@@ -1,6 +1,7 @@
 {
   "DO NOT CHANGE ANYTHING HERE": "DON't ASK FOR HELP IF YOU DO!",
   "forceStock": false,
+  "daytimeSilencerCutoff": -29,
   "forbiddenBullets": {
     "3": [],
     "4": [
@@ -360,7 +361,7 @@
   },
   "otherBotTypes": {
     "assault": {
-      "filterPlatesByLevel": false,
+      "weaponSlotIdsToMakeRequired": ["mod_muzzle"],
       "randomisation": [
         {
           "levelRange": {
@@ -457,7 +458,7 @@
             "FaceCover": 33,
             "ArmorVest": 55,
             "ArmBand": 5,
-            "TacticalVest": 95,
+            "TacticalVest": 99,
             "Pockets": 30,
             "SecondPrimaryWeapon": 1,
             "Scabbard": 35,

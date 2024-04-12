@@ -299,7 +299,7 @@ export const getHeadwearRating = (
   const hasNvg = !!item._props.Slots.find((slot) => slot._name === "mod_nvg");
 
   if (hasNvg) rating += 2;
-  if (item._props?.BlocksEarpiece) rating *= 0.7;
+  if (item._props?.BlocksEarpiece) rating *= 0.4;
   // console.log(
   //   Math.round(rating * 1.5 - item._props.Weight),
   //   "-",
@@ -1439,9 +1439,9 @@ export const buildInitialRandomization = (
         mod_mount_004: [20, 45, 65, 90, 95][index],
         mod_mount_005: [20, 45, 65, 90, 95][index],
         mod_mount_006: [20, 45, 65, 90, 95][index],
-        mod_muzzle: [25, 40, 59, 100, 100][index],
-        mod_muzzle_000: [15, 45, 99, 100, 100][index],
-        mod_muzzle_001: [15, 45, 99, 100, 100][index],
+        mod_muzzle: [5, 15, 35, 70, 100][index],
+        mod_muzzle_000: [5, 15, 35, 100, 100][index],
+        mod_muzzle_001: [5, 15, 35, 100, 100][index],
         mod_equipment: [15, 25, 25, 35, 50][index],
         mod_equipment_000: [0, 0, 0, 5, 20][index],
         mod_equipment_001: [0, 0, 5, 15, 25][index],

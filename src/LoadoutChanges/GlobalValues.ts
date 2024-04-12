@@ -64,7 +64,13 @@ export class globalValues {
       if (name === "assault") {
         buffScavGearAsLevel(botConfig.equipment[name], currentLevelIndex);
       }
-      setPlateWeightings(name, botConfig.equipment[name], currentLevelIndex);
+      setPlateWeightings(
+        name,
+        botConfig.equipment[name],
+        currentLevelIndex,
+        botInventory,
+        this.tables.templates.items
+      );
     });
   }
 

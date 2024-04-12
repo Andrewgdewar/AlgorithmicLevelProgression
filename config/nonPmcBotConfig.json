@@ -11,7 +11,7 @@
       ],
       "Backpack": [0, 0.3],
       "Ammo": [0, 0.4],
-      "BasePlateChance": 30,
+      "BasePlateChance": 40,
       "PlateWeightings": [
         { "2": 25, "3": 5, "4": 1, "5": 1, "6": 1 },
         { "2": 20, "3": 10, "4": 3, "5": 2, "6": 1 },
@@ -27,7 +27,7 @@
       ],
       "Backpack": [0, 0.4],
       "Ammo": [0, 0.7],
-      "BasePlateChance": 30,
+      "BasePlateChance": 40,
       "PlateWeightings": [
         { "2": 25, "3": 5, "4": 1, "5": 1, "6": 1 },
         { "2": 20, "3": 10, "4": 3, "5": 2, "6": 1 },
