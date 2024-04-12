@@ -64,7 +64,13 @@ export class globalValues {
       if (name === "assault") {
         buffScavGearAsLevel(botConfig.equipment[name], currentLevelIndex);
       }
-      setPlateWeightings(name, botConfig.equipment[name], currentLevelIndex);
+      setPlateWeightings(
+        name,
+        botConfig.equipment[name],
+        currentLevelIndex,
+        botInventory,
+        this.tables.templates.items
+      );
     });
   }
 
@@ -154,7 +160,7 @@ export class globalValues {
 
     // saveToFile(originalBotTypesCopy.usec.inventory.mods, "updated.json")
     // saveToFile(originalBotTypesCopy.usec.inventory, "refDBS/usecInventoryRef.json")
-    // saveToFile(finalEquipment, "finalEquipment.json")
+    // saveToFile(finalEquipment, "finalEquipment.json");
     // saveToFile(this.originalWeighting, "originalWeighting.json")
     botConfig.equipment.pmc = finalEquipment;
     this.tables.bots.types = originalBotTypesCopy;
