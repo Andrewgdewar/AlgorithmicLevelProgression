@@ -26,18 +26,19 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
             acceleration: 0,
             time: "",
             date: "",
+            winterEventEnabled: true,
           }).time;
 
-          const botConfig = globalValues.configServer.getConfig<IBotConfig>(
-            ConfigTypes.BOT
-          );
+          // const botConfig = globalValues.configServer.getConfig<IBotConfig>(
+          //   ConfigTypes.BOT
+          // );
 
           const hours = getTime(time, info.timeVariant === "PAST" ? 12 : 0);
 
           globalValues.setValuesForLocation(info.location.toLowerCase(), hours);
           if (enableNonPMCBotChanges) {
             const pmcData = globalValues.profileHelper.getPmcProfile(sessionId);
-            globalValues.updateInventory(pmcData?.Info?.Level);
+            globalValues.updateInventory(pmcData?.Info?.Level || 1);
           }
           return output;
         },

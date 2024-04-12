@@ -1,133 +1,111 @@
 {
   "botAmmoRandomness": 0,
   "botEquipmentRandomness": 0,
-  "nonPmcBots": [
-    {
-      "name": "assault",
+  "nonPmcBots": {
+    "assault": {
       "tiers": [
         [1, 14],
         [15, 30],
         [31, 45],
         [46, 100]
       ],
-      "Headwear": [0, 0.3],
-      "ArmorVest": [0, 0.3],
-      "TacticalVest": [0, 0.3],
       "Backpack": [0, 0.3],
-      "Ammo": [0, 0.4]
+      "Ammo": [0, 0.4],
+      "BasePlateChance": 40,
+      "PlateWeightings": [
+        { "2": 25, "3": 5, "4": 1, "5": 1, "6": 1 },
+        { "2": 20, "3": 10, "4": 3, "5": 2, "6": 1 },
+        { "2": 20, "3": 20, "4": 5, "5": 3, "6": 2 },
+        { "2": 5, "3": 10, "4": 20, "5": 5, "6": 4 }
+      ]
     },
-    {
-      "name": "marksman",
+    "marksman": {
       "tiers": [
         [1, 14],
         [15, 34],
         [35, 100]
       ],
-      "Headwear": [0, 0.4],
-      "ArmorVest": [0, 0.4],
-      "TacticalVest": [0, 0.4],
       "Backpack": [0, 0.4],
-      "Ammo": [0, 0.7]
+      "Ammo": [0, 0.7],
+      "BasePlateChance": 40,
+      "PlateWeightings": [
+        { "2": 25, "3": 5, "4": 1, "5": 1, "6": 1 },
+        { "2": 20, "3": 10, "4": 3, "5": 2, "6": 1 },
+        { "2": 20, "3": 20, "4": 5, "5": 3, "6": 2 },
+        { "2": 5, "3": 10, "4": 20, "5": 5, "6": 4 }
+      ]
     },
-    {
-      "name": "arenafighterevent",
+    "arenafighterevent": {
       "tiers": [
         [1, 14],
         [15, 30],
         [31, 45],
         [46, 100]
       ],
-      "Headwear": [0.2, 0.5],
-      "ArmorVest": [0.2, 0.5],
-      "TacticalVest": [0.2, 0.5],
       "Backpack": [0.2, 0.5],
       "Ammo": [0, 0.5]
     },
-    {
-      "name": "arenafighter",
+    "arenafighter": {
       "tiers": [
         [1, 14],
         [15, 30],
         [31, 45],
         [46, 100]
       ],
-      "Headwear": [0.2, 0.5],
-      "ArmorVest": [0.2, 0.5],
-      "TacticalVest": [0.2, 0.5],
       "Backpack": [0.2, 0.5],
       "Ammo": [0, 0.5]
     },
-    {
-      "name": "pmcbot",
+    "pmcbot": {
       "tiers": [
         [1, 14],
         [15, 30],
         [31, 45],
         [46, 100]
       ],
-      "Headwear": [0.3, 0.8],
-      "ArmorVest": [0.3, 0.8],
-      "TacticalVest": [0.3, 0.8],
       "Backpack": [0.3, 0.8],
       "Ammo": [0.2, 0.8]
     },
-    {
-      "name": "exusec",
+    "exusec": {
       "tiers": [
         [1, 14],
         [15, 30],
         [31, 45],
         [46, 100]
       ],
-      "Headwear": [0.3, 0.8],
-      "ArmorVest": [0.3, 0.8],
-      "TacticalVest": [0.3, 0.8],
       "Backpack": [0.3, 0.8],
       "Ammo": [0.2, 0.8]
     },
-    {
-      "name": "allBossFollowers",
+    "allBossFollowers": {
       "tiers": [
         [1, 14],
         [15, 30],
         [31, 45],
         [46, 100]
       ],
-      "Headwear": [0.3, 0.5],
-      "ArmorVest": [0.3, 0.5],
-      "TacticalVest": [0.3, 0.5],
       "Backpack": [0.3, 0.5],
       "Ammo": [0.2, 0.7]
     },
-    {
-      "name": "allBosses",
+    "allBosses": {
       "tiers": [
         [1, 14],
         [15, 30],
         [31, 45],
         [46, 100]
       ],
-      "Headwear": [0, 0],
-      "ArmorVest": [0, 0],
-      "TacticalVest": [0, 0],
       "Backpack": [0, 0],
       "Ammo": [0.3, 0.8]
     },
-    {
-      "name": "bossbully",
+    "bossbully": {
       "tiers": [
         [1, 14],
         [15, 30],
         [31, 45],
         [46, 100]
       ],
-      "Headwear": [0, 0],
-      "ArmorVest": [0, 0.2],
-      "TacticalVest": [0, 0],
       "Backpack": [0, 0],
       "Ammo": [0.3, 0.8]
     }
-  ],
+  },
   "allBossFollowers": [
     "followerbully",
     "followergluharassault",

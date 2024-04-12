@@ -17,6 +17,7 @@ import {
   weaponTypeNameToId,
 } from "./utils";
 import InternalBlacklist from "./InternalBlacklist";
+import { globalValues } from "./GlobalValues";
 
 export const makeRandomisationAdjustments = (
   isNight: boolean,
@@ -27,27 +28,46 @@ export const makeRandomisationAdjustments = (
   const noNvgNeeded = ["factory4_day", "factory4_night", "laboratory"].includes(
     location
   );
+
+  // levelRange: MinMax;
+  // generation?: Record<string, GenerationData>;
+  // /** Mod slots that should be fully randomised -ignores mods from bottype.json and instaed creates a pool using items.json */
+  // randomisedWeaponModSlots?: string[];
+  // /** Armor slots that should be randomised e.g. 'Headwear, Armband' */
+  // randomisedArmorSlots?: string[];
+  // /** Equipment chances */
+  // equipment?: Record<string, number>;
+  // /** Weapon mod chances */
+  // weaponMods?: Record<string, number>;
+  // /** Equipment mod chances */
+  // equipmentMods?: Record<string, number>;
+
   originalWeight.randomisation.forEach((_, index) => {
     // NVG's
-    if (!noNvgNeeded && randomisation?.[index]?.mods?.mod_nvg !== undefined) {
-      randomisation[index].mods.mod_nvg = isNight ? (index + 1) * 18 : 0;
-      if (randomisation[index].mods.mod_nvg > 100)
-        randomisation[index].mods.mod_nvg = 100;
+    if (
+      !noNvgNeeded &&
+      randomisation?.[index]?.equipmentMods?.mod_nvg !== undefined
+    ) {
+      randomisation[index].equipmentMods.mod_nvg = isNight
+        ? (index + 1) * 18
+        : 0;
+      if (randomisation[index].equipmentMods.mod_nvg > 100)
+        randomisation[index].equipmentMods.mod_nvg = 100;
     }
     // Silencers??
-    if (randomisation?.[index]?.mods?.mod_muzzle !== undefined) {
-      randomisation[index].mods.mod_muzzle += isNight ? 18 : 0;
-      if (randomisation[index].mods.mod_muzzle > 100)
-        randomisation[index].mods.mod_muzzle = 100;
+    if (randomisation?.[index]?.weaponMods?.mod_muzzle !== undefined) {
+      randomisation[index].weaponMods.mod_muzzle += isNight ? 18 : 0;
+      if (randomisation[index].weaponMods.mod_muzzle > 100)
+        randomisation[index].weaponMods.mod_muzzle = 100;
     }
     // Flashlights
     if (
       location === "laboratory" ||
-      randomisation?.[index]?.mods?.mod_flashlight !== undefined
+      randomisation?.[index]?.weaponMods?.mod_flashlight !== undefined
     ) {
-      randomisation[index].mods.mod_flashlight += isNight ? 45 : 0;
-      if (randomisation[index].mods.mod_flashlight > 100)
-        randomisation[index].mods.mod_flashlight = 100;
+      randomisation[index].weaponMods.mod_flashlight += isNight ? 45 : 0;
+      if (randomisation[index].weaponMods.mod_flashlight > 100)
+        randomisation[index].weaponMods.mod_flashlight = 100;
     }
 
     if (location === "laboratory") {
@@ -55,7 +75,7 @@ export const makeRandomisationAdjustments = (
         "mod_equipment",
         "mod_equipment_000",
         "mod_equipment_001",
-        "mod_equipment_002",
+        "mod_equipment_002", //TODO: check if this is still needed
         "mod_pistol_grip_akms",
         "mod_tactical",
         "mod_tactical_2",
@@ -66,10 +86,10 @@ export const makeRandomisationAdjustments = (
         "mod_tactical_002",
         "mod_tactical_003",
       ].forEach((modName) => {
-        if (randomisation?.[index]?.mods?.[modName] !== undefined) {
-          randomisation[index].mods[modName] += 30;
-          if (randomisation[index].mods[modName] > 100)
-            randomisation[index].mods[modName] = 100;
+        if (randomisation?.[index]?.weaponMods?.[modName] !== undefined) {
+          randomisation[index].weaponMods[modName] += 30;
+          if (randomisation[index].weaponMods[modName] > 100)
+            randomisation[index].weaponMods[modName] = 100;
         }
       });
     }
@@ -126,7 +146,7 @@ export const cullModItems = (
   for (let key in mods) {
     if (
       cullList.has(key) ||
-      !customFilterCheck(key, isNight, items, cullList)
+      !checkDaytimeSilencer(key, isNight, items, cullList)
     ) {
       delete mods[key];
     } else {
@@ -135,7 +155,7 @@ export const cullModItems = (
           mods[key][modType] = mods[key][modType].filter(
             (id) =>
               !cullList.has(id) &&
-              customFilterCheck(id, isNight, items, cullList)
+              checkDaytimeSilencer(id, isNight, items, cullList)
           );
           if (
             mods[key][modType].length === 0 &&
@@ -149,7 +169,7 @@ export const cullModItems = (
   }
 };
 
-const customFilterCheck = (
+const checkDaytimeSilencer = (
   id: string,
   isNight: boolean,
   items: Record<string, ITemplateItem>,
@@ -160,7 +180,7 @@ const customFilterCheck = (
   switch (true) {
     case !isNight &&
       checkParentRecursive(id, items, [muzzleParent]) &&
-      item._props.Loudness < -10:
+      item._props.Loudness < globalValues.advancedConfig.daytimeSilencerCutoff:
       cullList.add(id);
       return false;
 

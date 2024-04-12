@@ -24,6 +24,7 @@ import {
   buildWeaponSightWhitelist,
   checkParentRecursive,
   cloneDeep,
+  combineWhitelist,
   deDupeArr,
   deleteBlacklistedItemsFromInventory,
   ensureAllAmmoInSecureContainer,
@@ -46,6 +47,7 @@ import {
   TradersMasterList,
 } from "./utils";
 import Tier5 from "../Constants/Tier5";
+import { IGlobals } from "@spt-aki/models/eft/common/IGlobals";
 
 export default function ProgressionChanges(
   container: DependencyContainer
@@ -54,8 +56,10 @@ export default function ProgressionChanges(
     container.resolve<ItemFilterService>("ItemFilterService");
   const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
   const configServer = container.resolve<ConfigServer>("ConfigServer");
+
   const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
   const pmcConfig = configServer.getConfig<IPmcConfig>(ConfigTypes.PMC);
+
   const tables = databaseServer.getTables();
   const items = tables.templates.items;
   const customization = tables.templates.customization;
@@ -179,21 +183,21 @@ export default function ProgressionChanges(
         const equipmentType = getEquipmentType(parent, items);
 
         switch (true) {
-          case checkParentRecursive(parent, items, [
-            barterParent,
-            keyMechanical,
-            medsParent,
-            moneyParent,
-          ]):
-            usecInventory.items.Pockets.push(_tpl);
-            bearInventory.items.Pockets.push(_tpl);
+          // case checkParentRecursive(parent, items, [
+          //   barterParent,
+          //   keyMechanical,
+          //   medsParent,
+          //   moneyParent,
+          // ]):
+          //   usecInventory.items.Pockets[_tpl] = 1;
+          //   bearInventory.items.Pockets[_tpl] = 1;
 
-            usecInventory.items.TacticalVest.push(_tpl);
-            bearInventory.items.TacticalVest.push(_tpl);
+          //   usecInventory.items.TacticalVest[_tpl] = 1;
+          //   bearInventory.items.TacticalVest[_tpl] = 1;
 
-            usecInventory.items.Backpack.push(_tpl);
-            bearInventory.items.Backpack.push(_tpl);
-            break;
+          //   usecInventory.items.Backpack[_tpl] = 1;
+          //   bearInventory.items.Backpack[_tpl] = 1;
+          //   break;
 
           //Add Ammo
           case checkParentRecursive(parent, items, [AmmoParent]):
@@ -217,8 +221,8 @@ export default function ProgressionChanges(
               // usecInventory.items.TacticalVest.push(_tpl)
               // bearInventory.items.TacticalVest.push(_tpl)
 
-              usecInventory.items.SecuredContainer.push(_tpl);
-              bearInventory.items.SecuredContainer.push(_tpl);
+              usecInventory.items.SecuredContainer[_tpl] = 1;
+              bearInventory.items.SecuredContainer[_tpl] = 1;
             } else {
               console.log(
                 item._name,
@@ -228,8 +232,8 @@ export default function ProgressionChanges(
             }
             break;
           case checkParentRecursive(parent, items, [magParent]):
-            usecInventory.items.SecuredContainer.push(_tpl);
-            bearInventory.items.SecuredContainer.push(_tpl);
+            usecInventory.items.SecuredContainer[_tpl] = 1;
+            bearInventory.items.SecuredContainer[_tpl] = 1;
             break;
           // case equipmentType === "mod_scope":
           //     break;
@@ -381,37 +385,38 @@ export default function ProgressionChanges(
 
   setupMods(mods);
 
-  addKeysToPockets(combinedNumList, items, tables.bots.types.assault.inventory);
+  // lets disable this for now
+  // addKeysToPockets(combinedNumList, items, tables.bots.types.assault.inventory);
 
-  usecInventory.items.SecuredContainer.push("5e99711486f7744bfc4af328");
-  bearInventory.items.SecuredContainer.push("5e99711486f7744bfc4af328");
-  // Remove duplicate items for all arrays
-  usecInventory.items.SecuredContainer = deDupeArr(
-    usecInventory.items.SecuredContainer
-  );
-  bearInventory.items.SecuredContainer = deDupeArr(
-    bearInventory.items.SecuredContainer
-  );
+  usecInventory.items.SecuredContainer["5e99711486f7744bfc4af328"] = 1;
+  bearInventory.items.SecuredContainer["5e99711486f7744bfc4af328"] = 1;
+  // // Remove duplicate items for all arrays
+  // usecInventory.items.SecuredContainer = deDupeArr(
+  //   usecInventory.items.SecuredContainer
+  // );
+  // bearInventory.items.SecuredContainer = deDupeArr(
+  //   bearInventory.items.SecuredContainer
+  // );
 
-  usecInventory.items.Backpack = config.removePMCLootForLootingBots
-    ? []
-    : deDupeArr(usecInventory.items.Backpack);
-  bearInventory.items.Backpack = config.removePMCLootForLootingBots
-    ? []
-    : deDupeArr(bearInventory.items.Backpack);
+  // usecInventory.items.Backpack = config.removePMCLootForLootingBots
+  //   ? []
+  //   : deDupeArr(usecInventory.items.Backpack);
+  // bearInventory.items.Backpack = config.removePMCLootForLootingBots
+  //   ? []
+  //   : deDupeArr(bearInventory.items.Backpack);
 
-  usecInventory.items.Pockets = deDupeArr(usecInventory.items.Pockets);
-  bearInventory.items.Pockets = deDupeArr(bearInventory.items.Pockets);
+  // usecInventory.items.Pockets = deDupeArr(usecInventory.items.Pockets);
+  // bearInventory.items.Pockets = deDupeArr(bearInventory.items.Pockets);
 
-  usecInventory.items.TacticalVest = deDupeArr(
-    usecInventory.items.TacticalVest
-  );
-  bearInventory.items.TacticalVest = deDupeArr(
-    bearInventory.items.TacticalVest
-  );
+  // usecInventory.items.TacticalVest = deDupeArr(
+  //   usecInventory.items.TacticalVest
+  // );
+  // bearInventory.items.TacticalVest = deDupeArr(
+  //   bearInventory.items.TacticalVest
+  // );
 
-  usecInventory.items.SpecialLoot = deDupeArr(usecInventory.items.SpecialLoot);
-  bearInventory.items.SpecialLoot = deDupeArr(bearInventory.items.SpecialLoot);
+  // usecInventory.items.SpecialLoot = deDupeArr(usecInventory.items.SpecialLoot);
+  // bearInventory.items.SpecialLoot = deDupeArr(bearInventory.items.SpecialLoot);
 
   //Make everything level 1 in equipment
   reduceEquipmentChancesTo1(usecInventory);
@@ -458,6 +463,10 @@ export default function ProgressionChanges(
   setWeightingAdjustments(items, botConfig, tradersMasterList, mods);
   buildInitialRandomization(items, botConfig, tradersMasterList);
 
+  if (config.strictEquipmentTiering === false) {
+    combineWhitelist(botConfig.equipment.pmc);
+  }
+
   Object.keys(advancedConfig.otherBotTypes).forEach((botType) => {
     mergeDeep(
       botConfig.equipment[botType],
@@ -474,17 +483,17 @@ export default function ProgressionChanges(
     generation.backpackLoot = {
       ...(generation.looseLoot || {}),
       weights: { "0": 1 },
-      whitelist: [],
+      whitelist: {},
     };
     generation.pocketLoot = {
       ...(generation.looseLoot || {}),
       weights: { "0": 1 },
-      whitelist: [],
+      whitelist: {},
     };
     generation.vestLoot = {
       ...(generation.looseLoot || {}),
       weights: { "0": 1 },
-      whitelist: [],
+      whitelist: {},
     };
   }
 
@@ -496,6 +505,7 @@ export default function ProgressionChanges(
 
   addBossSecureContainer(usecInventory);
   addBossSecureContainer(bearInventory);
+
   //   deleteBlacklistedItemsFromInventory(bearInventory);
   // const RagfairPriceService = container.resolve<RagfairPriceService>(
   //   "RagfairPriceService"
@@ -542,12 +552,9 @@ export default function ProgressionChanges(
   // // console.log(listToStore.length)
 
   // saveToFile(listToStore, "refDBS/hats.json");
-  // saveToFile(usecInventory, "refDBS/usecInventoryRef3.json");
+  // saveToFile(botConfig.equipment.pmc, "refDBS/weightings.json");
 
-  // saveToFile(
-  //   tables.bots.types["assault"]?.inventory,
-  //   `NonPmcBotChanges/botsRef/${"assault"}-inventory.json`
-  // );
+  // saveToFile(usecInventory, `NonPmcBotChanges/botsRef/usec-inventory1.json`);
 
   config.debug && console.log("Algorthimic Progression: Equipment DB updated");
 }

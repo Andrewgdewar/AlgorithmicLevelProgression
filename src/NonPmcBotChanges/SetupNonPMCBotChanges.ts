@@ -38,30 +38,21 @@ export default function SetupNonPMCBotChanges(
   const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
   const tables = databaseServer.getTables();
   const items = tables.templates.items;
+  const botsForUpdate = nonPmcBotConfig?.nonPmcBots;
 
-  const botsToAdd = [];
-
-  const botsForUpdate = nonPmcBotConfig?.nonPmcBots.filter(
-    ({ name, ...rest }) => {
-      if (nonPmcBotConfig[name]?.length) {
-        nonPmcBotConfig[name].forEach((listName) =>
-          botsToAdd.push({ name: listName, ...rest })
-        );
-        return false;
-      }
-      return true;
+  Object.keys(nonPmcBotConfig?.nonPmcBots).forEach((name) => {
+    if (nonPmcBotConfig[name]?.length) {
+      nonPmcBotConfig[name].forEach((listName) => {
+        botsForUpdate[listName] = nonPmcBotConfig.nonPmcBots[name];
+      });
     }
+  });
+
+  const botConfig = globalValues.configServer.getConfig<IBotConfig>(
+    ConfigTypes.BOT
   );
 
-  botsForUpdate.push(...botsToAdd);
-
-  botsForUpdate.forEach((updateInfo) => {
-    const { name } = updateInfo;
-
-    const botConfig = globalValues.configServer.getConfig<IBotConfig>(
-      ConfigTypes.BOT
-    );
-
+  Object.keys(botsForUpdate).forEach((name) => {
     if (botConfig.equipment.assault.weightingAdjustmentsByPlayerLevel) {
       botConfig.equipment.assault.weightingAdjustmentsByPlayerLevel = [];
     }
@@ -69,29 +60,32 @@ export default function SetupNonPMCBotChanges(
     if (!tables.bots.types[name]?.inventory?.Ammo) return;
     const inventory = tables.bots.types[name].inventory;
 
-    addItemsToBotInventory(inventory, updateInfo, items);
+    addItemsToBotInventory(inventory, nonPmcBotConfig.nonPmcBots[name], items);
 
     normalizeMedianInventoryValues(inventory);
 
-    const storedEquipmentValues =
-      buildEmptyWeightAdjustmentsByDevision(updateInfo);
+    const storedEquipmentValues = buildEmptyWeightAdjustmentsByDevision(
+      nonPmcBotConfig.nonPmcBots[name]
+    );
 
     applyValuesToStoredEquipment(inventory, items, storedEquipmentValues);
 
     globalValues.storedEquipmentValues[name] = storedEquipmentValues;
-
-    // globalValues.updateInventory(1);
-    //   saveToFile(
-    //     globalValues.tables.bots.types[updateInfo.name]?.inventory,
-    //     `NonPmcBotChanges/botsRef/${updateInfo.name}-inventory1.json`
-    //   );
-    // saveToFile(globalValues.tables.botConfig.equipment.assault, "refDBS/weightings.json");
   });
 
+  // globalValues.updateInventory(69);
+
   // saveToFile(
-  //   globalValues.storedEquipmentValues,
-  //   `NonPmcBotChanges/botsRef/storedEquipmentValues1.json`
+  //   globalValues.storedEquipmentValues["assault"],
+  //   `NonPmcBotChanges/botsRef/stored69.json`
   // );
+
+  // saveToFile(botConfig.equipment.assault, "refDBS/weightings69.json");
+  // saveToFile(
+  //   globalValues.tables.bots.types["assault"]?.inventory,
+  //   `NonPmcBotChanges/botsRef/storedAssault1.json`
+  // );
+
   config.debug &&
     console.log("Algorthimic Progression: nonPmcBots equipment stored!");
 }

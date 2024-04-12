@@ -14,8 +14,8 @@
     "get id's from here https://db.sp-tarkov.com/search/",
     "5example3208of34not8f83real8a1id"
   ],
-  "removePMCLootForLootingBots": true,
-  "removeScavLootForLootingBots": true,
+  "removePMCLootForLootingBots": false,
+  "removeScavLootForLootingBots": false,
   "levelRange": {
     "1": {
       "min": 1,
@@ -45,15 +45,16 @@
     "4": [4, 6, 8, 10, 4],
     "5": [2, 4, 6, 9, 8]
   },
+  "strictEquipmentTiering": false,
   "randomness": {
-    "Holster": 0.3,
+    "Holster": 0.2,
     "Headwear": 0.3,
-    "FirstPrimaryWeapon": 0.4,
-    "Earpiece": 0.4,
-    "Backpack": 0.4,
+    "FirstPrimaryWeapon": 0.3,
+    "Earpiece": 0.2,
+    "Backpack": 0.2,
     "Eyewear": 0.5,
-    "TacticalVest": 0.4,
-    "ArmorVest": 0.3,
+    "TacticalVest": 0.1,
+    "ArmorVest": 0.1,
     "FaceCover": 0.3
   },
   "debug": false
