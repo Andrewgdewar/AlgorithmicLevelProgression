@@ -24,6 +24,7 @@ import {
   buildWeaponSightWhitelist,
   checkParentRecursive,
   cloneDeep,
+  combineWhitelist,
   deDupeArr,
   deleteBlacklistedItemsFromInventory,
   ensureAllAmmoInSecureContainer,
@@ -461,6 +462,10 @@ export default function ProgressionChanges(
   setWhitelists(items, botConfig, tradersMasterList, mods);
   setWeightingAdjustments(items, botConfig, tradersMasterList, mods);
   buildInitialRandomization(items, botConfig, tradersMasterList);
+
+  if (config.strictEquipmentTiering === false) {
+    combineWhitelist(botConfig.equipment.pmc);
+  }
 
   Object.keys(advancedConfig.otherBotTypes).forEach((botType) => {
     mergeDeep(

@@ -3,6 +3,7 @@ import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { ISuit } from "@spt-aki/models/eft/common/tables/ITrader";
 import {
   EquipmentFilterDetails,
+  EquipmentFilters,
   IBotConfig,
   RandomisationDetails,
   WeightingAdjustmentDetails,
@@ -299,7 +300,7 @@ export const getHeadwearRating = (
   const hasNvg = !!item._props.Slots.find((slot) => slot._name === "mod_nvg");
 
   if (hasNvg) rating += 2;
-  if (item._props?.BlocksEarpiece) rating *= 0.4;
+  if (item._props?.BlocksEarpiece) rating *= 0.3;
   // console.log(
   //   Math.round(rating * 1.5 - item._props.Weight),
   //   "-",
@@ -870,6 +871,37 @@ export const setWeightingAdjustments = (
   // saveToFile({ list }, "refDBS/tier5.json")
 };
 
+export const combineWhitelist = (equipmentFilters: EquipmentFilters) => {
+  const combinedWhitelist = {
+    levelRange: {
+      min: 1,
+      max: 99,
+    },
+    equipment: {},
+    cartridge: {},
+  };
+
+  equipmentFilters.whitelist.forEach((list, index) => {
+    for (const key in list) {
+      if (key !== "levelRange") {
+        for (const subKey in list[key]) {
+          const value = equipmentFilters.whitelist[index]?.[key]?.[subKey];
+          if (value) {
+            combinedWhitelist[key][subKey] = deDupeArr([
+              ...(!!combinedWhitelist[key][subKey]
+                ? combinedWhitelist[key][subKey]
+                : []),
+              ...value,
+            ]);
+          }
+        }
+      }
+    }
+  });
+  equipmentFilters.whitelist = [combinedWhitelist];
+  // saveToFile(equipmentFilters.whitelist, "refDBS/equipmentFilters.json");
+};
+
 const addRecursive = (
   modId: string,
   items: Record<string, ITemplateItem>,
@@ -1067,24 +1099,24 @@ export const buildInitialRandomization = (
         stims: {
           weights: [
             {
-              "0": 1,
-              "1": 3,
+              "0": 5,
+              "1": 1,
+            },
+            {
+              "0": 2,
+              "1": 1,
             },
             {
               "0": 1,
-              "1": 4,
+              "1": 1,
             },
             {
-              "0": 1,
-              "1": 5,
-            },
-            {
-              "0": 0,
+              "0": 2,
               "1": 5,
               "2": 1,
             },
             {
-              "0": 0,
+              "0": 1,
               "1": 3,
               "2": 1,
             },
@@ -1407,8 +1439,8 @@ export const buildInitialRandomization = (
               "4": 1,
             },
           ][index],
-          whitelist: botConfig.equipment.pmc.whitelist[index].equipment
-            .mod_magazine
+          whitelist: botConfig.equipment.pmc?.whitelist[index]?.equipment
+            ?.mod_magazine
             ? (() => {
                 const result = {};
                 botConfig.equipment.pmc.whitelist[
@@ -1522,7 +1554,8 @@ export const buildInitialRandomization = (
           items,
           num >= 3 ? [painKillerParent, stimParent] : [painKillerParent]
         ): //stims
-          newItem.generation.stims.whitelist[id] = 1;
+          // console.log(id, item._name, 5 - index);
+          newItem.generation.stims.whitelist[id] = 5 - index;
           break;
         case checkParentRecursive(parent, items, [medicalParent]): //drugs
           newItem.generation.drugs.whitelist[id] = 1;
