@@ -45,7 +45,7 @@
     "4": [4, 6, 8, 10, 4],
     "5": [2, 4, 6, 9, 8]
   },
-  "strictEquipmentTiering": false,
+  "strictEquipmentTiering": true,
   "randomness": {
     "Holster": 0.2,
     "Headwear": 0.3,
@@ -57,5 +57,6 @@
     "ArmorVest": 0.1,
     "FaceCover": 0.3
   },
+  "forceCached": false,
   "debug": false
 }

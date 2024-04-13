@@ -1,7 +1,6 @@
 import { DependencyContainer } from "tsyringe";
 
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import config from "../../config/config.json";
 import nonPmcBotConfig from "../../config/nonPmcBotConfig.json";
@@ -15,22 +14,6 @@ import {
 } from "./NonPmcUtils";
 import { globalValues } from "../LoadoutChanges/GlobalValues";
 import { saveToFile } from "../LoadoutChanges/utils";
-
-// const bots = [
-//   // BloodHounds
-//   "arenafighterevent",
-//   "arenafighter",
-//   //rogues
-//   "exusec", //
-//   //Scavs
-//   "assault", //
-//   "assaultgroup", // Uses assault inventory
-//   "cursedassault",
-//   //Snipers
-//   "marksman", //
-//   //raiders
-//   "pmcbot", //
-// ];
 
 export default function SetupNonPMCBotChanges(
   container: DependencyContainer
