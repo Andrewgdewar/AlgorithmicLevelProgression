@@ -1103,21 +1103,21 @@ export const buildInitialRandomization = (
               "1": 1,
             },
             {
-              "0": 2,
-              "1": 1,
-            },
-            {
-              "0": 1,
+              "0": 3,
               "1": 1,
             },
             {
               "0": 2,
+              "1": 1,
+            },
+            {
+              "0": 6,
               "1": 5,
               "2": 1,
             },
             {
-              "0": 1,
-              "1": 3,
+              "0": 5,
+              "1": 5,
               "2": 1,
             },
           ][index],
@@ -1158,20 +1158,20 @@ export const buildInitialRandomization = (
           weights: [
             {
               "0": 1,
+              "1": 6,
+            },
+            {
+              "0": 1,
               "1": 8,
             },
             {
-              "0": 0,
-              "1": 4,
+              "0": 1,
+              "1": 12,
             },
             {
-              "0": 0,
-              "1": 3,
-            },
-            {
-              "0": 0,
-              "1": 5,
-              "2": 1,
+              "0": 1,
+              "1": 25,
+              "2": 5,
             },
             {
               "0": 0,
@@ -1558,12 +1558,12 @@ export const buildInitialRandomization = (
           newItem.generation.stims.whitelist[id] = 5 - index;
           break;
         case checkParentRecursive(parent, items, [medicalParent]): //drugs
-          newItem.generation.drugs.whitelist[id] = 1;
+          newItem.generation.drugs.whitelist[id] = 5 - index;
           break;
         case checkParentRecursive(parent, items, [medKitParent]): //meds
-          newItem.generation.healing.whitelist[id] = 1;
+          newItem.generation.healing.whitelist[id] = 5 - index;
           medkitsAdd[num].forEach((addId: string) => {
-            newItem.generation.healing.whitelist[addId] = 1;
+            newItem.generation.healing.whitelist[addId] = 5 - index;
           });
           medkitsRemove[num].forEach((removeId: string) => {
             delete newItem.generation.healing.whitelist[removeId];
@@ -1572,7 +1572,7 @@ export const buildInitialRandomization = (
           break;
         case checkParentRecursive(parent, items, ["543be6564bdc2df4348b4568"]): //ThrowWeap
           if (items[id]._props.ThrowType !== "smoke_grenade") {
-            newItem.generation.grenades.whitelist[id] = 1;
+            newItem.generation.grenades.whitelist[id] = 5 - index;
           }
           break;
         default:
