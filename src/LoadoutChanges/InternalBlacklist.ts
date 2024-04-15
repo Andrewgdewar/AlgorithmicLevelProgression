@@ -232,6 +232,9 @@ export default [
   "57d14e1724597714010c3f4b", //PP-91 "Kedr" 9x18PM 20-round magazine
   "5d2f213448f0355009199284", //HK MP5 9x19 20-round magazine
   "5a43957686f7742a2c2f11b0", //Santahat
+  "639af924d0446708ee62294e", // FN40GL Mk2
+  "639c3fbbd0446708ee622ee9", // FN40GL Mk25e81ebcd8e146c7080625e15
+  "5e81ebcd8e146c7080625e15", // FN40GL Mk2 40mm grenade launcher
   // "5fd4c4fa16cac650092f6771", // IDEA RIG
 ];
 

@@ -13,6 +13,7 @@ import {
   addBossSecureContainer,
   addToModsObject,
   AmmoParent,
+  armorPlateParent,
   blacklistedItems,
   buildClothingWeighting,
   buildEmptyWeightAdjustments,
@@ -24,6 +25,7 @@ import {
   combineWhitelist,
   deleteBlacklistedItemsFromInventory,
   ensureAllAmmoInSecureContainer,
+  fixEmptyChancePlates,
   getEquipmentType,
   magParent,
   mergeDeep,
@@ -155,7 +157,11 @@ export default function ProgressionChanges(
           );
         }
         tradeItems.forEach(({ _tpl, _id, parentId, slotId }) => {
-          if (blacklistedItems.has(_tpl)) return; //Remove blacklisted items and bullets
+          if (
+            blacklistedItems.has(_tpl) ||
+            checkParentRecursive(_tpl, items, [armorPlateParent])
+          )
+            return; //Remove blacklisted items and bullets
           const item = items[_tpl];
           if (!item)
             return console.log(
@@ -445,6 +451,8 @@ export default function ProgressionChanges(
 
     addBossSecureContainer(usecInventory);
     addBossSecureContainer(bearInventory);
+
+    fixEmptyChancePlates(botConfig);
   } else {
     botConfig.equipment.pmc = botConfigequipmentpmc as any;
     tables.bots.types.usec = tablesbotstypesusec as any;
@@ -461,7 +469,6 @@ export default function ProgressionChanges(
       advancedConfig.otherBotTypes[botType]
     );
   });
-
   if (
     config.removeScavLootForLootingBots &&
     (botConfig?.equipment?.assault?.randomisation?.[0] as any)?.generation

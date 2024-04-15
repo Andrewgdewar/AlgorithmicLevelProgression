@@ -63,6 +63,7 @@ export const mountParent = "55818b224bdc2dde698b456f";
 export const weaponParent = "5422acb9af1c889c16000029";
 export const armorParent = "57bef4c42459772e8d35a53b";
 export const rigParent = "5448e5284bdc2dcb718b4567";
+export const armorPlateParent = "644120aa86ffbe10ee032b6f";
 
 export enum SightType {
   AssaultScope = "55818add4bdc2d5b648b456f",
@@ -906,8 +907,10 @@ const addRecursive = (
   modId: string,
   items: Record<string, ITemplateItem>,
   weaponId: string,
-  mods: Mods
+  mods: Mods,
+  count = 0
 ) => {
+  if (count > 115) return false;
   const newModObject = {};
   let pass = false;
   if (items[modId]?._props?.Slots?.length > 0) {
@@ -915,7 +918,8 @@ const addRecursive = (
       if (mod._props?.filters?.[0]?.Filter?.length) {
         newModObject[mod._name] = mod._props.filters[0].Filter.filter((id) => {
           if (blacklistedItems.has(id)) return false;
-          addRecursive(id, items, weaponId, mods);
+          count += 1;
+          addRecursive(id, items, weaponId, mods, count);
           return true;
         });
         pass = true;
@@ -970,7 +974,6 @@ export const buildOutModsObject = (
         case checkParentRecursive(item._parent, items, [weaponParent]): //Weapon
           if (item?._props?.Slots?.length > 0) {
             item._props.Slots.forEach((mod) => {
-              // if (!weaponsToAllowAllMods[id] && mod._name?.includes("scope")) {
               //     newModObject[mod._name] = mod._props?.filters[0].Filter.filter((_tpl) => !!_tpl && !blacklistedItems.has(_tpl) && checkForScopeTypeRecursive(_tpl, items, id, inventory.mods))
               // } else
               if (mod._props?.filters?.[0]?.Filter?.length) {
@@ -1007,7 +1010,6 @@ export const buildOutModsObject = (
           if (item?._props?.Slots?.length > 0) {
             const newModObject = {};
             item._props.Slots.forEach((mod) => {
-              // if (mod._props.filters[0]?.Plate !== undefined) {
               newModObject[mod._name] = mod._props.filters[0].Filter.filter(
                 (_tpl) => {
                   addRecursive(_tpl, items, id, inventory.mods);
@@ -1530,13 +1532,14 @@ export const buildInitialRandomization = (
     };
 
     const medkitsRemove = {
-      1: new Set([]),
-      2: new Set(["5755356824597772cb798962", "590c657e86f77412b013051d"]),
-      3: new Set([
-        "590c657e86f77412b013051d",
+      1: new Set(["60098ad7c2240c0fe85c570a", "590c678286f77426c9660122"]),
+      2: new Set([
+        "590c678286f77426c9660122",
         "5755356824597772cb798962",
-        "590c661e86f7741e566b646a",
+        "590c657e86f77412b013051d",
+        "60098ad7c2240c0fe85c570a",
       ]),
+      3: new Set(["590c657e86f77412b013051d", "5755356824597772cb798962"]),
       4: new Set(["5755356824597772cb798962", "590c661e86f7741e566b646a"]),
       5: new Set([
         "544fb45d4bdc2dee738b4568",
@@ -1879,6 +1882,21 @@ export const ensureAllAmmoInSecureContainer = (inventory: Inventory) => {
   //     (a, b) => getAmmoWeighting(items[a]) - getAmmoWeighting(items[b])
   //   );
   //   saveToFile({ sortedAmmo }, "refDBS/ammoList.json");
+};
+
+export const fixEmptyChancePlates = (botConfig: IBotConfig) => {
+  const armorPlateWeighting = botConfig.equipment.pmc.armorPlateWeighting;
+  for (const key in armorPlateWeighting) {
+    for (const subKey in armorPlateWeighting[key]) {
+      if (!armorPlateWeighting[key][subKey]?.min) {
+        for (const num in armorPlateWeighting[key][subKey]) {
+          if (armorPlateWeighting[key][subKey][num] === 0) {
+            armorPlateWeighting[key][subKey][num] = 1;
+          }
+        }
+      }
+    }
+  }
 };
 
 export const addBossSecureContainer = (inventory: Inventory) => {

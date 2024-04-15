@@ -84,7 +84,7 @@ export const normalizeMedianInventoryValues = (inventory: Inventory) => {
       if (value > highest) highest = value;
     });
 
-    const multiplier = 50 / highest;
+    const multiplier = 100 / highest;
     Object.keys(inventory.Ammo[caliber]).forEach((id) => {
       inventory.Ammo[caliber][id] =
         Math.round(inventory.Ammo[caliber][id] * multiplier) || 10;
@@ -101,7 +101,7 @@ export const normalizeMedianInventoryValues = (inventory: Inventory) => {
         }
       );
 
-      const multiplier = 50 / highest;
+      const multiplier = 200 / highest;
       Object.keys(inventory.equipment[equipmentType]).forEach((id) => {
         inventory.equipment[equipmentType][id] =
           Math.round(inventory.equipment[equipmentType][id] * multiplier) || 10;
@@ -244,7 +244,7 @@ export const setPlateWeightings = (
 
     ["left_side_plate", "right_side_plate"].forEach((key) => {
       let value =
-        nonPmcBotConfig.nonPmcBots[name].BasePlateChance - 25 + index * 15;
+        nonPmcBotConfig.nonPmcBots[name].BasePlateChance - 60 + index * 20;
       if (value > 100) value = 100;
       if (value < 0) value = 0;
       randomizationToUpdate.equipmentMods[key] = value;
@@ -355,7 +355,15 @@ export const buffScavGearAsLevel = (
   equipmentFilters: EquipmentFilters,
   index: number
 ) => {
-  delete equipmentFilters.weightingAdjustmentsByPlayerLevel;
+  equipmentFilters.weightingAdjustmentsByPlayerLevel = [
+    {
+      levelRange: {
+        min: 1,
+        max: 99,
+      },
+    },
+  ];
+
   if (!index) return;
 
   const randomizationToUpdate = cloneDeep(
@@ -376,12 +384,9 @@ export const buffScavGearAsLevel = (
       randomizationToUpdate.equipment[key] = 99;
   });
 
-  mergeDeep(
-    equipmentFilters.blacklist,
-    advancedConfig.otherBotTypes.assault.blacklist
-  );
-
   equipmentFilters.randomisation[0] = randomizationToUpdate;
+  equipmentFilters.blacklist = advancedConfig.otherBotTypes.assault.blacklist;
+  equipmentFilters.whitelist = advancedConfig.otherBotTypes.assault.whitelist;
 };
 
 export interface StoredWeightingAdjustmentDetails {

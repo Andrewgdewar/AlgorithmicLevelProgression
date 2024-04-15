@@ -453,26 +453,27 @@
             }
           },
           "equipment": {
-            "Headwear": 40,
-            "Earpiece": 10,
-            "FaceCover": 25,
+            "ArmBand": 0,
             "ArmorVest": 50,
-            "ArmBand": 5,
-            "TacticalVest": 95,
-            "Pockets": 25,
-            "SecondPrimaryWeapon": 1,
-            "Scabbard": 35,
-            "FirstPrimaryWeapon": 95,
-            "Holster": 1,
-            "Eyewear": 30,
-            "Backpack": 35
+            "Backpack": 44,
+            "Earpiece": 0,
+            "Eyewear": 26,
+            "FaceCover": 47,
+            "FirstPrimaryWeapon": 92,
+            "Headwear": 74,
+            "Holster": 7,
+            "Pockets": 100,
+            "Scabbard": 80,
+            "SecondPrimaryWeapon": 0,
+            "SecuredContainer": 100,
+            "TacticalVest": 100
           },
           "equipmentMods": {
-            "front_plate": 30,
-            "back_plate": 30,
-            "left_side_plate": 5,
-            "right_side_plate": 5,
-            "mod_equipment": 5,
+            "front_plate": 60,
+            "back_plate": 60,
+            "left_side_plate": 15,
+            "right_side_plate": 15,
+            "mod_equipment": 10,
             "mod_equipment_000": 0,
             "mod_equipment_001": 0,
             "mod_equipment_002": 0,
@@ -603,6 +604,16 @@
               "5648b4534bdc2d3d1c8b4580"
             ]
           },
+          "cartridge": {}
+        }
+      ],
+      "whitelist": [
+        {
+          "levelRange": {
+            "min": 1,
+            "max": 99
+          },
+          "equipment": {},
           "cartridge": {}
         }
       ]
