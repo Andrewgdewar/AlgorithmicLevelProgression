@@ -3176,7 +3176,6 @@
                 "5f60c74e3b85f6263c145586": 1,
                 "61bca7cda0eae612383adf57": 1,
                 "65719f0775149d62ce0a670b": 1,
-                "5b4329f05acfc47a86086aa1": 1,
                 "5b40e61f5acfc4001a599bec": 1,
                 "5aa2b87de5b5b00016327c25": 1,
                 "5aa2ba19e5b5b00014028f4e": 1,
@@ -3186,6 +3185,7 @@
                 "5f60e784f2bcbb675b00dac7": 1,
                 "5f60e6403b85f6263c14558c": 1,
                 "65709d2d21b9f815e208ff95": 1,
+                "5b4329f05acfc47a86086aa1": 1,
                 "572b7d8524597762b472f9d1": 1,
                 "572b7fa124597762b472f9d2": 1,
                 "59e7708286f7742cbd762753": 1,
@@ -33940,6 +33940,28 @@
                     "5c0102aa0db834001b734ba1"
                 ]
             },
+            "5ea18c84ecf1982c7712d9a2": {
+                "mod_nvg": [
+                    "5a16b8a9fcdbcb00165aa6ca"
+                ]
+            },
+            "65709d2d21b9f815e208ff95": {
+                "mod_equipment_000": [
+                    "6570a88c8f221f3b210353b7"
+                ],
+                "mod_mount": [
+                    "5b7be47f5acfc400170e2dd2"
+                ],
+                "mod_nvg": [
+                    "5a16b8a9fcdbcb00165aa6ca"
+                ],
+                "Helmet_top": [
+                    "657f9eb7e9433140ad0baf86"
+                ],
+                "Helmet_back": [
+                    "657f9ef6c6679fefb3051e1f"
+                ]
+            },
             "5b4329f05acfc47a86086aa1": {
                 "Helmet_top": [
                     "65711b07a330b8c9060f7b01"
@@ -33988,28 +34010,6 @@
                     "5efb0c1bd79ff02a1f5e68d9",
                     "5e023e6e34d52a55c3304f71",
                     "5e023e88277cce2b522ff2b1"
-                ]
-            },
-            "5ea18c84ecf1982c7712d9a2": {
-                "mod_nvg": [
-                    "5a16b8a9fcdbcb00165aa6ca"
-                ]
-            },
-            "65709d2d21b9f815e208ff95": {
-                "mod_equipment_000": [
-                    "6570a88c8f221f3b210353b7"
-                ],
-                "mod_mount": [
-                    "5b7be47f5acfc400170e2dd2"
-                ],
-                "mod_nvg": [
-                    "5a16b8a9fcdbcb00165aa6ca"
-                ],
-                "Helmet_top": [
-                    "657f9eb7e9433140ad0baf86"
-                ],
-                "Helmet_back": [
-                    "657f9ef6c6679fefb3051e1f"
                 ]
             },
             "5bfeaa0f0db834001b734927": {
