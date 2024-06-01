@@ -395,10 +395,6 @@ export default function ProgressionChanges(
     // lets disable this for now
     // addKeysToPockets(combinedNumList, items, tables.bots.types.assault.inventory);
 
-    // sanitars first aid kit?
-    // usecInventory.items.SecuredContainer["5e99711486f7744bfc4af328"] = 1;
-    // bearInventory.items.SecuredContainer["5e99711486f7744bfc4af328"] = 1;
-
     //Make everything level 1 in equipment
     reduceEquipmentChancesTo1(usecInventory);
     reduceEquipmentChancesTo1(bearInventory);
@@ -448,6 +444,12 @@ export default function ProgressionChanges(
 
     deleteBlacklistedItemsFromInventory(usecInventory);
     deleteBlacklistedItemsFromInventory(bearInventory);
+
+    // add grizzly and surv to bot container
+    usecInventory.items.SecuredContainer["590c657e86f77412b013051d"] = 1;
+    usecInventory.items.SecuredContainer["5d02778e86f774203e7dedbe"] = 1;
+    bearInventory.items.SecuredContainer["590c657e86f77412b013051d"] = 1;
+    bearInventory.items.SecuredContainer["5d02778e86f774203e7dedbe"] = 1;
 
     ensureAllAmmoInSecuredContainer(usecInventory);
     ensureAllAmmoInSecuredContainer(bearInventory);
