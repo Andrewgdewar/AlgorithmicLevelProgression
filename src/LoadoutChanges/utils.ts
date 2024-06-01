@@ -1147,7 +1147,8 @@ export const buildOutModsObject = (
 export const buildInitialRandomization = (
   items: Record<string, ITemplateItem>,
   botConfig: IBotConfig,
-  traderList: TradersMasterList
+  traderList: TradersMasterList,
+  lootingBotsDetected: boolean
 ) => {
   const randomizationItems: RandomisationDetails[] = [];
   numList.forEach((num, index) => {
@@ -1296,7 +1297,7 @@ export const buildInitialRandomization = (
           },
         },
         backpackLoot: {
-          weights: config.removePMCLootForLootingBots
+          weights: lootingBotsDetected
             ? [
                 {
                   "0": 5,
@@ -1370,7 +1371,7 @@ export const buildInitialRandomization = (
           whitelist: {},
         },
         pocketLoot: {
-          weights: config.removePMCLootForLootingBots
+          weights: lootingBotsDetected
             ? [
                 {
                   "0": 5,
@@ -1426,7 +1427,7 @@ export const buildInitialRandomization = (
           whitelist: {},
         },
         vestLoot: {
-          weights: config.removePMCLootForLootingBots
+          weights: lootingBotsDetected
             ? [
                 {
                   "0": 5,

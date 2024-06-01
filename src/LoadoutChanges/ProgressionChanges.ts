@@ -440,7 +440,26 @@ export default function ProgressionChanges(
 
     setWhitelists(items, botConfig, tradersMasterList, mods);
     setWeightingAdjustments(items, botConfig, tradersMasterList, mods);
-    buildInitialRandomization(items, botConfig, tradersMasterList);
+
+    let lootingBotsDetected = false;
+    if (
+      tables?.bots?.types?.bear?.generation?.items?.backpackLoot?.weights &&
+      new Set(
+        Object.values(
+          tables.bots.types.bear.generation.items.backpackLoot.weights
+        )
+      ).size === 1
+    ) {
+      console.log("[AlgorithmicLevelProgression] Looting bots detected");
+      lootingBotsDetected = true;
+    }
+
+    buildInitialRandomization(
+      items,
+      botConfig,
+      tradersMasterList,
+      lootingBotsDetected
+    );
 
     deleteBlacklistedItemsFromInventory(usecInventory);
     deleteBlacklistedItemsFromInventory(bearInventory);
@@ -476,9 +495,14 @@ export default function ProgressionChanges(
       advancedConfig.otherBotTypes[botType]
     );
   });
+
   if (
-    config.removeScavLootForLootingBots &&
-    (botConfig?.equipment?.assault?.randomisation?.[0] as any)?.generation
+    tables?.bots?.types?.assault?.generation?.items?.backpackLoot?.weights &&
+    new Set(
+      Object.values(
+        tables.bots.types.assault.generation.items.backpackLoot.weights
+      )
+    ).size === 1
   ) {
     const generation = (botConfig.equipment.assault.randomisation[0] as any)
       .generation;

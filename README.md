@@ -59,10 +59,6 @@ Example order.json with recommended mods:
         "5example3208of34not8f83real8a1id"
     ],
 
-    // Turn both of the below on if you use looting bots.
-    "removePMCLootForLootingBots": false,
-    "removeScavLootForLootingBots": false,
-
     // This dictates at what level bots obtain trader tiers.
     // 1 - 14 for example are for tier 1 traders
     // NOTE: These cannot overlap or have gaps: 1-14, 15-24, 25-39, 40-100
