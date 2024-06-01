@@ -1,6 +1,7 @@
 {
   "DO NOT CHANGE ANYTHING HERE": "DON't ASK FOR HELP IF YOU DO!",
-  "forceStock": false,
+  "forceStock": true,
+  "vanillaBackpacks": true,
   "daytimeSilencerCutoff": -29,
   "forbiddenBullets": {
     "3": [],
