@@ -666,6 +666,50 @@ export const setWeightingAdjustments = (
     // console.log(JSON.stringify(weight[index].ammo.edit))
   });
 
+  //Make best ammos have a chance of use
+
+  weight.reverse().forEach((currentItem, index) => {
+    const nextItem = weight?.[index + 1];
+    if (nextItem) {
+      Object.keys(nextItem.ammo.edit).forEach((caliber) => {
+        if (currentItem.ammo.edit[caliber]) {
+          const max = Math.max(...Object.values(nextItem.ammo.edit[caliber]));
+          const maxValueForHighTier = Math.round(
+            config.higherTierAmmoChance * max
+          );
+
+          const nextAmmoIdList = new Set(
+            Object.keys(nextItem.ammo.edit[caliber] || {})
+          );
+
+          const currentTierItemList = Object.keys(
+            currentItem.ammo.edit[caliber]
+          )
+            .filter(
+              (id) =>
+                !nextAmmoIdList.has(id) &&
+                currentItem.ammo.edit[caliber][id] > maxValueForHighTier
+            )
+            .sort(
+              (a, b) =>
+                currentItem.ammo.edit[caliber][b] -
+                currentItem.ammo.edit[caliber][a]
+            );
+
+          currentTierItemList.forEach((id, rank) => {
+            weight[index + 1].ammo.edit[caliber][id] = Math.round(
+              maxValueForHighTier / (currentTierItemList.length - rank)
+            );
+          });
+        }
+      });
+    }
+  });
+
+  weight.reverse();
+
+  // saveToFile(weight, "refDBS/weight1.json");
+
   numList.forEach((actualNum, index) => {
     numList.forEach((num) => {
       if (num > actualNum) return;

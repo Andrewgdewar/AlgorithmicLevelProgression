@@ -124,6 +124,10 @@ Example order.json with recommended mods:
     // IE makes it so there is no chance a pmc will use gear beyond their level
     "strictEquipmentTiering": false,
 
+
+    //This controls the chance of pmcs using higher tier ammo 0.1 > 1
+    "higherTierAmmoChance": 0.3,
+
     // The below is how one can adjust equipment weightings for each category.
     // 0 is meta, 1 is completely random, 2 will make pmcs prioritize the worst gear.
     // Imagine a pmc can wear a usec hat, or a Ulach helmet, the weighting may look like this:
