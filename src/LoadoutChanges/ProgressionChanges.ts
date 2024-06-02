@@ -91,6 +91,7 @@ export default function ProgressionChanges(
       "Unknown",
       "caretaker",
       "Fence",
+      "БТР",
       ...config.customTradersToExclude,
     ];
 
