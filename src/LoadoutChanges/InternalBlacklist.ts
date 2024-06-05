@@ -209,6 +209,9 @@ export default [
   "5c1bc5612e221602b5429350",
   "5c1cd46f2e22164bef5cfedb",
   "5c1bc5af2e221602b412949b",
+  "648c1a965043c4052a4f8505", // Ebudal (bad stim)
+  "5d02778e86f774203e7dedbe", // CMS surgical kit
+  "5d02797c86f774203f38e30a", // Surv kit
   //long handgun stock
   "5d1c702ad7ad1a632267f429",
   "620109578d82e67e7911abf2", // signal pistol
