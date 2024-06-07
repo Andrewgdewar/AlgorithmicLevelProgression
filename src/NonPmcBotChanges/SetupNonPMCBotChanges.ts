@@ -66,7 +66,7 @@ export default function SetupNonPMCBotChanges(
   // saveToFile(botConfig.equipment.assault, "refDBS/weightings2F.json");
   // saveToFile(
   //   globalValues.tables.bots.types["assault"]?.inventory,
-  //   `NonPmcBotChanges/botsRef/storedAssault12.json`
+  //   `NonPmcBotChanges/botsRef/storedAssault.json`
   // );
 
   config.debug &&

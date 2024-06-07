@@ -1154,7 +1154,7 @@ export const buildInitialRandomization = (
   numList.forEach((num, index) => {
     const range = levelRange[num];
 
-    const newItem: RandomisationDetails = {
+    const newItem = {
       levelRange: range,
       equipment: {
         Headwear: [75, 85, 99, 99, 99][index],
@@ -1407,24 +1407,25 @@ export const buildInitialRandomization = (
                 },
                 {
                   "0": 1,
-                  "1": 2,
-                  "2": 1,
-                  "3": 1,
-                  "4": 1,
+                  "1": 1,
+                  "2": 2,
+                  "3": 2,
+                  "5": 2,
                 },
                 {
                   "0": 1,
-                  "1": 2,
-                  "2": 2,
-                  "3": 1,
-                  "4": 1,
+                  "1": 1,
+                  "2": 1,
+                  "3": 2,
+                  "4": 2,
+                  "5": 2,
                 },
                 {
                   "0": 0,
                   "1": 2,
-                  "2": 2,
-                  "3": 1,
+                  "3": 2,
                   "4": 1,
+                  "5": 1,
                 },
               ][index],
           whitelist: {},
@@ -1543,31 +1544,6 @@ export const buildInitialRandomization = (
       },
     };
 
-    // const medkitsAdd = {
-    //   1: ["590c661e86f7741e566b646a"],
-    //   2: [],
-    //   3: ["590c678286f77426c9660122"],
-    //   4: ["590c657e86f77412b013051d", "60098ad7c2240c0fe85c570a"],
-    //   5: [],
-    // };
-
-    // const medkitsRemove = {
-    //   1: new Set(["60098ad7c2240c0fe85c570a", "590c678286f77426c9660122"]),
-    //   2: new Set([
-    //     "590c678286f77426c9660122",
-    //     "5755356824597772cb798962",
-    //     "590c657e86f77412b013051d",
-    //     "60098ad7c2240c0fe85c570a",
-    //   ]),
-    //   3: new Set(["590c657e86f77412b013051d", "5755356824597772cb798962"]),
-    //   4: new Set(["5755356824597772cb798962", "590c661e86f7741e566b646a"]),
-    //   5: new Set([
-    //     "544fb45d4bdc2dee738b4568",
-    //     "5755356824597772cb798962",
-    //     "590c661e86f7741e566b646a",
-    //   ]),
-    // };
-
     traderList[num].forEach((id) => {
       const item = items[id];
       const parent = item._parent;
@@ -1602,34 +1578,6 @@ export const buildInitialRandomization = (
           break;
       }
     });
-
-    if (advancedConfig.vanillaBackpacks) {
-      newItem.generation.backpackLoot.whitelist = {};
-      newItem.generation.pocketLoot.whitelist = {};
-      newItem.generation.vestLoot.whitelist = {};
-    } else {
-      const maxIndex = Math.round(BackpackLoot.length * (num * 0.2) - 1);
-      const newLootList = BackpackLoot.slice(0, maxIndex);
-
-      newLootList.forEach((backpackLootId) => {
-        newItem.generation.backpackLoot.whitelist[backpackLootId] = 1;
-        newItem.generation.pocketLoot.whitelist[backpackLootId] = 1;
-        newItem.generation.vestLoot.whitelist[backpackLootId] = 1;
-      });
-    }
-
-    // Object.keys(newItem.generation).forEach((key) => {
-    //   if (!newItem.generation[key]?.whitelist) {
-    //     newItem.generation[key] = {
-    //       ...newItem.generation[key],
-    //       weights: { "0": 1 },
-    //     };
-    //   } else {
-    //     // newItem.generation[key].whitelist = deDupeArr(
-    //     //   newItem.generation[key].whitelist
-    //     // );
-    //   }
-    // });
 
     randomizationItems.push(newItem);
   });

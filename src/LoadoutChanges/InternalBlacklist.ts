@@ -212,6 +212,7 @@ export default [
   "648c1a965043c4052a4f8505", // Ebudal (bad stim)
   "5d02778e86f774203e7dedbe", // CMS surgical kit
   "5d02797c86f774203f38e30a", // Surv kit
+  "590c657e86f77412b013051d", //grizzly
   //long handgun stock
   "5d1c702ad7ad1a632267f429",
   "620109578d82e67e7911abf2", // signal pistol
@@ -238,7 +239,8 @@ export default [
   "639af924d0446708ee62294e", // FN40GL Mk2
   "639c3fbbd0446708ee622ee9", // FN40GL Mk25e81ebcd8e146c7080625e15
   "5e81ebcd8e146c7080625e15", // FN40GL Mk2 40mm grenade launcher
-  // "5fd4c4fa16cac650092f6771", // IDEA RIG
+  "59f32c3b86f77472a31742f0", // dogtags
+  "59f32bb586f774757e1e8442", // dogtags
 ];
 
 //5d0a29fed7ad1a002769ad08
