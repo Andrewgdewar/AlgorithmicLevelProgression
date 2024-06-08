@@ -3,7 +3,7 @@
 === INSTALL STEPS ===
 
 1. Drag and drop this folder into the user/mods folder.
-2. Update your mods/order.json so that this is last on the list.
+2. Update your mods/order.json as seen below.
 3. Optionally change your configuration (see below configuration options).
 
 4. ???????
@@ -14,10 +14,10 @@ Example order.json with recommended mods:
 {
 "order": [
 "ServerValueModifier",
-"zPOOP",
-"Lua-CustomSpawnPoints",
 "DewardianDev-XXXX-1.x.x",
+"customItemMods or customTraders that work well with ALP",
 "DewardianDev-AlgorithmicLevelProgression-1.x.x"
+"customItemMods or customTraders that do not work well with ALP",
 ]
 }
 
@@ -31,6 +31,9 @@ Example order.json with recommended mods:
 
     // PMCS will wear level appropriate clothing (IE level 34 will wear plaid)
     "leveledClothing": true,
+
+    // Replaces scav loot with an ALP (live-like) implementation with much larger spawn pools.
+    "enableLootChanges": true,
 
     // These two "shift" items that would be unlocked at a certain loyalty level to a later level
     // For example if you needed to finish a quest at tier 2 traders to unlock some ammo, it would be shifted to tier 3
