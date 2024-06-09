@@ -18,7 +18,6 @@ import {
   Mods,
 } from "../../types/models/eft/common/tables/IBotType";
 import InternalBlacklist from "./InternalBlacklist";
-import BackpackLoot from "../Constants/BackpackLoot";
 
 export const saveToFile = (data, filePath) => {
   var fs = require("fs");

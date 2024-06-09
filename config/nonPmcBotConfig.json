@@ -129,5 +129,7 @@
     "followerbirdeye",
     "followerbigpipe",
     "bossboarsniper"
-  ]
+  ],
+  "addRandomizedKeysToScavs": true,
+  "additionalScavLoot": ["5c94bbff86f7747ee735c08f"]
 }
