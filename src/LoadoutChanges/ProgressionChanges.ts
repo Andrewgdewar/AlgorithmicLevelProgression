@@ -44,6 +44,7 @@ import tablesbotstypesusec from "../Cache/tablesbotstypesusec.json";
 import { globalValues } from "./GlobalValues";
 import { buildLootChanges } from "./LootChanges";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { fixSpecificItemIssues } from "./FixSpecificScopeIssues";
 
 export default function ProgressionChanges(
   container: DependencyContainer
@@ -478,6 +479,9 @@ export default function ProgressionChanges(
       // addAllMedsToInventory(combinedNumWith5List, usecInventory, items);
 
       fixEmptyChancePlates(botConfig);
+
+      fixSpecificItemIssues(usecInventory);
+      fixSpecificItemIssues(bearInventory);
     } catch (error) {
       config.forceCached = true;
       throw Error(

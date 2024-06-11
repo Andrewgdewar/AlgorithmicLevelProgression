@@ -1,4 +1,7 @@
 {
+  "addRandomizedKeysToScavs": true,
+  "lootDisparityMultiplier": 1,
+  "additionalScavLoot": ["5c94bbff86f7747ee735c08f"],
   "botAmmoRandomness": 0.1,
   "botEquipmentRandomness": 0.1,
   "nonPmcBots": {
@@ -129,7 +132,5 @@
     "followerbirdeye",
     "followerbigpipe",
     "bossboarsniper"
-  ],
-  "addRandomizedKeysToScavs": true,
-  "additionalScavLoot": ["5c94bbff86f7747ee735c08f"]
+  ]
 }

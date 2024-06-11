@@ -99,26 +99,33 @@ export const buildLootChanges = (
     (id) => !!items[id] && !!getFleaPrice(id)
   );
 
+  const configmultiplier = 100 / nonPmcBotConfig.lootDisparityMultiplier;
+
   const allLoot = [...loot, ...importedCustomLoot]
     .map((id) => ({
       id,
-      value: Math.round(getFleaPrice(id) / 200) || 1,
+      value: Math.round(getFleaPrice(id) / configmultiplier) || 1,
       name: items[id]._name,
     }))
     .sort(({ value: b }, { value: a }) => b - a);
 
   const reverseLoot = [...allLoot].reverse().map(({ value }) => value);
 
+  const top = reverseLoot[Math.round(reverseLoot.length * 0.15)];
+  const bottom = reverseLoot[Math.round(allLoot.length * 0.7)];
+
   const finalValues: Record<string, number> = {};
 
-  [...allLoot].forEach(({ value, id, name }, index) => {
+  allLoot.forEach(({ value, id, name }, index) => {
     let rarity = reverseLoot[index];
     switch (true) {
-      case reverseLoot[index] > 1000:
-        rarity = 1000;
+      case reverseLoot[index] > top:
+        rarity = top;
         break;
-      case reverseLoot[index] < 100:
-        rarity = 1;
+      case reverseLoot[index] < bottom:
+        rarity = Math.round(
+          rarity * (0.3 / nonPmcBotConfig.lootDisparityMultiplier)
+        );
         break;
       default:
     }
@@ -130,7 +137,7 @@ export const buildLootChanges = (
     finalValues[id] = rarity;
   });
 
-  // saveToFile(finalValues, "refDBS/allLoot1.json");
+  // saveToFile(finalValues, "refDBS/allLoot.json");
 
   assaultInventory.items.Backpack = finalValues;
   assaultInventory.items.Pockets = finalValues;

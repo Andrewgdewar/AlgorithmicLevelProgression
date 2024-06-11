@@ -1458,7 +1458,6 @@ export const buildInitialRandomization = (
               "1": 0,
               "2": 1,
               "3": 1,
-              "4": 1,
             },
           ][index],
           whitelist: botConfig.equipment.pmc?.whitelist[index]?.equipment
@@ -1502,7 +1501,7 @@ export const buildInitialRandomization = (
         mod_equipment_002: [0, 0, 10, 35, 45][index],
         mod_pistol_grip_akms: [1, 25, 45, 55, 80][index],
         mod_pistol_grip: [1, 25, 45, 65, 80][index],
-        mod_scope: [50, 80, 100, 100, 100][index],
+        mod_scope: [30, 70, 100, 100, 100][index],
         mod_scope_000: [30, 80, 100, 100, 100][index],
         mod_scope_001: [30, 80, 100, 100, 100][index],
         mod_scope_002: [30, 80, 100, 100, 100][index],
@@ -1516,12 +1515,12 @@ export const buildInitialRandomization = (
         mod_tactical_002: [15, 30, 55, 70, 95][index],
         mod_tactical_003: [15, 30, 55, 70, 95][index],
         mod_charge: [10, 20, 55, 70, 95][index],
-        mod_stock: [10, 20, 55, 70, 95][index],
+        mod_stock: [5, 15, 55, 70, 95][index],
         mod_stock_000: 99,
         // "mod_stock_001": [1, 10, 15, 20][index],
         mod_stock_akms: 100,
-        mod_sight_front: [80, 30, 5, 0, 0][index],
-        mod_sight_rear: [80, 30, 5, 0, 0][index],
+        mod_sight_front: [90, 40, 5, 0, 0][index],
+        mod_sight_rear: [90, 40, 5, 0, 0][index],
         // "mod_reciever": 100,
         // "mod_gas_block": [1, 10, 15, 20][index],
         mod_pistolgrip: [1, 15, 45, 55, 90][index],
@@ -1580,8 +1579,21 @@ export const buildInitialRandomization = (
 
     randomizationItems.push(newItem);
   });
-  // console.log(botConfig.equipment.pmc.randomisation[2]);
-  // saveToFile(randomizationItems, "randomization2.json");
+
+  botConfig.lootItemResourceRandomization["pmc"] = {
+    food: {
+      resourcePercent: 50,
+      chanceMaxResourcePercent: 90,
+    },
+    meds: {
+      resourcePercent: 50,
+      chanceMaxResourcePercent: 70,
+    },
+  };
+  // saveToFile(
+  //   botConfig.lootItemResourceRandomization,
+  //   "botConfiglootItemResourceRandomization.json"
+  // );
   botConfig.equipment.pmc["forceStock"] = advancedConfig.forceStock;
   botConfig.equipment.pmc.randomisation = randomizationItems;
   // console.log(JSON.stringify(randomizationItems));

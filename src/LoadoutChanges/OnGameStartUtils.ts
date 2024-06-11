@@ -181,6 +181,7 @@ const checkDaytimeSilencer = (
     case !isNight &&
       checkParentRecursive(id, items, [muzzleParent]) &&
       item._props.Loudness < globalValues.advancedConfig.daytimeSilencerCutoff:
+      // console.log(item._name);
       cullList.add(id);
       return false;
 

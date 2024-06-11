@@ -10,7 +10,7 @@ export default [
   "622b4d7df9cfc87d675d2ded", //HK G36 Hensoldt HKV 3x carry handle
   // armasight vulcan universal base
   // Geissele Super Precision 30mm
-  "5aa66a9be5b5b0214e506e89", //Nightforce Magmount 34mm ring scope mount > stupid long scope mount
+  "5aa66a9be5b5b0214e506e89", // Nightforce Magmount 34mm ring scope mount > stupid long scope mount
   "5a1ead28fcdbcb001912fa9f", // Reap-ir Mount
   "5c86592b2e2216000e69e77c", // IEA Mil-Optics KH/F 34mm one-piece magmount <Stupid Long distance scopes>
   "5c11046cd174af02a012e42b", // Wilcox Interface for PVS-7 >  Thermal night vision connector
@@ -175,7 +175,6 @@ export default [
   "595cfa8b86f77427437e845b",
   "595cf16b86f77427440c32e2",
   "55f84c3c4bdc2d5f408b4576",
-  "5c9a25172e2216000f20314e",
   "619b5db699fb192e7430664f",
   "5b2cfa535acfc432ff4db7a0",
   "5c9a25172e2216000f20314e",
@@ -213,8 +212,7 @@ export default [
   "5d02778e86f774203e7dedbe", // CMS surgical kit
   "5d02797c86f774203f38e30a", // Surv kit
   "590c657e86f77412b013051d", //grizzly
-  //long handgun stock
-  "5d1c702ad7ad1a632267f429",
+  "5d1c702ad7ad1a632267f429",  //long handgun stock
   "620109578d82e67e7911abf2", // signal pistol
   "62178c4d4ecf221597654e3d",
   "624c0570c9b794431568f5d5",
@@ -241,6 +239,8 @@ export default [
   "5e81ebcd8e146c7080625e15", // FN40GL Mk2 40mm grenade launcher
   "59f32c3b86f77472a31742f0", // dogtags
   "59f32bb586f774757e1e8442", // dogtags
+  "65392f611406374f82152ba5", // mount_all_gbrs_hydra_micro_kit
+  "653931da5db71d30ab1d6296", // GBRS Aimpoint Hydra Mount Kit (FDE)
 ];
 
 //5d0a29fed7ad1a002769ad08
