@@ -40,6 +40,7 @@ export const AmmoParent = "5485a8684bdc2da71d8b4567";
 export const magParent = "5448bc234bdc2d3c308b4569";
 export const barterParent = "5448eb774bdc2d0a728b4567";
 export const keyMechanical = "5c99f98d86f7745c314214b3";
+export const keycard = "5c164d2286f774194c5e69fa";
 export const stimParent = "5448f3a64bdc2d60728b456a";
 export const painKillerParent = "5448f3a14bdc2d27728b4569";
 export const medicalParent = "5448f3ac4bdc2dce718b4569";
@@ -160,7 +161,7 @@ export const addKeysToPockets = (
     if (
       id &&
       items[id]?._parent &&
-      checkParentRecursive(id, items, [keyMechanical])
+      checkParentRecursive(id, items, [keyMechanical, keycard])
     ) {
       inventory.items.Pockets[id] = 1;
       inventory.items.Backpack[id] = 1;
