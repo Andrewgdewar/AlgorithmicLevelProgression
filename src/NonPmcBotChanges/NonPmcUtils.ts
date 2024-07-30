@@ -1,8 +1,5 @@
-import {
-  Equipment,
-  Inventory,
-} from "@spt-aki/models/eft/common/tables/IBotType";
-import { EquipmentFilters } from "@spt-aki/models/spt/config/IBotConfig";
+import { Equipment, Inventory } from "@spt/models/eft/common/tables/IBotType";
+import { EquipmentFilters } from "@spt/models/spt/config/IBotConfig";
 import {
   armorParent,
   checkParentRecursive,
@@ -17,14 +14,14 @@ import {
   rigParent,
   saveToFile,
 } from "../LoadoutChanges/utils";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import advancedConfig from "../../config/advancedConfig.json";
 import nonPmcBotConfig from "../../config/nonPmcBotConfig.json";
 import Armor from "../Constants/Armor";
 import Helmets from "../Constants/Helmets";
 import Vests from "../Constants/Vests";
 import Ammo from "../Constants/Ammo";
-import { MinMax } from "@spt-aki/models/common/MinMax";
+import { MinMax } from "@spt/models/common/MinMax";
 import Backpacks from "../Constants/Backpacks";
 
 export interface BotUpdateInterface {
@@ -542,6 +539,7 @@ export const applyValuesToStoredEquipment = (
       const betterValue = Math.round(
         (medianValue + highestValue + lowestValue) / 3
       );
+
       if (betterValue > 1) {
         keys.forEach((key) => {
           const valToAdjust = list[key];

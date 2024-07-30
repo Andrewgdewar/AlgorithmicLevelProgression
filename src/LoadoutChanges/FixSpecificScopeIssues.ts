@@ -1,4 +1,4 @@
-import { Inventory } from "@spt-aki/models/eft/common/tables/IBotType";
+import { Inventory } from "@spt/models/eft/common/tables/IBotType";
 
 export const fixSpecificItemIssues = (inventory: Inventory) => {
   const removeAccentScopeList = new Set([

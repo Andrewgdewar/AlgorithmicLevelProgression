@@ -1,6 +1,6 @@
-import { IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
-import { IHandbookBase } from "@spt-aki/models/eft/common/tables/IHandbookBase";
-import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
+import { IBotType } from "@spt/models/eft/common/tables/IBotType";
+import { IHandbookBase } from "@spt/models/eft/common/tables/IHandbookBase";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 import BaseClasses from "../Constants/BaseClasses";
 import {
   blacklistedItems,
@@ -8,8 +8,8 @@ import {
   keyMechanical,
   saveToFile,
 } from "./utils";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
 import nonPmcBotConfig from "../../config/nonPmcBotConfig.json";
 
 export const buildLootChanges = (
@@ -86,9 +86,24 @@ export const buildLootChanges = (
   //limit keys on scavs
   botConfig.itemSpawnLimits.assault[BaseClasses.KEY_MECHANICAL] = 1;
 
+  const randomlyAllowKey = (id) => {
+    if (
+      checkParentRecursive(id, items, [BaseClasses.KEY_MECHANICAL]) &&
+      Math.random() > nonPmcBotConfig.percentageOfKeysInSpawnPool
+    ) {
+      // console.log(items[id]._name);
+      return false;
+    }
+    return true;
+  };
+
+  const scavLootBlacklist = new Set(nonPmcBotConfig.scavLootBlacklist);
+
   const loot = Object.keys(items).filter(
     (id) =>
+      !scavLootBlacklist.has(id) &&
       !blacklistedItems.has(id) &&
+      randomlyAllowKey(id) &&
       checkParentRecursive(id, items, addList) &&
       !checkParentRecursive(id, items, [BaseClasses.MONEY, ...removeList]) &&
       !items[id]?._props?.QuestItem &&

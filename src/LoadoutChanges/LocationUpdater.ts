@@ -1,10 +1,10 @@
-import { StaticRouterModService } from "@spt-aki/services/mod/staticRouter/StaticRouterModService";
+import { StaticRouterModService } from "@spt/services/mod/staticRouter/StaticRouterModService";
 import { DependencyContainer } from "tsyringe";
 import { globalValues } from "./GlobalValues";
-import { WeatherGenerator } from "@spt-aki/generators/WeatherGenerator";
+import { WeatherController } from "@spt/controllers/WeatherController";
 import { saveToFile } from "./utils";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 import { enableNonPMCBotChanges } from "../../config/config.json";
 
 export const LocationUpdater = (container: DependencyContainer): undefined => {
@@ -12,26 +12,16 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
     "StaticRouterModService"
   );
 
-  const weatherGenerator =
-    container.resolve<WeatherGenerator>("WeatherGenerator");
+  const weatherController =
+    container.resolve<WeatherController>("WeatherController");
 
   staticRouterModService.registerStaticRouter(
     `AlgorithmicLevelProgressionMapUpdater`,
     [
       {
         url: "/client/raid/configuration",
-        action: (_url, info, sessionId, output) => {
-          // console.log(pmcData?.Info?.Level);
-          const time = weatherGenerator.calculateGameTime({
-            acceleration: 0,
-            time: "",
-            date: "",
-            winterEventEnabled: true,
-          }).time;
-
-          // const botConfig = globalValues.configServer.getConfig<IBotConfig>(
-          //   ConfigTypes.BOT
-          // );
+        action: async (_url, info, sessionId, output) => {
+          const time = weatherController.generate().time;
 
           const hours = getTime(time, info.timeVariant === "PAST" ? 12 : 0);
 

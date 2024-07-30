@@ -138,6 +138,7 @@ Example order.json with recommended mods:
     // weight > 54, Ulach  > 54,
 
     "randomness": {
+        "Ammo": 0.3,
         "Holster": 0.3,
         "Headwear": 0.3,
         "FirstPrimaryWeapon": 0.4,
@@ -154,7 +155,36 @@ Example order.json with recommended mods:
 
 
 
-  // This is the configuration for nonPmcBots
+==== NonPmcBot Configuration Options ====
+
+   // This adds all usable keys to the loot pool for scavs (low random chance)
+  "addRandomizedKeysToScavs": true,
+   
+   // The disparity between super rare and common items
+   // Increase this to make rare loot more rare, vice versa to make rare loot more common.
+   // Recommended settings: 0.2 - 3
+
+  "lootDisparityMultiplier": 1,
+
+  // Sice of the key pool (randomized on game start) 0.5 === 50%
+  "percentageOfKeysInSpawnPool": 0.5,
+  
+  // Add ids of items you'd like the scavs NOT to have
+  "scavLootBlacklist": [],
+
+  // Add additional items to the scavs loot pool via the item ID, automatically weights the item for balance.
+  "additionalScavLoot": ["5c94bbff86f7747ee735c08f"],
+
+  // These values increase the randomness of the ammo or equipment used by bots
+  // (1 = 100% randomness, 0.5 = 80% randomness... it's confusing)
+  // Basically be careful here, this is highly sensitive
+  // Even slightly increasing this will produce dramatic effects
+  // I recommend to keep it off, or below 0.2, try increments of 0.05
+
+  "botAmmoRandomness": 0.1,
+  "botEquipmentRandomness": 0.1,
+
+// This is the configuration for nonPmcBots
   "nonPmcBots": [
      {
       // Name of the bot, or bot group (see below for bot group explanation)

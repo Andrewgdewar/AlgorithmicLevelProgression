@@ -1,13 +1,13 @@
-import { ICustomizationItem } from "@spt-aki/models/eft/common/tables/ICustomizationItem";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { ISuit } from "@spt-aki/models/eft/common/tables/ITrader";
+import { ICustomizationItem } from "@spt/models/eft/common/tables/ICustomizationItem";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { ISuit } from "@spt/models/eft/common/tables/ITrader";
 import {
   EquipmentFilterDetails,
   EquipmentFilters,
   IBotConfig,
   RandomisationDetails,
   WeightingAdjustmentDetails,
-} from "@spt-aki/models/spt/config/IBotConfig";
+} from "@spt/models/spt/config/IBotConfig";
 
 import advancedConfig from "../../config/advancedConfig.json";
 import config, { levelRange } from "../../config/config.json";
@@ -655,18 +655,19 @@ export const setWeightingAdjustments = (
       );
       caliberList.forEach((id, rank) => {
         if (caliberList.length > 1 && rank > 0) {
-          if (rank > 3) weight[index].ammo.edit[caliber][id] = 1;
+          if (rank > 3) weight[index].ammo.edit[caliber][id] = 5;
           const modifier = (caliberList.length - rank) / caliberList.length;
           weight[index].ammo.edit[caliber][id] =
-            Math.round(weight[index].ammo.edit[caliber][id] * modifier) || 1;
+            Math.round(weight[index].ammo.edit[caliber][id] * modifier) || 5;
+          if (weight[index].ammo.edit[caliber][id] === 1)
+            weight[index].ammo.edit[caliber][id] = 5;
         }
       });
     });
     // console.log(JSON.stringify(weight[index].ammo.edit))
   });
 
-  //Make best ammos have a chance of use
-
+  //Make best ammos have a chance of use at lower level
   weight.reverse().forEach((currentItem, index) => {
     const nextItem = weight?.[index + 1];
     if (nextItem) {
@@ -707,7 +708,75 @@ export const setWeightingAdjustments = (
 
   weight.reverse();
 
+  // Apply randomness
+  weight.forEach(({ ammo }, index) => {
+    Object.keys(ammo.edit).forEach((calbr) => {
+      const list = weight[index].ammo.edit[calbr];
+      const keys = Object.keys(list);
+      const sortedValues = Object.values(list).sort((a, b) => a - b);
+      const middleIndex = 0 + Math.round((sortedValues.length - 1) / 2);
+      const medianValue = sortedValues[middleIndex];
+      const highestValue = sortedValues[sortedValues.length - 1];
+      const lowestValue = sortedValues[0];
+      const betterValue = Math.round(
+        (medianValue + highestValue + lowestValue) / 3
+      );
+
+      if (betterValue >= 1) {
+        keys.forEach((key) => {
+          const valToAdjust = list[key];
+          if (valToAdjust > 5) {
+            const adjustedAmountMax = betterValue - valToAdjust;
+            const amountAfterAdjustment = Math.round(
+              valToAdjust + adjustedAmountMax * config.randomness.Ammo
+            );
+            if (weight[index].ammo.edit[calbr][key]) {
+              weight[index].ammo.edit[calbr][key] = Math.abs(
+                amountAfterAdjustment
+              );
+            }
+          }
+        });
+      }
+    });
+  });
+
+  // saveToFile(weight, "refDBS/weight1.json"); //------------------------------------------------------------------------------
+
+  // for (const category in weight.ammo.edit) {
+  //   const randomnessMultiplier = config?.randomness?.[category];
+  //   if (!randomnessMultiplier) return;
+  //   const list = weight[index].equipment.edit[category];
+  //   const keys = Object.keys(list);
+  //   const sortedValues = Object.values(list).sort((a, b) => a - b);
+  //   const middleIndex = 0 + Math.round((sortedValues.length - 1) / 2);
+  //   const medianValue = sortedValues[middleIndex];
+  //   const highestValue = sortedValues[sortedValues.length - 1];
+  //   const lowestValue = sortedValues[0];
+  //   const betterValue = Math.round(
+  //     (medianValue + highestValue + lowestValue) / 3
+  //   );
+
+  //   if (betterValue > 1) {
+  //     keys.forEach((key) => {
+  //       const valToAdjust = list[key];
+  //       if (valToAdjust > 5) {
+  //         const adjustedAmountMax = betterValue - valToAdjust;
+  //         const amountAfterAdjustment = Math.round(
+  //           valToAdjust + adjustedAmountMax * randomnessMultiplier
+  //         );
+  //         if (weight[index].equipment.edit[category][key]) {
+  //           weight[index].equipment.edit[category][key] = Math.abs(
+  //             amountAfterAdjustment
+  //           );
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
+
   // saveToFile(weight, "refDBS/weight1.json");
+  //------------------------------------------------------------------------------
 
   numList.forEach((actualNum, index) => {
     numList.forEach((num) => {

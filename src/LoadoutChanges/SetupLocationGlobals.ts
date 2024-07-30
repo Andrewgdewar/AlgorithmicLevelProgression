@@ -1,11 +1,11 @@
 import { DependencyContainer } from "tsyringe";
 import { globalValues } from "./GlobalValues";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { ConfigServer } from "@spt/servers/ConfigServer";
 import { cloneDeep } from "./utils";
-import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 
 export const SetupLocationGlobals = (
   container: DependencyContainer

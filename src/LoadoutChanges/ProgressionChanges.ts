@@ -1,9 +1,9 @@
 import { IPmcConfig } from "./../../types/models/spt/config/IPmcConfig.d";
 import { DependencyContainer } from "tsyringe";
 
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
 
 import advancedConfig from "../../config/advancedConfig.json";
 import config from "../../config/config.json";
@@ -43,7 +43,7 @@ import botConfigequipmentpmc from "../Cache/botConfigequipmentpmc.json";
 import tablesbotstypesusec from "../Cache/tablesbotstypesusec.json";
 import { globalValues } from "./GlobalValues";
 import { buildLootChanges } from "./LootChanges";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { fixSpecificItemIssues } from "./FixSpecificScopeIssues";
 
 export default function ProgressionChanges(

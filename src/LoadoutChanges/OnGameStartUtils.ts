@@ -1,11 +1,11 @@
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import {
   EquipmentFilters,
   RandomisationDetails,
   WeightingAdjustmentDetails,
-} from "@spt-aki/models/spt/config/IBotConfig";
+} from "@spt/models/spt/config/IBotConfig";
 import advancedConfig from "../../config/advancedConfig.json";
-import { IBotType, Mods } from "@spt-aki/models/eft/common/tables/IBotType";
+import { IBotType, Mods } from "@spt/models/eft/common/tables/IBotType";
 import {
   SightType,
   checkParentRecursive,

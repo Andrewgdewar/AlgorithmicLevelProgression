@@ -1,7 +1,8 @@
-import { IPreAkiLoadMod } from "./../types/models/external/IPreAkiLoadMod.d";
+import { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
 /* eslint-disable @typescript-eslint/naming-convention */
 import { DependencyContainer } from "tsyringe";
-import { IPostAkiLoadMod } from "@spt-aki/models/external/IPostAkiLoadMod";
+import { IPostSptLoadMod } from "@spt/models/external/IPostSptLoadMod";
+import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
 import BotLevelChanges from "./LevelChanges/BotLevelChanges";
 import {
   enableProgressionChanges,
@@ -14,10 +15,12 @@ import { SetupLocationGlobals } from "./LoadoutChanges/SetupLocationGlobals";
 import { LocationUpdater } from "./LoadoutChanges/LocationUpdater";
 import SetupNonPMCBotChanges from "./NonPmcBotChanges/SetupNonPMCBotChanges";
 import ClothingChanges from "./LoadoutChanges/ClothingChanges";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
 
-class AlgorithmicLevelProgression implements IPreAkiLoadMod, IPostAkiLoadMod {
-  preAkiLoad(container: DependencyContainer): void {
+class AlgorithmicLevelProgression
+  implements IPreSptLoadMod, IPostDBLoadMod, IPostSptLoadMod
+{
+  preSptLoad(container: DependencyContainer): void {
     enableLevelChanges && BotLevelChanges(container);
     enableProgressionChanges && LocationUpdater(container);
   }
@@ -50,7 +53,7 @@ class AlgorithmicLevelProgression implements IPreAkiLoadMod, IPostAkiLoadMod {
     enableNonPMCBotChanges && SetupNonPMCBotChanges(container);
   }
 
-  postAkiLoad(container: DependencyContainer): void {
+  postSptLoad(container: DependencyContainer): void {
     try {
       leveledClothing && ClothingChanges(container);
     } catch (error) {

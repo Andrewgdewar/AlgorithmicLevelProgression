@@ -212,7 +212,7 @@ export default [
   "5d02778e86f774203e7dedbe", // CMS surgical kit
   "5d02797c86f774203f38e30a", // Surv kit
   "590c657e86f77412b013051d", //grizzly
-  "5d1c702ad7ad1a632267f429",  //long handgun stock
+  "5d1c702ad7ad1a632267f429", //long handgun stock
   "620109578d82e67e7911abf2", // signal pistol
   "62178c4d4ecf221597654e3d",
   "624c0570c9b794431568f5d5",
@@ -241,6 +241,8 @@ export default [
   "59f32bb586f774757e1e8442", // dogtags
   "65392f611406374f82152ba5", // mount_all_gbrs_hydra_micro_kit
   "653931da5db71d30ab1d6296", // GBRS Aimpoint Hydra Mount Kit (FDE)
+  "618b9682a3884f56c957ca78", //Reptilia ROF-90 RMR mount for Geissele scope mounts
+  "618ba92152ecee1505530bd3", //Reptilia ROF-90 RMR mount for Geissele scope mounts ddc
 ];
 
 //5d0a29fed7ad1a002769ad08

@@ -1,22 +1,22 @@
 import { cloneDeep, mergeDeep, saveToFile } from "./utils";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 import config from "../../config/config.json";
 import advancedConfig from "../../config/advancedConfig.json";
 import {
   EquipmentFilters,
   IBotConfig,
-} from "@spt-aki/models/spt/config/IBotConfig";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
+} from "@spt/models/spt/config/IBotConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IBotType } from "@spt/models/eft/common/tables/IBotType";
 import {
   cullModItems,
   makeMapSpecificWeaponWeightings,
   makeRandomisationAdjustments,
   updateScopes,
 } from "./OnGameStartUtils";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import {
   StoredWeightingAdjustmentDetails,
   buffScavGearAsLevel,

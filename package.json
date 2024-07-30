@@ -1,10 +1,10 @@
 {
   "name": "AlgorithmicLevelProgression",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "main": "src/mod.js",
   "license": "MIT",
   "author": "DewardianDev",
-  "akiVersion": "^3.8.x",
+  "sptVersion": "^3.9.x",
   "scripts": {
     "setup": "npm i",
     "build": "node ./packageBuild.ts"
@@ -14,14 +14,14 @@
     "@typescript-eslint/eslint-plugin": "7.2",
     "@typescript-eslint/parser": "7.2",
     "archiver": "^6.0",
+    "bestzip": "2.2.1",
     "eslint": "8.57",
     "fs-extra": "11.2",
+    "glob": "8.0.3",
     "ignore": "^5.2",
     "os": "^0.1",
     "tsyringe": "4.8.0",
     "typescript": "5.4",
-    "winston": "3.12",
-    "bestzip": "2.2.1",
-    "glob": "8.0.3"
+    "winston": "3.12"
   }
 }

@@ -5,13 +5,12 @@ import { MinMax } from "../../types/models/common/MinMax";
 import { DependencyContainer } from "tsyringe";
 import { botRangeAtLevel, levelRange } from "../../config/config.json";
 import { getCurrentLevelRange } from "../LoadoutChanges/utils";
-import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { BotLevelGenerator } from "@spt-aki/generators/BotLevelGenerator";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { BotLevelGenerator } from "@spt/generators/BotLevelGenerator";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import config from "../../config/config.json";
-import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
+import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
 
 export default function BotLevelChanges(
   container: DependencyContainer

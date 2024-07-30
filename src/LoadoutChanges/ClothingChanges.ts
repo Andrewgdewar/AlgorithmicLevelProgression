@@ -1,9 +1,9 @@
 import { DependencyContainer } from "tsyringe";
 import { buildClothingWeighting, cloneDeep } from "./utils";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { globalValues } from "./GlobalValues";
 
 export default function ClothingChanges(

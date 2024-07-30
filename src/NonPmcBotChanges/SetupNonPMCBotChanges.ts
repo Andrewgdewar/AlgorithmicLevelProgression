@@ -1,7 +1,7 @@
 import { DependencyContainer } from "tsyringe";
 
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import config from "../../config/config.json";
 import nonPmcBotConfig from "../../config/nonPmcBotConfig.json";
 import { IBotConfig } from "../../types/models/spt/config/IBotConfig";

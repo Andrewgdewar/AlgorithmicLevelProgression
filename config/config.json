@@ -47,6 +47,7 @@
   "strictEquipmentTiering": true,
   "higherTierAmmoChance": 0.3,
   "randomness": {
+    "Ammo": 0.3,
     "Holster": 0.2,
     "Headwear": 0.3,
     "FirstPrimaryWeapon": 0.3,
