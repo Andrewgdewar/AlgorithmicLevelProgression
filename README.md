@@ -166,7 +166,7 @@ Example order.json with recommended mods:
 
   "lootDisparityMultiplier": 1,
 
-  // Sice of the key pool (randomized on game start) 0.5 === 50%
+  // Size of the key pool (randomized on game start) 0.5 === 50%
   "percentageOfKeysInSpawnPool": 0.5,
   
   // Add ids of items you'd like the scavs NOT to have
