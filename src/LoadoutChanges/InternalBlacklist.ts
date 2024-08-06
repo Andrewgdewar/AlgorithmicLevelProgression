@@ -248,6 +248,9 @@ export default [
   "653931da5db71d30ab1d6296", // GBRS Aimpoint Hydra Mount Kit (FDE)
   "618b9682a3884f56c957ca78", //Reptilia ROF-90 RMR mount for Geissele scope mounts
   "618ba92152ecee1505530bd3", //Reptilia ROF-90 RMR mount for Geissele scope mounts ddc
+  "6601546f86889319850bd566",
+  "66015072e9f84d5680039678",
+  "66015dc4aaad2f54cb04c56a"
 ];
 
 //5d0a29fed7ad1a002769ad08
