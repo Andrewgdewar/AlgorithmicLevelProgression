@@ -2,6 +2,7 @@ import { Equipment, Inventory } from "@spt/models/eft/common/tables/IBotType";
 import { EquipmentFilters } from "@spt/models/spt/config/IBotConfig";
 import {
   armorParent,
+  blacklistedItems,
   checkParentRecursive,
   cloneDeep,
   getAmmoWeighting,
@@ -10,7 +11,6 @@ import {
   getTacticalVestValue,
   getWeaponWeighting,
   headwearParent,
-  mergeDeep,
   rigParent,
   saveToFile,
 } from "../LoadoutChanges/utils";
@@ -132,6 +132,7 @@ export const addItemsToBotInventory = (
         equipmentToAdd[key]
           .slice(startIndex, endIndex)
           .forEach((id: string) => {
+            if (blacklistedItems.has(id)) return;
             if (!inventory.equipment[key][id]) {
               inventory.equipment[key][id] = 1;
             }

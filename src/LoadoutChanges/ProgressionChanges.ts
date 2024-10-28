@@ -121,9 +121,60 @@ export default function ProgressionChanges(
         return tradersToInclude.includes(base.nickname);
       });
 
-      botConfig.equipment.pmc.nvgIsActiveChanceNightPercent = 95;
-      botConfig.equipment.pmc.lightIsActiveNightChancePercent = 95;
+      botConfig.equipment.pmc.nvgIsActiveChanceNightPercent = 85;
+      botConfig.equipment.pmc.lightIsActiveNightChancePercent = 45;
+      botConfig.equipment.pmc.lightIsActiveDayChancePercent = 25;
       botConfig.equipment.pmc.laserIsActiveChancePercent = 90;
+
+      botConfig.equipment.pmc.armorPlateWeighting = [
+        {
+          levelRange: {
+            min: 1,
+            max: 99,
+          },
+          front_plate: {
+            "1": 1,
+            "2": 3,
+            "3": 15,
+            "4": 35,
+            "5": 15,
+            "6": 5,
+          },
+          back_plate: {
+            "1": 1,
+            "2": 3,
+            "3": 15,
+            "4": 35,
+            "5": 15,
+            "6": 5,
+          },
+          side_plate: {
+            "1": 1,
+            "2": 3,
+            "3": 15,
+            "4": 35,
+            "5": 15,
+            "6": 5,
+          },
+          left_side_plate: {
+            "1": 1,
+            "2": 3,
+            "3": 15,
+            "4": 35,
+            "5": 15,
+            "6": 5,
+          },
+          right_side_plate: {
+            "1": 1,
+            "2": 3,
+            "3": 15,
+            "4": 35,
+            "5": 15,
+            "6": 5,
+          },
+        },
+      ];
+      // botConfig.equipment.pmc.forceOnlyArmoredRigWhenNoArmor = false;
       botConfig.equipment.pmc.faceShieldIsActiveChancePercent = 100;
       botConfig.equipment.pmc.weightingAdjustmentsByBotLevel =
         buildEmptyWeightAdjustments();
@@ -157,7 +208,6 @@ export default function ProgressionChanges(
         ) => {
           if (!tradeItems || !nickname) return;
 
-          // if (index === 0) console.log(JSON.stringify(questassort))
           if (
             config.addCustomTraderItems &&
             ![...tradersToExclude, ...tradersToInclude].includes(nickname)
@@ -166,12 +216,14 @@ export default function ProgressionChanges(
               `\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`
             );
           }
+
           tradeItems.forEach(({ _tpl, _id, parentId, slotId }) => {
             if (
               blacklistedItems.has(_tpl) ||
               checkParentRecursive(_tpl, items, [armorPlateParent])
             )
               return; //Remove blacklisted items and bullets
+
             const item = items[_tpl];
             if (!item)
               return console.log(
@@ -180,6 +232,7 @@ export default function ProgressionChanges(
                 " for trader: ",
                 nickname
               );
+
             const parent = item._parent;
             if (!parent || !items[parent])
               return console.log(
@@ -188,6 +241,7 @@ export default function ProgressionChanges(
                 " for trader: ",
                 nickname
               );
+
             const equipmentType = getEquipmentType(parent, items);
 
             switch (true) {
@@ -541,8 +595,8 @@ export default function ProgressionChanges(
     };
   }
 
-  // saveToFile(botConfig, "botConfig1.json");
-  // saveToFile(pmcConfig, "pmcConfig1.json");
+  // saveToFile(botConfig, "botConfig.json");
+  // saveToFile(pmcConfig, "pmcConfig.json");
 
   globalValues.originalBotTypes = cloneDeep(tables.bots.types);
   globalValues.originalWeighting = cloneDeep(botConfig.equipment.pmc);

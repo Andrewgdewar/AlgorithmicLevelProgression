@@ -1219,18 +1219,21 @@ export const buildInitialRandomization = (
   lootingBotsDetected: boolean
 ) => {
   const randomizationItems: RandomisationDetails[] = [];
+
   numList.forEach((num, index) => {
     const range = levelRange[num];
 
-    const newItem = {
+    const newItem: RandomisationDetails = {
       levelRange: range,
+      randomisedArmorSlots: ["TacticalVest", "ArmorVest"],
+      randomisedWeaponModSlots: [],
       equipment: {
         Headwear: [75, 85, 99, 99, 99][index],
         Earpiece: [55, 75, 95, 100, 100][index],
         FaceCover: [25, 35, 65, 75, 90][index],
-        ArmorVest: [99, 99, 99, 99, 99][index],
+        ArmorVest: index < 2 ? 100 : 70, // [99, 99, 99, 99, 99][index],
         ArmBand: [25, 45, 59, 69, 80][index],
-        TacticalVest: [96, 96, 99, 99, 99][index],
+        // TacticalVest: [96, 96, 99, 99, 99][index],
         Pockets: [25, 45, 59, 69, 80][index],
         SecondPrimaryWeapon: [0, 0, 0, 0, 5][index],
         SecuredContainer: 100,
@@ -1543,7 +1546,6 @@ export const buildInitialRandomization = (
             : {},
         },
       },
-      randomisedWeaponModSlots: [],
       weaponMods: {
         mod_barrel: [5, 20, 35, 55, 65][index],
         mod_bipod: [1, 10, 5, 11, 50][index],
@@ -1610,7 +1612,7 @@ export const buildInitialRandomization = (
         mod_equipment_002: [0, 0, 5, 15, 25][index],
       },
     };
-
+    
     traderList[num].forEach((id) => {
       const item = items[id];
       const parent = item._parent;
@@ -1659,10 +1661,6 @@ export const buildInitialRandomization = (
       chanceMaxResourcePercent: 70,
     },
   };
-  // saveToFile(
-  //   botConfig.lootItemResourceRandomization,
-  //   "botConfiglootItemResourceRandomization.json"
-  // );
   botConfig.equipment.pmc["forceStock"] = advancedConfig.forceStock;
   botConfig.equipment.pmc.randomisation = randomizationItems;
   // console.log(JSON.stringify(randomizationItems));
