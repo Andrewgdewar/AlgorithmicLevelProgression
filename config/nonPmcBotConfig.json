@@ -9,10 +9,10 @@
   "nonPmcBots": {
     "assault": {
       "tiers": [
-        [1, 14],
-        [15, 30],
-        [31, 45],
-        [46, 100]
+        [1, 9],
+        [12, 20],
+        [21, 31],
+        [32, 100]
       ],
       "Backpack": [0, 0.3],
       "Ammo": [0, 0.4],
@@ -42,70 +42,70 @@
     },
     "arenafighterevent": {
       "tiers": [
-        [1, 14],
-        [15, 30],
-        [31, 45],
-        [46, 100]
+        [1, 9],
+        [12, 20],
+        [21, 31],
+        [32, 100]
       ],
       "Backpack": [0.2, 0.5],
       "Ammo": [0, 0.5]
     },
     "arenafighter": {
       "tiers": [
-        [1, 14],
-        [15, 30],
-        [31, 45],
-        [46, 100]
+        [1, 9],
+        [12, 20],
+        [21, 31],
+        [32, 100]
       ],
       "Backpack": [0.2, 0.5],
       "Ammo": [0, 0.5]
     },
     "pmcbot": {
       "tiers": [
-        [1, 14],
-        [15, 30],
-        [31, 45],
-        [46, 100]
+        [1, 9],
+        [12, 20],
+        [21, 31],
+        [32, 100]
       ],
       "Backpack": [0.3, 0.8],
       "Ammo": [0.2, 0.8]
     },
     "exusec": {
       "tiers": [
-        [1, 14],
-        [15, 30],
-        [31, 45],
-        [46, 100]
+        [1, 9],
+        [12, 20],
+        [21, 31],
+        [32, 100]
       ],
       "Backpack": [0.3, 0.8],
       "Ammo": [0.2, 0.8]
     },
     "allBossFollowers": {
       "tiers": [
-        [1, 14],
-        [15, 30],
-        [31, 45],
-        [46, 100]
+        [1, 9],
+        [12, 20],
+        [21, 31],
+        [32, 100]
       ],
-      "Backpack": [0.3, 0.5],
+      "Backpack": [0.1, 0.5],
       "Ammo": [0.2, 0.7]
     },
     "allBosses": {
       "tiers": [
-        [1, 14],
-        [15, 30],
-        [31, 45],
-        [46, 100]
+        [1, 9],
+        [12, 20],
+        [21, 31],
+        [32, 100]
       ],
       "Backpack": [0, 0],
-      "Ammo": [0.3, 0.8]
+      "Ammo": [0.4, 0.8]
     },
     "bossbully": {
       "tiers": [
-        [1, 14],
-        [15, 30],
-        [31, 45],
-        [46, 100]
+        [1, 9],
+        [12, 20],
+        [21, 31],
+        [32, 100]
       ],
       "Backpack": [0, 0],
       "Ammo": [0.3, 0.8]
@@ -114,13 +114,10 @@
   "allBossFollowers": [
     "followerbully",
     "followergluharassault",
-    "followergluharscout",
     "followergluharsecurity",
     "followerboar",
     "followerkojaniy",
-    "followersanitar",
-    "followertest",
-    "followerzryachiy"
+    "followersanitar"
   ],
   "allBosses": [
     "bossgluhar",
@@ -130,9 +127,7 @@
     "bosssanitar",
     "bosstagilla",
     "bossknight",
-    "bosszryachiy",
     "followerbirdeye",
-    "followerbigpipe",
-    "bossboarsniper"
+    "followerbigpipe"
   ]
 }
