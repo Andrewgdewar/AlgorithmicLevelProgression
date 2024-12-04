@@ -1,5 +1,5 @@
 import { IBotBase } from "../../types/models/eft/common/tables/IBotBase";
-import { BotGenerationDetails } from "../../types/models/spt/bots/BotGenerationDetails";
+import { IBotGenerationDetails } from "../../types/models/spt/bots/BotGenerationDetails";
 import { IRandomisedBotLevelResult } from "../../types/models/eft/bot/IRandomisedBotLevelResult";
 import { MinMax } from "../../types/models/common/MinMax";
 import { DependencyContainer } from "tsyringe";
@@ -28,7 +28,7 @@ export default function BotLevelChanges(
     (_t, result: BotLevelGenerator) => {
       result.generateBotLevel = (
         levelDetails: MinMax,
-        botGenerationDetails: BotGenerationDetails,
+        botGenerationDetails: IBotGenerationDetails,
         bot: IBotBase
       ): IRandomisedBotLevelResult => {
         if (!botGenerationDetails.isPmc)

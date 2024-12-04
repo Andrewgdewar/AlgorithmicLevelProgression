@@ -2,20 +2,20 @@ import { ICustomizationItem } from "@spt/models/eft/common/tables/ICustomization
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { ISuit } from "@spt/models/eft/common/tables/ITrader";
 import {
-  EquipmentFilterDetails,
+  IEquipmentFilterDetails,
   EquipmentFilters,
   IBotConfig,
-  RandomisationDetails,
-  WeightingAdjustmentDetails,
+  IRandomisationDetails,
+  IWeightingAdjustmentDetails,
 } from "@spt/models/spt/config/IBotConfig";
 
 import advancedConfig from "../../config/advancedConfig.json";
 import config, { levelRange } from "../../config/config.json";
 import { MinMax } from "../../types/models/common/MinMax";
 import {
-  Appearance,
-  Inventory,
-  Mods,
+  IAppearance,
+  IInventory,
+  IMods,
 } from "../../types/models/eft/common/tables/IBotType";
 import InternalBlacklist from "./InternalBlacklist";
 
@@ -154,7 +154,7 @@ export const addToModsObject = (
 export const addKeysToPockets = (
   traderItems: Set<string>,
   items: Record<string, ITemplateItem>,
-  inventory: Inventory
+  inventory: IInventory
 ) => {
   traderItems.forEach((id) => {
     if (
@@ -187,7 +187,7 @@ export const setupMods = (mods: Record<string, Record<string, string[]>>) => {
   });
 };
 
-export const reduceEquipmentChancesTo1 = (inventory: Inventory) => {
+export const reduceEquipmentChancesTo1 = (inventory: IInventory) => {
   Object.keys(inventory.equipment).forEach((equipType) => {
     Object.keys(inventory.equipment[equipType]).forEach((id) => {
       if (inventory.equipment[equipType][id] !== 0) {
@@ -197,7 +197,7 @@ export const reduceEquipmentChancesTo1 = (inventory: Inventory) => {
   });
 };
 
-export const reduceAmmoChancesTo1 = (inventory: Inventory) => {
+export const reduceAmmoChancesTo1 = (inventory: IInventory) => {
   Object.keys(inventory.Ammo).forEach((caliber) => {
     Object.keys(inventory.Ammo[caliber]).forEach((id) => {
       if (inventory.Ammo[caliber][id] !== 0) {
@@ -477,7 +477,7 @@ export const numList = [1, 2, 3, 4, 5];
 
 export const arrSum = (arr: number[]): number => arr.reduce((a, b) => a + b, 0);
 
-export const setupBaseWhiteList = (): EquipmentFilterDetails[] => {
+export const setupBaseWhiteList = (): IEquipmentFilterDetails[] => {
   return numList.map((num) => ({
     levelRange: levelRange[num],
     equipment: {},
@@ -553,7 +553,7 @@ export const setWhitelists = (
   // console.log(JSON.stringify(botConfig.equipment.pmc.whitelist))
 };
 
-export const buildEmptyWeightAdjustments = (): WeightingAdjustmentDetails[] => {
+export const buildEmptyWeightAdjustments = (): IWeightingAdjustmentDetails[] => {
   return numList.map((num) => ({
     levelRange: levelRange[num],
     ammo: {
@@ -575,7 +575,7 @@ const multiplyAndRound = (num1: number, num2: number): number =>
   Math.round(num1 * num2);
 
 const setWeightItem = (
-  weight: WeightingAdjustmentDetails,
+  weight: IWeightingAdjustmentDetails,
   equipmentType: string,
   id: string,
   rating: number,
@@ -1000,7 +1000,7 @@ export const setWeightingAdjustments = (
 
 export const addAllMedsToInventory = (
   traderList: Set<string>,
-  inventory: Inventory,
+  inventory: IInventory,
   items: Record<string, ITemplateItem>
 ) => {
   traderList.forEach((id) => {
@@ -1051,7 +1051,7 @@ const addRecursive = (
   modId: string,
   items: Record<string, ITemplateItem>,
   weaponId: string,
-  mods: Mods,
+  mods: IMods,
   count = 0
 ) => {
   if (count > 115) return false;
@@ -1079,7 +1079,7 @@ const addRecursive = (
 export const buildOutModsObject = (
   traderList: Set<string>,
   items: Record<string, ITemplateItem>,
-  inventory: Inventory,
+  inventory: IInventory,
   botConfig: IBotConfig
 ) => {
   traderList.forEach((id) => {
@@ -1218,12 +1218,12 @@ export const buildInitialRandomization = (
   traderList: TradersMasterList,
   lootingBotsDetected: boolean
 ) => {
-  const randomizationItems: RandomisationDetails[] = [];
+  const randomizationItems: IRandomisationDetails[] = [];
 
   numList.forEach((num, index) => {
     const range = levelRange[num];
 
-    const newItem: RandomisationDetails = {
+    const newItem: IRandomisationDetails = {
       levelRange: range,
       randomisedArmorSlots: ["TacticalVest", "ArmorVest"],
       randomisedWeaponModSlots: [],
@@ -1667,7 +1667,7 @@ export const buildInitialRandomization = (
 };
 
 export const buildInitialUsecAppearance = (
-  appearance: Appearance,
+  appearance: IAppearance,
   items: Record<string, ICustomizationItem>
 ) => {
   appearance.feet = {
@@ -1693,7 +1693,7 @@ export const buildInitialUsecAppearance = (
 };
 
 export const buildInitialBearAppearance = (
-  appearance: Appearance,
+  appearance: IAppearance,
   items: Record<string, ICustomizationItem>
 ) => {
   appearance.feet = {
@@ -1725,8 +1725,8 @@ export const buildClothingWeighting = (
   suit: ISuit[],
   items: Record<string, ICustomizationItem>,
   botConfig: IBotConfig,
-  usecAppearance: Appearance,
-  bearAppearance: Appearance
+  usecAppearance: IAppearance,
+  bearAppearance: IAppearance
 ) => {
   buildInitialUsecAppearance(usecAppearance, items);
   buildInitialBearAppearance(bearAppearance, items);
@@ -1889,7 +1889,7 @@ export const buildBlacklist = (
   });
 };
 
-export const deleteBlacklistedItemsFromInventory = (inventory: Inventory) => {
+export const deleteBlacklistedItemsFromInventory = (inventory: IInventory) => {
   Object.keys(inventory.items).forEach((key) => {
     Object.keys(inventory.items[key]).forEach((id) => {
       if (blacklistedItems.has(id)) delete inventory.items[key][id];
@@ -1920,7 +1920,7 @@ export const deleteBlacklistedItemsFromInventory = (inventory: Inventory) => {
   });
 };
 
-export const ensureAllAmmoInSecuredContainer = (inventory: Inventory) => {
+export const ensureAllAmmoInSecuredContainer = (inventory: IInventory) => {
   const ammo = Object.keys(inventory.Ammo)
     .map((calbr) => Object.keys(inventory.Ammo[calbr]))
     .flat();
@@ -1953,7 +1953,7 @@ export const fixEmptyChancePlates = (botConfig: IBotConfig) => {
   }
 };
 
-export const addBossSecuredContainer = (inventory: Inventory) => {
+export const addBossSecuredContainer = (inventory: IInventory) => {
   inventory.equipment.SecuredContainer = {
     "5c0a794586f77461c458f892": 1,
   };

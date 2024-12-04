@@ -36,7 +36,7 @@ export default function SetupNonPMCBotChanges(
   );
 
   Object.keys(botsForUpdate).forEach((name) => {
-    if (botConfig.equipment.assault.weightingAdjustmentsByPlayerLevel) {
+    if (botConfig.equipment?.assault?.weightingAdjustmentsByPlayerLevel) {
       botConfig.equipment.assault.weightingAdjustmentsByPlayerLevel = [];
     }
 
@@ -56,14 +56,14 @@ export default function SetupNonPMCBotChanges(
     globalValues.storedEquipmentValues[name] = storedEquipmentValues;
   });
 
-  // globalValues.updateInventory(1);
+  globalValues.updateInventory(1);
 
-  // saveToFile(
-  //   globalValues.storedEquipmentValues["assault"],
-  //   `NonPmcBotChanges/botsRef/stored69.json`
-  // );
+  saveToFile(
+    globalValues.storedEquipmentValues["assault"],
+    `refDBS/storedAssault.json`
+  );
 
-  // saveToFile(botConfig.equipment.assault, "refDBS/weightings2F.json");
+  saveToFile(botConfig.equipment.assault, "refDBS/equipmentAssault.json");
   // saveToFile(
   //   globalValues.tables.bots.types["assault"]?.inventory,
   //   `NonPmcBotChanges/botsRef/storedAssault.json`

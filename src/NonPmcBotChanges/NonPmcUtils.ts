@@ -1,4 +1,4 @@
-import { Equipment, Inventory } from "@spt/models/eft/common/tables/IBotType";
+import { IEquipment, IInventory } from "@spt/models/eft/common/tables/IBotType";
 import { EquipmentFilters } from "@spt/models/spt/config/IBotConfig";
 import {
   armorParent,
@@ -26,26 +26,19 @@ import Backpacks from "../Constants/Backpacks";
 
 export interface BotUpdateInterface {
   tiers: Array<number[]>;
-  // Headwear: number[];
-  // ArmorVest: number[];
-  // TacticalVest: number[];
+  Headwear: number[];
+  ArmorVest: number[];
+  TacticalVest: number[];
   Backpack: number[];
   Ammo: number[];
   BasePlateChance?: number;
-  PlateWeightings?: {
-    "2": number;
-    "3": number;
-    "4": number;
-    "5": number;
-    "6": number;
-  }[];
 }
 
 // TODO: Fix adding items failing.
 const equipmentToAdd = {
-  // Headwear: Helmets,
-  // ArmorVest: Armor,
-  // TacticalVest: Vests,
+  Headwear: Helmets,
+  ArmorVest: Armor,
+  TacticalVest: Vests,
   Backpack: Backpacks,
 };
 
@@ -59,7 +52,7 @@ const equipmentTypesTochange = new Set([
 ]);
 
 const getRatingFuncForEquipmentType = (
-  equipmentType: keyof Equipment,
+  equipmentType: keyof IEquipment,
   items: Record<string, ITemplateItem>
 ) => {
   const equipmentFunctions = {
@@ -73,7 +66,7 @@ const getRatingFuncForEquipmentType = (
   return equipmentFunctions[equipmentType];
 };
 
-export const normalizeMedianInventoryValues = (inventory: Inventory) => {
+export const normalizeMedianInventoryValues = (inventory: IInventory) => {
   for (const caliber in inventory.Ammo) {
     let highest = 0;
 
@@ -108,16 +101,11 @@ export const normalizeMedianInventoryValues = (inventory: Inventory) => {
 };
 
 export const addItemsToBotInventory = (
-  inventory: Inventory,
+  inventory: IInventory,
   botToUpdate: BotUpdateInterface,
   items: Record<string, ITemplateItem>
 ) => {
-  const {
-    Ammo: botToUpdateAmmo,
-    BasePlateChance,
-    PlateWeightings,
-    ...equipment
-  } = botToUpdate;
+  const { Ammo: botToUpdateAmmo, BasePlateChance, ...equipment } = botToUpdate;
   Object.keys(equipmentToAdd).forEach((key) => {
     if (equipment[key]) {
       const equipmentStart = equipment[key][0];
@@ -212,13 +200,59 @@ export const setPlateWeightings = (
   name: string,
   equipmentFilters: EquipmentFilters,
   index: number,
-  equipment: Inventory,
+  equipment: IInventory,
   items: Record<string, ITemplateItem>
 ) => {
-  if (
-    !nonPmcBotConfig.nonPmcBots?.[name]?.BasePlateChance &&
-    !nonPmcBotConfig.nonPmcBots?.[name]?.PlateWeightings
-  ) {
+  equipmentFilters.armorPlateWeighting = [
+    {
+      levelRange: {
+        min: 1,
+        max: 100,
+      },
+      front_plate: {
+        "1": 1,
+        "2": 3,
+        "3": 20,
+        "4": 20,
+        "5": 4,
+        "6": 1,
+      },
+      back_plate: {
+        "1": 1,
+        "2": 3,
+        "3": 20,
+        "4": 20,
+        "5": 4,
+        "6": 1,
+      },
+      side_plate: {
+        "1": 1,
+        "2": 3,
+        "3": 20,
+        "4": 20,
+        "5": 4,
+        "6": 1,
+      },
+      left_side_plate: {
+        "1": 1,
+        "2": 3,
+        "3": 20,
+        "4": 20,
+        "5": 4,
+        "6": 1,
+      },
+      right_side_plate: {
+        "1": 1,
+        "2": 3,
+        "3": 20,
+        "4": 20,
+        "5": 4,
+        "6": 1,
+      },
+    },
+  ] as any;
+
+  if (!nonPmcBotConfig.nonPmcBots?.[name]?.BasePlateChance) {
     return;
   }
   //=========================================
@@ -242,7 +276,7 @@ export const setPlateWeightings = (
 
     ["left_side_plate", "right_side_plate"].forEach((key) => {
       let value =
-        nonPmcBotConfig.nonPmcBots[name].BasePlateChance - 60 + index * 20;
+        nonPmcBotConfig.nonPmcBots[name].BasePlateChance - 30 + index * 20;
       if (value > 100) value = 100;
       if (value < 0) value = 0;
       randomizationToUpdate.equipmentMods[key] = value;
@@ -251,102 +285,6 @@ export const setPlateWeightings = (
 
   equipmentFilters.randomisation[0] = randomizationToUpdate;
   //=========================================
-
-  if (nonPmcBotConfig.nonPmcBots?.[name]?.PlateWeightings) {
-    // const botPlateWeights = nonPmcBotConfig.nonPmcBots[name]
-    //   .PlateWeightings as {
-    //   "2": number;
-    //   "3": number;
-    //   "4": number;
-    //   "5": number;
-    //   "6": number;
-    // }[];
-    equipmentFilters.armorPlateWeighting = [
-      {
-        levelRange: {
-          min: 1,
-          max: 100,
-        },
-        // frontPlateWeights: {},
-        // backPlateWeights: {},
-        // sidePlateWeights: {},
-      },
-    ] as any;
-
-    const perplate = [
-      "front_plate",
-      "back_plate",
-      "side_plate",
-      "left_side_plate",
-      "right_side_plate",
-    ];
-
-    perplate.forEach((key) => {
-      equipmentFilters.armorPlateWeighting[0][key] =
-        nonPmcBotConfig.nonPmcBots[name].PlateWeightings[index];
-    });
-
-    // const plating = equipmentFilters.armorPlateWeighting[0];
-
-    // const front = {};
-    // const back = {};
-    // const side = {};
-    // Object.keys(equipment.mods).forEach((id) => {
-    //   if (
-    //     checkParentRecursive(id, items, [
-    //       armorParent,
-    //       rigParent,
-    //       headwearParent,
-    //     ])
-    //   ) {
-    //     const mod = equipment.mods[id];
-
-    //     ["Front_plate", "front_plate"].forEach((plateType) => {
-    //       if (mod[plateType]) {
-    //         mod[plateType].forEach((plateId) => {
-    //           const rating =
-    //             botPlateWeights?.[index]?.[items[plateId]._props.armorClass];
-    //           if (rating) {
-    //             plating.frontPlateWeights[plateId] = rating;
-    //           }
-    //         });
-    //       }
-    //     });
-    //     ["Back_plate", "back_plate"].forEach((plateType) => {
-    //       if (mod[plateType]) {
-    //         mod[plateType].forEach((plateId) => {
-    //           const rating =
-    //             botPlateWeights?.[index]?.[items[plateId]._props.armorClass];
-    //           if (rating) {
-    //             plating.backPlateWeights[plateId] = rating;
-    //           }
-    //         });
-    //       }
-    //     });
-    //     ["left_side_plate", "right_side_plate"].forEach((plateType) => {
-    //       if (mod[plateType]) {
-    //         mod[plateType].forEach((plateId) => {
-    //           const rating =
-    //             botPlateWeights?.[index]?.[items[plateId]._props.armorClass];
-    //           if (rating) {
-    //             plating.sidePlateWeights[plateId] = rating;
-    //           }
-    //         });
-    //       }
-    //     });
-
-    //     // items[id]._props.Slots.forEach((mod) => {
-    //     //   if (!mod._props.filters[0].locked) {
-    //     //     names.add(mod._name);
-    //     //   }
-    //     // });
-    //   }
-    // });
-
-    // // equipmentFilters.filterPlatesByLevel = true;
-  }
-
-  // saveToFile(equipmentFilters, name + "-filter.json");
 };
 
 export const buffScavGearAsLevel = (
@@ -414,7 +352,7 @@ export const buildEmptyWeightAdjustmentsByDevision = (
 };
 
 export const applyValuesToStoredEquipment = (
-  inventory: Inventory,
+  inventory: IInventory,
   items: Record<string, ITemplateItem>,
   storedWeightingAdjustmentDetails: StoredWeightingAdjustmentDetails[]
 ) => {
@@ -436,7 +374,7 @@ export const applyValuesToStoredEquipment = (
 
   const equipmentList = {};
 
-  Object.keys(inventory.equipment).forEach((key: keyof Equipment) => {
+  Object.keys(inventory.equipment).forEach((key: keyof IEquipment) => {
     if (equipmentTypesTochange.has(key)) {
       const ratingFunc = getRatingFuncForEquipmentType(key, items);
       equipmentList[key] = [];
@@ -486,7 +424,7 @@ export const applyValuesToStoredEquipment = (
       });
     });
 
-    Object.keys(equipmentList).forEach((key: keyof Equipment) => {
+    Object.keys(equipmentList).forEach((key: keyof IEquipment) => {
       const listPortion = equipmentList[key];
       const quantityPerLevel = Math.round(listPortion.length / division);
       const resultingList = (listPortion as Array<{ id; rating }>).slice(

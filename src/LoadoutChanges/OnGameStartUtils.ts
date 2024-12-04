@@ -1,11 +1,11 @@
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import {
   EquipmentFilters,
-  RandomisationDetails,
-  WeightingAdjustmentDetails,
+  IRandomisationDetails,
+  IWeightingAdjustmentDetails,
 } from "@spt/models/spt/config/IBotConfig";
 import advancedConfig from "../../config/advancedConfig.json";
-import { IBotType, Mods } from "@spt/models/eft/common/tables/IBotType";
+import { IBotType, IMods } from "@spt/models/eft/common/tables/IBotType";
 import {
   SightType,
   checkParentRecursive,
@@ -22,7 +22,7 @@ import { globalValues } from "./GlobalValues";
 export const makeRandomisationAdjustments = (
   isNight: boolean,
   originalWeight: EquipmentFilters,
-  randomisation: RandomisationDetails[],
+  randomisation: IRandomisationDetails[],
   location: keyof typeof advancedConfig.locations
 ) => {
   const noNvgNeeded = ["factory4_day", "factory4_night", "laboratory"].includes(
@@ -100,7 +100,7 @@ export const makeMapSpecificWeaponWeightings = (
   location: keyof typeof advancedConfig.locations,
   items: Record<string, ITemplateItem>,
   originalWeight: EquipmentFilters,
-  pmcWeighting: WeightingAdjustmentDetails[]
+  pmcWeighting: IWeightingAdjustmentDetails[]
 ) => {
   const firstPrimaryWeaponTypes =
     advancedConfig.locations[location].weightingAdjustments.FirstPrimaryWeapon;
@@ -125,7 +125,7 @@ export const makeMapSpecificWeaponWeightings = (
 };
 
 export const cullModItems = (
-  mods: Mods,
+  mods: IMods,
   isNight: boolean,
   items: Record<string, ITemplateItem>,
   location: keyof typeof advancedConfig.locations
@@ -218,7 +218,7 @@ const marksmanUpperRails = new Set([
 ]);
 
 export const updateScopes = (
-  mods: Mods,
+  mods: IMods,
   isNight: boolean,
   items: Record<string, ITemplateItem>,
   location: keyof typeof advancedConfig.locations
@@ -322,7 +322,7 @@ const checkIfChildHasScopes = (
   id: string,
   items: Record<string, ITemplateItem>,
   scopeTypes: Set<string>,
-  mods: Mods,
+  mods: IMods,
   clean?: boolean
 ) => {
   const result = !!mods[id]?.mod_scope?.find((scopeId) =>

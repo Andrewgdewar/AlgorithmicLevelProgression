@@ -1,6 +1,6 @@
-import { Inventory } from "@spt/models/eft/common/tables/IBotType";
+import { IInventory } from "@spt/models/eft/common/tables/IBotType";
 
-export const fixSpecificItemIssues = (inventory: Inventory) => {
+export const fixSpecificItemIssues = (inventory: IInventory) => {
   const removeAccentScopeList = new Set([
     "6171407e50224f204c1da3c5", // Recknagel Era-Tac 30mm ring scope mount
     "61713cc4d8e3106d9806c109", // Recknagel Era-Tac 34mm ring scope mount
