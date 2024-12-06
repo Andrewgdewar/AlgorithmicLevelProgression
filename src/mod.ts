@@ -16,6 +16,12 @@ import { LocationUpdater } from "./LoadoutChanges/LocationUpdater";
 import SetupNonPMCBotChanges from "./NonPmcBotChanges/SetupNonPMCBotChanges";
 import ClothingChanges from "./LoadoutChanges/ClothingChanges";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { globalValues } from "./LoadoutChanges/GlobalValues";
+import { cloneDeep } from "./LoadoutChanges/utils";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 
 class AlgorithmicLevelProgression
   implements IPreSptLoadMod, IPostDBLoadMod, IPostSptLoadMod
@@ -51,6 +57,12 @@ class AlgorithmicLevelProgression
       SetupLocationGlobals(container);
     }
     enableNonPMCBotChanges && SetupNonPMCBotChanges(container);
+    const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
+    const tables = databaseServer.getTables();
+    const configServer = container.resolve<ConfigServer>("ConfigServer");
+    const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
+    globalValues.originalBotTypes = cloneDeep(tables.bots.types);
+    globalValues.originalWeighting = cloneDeep(botConfig.equipment.pmc);
   }
 
   postSptLoad(container: DependencyContainer): void {

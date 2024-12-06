@@ -18,6 +18,7 @@ import {
   IMods,
 } from "../../types/models/eft/common/tables/IBotType";
 import InternalBlacklist from "./InternalBlacklist";
+import mappedPresets from "../Constants/mappedPresets.json";
 
 export const saveToFile = (data, filePath) => {
   var fs = require("fs");
@@ -300,7 +301,7 @@ export const getHeadwearRating = (
   const hasNvg = !!item._props.Slots.find((slot) => slot._name === "mod_nvg");
 
   if (hasNvg) rating += 2;
-  if (item._props?.BlocksEarpiece) rating *= 0.3;
+  if (item._props?.BlocksEarpiece) rating *= 0.2;
   // console.log(
   //   Math.round(rating * 1.5 - item._props.Weight),
   //   "-",
@@ -396,9 +397,9 @@ export const getBackPackInternalGridValue = ({
       total = total / 6;
     }
   });
-  if (total > 20) total += 20;
+  // if (total > 20) total += 20;
 
-  total = Math.round(total / Weight);
+  total = Math.round((total * 10) / Weight);
   if (["6034d103ca006d2dca39b3f0", "6038d614d10cbf667352dd44"].includes(_id)) {
     total = Math.round(total * 0.7);
   }
@@ -553,23 +554,24 @@ export const setWhitelists = (
   // console.log(JSON.stringify(botConfig.equipment.pmc.whitelist))
 };
 
-export const buildEmptyWeightAdjustments = (): IWeightingAdjustmentDetails[] => {
-  return numList.map((num) => ({
-    levelRange: levelRange[num],
-    ammo: {
-      add: {},
-      edit: {},
-    },
-    equipment: {
-      add: {},
-      edit: {},
-    },
-    clothing: {
-      add: {},
-      edit: {},
-    },
-  }));
-};
+export const buildEmptyWeightAdjustments =
+  (): IWeightingAdjustmentDetails[] => {
+    return numList.map((num) => ({
+      levelRange: levelRange[num],
+      ammo: {
+        add: {},
+        edit: {},
+      },
+      equipment: {
+        add: {},
+        edit: {},
+      },
+      clothing: {
+        add: {},
+        edit: {},
+      },
+    }));
+  };
 
 const multiplyAndRound = (num1: number, num2: number): number =>
   Math.round(num1 * num2);
@@ -851,7 +853,6 @@ export const setWeightingAdjustments = (
             break;
           case "Headwear":
             const rating = getHeadwearRating(item, items);
-
             setWeightItem(
               weight[index],
               equipmentType,
@@ -876,7 +877,11 @@ export const setWeightingAdjustments = (
               weight[index],
               equipmentType,
               id,
-              item._props.BlocksHeadwear ? 1 : 40,
+              Math.round(
+                (item._props.BlocksHeadwear ? 0.1 : 1) *
+                  (item._props.ExamineExperience || 0) +
+                  (item._props.LootExperience || 0)
+              ),
               tierMultiplier
             );
             break;
@@ -894,7 +899,18 @@ export const setWeightingAdjustments = (
             setWeightItem(weight[index], equipmentType, id, 20, tierMultiplier);
             break;
           case "Scabbard":
-            setWeightItem(weight[index], equipmentType, id, 20, tierMultiplier);
+            setWeightItem(
+              weight[index],
+              equipmentType,
+              id,
+              Math.round(
+                (item._props.StabPenetration || 0) +
+                  (item._props.SlashPenetration || 0) +
+                  (item._props.ExamineExperience || 0) +
+                  (item._props.LootExperience || 0)
+              ),
+              tierMultiplier
+            );
             break;
           case "Eyewear":
             setWeightItem(
@@ -1174,7 +1190,10 @@ export const buildOutModsObject = (
 
   traderList.forEach((id) => {
     const item = items[id];
-    const newModObject = {} as Record<string, string[]>;
+
+    const newModObject = mappedPresets[id]
+      ? mappedPresets[id]
+      : ({} as Record<string, string[]>);
 
     if (
       !inventory.mods[id] &&
@@ -1190,19 +1209,23 @@ export const buildOutModsObject = (
                   handguardParent,
                   gasblockParent,
                 ]) /*gasblockParent,*/:
-                newModObject[mod._name] = [];
+                if (!newModObject[mod._name]) newModObject[mod._name] = [];
                 break;
               // case mod._name?.includes("scope"):
               //     newModObject[mod._name] = mod._props?.filters[0].Filter.filter((_tpl) => siteWhiteList["5447bedf4bdc2d87278b4568"].includes(_tpl))
               // console.log(item._name, newModObject[mod._name])
               default:
-                newModObject[mod._name] = mod._props?.filters[0].Filter.filter(
-                  (_tpl) => !blacklistedItems.has(_tpl)
-                );
+                newModObject[mod._name] = deDupeArr([
+                  ...(newModObject[mod._name] ? newModObject[mod._name] : []),
+                  ...mod._props?.filters[0].Filter.filter(
+                    (_tpl) => !blacklistedItems.has(_tpl)
+                  ),
+                ]);
                 break;
             }
           }
         });
+
         if (Object.keys(newModObject)) {
           inventory.mods[id] = newModObject;
         }
@@ -1612,7 +1635,7 @@ export const buildInitialRandomization = (
         mod_equipment_002: [0, 0, 5, 15, 25][index],
       },
     };
-    
+
     traderList[num].forEach((id) => {
       const item = items[id];
       const parent = item._parent;
@@ -1889,16 +1912,19 @@ export const buildBlacklist = (
   });
 };
 
-export const deleteBlacklistedItemsFromInventory = (inventory: IInventory) => {
+export const deleteBlacklistedItemsFromInventory = (
+  inventory: IInventory,
+  blacklist: Set<string>
+) => {
   Object.keys(inventory.items).forEach((key) => {
     Object.keys(inventory.items[key]).forEach((id) => {
-      if (blacklistedItems.has(id)) delete inventory.items[key][id];
+      if (blacklist.has(id)) delete inventory.items[key][id];
     });
   });
 
   Object.keys(inventory.Ammo).forEach((calibre) => {
     Object.keys(inventory.Ammo[calibre]).forEach((ammoKey) => {
-      if (blacklistedItems.has(ammoKey)) {
+      if (blacklist.has(ammoKey)) {
         delete inventory.Ammo[calibre][ammoKey];
         // console.log(calibre, ammoKey, inventory.Ammo[calibre][ammoKey]);
       }
@@ -1906,14 +1932,12 @@ export const deleteBlacklistedItemsFromInventory = (inventory: IInventory) => {
   });
 
   Object.keys(inventory.mods).forEach((key) => {
-    if (blacklistedItems.has(key)) {
+    if (blacklist.has(key)) {
       delete inventory.mods[key];
     } else {
       Object.keys(inventory.mods?.[key]).forEach((modtype) => {
         if (inventory.mods[key][modtype]?.length) {
-          inventory.mods[key][modtype].filter(
-            (id) => !blacklistedItems.has(id)
-          );
+          inventory.mods[key][modtype].filter((id) => !blacklist.has(id));
         }
       });
     }

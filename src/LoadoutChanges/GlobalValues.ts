@@ -71,6 +71,9 @@ export class globalValues {
         botInventory,
         this.tables.templates.items
       );
+      // if (name === "assault") {
+      //   saveToFile(this.tables.bots.types[name], `refDBS/assault.json`);
+      // }
     });
   }
 
@@ -104,7 +107,7 @@ export class globalValues {
         `Algorthimic LevelProgression: 'originalWeighting' was not set correctly`
       );
     }
-    
+
     if (!items) {
       return this.Logger.error(
         `Algorthimic LevelProgression: 'items' was not set correctly`

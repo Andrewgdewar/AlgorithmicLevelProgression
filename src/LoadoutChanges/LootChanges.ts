@@ -1,7 +1,6 @@
 import { IBotType } from "@spt/models/eft/common/tables/IBotType";
 import { IHandbookBase } from "@spt/models/eft/common/tables/IHandbookBase";
 import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
-import BaseClasses from "../Constants/BaseClasses";
 import {
   blacklistedItems,
   checkParentRecursive,
@@ -11,6 +10,7 @@ import {
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
 import nonPmcBotConfig from "../../config/nonPmcBotConfig.json";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
 
 export const buildLootChanges = (
   items: Record<string, ITemplateItem>,

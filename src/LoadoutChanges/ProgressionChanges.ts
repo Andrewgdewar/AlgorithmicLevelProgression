@@ -41,7 +41,6 @@ import Tier5 from "../Constants/Tier5";
 
 import botConfigequipmentpmc from "../Cache/botConfigequipmentpmc.json";
 import tablesbotstypesusec from "../Cache/tablesbotstypesusec.json";
-import { globalValues } from "./GlobalValues";
 import { buildLootChanges } from "./LootChanges";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { fixSpecificItemIssues } from "./FixSpecificScopeIssues";
@@ -52,6 +51,47 @@ export default function ProgressionChanges(
   const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
   const tables = databaseServer.getTables();
   const configServer = container.resolve<ConfigServer>("ConfigServer");
+
+  // const presets = tables.globals.ItemPresets;
+
+  // let mappedPresets = {};
+
+  // Object.values(presets).forEach((preset) => {
+  //   if (preset._encyclopedia) {
+  //     const newPreset = {};
+
+  //     let mainId = "";
+  //     const otherPresets = {};
+  //     const mapper = {};
+  //     preset._items.forEach((item) => {
+  //       if (item._tpl === preset._encyclopedia) {
+  //         mainId = item._id;
+  //       }
+
+  //       if (item.parentId && item.slotId) {
+  //         mapper[item._id] = item._tpl;
+  //         if (item.parentId === mainId) {
+  //           if (!newPreset[item.slotId]) newPreset[item.slotId] = [];
+  //           newPreset[item.slotId].push(item._tpl);
+  //         } else {
+  //           if (!otherPresets[mapper[item.parentId]])
+  //             otherPresets[mapper[item.parentId]] = {};
+  //           if (!otherPresets[mapper[item.parentId]][item.slotId]) {
+  //             otherPresets[mapper[item.parentId]][item.slotId] = [item._tpl];
+  //           } else {
+  //             otherPresets[mapper[item.parentId]][item.slotId].push(item._tpl);
+  //           }
+  //         }
+  //       }
+  //     });
+
+  //     mappedPresets[preset._encyclopedia] = newPreset;
+  //     if (Object.keys(otherPresets))
+  //       mappedPresets = { ...mappedPresets, ...otherPresets };
+  //   }
+  // });
+
+  // saveToFile(mappedPresets, "Constants/mappedPresets.json");
 
   const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
   const pmcConfig = configServer.getConfig<IPmcConfig>(ConfigTypes.PMC);
@@ -508,8 +548,8 @@ export default function ProgressionChanges(
         lootingBotsDetected
       );
 
-      deleteBlacklistedItemsFromInventory(usecInventory);
-      deleteBlacklistedItemsFromInventory(bearInventory);
+      deleteBlacklistedItemsFromInventory(usecInventory, blacklistedItems);
+      deleteBlacklistedItemsFromInventory(bearInventory, blacklistedItems);
 
       // add ai2 and surv to bot containerq
 
@@ -541,6 +581,7 @@ export default function ProgressionChanges(
 
       tables.bots.types.usec.inventory = usecInventory;
       tables.bots.types.bear.inventory = bearInventory;
+      tables.bots.types.bear.inventory = tables.bots.types.usec.inventory; // TESTING << REMOVE IF SLOWER
     } catch (error) {
       config.forceCached = true;
       throw Error(
@@ -598,8 +639,7 @@ export default function ProgressionChanges(
   // saveToFile(botConfig, "botConfig.json");
   // saveToFile(pmcConfig, "pmcConfig.json");
 
-  globalValues.originalBotTypes = cloneDeep(tables.bots.types);
-  globalValues.originalWeighting = cloneDeep(botConfig.equipment.pmc);
+
   // tables.bots.types.usec
   // botConfig.equipment.pmc
   // saveToFile(tables.bots.types.usec, `Cache/tablesbotstypesusec.json`);

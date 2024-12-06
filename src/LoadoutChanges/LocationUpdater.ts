@@ -19,12 +19,22 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
     `AlgorithmicLevelProgressionMapUpdater`,
     [
       {
-        url: "/client/raid/configuration",
+        url: "/client/match/local/start",
         action: async (_url, info, sessionId, output) => {
           const time = weatherController.generate().time;
+          // const timestamp =
+          //   weatherController.generate().weather.sptInRaidTimestamp;
+          // console.log(
+          //   timestamp,
+          //   timestamp / 360000,
+          //   timestamp / 3600,
+          //   timestamp / 6000,
+          //   timestamp / 24,
+          //   timestamp / 24 / 60
+          // );
 
           const hours = getTime(time, info.timeVariant === "PAST" ? 12 : 0);
-
+          // console.log("hours", hours);
           globalValues.setValuesForLocation(info.location.toLowerCase(), hours);
           if (enableNonPMCBotChanges) {
             const pmcData = globalValues.profileHelper.getPmcProfile(sessionId);
@@ -44,11 +54,11 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
     );
 };
 
-function getTime(time: string, hourDiff): number {
-  let [h, m] = time.split(":");
-  // console.log("minutes", m)
-  if (parseInt(h) == 0) {
-    return Number(h);
+function getTime(time: string, hourDiff: number): number {
+  let [hours, minutes] = time.split(":");
+
+  if (hourDiff == 12 && parseInt(hours) >= 12) {
+    return Math.abs(parseInt(hours) - hourDiff);
   }
-  return Number(Math.abs(parseInt(h) - hourDiff));
+  return Math.abs(parseInt(hours) + hourDiff);
 }
