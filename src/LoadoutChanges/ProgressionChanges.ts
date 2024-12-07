@@ -144,6 +144,7 @@ export default function ProgressionChanges(
         "Mechanic",
         "Ragman",
         "Jaeger",
+        "Arena",
       ];
 
       const tradersToExclude = [
@@ -638,7 +639,6 @@ export default function ProgressionChanges(
 
   // saveToFile(botConfig, "botConfig.json");
   // saveToFile(pmcConfig, "pmcConfig.json");
-
 
   // tables.bots.types.usec
   // botConfig.equipment.pmc

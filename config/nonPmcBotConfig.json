@@ -1,12 +1,453 @@
 {
   "addRandomizedKeysToScavs": true,
   "lootDisparityMultiplier": 1,
-  "percentageOfKeysInSpawnPool": 0.5,
+  "percentageOfKeysInSpawnPool": 0.3,
   "scavLootBlacklist": [],
   "additionalScavLoot": ["5c94bbff86f7747ee735c08f"],
   "botAmmoRandomness": 0.1,
   "botEquipmentRandomness": 0.1,
   "nonPmcBots": {
+    "assault": {
+      "tiers": [
+        [1, 9],
+        [12, 15],
+        [16, 29],
+        [30, 100]
+      ],
+      "Ammo": [0, 0.4],
+      "Holster": [0, 0.6],
+      "FirstPrimaryWeapon": [0, 0.6],
+      "Backpack": [0, 0.3],
+      "ArmorVest": [0, 0.4],
+      "TacticalVest": [0, 0.3],
+      "Headwear": [0, 0.4],
+      "Scabbard": [0, 0],
+      "FaceCover": [0, 0.5],
+      "Eyewear": [0, 0.5],
+      "BasePlateChance": 60,
+      "SidePlateChance": 10
+    },
+    "marksman": {
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "AllowSniperRifles": true,
+      "HasModdedWeapons": false,
+      "FirstPrimaryWeapon": [0.4, 0.8],
+      "Backpack": [0.1, 0.3],
+      "Ammo": [0.3, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.6],
+      "Headwear": [0.3, 0.6],
+      "Scabbard": [0, 0],
+      "FaceCover": [0, 0.5],
+      "BasePlateChance": 60,
+      "SidePlateChance": 10
+    },
+    "pmcbot": {
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "Ammo": [0.4, 0.6],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.2, 0.6],
+      "Headwear": [0.1, 0.5],
+      "FaceCover": [0.2, 0.6],
+      "Eyewear": [0, 0.5],
+      "BasePlateChance": 90
+    },
+    "exusec": {
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "Earpiece": [0, 0.4],
+      "HasModdedWeapons": true,
+      "Ammo": [0.6, 0.8],
+      "ArmorVest": [0.4, 0.7],
+      "TacticalVest": [0.4, 0.7],
+      "Headwear": [0.5, 0.8],
+      "FaceCover": [0.2, 0.6],
+      "Eyewear": [0, 0.5],
+      "BasePlateChance": 90
+    },
+    "bossboar": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "AllowSniperRifles": false,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0.5],
+      "FirstPrimaryWeapon": [0.5, 0.9],
+      "Backpack": [0, 0],
+      "Ammo": [0.1, 0.5],
+      "ArmorVest": [0, 0.5],
+      "TacticalVest": [0, 0.4],
+      "Headwear": [0, 0.6],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.1, 0.4],
+      "Eyewear": [0, 0.3],
+      "BasePlateChance": 40,
+      "SidePlateChance": 20
+    },
+    "bosspartisan": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "AllowSniperRifles": false,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0.5],
+      "FirstPrimaryWeapon": [0, 0.5],
+      "Backpack": [0, 0],
+      "Ammo": [0.1, 0.5],
+      "ArmorVest": [0, 0.5],
+      "TacticalVest": [0, 0.4],
+      "Headwear": [0, 0.6],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.1, 0.4],
+      "Eyewear": [0, 0.3],
+      "BasePlateChance": 40,
+      "SidePlateChance": 20
+    },
+    "bossbully": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "AllowSniperRifles": false,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.3, 0.7],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.2, 0.5],
+      "TacticalVest": [0.1, 0.4],
+      "Headwear": [0.3, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 50,
+      "SidePlateChance": 30
+    },
+    "bosstagilla": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.4, 0.7],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.3, 0.7],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0.5, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
+    },
+    "bossgluhar": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.4, 0.7],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.3, 0.7],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0.5, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
+    },
+    "bosskilla": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.4, 0.7],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.3, 0.7],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0.5, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
+    },
+    "bosskojaniy": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.4, 0.7],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.3, 0.7],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0.5, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
+    },
+    "bosssanitar": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.4, 0.7],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.3, 0.7],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0.5, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
+    },
+    "bosskolontay": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.4, 0.7],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.3, 0.7],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0.5, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
+    },
+    "bossknight": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.4, 0.7],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.3, 0.7],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0.5, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
+    },
+    "followersanitar": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followerkolontayassault": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followerkolontaysecurity": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followerboarclose1": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followerboarclose2": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followerbully": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followergluharscout": {
+      "AllowSniperRifles": true,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followerbigpipe": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "AllowSniperRifles": false,
+      "Holster": [0, 0],
+      "FirstPrimaryWeapon": [0.6, 0.9],
+      "Backpack": [0, 0],
+      "Ammo": [0.5, 1],
+      "ArmorVest": [0.5, 1],
+      "TacticalVest": [0.5, 1],
+      "Headwear": [0.5, 1],
+      "Scabbard": [0, 0],
+      "FaceCover": [0.5, 1],
+      "Eyewear": [0, 0],
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
+    },
     "followerbirdeye": {
       "forceOnlyArmoredRigWhenNoArmor": true,
       "HasModdedWeapons": true,
@@ -26,29 +467,10 @@
       "Scabbard": [0, 0],
       "FaceCover": [0.5, 1],
       "Eyewear": [0, 0],
-      "BasePlateChance": 100
+      "BasePlateChance": 90,
+      "SidePlateChance": 60
     },
-    "allBosses": {
-      "forceOnlyArmoredRigWhenNoArmor": true,
-      "HasModdedWeapons": true,
-      "tiers": [
-        [1, 14],
-        [15, 24],
-        [25, 100]
-      ],
-      "Holster": [0, 0],
-      "FirstPrimaryWeapon": [0.4, 0.7],
-      "Backpack": [0, 0],
-      "Ammo": [0.5, 1],
-      "ArmorVest": [0.5, 1],
-      "TacticalVest": [0.5, 1],
-      "Headwear": [0.5, 1],
-      "Scabbard": [0, 0],
-      "FaceCover": [0.5, 1],
-      "Eyewear": [0, 0],
-      "BasePlateChance": 100
-    },
-    "allBossFollowers": {
+    "followergluharassault": {
       "forceOnlyArmoredRigWhenNoArmor": true,
       "HasModdedWeapons": true,
       "tiers": [
@@ -59,123 +481,72 @@
       "Earpiece": [0, 0.3],
       "Backpack": [0, 0.4],
       "Ammo": [0.4, 0.8],
-      "ArmorVest": [0.3, 0.8],
-      "TacticalVest": [0.3, 0.8],
-      "Headwear": [0, 0.7],
-      "FaceCover": [0, 0.4],
-      "Eyewear": [0, 0.6],
-      "BasePlateChance": 100
-    },
-    "assault": {
-      "tiers": [
-        [1, 9],
-        [12, 15],
-        [16, 29],
-        [30, 100]
-      ],
-      "Holster": [0, 0.5],
-      "FirstPrimaryWeapon": [0, 0.4],
-      "Backpack": [0, 0.3],
-      "Ammo": [0, 0.4],
-      "ArmorVest": [0, 0.4],
-      "TacticalVest": [0, 0.3],
-      "Headwear": [0, 0.4],
-      "Scabbard": [0, 0],
-      "FaceCover": [0, 0.5],
-      "Eyewear": [0, 0.5],
-      "BasePlateChance": 60
-    },
-    "marksman": {
-      "tiers": [
-        [1, 14],
-        [15, 24],
-        [25, 100]
-      ],
-      "AllowSniperRifles": true,
-      "HasModdedWeapons": false,
-      "FirstPrimaryWeapon": [0.4, 0.8],
-      "Backpack": [0.1, 0.3],
-      "Ammo": [0.3, 0.8],
       "ArmorVest": [0.3, 0.6],
-      "TacticalVest": [0.3, 0.6],
-      "Headwear": [0.3, 0.6],
-      "Scabbard": [0, 0],
-      "FaceCover": [0, 0.5],
-      "BasePlateChance": 60
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
     },
-    "pmcbot": {
-      "tiers": [
-        [1, 14],
-        [15, 24],
-        [25, 100]
-      ],
+    "followergluharsecurity": {
       "forceOnlyArmoredRigWhenNoArmor": true,
       "HasModdedWeapons": true,
-      "Ammo": [0.4, 0.6],
-      "ArmorVest": [0.3, 0.6],
-      "TacticalVest": [0.2, 0.6],
-      "Headwear": [0.1, 0.5],
-      "FaceCover": [0.2, 0.6],
-      "Eyewear": [0, 0.5],
-      "BasePlateChance": 100
-    },
-    "exusec": {
       "tiers": [
         [1, 14],
         [15, 24],
         [25, 100]
       ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followerboar": {
       "forceOnlyArmoredRigWhenNoArmor": true,
-      "Earpiece": [0, 0.4],
       "HasModdedWeapons": true,
-      "Ammo": [0.6, 0.8],
-      "ArmorVest": [0.4, 0.7],
-      "TacticalVest": [0.4, 0.7],
-      "Headwear": [0.5, 0.8],
-      "FaceCover": [0.2, 0.6],
-      "Eyewear": [0, 0.5],
-      "BasePlateChance": 100
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
+    },
+    "followerkojaniy": {
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "HasModdedWeapons": true,
+      "tiers": [
+        [1, 14],
+        [15, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.3],
+      "Backpack": [0, 0.4],
+      "Ammo": [0.4, 0.8],
+      "ArmorVest": [0.3, 0.6],
+      "TacticalVest": [0.3, 0.7],
+      "Headwear": [0, 0.6],
+      "FaceCover": [0, 0.3],
+      "Eyewear": [0.2, 0.6],
+      "BasePlateChance": 70,
+      "SidePlateChance": 50
     }
   },
-  "allBossFollowers": [
-    "followerbully",
-    "followergluharassault",
-    "followergluharsecurity",
-    "followerboar",
-    "followerkojaniy",
-    "followersanitar"
-  ],
-  "allBosses": [
-    "bosstagilla",
-    "bossbully",
-    "bossgluhar",
-    "bosskilla",
-    "bosskojaniy",
-    "bosssanitar",
-    "bossknight",
-
-    "followerbigpipe"
-  ],
-  "==========": "=============",
-  "bossboar": "because no",
-  "arenafighterevent": {
-    "tiers": [
-      [1, 9],
-      [12, 15],
-      [16, 29],
-      [30, 100]
-    ],
-    "Backpack": [0.2, 0.5],
-    "Ammo": [0, 0.5]
-  },
-  "arenafighter": {
-    "tiers": [
-      [1, 9],
-      [12, 15],
-      [16, 29],
-      [30, 100]
-    ],
-    "Backpack": [0.2, 0.5],
-    "Ammo": [0, 0.5]
-  }
+  "arenafighterevent": "because no",
+  "arenafighter": "because no"
 }

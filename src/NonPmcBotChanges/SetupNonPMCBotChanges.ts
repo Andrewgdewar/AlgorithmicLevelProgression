@@ -28,14 +28,6 @@ export default function SetupNonPMCBotChanges(
   // const tieredItemTypes = buldTieredItemTypes(items);
   // saveToFile(tieredItemTypes, "Constants/tieredItems.json");
 
-  Object.keys(nonPmcBotConfig?.nonPmcBots).forEach((name) => {
-    if (nonPmcBotConfig[name]?.length) {
-      nonPmcBotConfig[name].forEach((listName) => {
-        botsForUpdate[listName] = nonPmcBotConfig.nonPmcBots[name];
-      });
-    }
-  });
-
   const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
 
   Object.keys(botsForUpdate).forEach((name) => {
@@ -58,10 +50,13 @@ export default function SetupNonPMCBotChanges(
     if (name !== "assault") {
       Object.keys(nonPmcBotConfig.nonPmcBots[name]).forEach((key) => {
         if (
+          chances.equipment[key] !== undefined &&
           chances.equipment[key] < 30 &&
           nonPmcBotConfig.nonPmcBots[name][key][1] > 0
         ) {
           switch (key) {
+            case "Scabbard":
+              break;
             case "Backpack":
             case "Holster":
             case "Eyewear":
@@ -74,9 +69,15 @@ export default function SetupNonPMCBotChanges(
               chances.equipment[key] = 70;
               break;
           }
-          // console.log(name, key, chances.equipment[key]);
         }
       });
+
+      if (chances.equipment.SecondPrimaryWeapon) {
+        chances.equipment.SecondPrimaryWeapon = 10;
+      } else {
+        chances.equipment.SecondPrimaryWeapon = 0;
+      }
+      // console.log("\n");
     }
 
     // if (name === "marksman") {
@@ -103,8 +104,8 @@ export default function SetupNonPMCBotChanges(
 
     globalValues.storedEquipmentValues[name] = storedEquipmentValues;
   });
-
-  // globalValues.updateInventory(70);
+  // console.log(bots);
+  globalValues.updateInventory(1);
 
   // saveToFile(
   //   globalValues.storedEquipmentValues,

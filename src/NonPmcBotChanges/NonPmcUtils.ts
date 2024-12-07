@@ -133,6 +133,7 @@ export interface BotUpdateInterface {
   FirstPrimary?: number[];
   Holster?: number[];
   BasePlateChance: number;
+  SidePlateChance?: number;
 }
 
 const equipmentTypesTochange = new Set([
@@ -368,7 +369,7 @@ const defaultRandomisation = [
       min: 1,
       max: 100,
     },
-    equipmentMods: {},
+    equipmentMods: { mod_nvg: 0 },
   },
 ];
 
@@ -440,25 +441,34 @@ export const setPlateWeightings = (
 
   const randomizationToUpdate = cloneDeep(equipmentFilters.randomisation[0]);
 
-  if (
-    nonPmcBotConfig.nonPmcBots?.[name]?.BasePlateChance &&
-    nonPmcBotConfig.nonPmcBots[name].BasePlateChance < 100
-  ) {
-    ["front_plate", "back_plate"].forEach((key) => {
-      let value = nonPmcBotConfig.nonPmcBots[name].BasePlateChance + index * 15;
+  if (nonPmcBotConfig.nonPmcBots[name].BasePlateChance < 101) {
+    let front = nonPmcBotConfig.nonPmcBots[name].BasePlateChance + index * 15;
+    if (front > 100) front = 100;
+    randomizationToUpdate.equipmentMods["front_plate"] = front;
+
+    let back =
+      nonPmcBotConfig.nonPmcBots[name].BasePlateChance - 20 + index * 15;
+    if (back > 100) back = 100;
+    randomizationToUpdate.equipmentMods["back_plate"] = back;
+  }
+
+  if (nonPmcBotConfig.nonPmcBots?.[name]?.SidePlateChance) {
+    ["left_side_plate", "right_side_plate"].forEach((key) => {
+      let value = nonPmcBotConfig.nonPmcBots[name].SidePlateChance + index * 10;
       if (value > 100) value = 100;
+      if (value < 0) value = 0;
       randomizationToUpdate.equipmentMods[key] = value;
     });
-
+  } else {
     ["left_side_plate", "right_side_plate"].forEach((key) => {
       let value =
-        nonPmcBotConfig.nonPmcBots[name].BasePlateChance - 30 + index * 20;
+        nonPmcBotConfig.nonPmcBots[name].BasePlateChance - 30 + index * 10;
       if (value > 100) value = 100;
       if (value < 0) value = 0;
       randomizationToUpdate.equipmentMods[key] = value;
     });
   }
-
+  // console.log(name, randomizationToUpdate.equipmentMods);
   equipmentFilters.randomisation[0] = randomizationToUpdate;
   //=========================================
 };
