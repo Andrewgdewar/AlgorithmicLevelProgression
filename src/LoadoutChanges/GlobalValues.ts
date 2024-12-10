@@ -37,10 +37,19 @@ export class globalValues {
   public static originalWeighting: EquipmentFilters;
   public static configServer: ConfigServer;
 
-  public static updateInventory(currentLevel: number) {
+  public static updateInventory(
+    currentLevel: number,
+    location: keyof typeof advancedConfig.locations
+  ) {
+    // const items = this.tables.templates.items;
     const nameList = Object.keys(this.storedEquipmentValues);
     if (!nameList.length || !currentLevel) return;
     const botConfig = this.configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
+
+    // const firstPrimaryWeaponTypes =
+    //   advancedConfig.locations[location].weightingAdjustments
+    //     .FirstPrimaryWeapon;
+
     nameList.forEach((name) => {
       const currentLevelIndex = this.storedEquipmentValues[name].findIndex(
         ({ levelRange: { min, max } }) =>
@@ -50,30 +59,59 @@ export class globalValues {
         this.storedEquipmentValues[name][currentLevelIndex];
 
       const botInventory = this.tables.bots.types[name].inventory;
-
-      for (const caliber in weightingToUpdate.ammo) {
-        mergeDeep(botInventory.Ammo[caliber], weightingToUpdate.ammo[caliber]);
+      if (!weightingToUpdate) return;
+      if (weightingToUpdate?.ammo) {
+        for (const caliber in weightingToUpdate.ammo) {
+          mergeDeep(
+            botInventory.Ammo[caliber],
+            weightingToUpdate.ammo[caliber]
+          );
+        }
       }
 
-      for (const equipmentType in weightingToUpdate.equipment) {
-        mergeDeep(
-          botInventory.equipment[equipmentType],
-          weightingToUpdate.equipment[equipmentType]
+      if (weightingToUpdate?.equipment) {
+        for (const equipmentType in weightingToUpdate.equipment) {
+          //update weapons here
+          // if (equipmentType === "FirstPrimaryWeapon") {
+          // const copiedWeapons: Record<string, number> = cloneDeep(
+          //   weightingToUpdate.equipment[equipmentType]
+          // );
+          // // console.log(name, copiedWeapons);
+          // for (const key in firstPrimaryWeaponTypes) {
+          //   const value = firstPrimaryWeaponTypes[key];
+          //   // console.log(, value);
+          //   copiedWeapons[key] = value;
+          // }
+          // firstPrimaryKeys?.forEach((weaponId) => {
+          //   const parentId = items[weaponId]?._parent;
+          //   const parent = items?.[parentId]?._name;
+          //   if (parent && firstPrimaryWeaponTypes[parent]) {
+          //     const multiplier = firstPrimaryWeaponTypes[parent];
+          //     pmcWeighting[index].equipment.edit.FirstPrimaryWeapon[
+          //       weaponId
+          //     ] = Math.round(multiplier * firstPrimary[weaponId]);
+          //     // console.log(firstPrimary[weaponId], " to ", pmcWeighting[index].equipment.edit.FirstPrimaryWeapon[weaponId], parent, items[weaponId]._name)
+          // } else {
+          mergeDeep(
+            botInventory.equipment[equipmentType],
+            weightingToUpdate.equipment[equipmentType]
+          );
+          // }
+        }
+        if (name === "assault") {
+          buffScavGearAsLevel(botConfig.equipment[name], currentLevelIndex);
+        }
+        setPlateWeightings(
+          name,
+          botConfig.equipment[name],
+          currentLevelIndex,
+          botInventory,
+          this.tables.templates.items
         );
+        // if (name === "assault") {
+        //   saveToFile(this.tables.bots.types[name], `refDBS/assault.json`);
+        // }
       }
-      if (name === "assault") {
-        buffScavGearAsLevel(botConfig.equipment[name], currentLevelIndex);
-      }
-      setPlateWeightings(
-        name,
-        botConfig.equipment[name],
-        currentLevelIndex,
-        botInventory,
-        this.tables.templates.items
-      );
-      // if (name === "assault") {
-      //   saveToFile(this.tables.bots.types[name], `refDBS/assault.json`);
-      // }
     });
   }
 

@@ -284,38 +284,40 @@ export const addItemsToBotInventory = (
     }
   });
 
-  const Ammo = tieredItems.Ammo;
+  if (botToUpdate?.Ammo?.[1] > 0) {
+    const Ammo = tieredItems.Ammo;
 
-  const ammoStart = botToUpdateAmmo[0];
-  const ammoEnd = botToUpdateAmmo[1];
-  if (ammoStart || ammoEnd) {
-    const startIndex = Math.floor(Ammo.length * ammoStart);
-    const endIndex = Math.floor(Ammo.length * ammoEnd);
+    const ammoStart = botToUpdateAmmo[0];
+    const ammoEnd = botToUpdateAmmo[1];
+    if (ammoStart || ammoEnd) {
+      const startIndex = Math.floor(Ammo.length * ammoStart);
+      const endIndex = Math.floor(Ammo.length * ammoEnd);
 
-    const toAddAmmo = [...ammoToAdd]
-      .map((id) => ({
-        id,
-        value: tieredItems.mapper[id],
-      }))
-      .sort((a, b) => a.value - b.value);
-    const toAddAmmoStartIndex = Math.floor(toAddAmmo.length * ammoStart);
-    const toAddAmmoEndIndex = Math.floor(toAddAmmo.length * ammoEnd);
+      const toAddAmmo = [...ammoToAdd]
+        .map((id) => ({
+          id,
+          value: tieredItems.mapper[id],
+        }))
+        .sort((a, b) => a.value - b.value);
+      const toAddAmmoStartIndex = Math.floor(toAddAmmo.length * ammoStart);
+      const toAddAmmoEndIndex = Math.floor(toAddAmmo.length * ammoEnd);
 
-    [
-      ...toAddAmmo.slice(toAddAmmoStartIndex, toAddAmmoEndIndex),
-      ...Ammo.slice(startIndex, endIndex),
-    ].forEach(({ id, value }) => {
-      const calibre =
-        items[id]?._props?.Caliber || items[id]?._props?.ammoCaliber;
+      [
+        ...toAddAmmo.slice(toAddAmmoStartIndex, toAddAmmoEndIndex),
+        ...Ammo.slice(startIndex, endIndex),
+      ].forEach(({ id, value }) => {
+        const calibre =
+          items[id]?._props?.Caliber || items[id]?._props?.ammoCaliber;
 
-      if (
-        calibre &&
-        inventory.Ammo[calibre] &&
-        !inventory.Ammo?.[calibre]?.[id]
-      ) {
-        inventory.Ammo[calibre][id] = value;
-      }
-    });
+        if (
+          calibre &&
+          inventory.Ammo[calibre] &&
+          !inventory.Ammo?.[calibre]?.[id]
+        ) {
+          inventory.Ammo[calibre][id] = value;
+        }
+      });
+    }
   }
 
   // Add all plates to all equipment for all bots <<PLATE VARIETY>>

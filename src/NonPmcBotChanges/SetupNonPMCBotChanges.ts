@@ -66,6 +66,10 @@ export default function SetupNonPMCBotChanges(
               break;
 
             default:
+              if (name.includes("infected")) {
+                chances.equipment[key] = 50;
+                break;
+              }
               chances.equipment[key] = 70;
               break;
           }
@@ -105,7 +109,6 @@ export default function SetupNonPMCBotChanges(
     globalValues.storedEquipmentValues[name] = storedEquipmentValues;
   });
   // console.log(bots);
-  globalValues.updateInventory(1);
 
   // saveToFile(
   //   globalValues.storedEquipmentValues,

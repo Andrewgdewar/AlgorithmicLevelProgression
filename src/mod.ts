@@ -63,6 +63,7 @@ class AlgorithmicLevelProgression
     const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
     globalValues.originalBotTypes = cloneDeep(tables.bots.types);
     globalValues.originalWeighting = cloneDeep(botConfig.equipment.pmc);
+    // globalValues.updateInventory(50, "factory4_day");
   }
 
   postSptLoad(container: DependencyContainer): void {

@@ -7,6 +7,56 @@
   "botAmmoRandomness": 0.1,
   "botEquipmentRandomness": 0.1,
   "nonPmcBots": {
+    "infectedpmc": {
+      "tiers": [
+        [1, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.4],
+      "Scabbard": [0, 1],
+      "Headwear": [0.3, 0.9],
+      "FaceCover": [0, 0.9],
+      "Eyewear": [0, 0.9],
+      "BasePlateChance": 60,
+      "SidePlateChance": 20
+    },
+    "infectedassault": {
+      "tiers": [
+        [1, 24],
+        [25, 100]
+      ],
+      "Earpiece": [0, 0.2],
+      "Scabbard": [0, 1],
+      "Headwear": [0.3, 0.9],
+      "FaceCover": [0, 0.9],
+      "Eyewear": [0, 0.9],
+      "BasePlateChance": 60,
+      "SidePlateChance": 20
+    },
+    "infectedcivil": {
+      "tiers": [
+        [1, 24],
+        [25, 100]
+      ],
+      "Scabbard": [0, 1],
+      "Headwear": [0, 0.3],
+      "FaceCover": [0, 0.9],
+      "Eyewear": [0, 0.4],
+      "BasePlateChance": 60,
+      "SidePlateChance": 20
+    },
+    "infectedlaborant": {
+      "tiers": [
+        [1, 24],
+        [25, 100]
+      ],
+      "Scabbard": [0, 1],
+      "Headwear": [0, 0.3],
+      "FaceCover": [0, 0],
+      "Eyewear": [0.3, 0.9],
+      "BasePlateChance": 60,
+      "SidePlateChance": 20
+    },
     "assault": {
       "tiers": [
         [1, 9],

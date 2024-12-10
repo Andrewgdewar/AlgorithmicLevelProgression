@@ -38,7 +38,10 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
           globalValues.setValuesForLocation(info.location.toLowerCase(), hours);
           if (enableNonPMCBotChanges) {
             const pmcData = globalValues.profileHelper.getPmcProfile(sessionId);
-            globalValues.updateInventory(pmcData?.Info?.Level || 1);
+            globalValues.updateInventory(
+              pmcData?.Info?.Level || 1,
+              info.location.toLowerCase()
+            );
           }
           console.log("Algorthimic LevelProgression: Loaded");
           return output;
