@@ -129,7 +129,7 @@ export interface BotUpdateInterface {
   Eyewear?: number[];
   Headwear?: number[];
   FaceCover?: number[];
-  Scabbard?: number[];
+  // Scabbard?: number[];
   FirstPrimary?: number[];
   Holster?: number[];
   BasePlateChance: number;
@@ -144,7 +144,7 @@ const equipmentTypesTochange = new Set([
   "Eyewear",
   "Headwear",
   "FaceCover",
-  "Scabbard",
+  // "Scabbard",
   "FirstPrimaryWeapon",
   "Holster",
 ]);
@@ -499,7 +499,7 @@ export const buffScavGearAsLevel = (
     "Earpiece",
     "ArmorVest",
     "FaceCover",
-    "Scabbard",
+    // "Scabbard",
     "Eyewear",
     "Backpack",
   ].forEach((key) => {
