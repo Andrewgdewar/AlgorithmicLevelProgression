@@ -47,6 +47,13 @@ const blackList = new Set<string>([
   "601948682627df266209af05",
   "63495c500c297e20065a08b1",
   "59ef13ca86f77445fd0e2483",
+  "670e8eab8c1bb0e5a7075acf", //mag_pm_izhmeh_9x18pm_999_infectedMagazin
+  "671d85439ae8365d69117ba6", //mag_tt_toz_std_762x25tt_999_infectedMagazin
+  "671d8617a3e45c1f5908278c", //mag_mp443_izhmeh_std_9x19_999_infectedMagazin
+  "671d8ac8a3e45c1f59082799", //mag_glock_glock_w_pad_9x19_999_fde_Infected
+  "671d8b38b769f0d88c0950f8", //mag_m1911_colt_m45a1_std_1143x23_999_infected
+  "671d8b8c0959c721a50ca838", //mag_usp_hk_usp_tactical_1143x23_999_infected
+  "628120f210e26c1f344e6558", // mxc broken mag
 ]);
 
 const makeRare = new Set<string>([
