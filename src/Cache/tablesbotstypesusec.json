@@ -3349,6 +3349,7 @@
                 "66b5f65ca7f72d197e70bcd6": 1,
                 "66b5f661af44ca0014063c05": 1,
                 "66b5f666cad6f002ab7214c2": 1,
+                "66bdc28a0b603c26902b2011": 1,
                 "5aa2ba19e5b5b00014028f4e": 1,
                 "60b52e5bc7d8103275739d67": 1,
                 "5b4329f05acfc47a86086aa1": 1,
@@ -3359,7 +3360,6 @@
                 "5f60e6403b85f6263c14558c": 1,
                 "5b40e5e25acfc4001a599bea": 1,
                 "5f60e7788adaa7100c3adb49": 1,
-                "66bdc28a0b603c26902b2011": 1,
                 "572b7d8524597762b472f9d1": 1,
                 "572b7fa124597762b472f9d2": 1,
                 "59e7708286f7742cbd762753": 1,
@@ -5474,8 +5474,7 @@
                     "576a7c512459771e796e0e17"
                 ],
                 "mod_magazine": [
-                    "576a5ed62459771e9c2096cb",
-                    "671d8617a3e45c1f5908278c"
+                    "576a5ed62459771e9c2096cb"
                 ],
                 "mod_pistol_grip": [
                     "576a63cd2459771e796e0e11"
@@ -21034,8 +21033,7 @@
                 "mod_magazine": [
                     "5e81c4ca763d9f754677befa",
                     "5f3e77b26cda304dcc634057",
-                    "5ef3448ab37dfd6af863525c",
-                    "671d8b38b769f0d88c0950f8"
+                    "5ef3448ab37dfd6af863525c"
                 ],
                 "mod_trigger": [
                     "5ef32e4d1c1fd62aea6a150d",
@@ -25215,8 +25213,7 @@
                 ],
                 "mod_magazine": [
                     "6193d338de3cdf1d2614a6fc",
-                    "6193d3149fb0c665d5490e32",
-                    "671d8b8c0959c721a50ca838"
+                    "6193d3149fb0c665d5490e32"
                 ],
                 "mod_trigger": [
                     "6193d3cded0429009f543e6a"
@@ -26338,7 +26335,6 @@
             },
             "627e14b21713922ded6f2c15": {
                 "mod_magazine": [
-                    "628120f210e26c1f344e6558",
                     "628120fd5631d45211793c9f"
                 ],
                 "mod_pistol_grip": [
@@ -27548,8 +27544,7 @@
                     "5a718da68dc32e000d46d264",
                     "630769c4962d0247b029dc60",
                     "630767c37d50ff5e8a1ea71a",
-                    "63076701a987397c0816d21b",
-                    "671d8ac8a3e45c1f59082799"
+                    "63076701a987397c0816d21b"
                 ],
                 "mod_tactical": [
                     "5a800961159bd4315e3a1657",
@@ -31570,8 +31565,7 @@
             },
             "5448bd6b4bdc2dfc2f8b4569": {
                 "mod_magazine": [
-                    "5448c12b4bdc2d02308b456f",
-                    "670e8eab8c1bb0e5a7075acf"
+                    "5448c12b4bdc2d02308b456f"
                 ],
                 "mod_reciever": [
                     "6374a822e629013b9c0645c8"
@@ -31663,8 +31657,7 @@
                     "571a282c2459771fb2755a69"
                 ],
                 "mod_magazine": [
-                    "571a29dc2459771fb2755a6a",
-                    "671d85439ae8365d69117ba6"
+                    "571a29dc2459771fb2755a6a"
                 ],
                 "mod_muzzle": [
                     "5bffd7ed0db834001d23ebf9"
@@ -34311,8 +34304,7 @@
             },
             "579204f224597773d619e051": {
                 "mod_magazine": [
-                    "5448c12b4bdc2d02308b456f",
-                    "670e8eab8c1bb0e5a7075acf"
+                    "5448c12b4bdc2d02308b456f"
                 ],
                 "mod_muzzle": [
                     "59bffc1f86f77435b128b872",
@@ -37316,28 +37308,6 @@
                     "644a3df63b0b6f03e101e065"
                 ]
             },
-            "65709d2d21b9f815e208ff95": {
-                "mod_equipment_000": [
-                    "6570a88c8f221f3b210353b7"
-                ],
-                "mod_mount": [
-                    "5b7be47f5acfc400170e2dd2"
-                ],
-                "mod_nvg": [
-                    "5a16b8a9fcdbcb00165aa6ca"
-                ],
-                "Helmet_top": [
-                    "657f9eb7e9433140ad0baf86"
-                ],
-                "Helmet_back": [
-                    "657f9ef6c6679fefb3051e1f"
-                ]
-            },
-            "5ea18c84ecf1982c7712d9a2": {
-                "mod_nvg": [
-                    "5a16b8a9fcdbcb00165aa6ca"
-                ]
-            },
             "5d25af8f8abbc3055079fec5": {
                 "cartridges": [
                     "5a6086ea4f39f99cd479502f",
@@ -37431,6 +37401,28 @@
                     "5efb0c1bd79ff02a1f5e68d9",
                     "5e023e6e34d52a55c3304f71",
                     "5e023e88277cce2b522ff2b1"
+                ]
+            },
+            "65709d2d21b9f815e208ff95": {
+                "mod_equipment_000": [
+                    "6570a88c8f221f3b210353b7"
+                ],
+                "mod_mount": [
+                    "5b7be47f5acfc400170e2dd2"
+                ],
+                "mod_nvg": [
+                    "5a16b8a9fcdbcb00165aa6ca"
+                ],
+                "Helmet_top": [
+                    "657f9eb7e9433140ad0baf86"
+                ],
+                "Helmet_back": [
+                    "657f9ef6c6679fefb3051e1f"
+                ]
+            },
+            "5ea18c84ecf1982c7712d9a2": {
+                "mod_nvg": [
+                    "5a16b8a9fcdbcb00165aa6ca"
                 ]
             },
             "5bfeaa0f0db834001b734927": {
@@ -37852,40 +37844,6 @@
                     "6529302b8c26af6326029fb7"
                 ]
             },
-            "5b4329f05acfc47a86086aa1": {
-                "Helmet_top": [
-                    "65711b07a330b8c9060f7b01"
-                ],
-                "Helmet_back": [
-                    "65711b489eb8c145180dbb9d"
-                ],
-                "helmet_eyes": [
-                    "65711b9b65daf6aa960c9b1b"
-                ],
-                "helmet_jaw": [
-                    "65711bc79eb8c145180dbba1"
-                ],
-                "Helmet_ears": [
-                    "65711b706d197c216005b31c"
-                ],
-                "mod_nvg": [
-                    "5a16b8a9fcdbcb00165aa6ca"
-                ],
-                "mod_equipment": [
-                    "5a800961159bd4315e3a1657",
-                    "626becf9582c3e319310b837",
-                    "6272370ee4013c5d7e31f418",
-                    "6272379924e29f06af4d5ecb",
-                    "5d2369418abbc306c62e0c80",
-                    "5b07dd285acfc4001754240d",
-                    "56def37dd2720bec348b456a",
-                    "5a7b483fe899ef0016170d15",
-                    "560d657b4bdc2da74d8b4572",
-                    "5b3a337e5acfc4704b4a19a0",
-                    "6267c6396b642f77f56f5c1c",
-                    "57d17e212459775a1179a0f5"
-                ]
-            },
             "5cf12a15d7f00c05464b293f": {
                 "cartridges": [
                     "5a6086ea4f39f99cd479502f",
@@ -37930,6 +37888,40 @@
                     "638db77630c4240f9e06f8b6",
                     "6544d4187c5457729210d277",
                     "65f1b1176dbd6c5ba2082eed"
+                ]
+            },
+            "5b4329f05acfc47a86086aa1": {
+                "Helmet_top": [
+                    "65711b07a330b8c9060f7b01"
+                ],
+                "Helmet_back": [
+                    "65711b489eb8c145180dbb9d"
+                ],
+                "helmet_eyes": [
+                    "65711b9b65daf6aa960c9b1b"
+                ],
+                "helmet_jaw": [
+                    "65711bc79eb8c145180dbba1"
+                ],
+                "Helmet_ears": [
+                    "65711b706d197c216005b31c"
+                ],
+                "mod_nvg": [
+                    "5a16b8a9fcdbcb00165aa6ca"
+                ],
+                "mod_equipment": [
+                    "5a800961159bd4315e3a1657",
+                    "626becf9582c3e319310b837",
+                    "6272370ee4013c5d7e31f418",
+                    "6272379924e29f06af4d5ecb",
+                    "5d2369418abbc306c62e0c80",
+                    "5b07dd285acfc4001754240d",
+                    "56def37dd2720bec348b456a",
+                    "5a7b483fe899ef0016170d15",
+                    "560d657b4bdc2da74d8b4572",
+                    "5b3a337e5acfc4704b4a19a0",
+                    "6267c6396b642f77f56f5c1c",
+                    "57d17e212459775a1179a0f5"
                 ]
             },
             "628120c21d5df4475f46a337": {
