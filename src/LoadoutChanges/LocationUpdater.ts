@@ -22,28 +22,30 @@ export const LocationUpdater = (container: DependencyContainer): undefined => {
         url: "/client/match/local/start",
         action: async (_url, info, sessionId, output) => {
           const time = weatherController.generate().time;
-          // const timestamp =
-          //   weatherController.generate().weather.sptInRaidTimestamp;
-          // console.log(
-          //   timestamp,
-          //   timestamp / 360000,
-          //   timestamp / 3600,
-          //   timestamp / 6000,
-          //   timestamp / 24,
-          //   timestamp / 24 / 60
-          // );
 
           const hours = getTime(time, info.timeVariant === "PAST" ? 12 : 0);
           // console.log("hours", hours);
-          globalValues.setValuesForLocation(info.location.toLowerCase(), hours);
-          if (enableNonPMCBotChanges) {
-            const pmcData = globalValues.profileHelper.getPmcProfile(sessionId);
-            globalValues.updateInventory(
-              pmcData?.Info?.Level || 1,
-              info.location.toLowerCase()
+          try {
+            globalValues.setValuesForLocation(
+              info.location.toLowerCase(),
+              hours
+            );
+            if (enableNonPMCBotChanges) {
+              const pmcData =
+                globalValues.profileHelper.getPmcProfile(sessionId);
+              globalValues.updateInventory(
+                pmcData?.Info?.Level || 1,
+                info.location.toLowerCase()
+              );
+            }
+            console.log("Algorthimic LevelProgression: Loaded");
+          } catch (error) {
+            console.log(
+              `"Algorthimic LevelProgression: failed to make equipment changes.
+                ` + error?.message
             );
           }
-          console.log("Algorthimic LevelProgression: Loaded");
+
           return output;
         },
       },
