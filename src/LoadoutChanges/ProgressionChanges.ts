@@ -254,7 +254,7 @@ export default function ProgressionChanges(
             ![...tradersToExclude, ...tradersToInclude].includes(nickname)
           ) {
             console.log(
-              `\nAlgorithmicLevelProgression: Attempting to add items for custom trader > ${nickname}!\n`
+              `[AlgorithmicLevelProgression]: Attempting to add items for custom trader > ${nickname}!`
             );
           }
 
@@ -268,7 +268,7 @@ export default function ProgressionChanges(
             const item = items[_tpl];
             if (!item)
               return console.log(
-                "AlgorithmicLevelProgression: Skipping custom item: ",
+                "[AlgorithmicLevelProgression]: Skipping custom item: ",
                 _tpl,
                 " for trader: ",
                 nickname
@@ -277,7 +277,7 @@ export default function ProgressionChanges(
             const parent = item._parent;
             if (!parent || !items[parent])
               return console.log(
-                "AlgorithmicLevelProgression: Skipping custom item: ",
+                "[AlgorithmicLevelProgression]: Skipping custom item: ",
                 _tpl,
                 " for trader: ",
                 nickname
@@ -528,11 +528,12 @@ export default function ProgressionChanges(
       setWeightingAdjustments(items, botConfig, tradersMasterList, mods);
 
       let lootingBotsDetected = false;
+
       if (
         tables?.bots?.types?.bear?.generation?.items?.backpackLoot?.weights &&
         new Set(
           Object.values(
-            tables.bots.types.pmcbear.generation.items.backpackLoot.weights
+            tables?.bots?.types?.bear?.generation?.items?.backpackLoot.weights
           )
         ).size === 1
       ) {
