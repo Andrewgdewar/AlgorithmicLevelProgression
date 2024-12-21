@@ -386,8 +386,6 @@ export const setPlateWeightings = (
   name: string,
   equipmentFilters: EquipmentFilters,
   index: number,
-  equipment: IInventory,
-  items: Record<string, ITemplateItem>
 ) => {
   equipmentFilters.armorPlateWeighting = [
     {

@@ -41,77 +41,103 @@ export class globalValues {
     currentLevel: number,
     location: keyof typeof advancedConfig.locations
   ) {
-    // const items = this.tables.templates.items;
+    const items = this.tables.templates.items;
     const nameList = Object.keys(this.storedEquipmentValues);
     if (!nameList.length || !currentLevel) return;
     const botConfig = this.configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
+    const firstPrimaryWeaponMultiplier =
+      advancedConfig.locations[location].weightingAdjustments
+        .FirstPrimaryWeapon;
 
-    // const firstPrimaryWeaponTypes =
-    //   advancedConfig.locations[location].weightingAdjustments
-    //     .FirstPrimaryWeapon;
+    nameList.forEach((botName) => {
+      const copiedInventory = cloneDeep(
+        this.originalBotTypes[botName].inventory
+      );
 
-    nameList.forEach((name) => {
-      const currentLevelIndex = this.storedEquipmentValues[name].findIndex(
+      const currentLevelIndex = this.storedEquipmentValues[botName].findIndex(
         ({ levelRange: { min, max } }) =>
           currentLevel <= max && currentLevel >= min
       );
-      const weightingToUpdate =
-        this.storedEquipmentValues[name][currentLevelIndex];
 
-      const botInventory = this.tables.bots.types[name].inventory;
+      const weightingToUpdate =
+        this.storedEquipmentValues[botName][currentLevelIndex];
+
       if (!weightingToUpdate) return;
       if (weightingToUpdate?.ammo) {
         for (const caliber in weightingToUpdate.ammo) {
-          mergeDeep(
-            botInventory.Ammo[caliber],
-            weightingToUpdate.ammo[caliber]
-          );
+          copiedInventory.Ammo[caliber] = {
+            ...copiedInventory.Ammo[caliber],
+            ...weightingToUpdate.ammo[caliber],
+          };
         }
       }
 
       if (weightingToUpdate?.equipment) {
         for (const equipmentType in weightingToUpdate.equipment) {
-          //update weapons here
-          // if (equipmentType === "FirstPrimaryWeapon") {
-          // const copiedWeapons: Record<string, number> = cloneDeep(
-          //   weightingToUpdate.equipment[equipmentType]
-          // );
-          // // console.log(name, copiedWeapons);
-          // for (const key in firstPrimaryWeaponTypes) {
-          //   const value = firstPrimaryWeaponTypes[key];
-          //   // console.log(, value);
-          //   copiedWeapons[key] = value;
-          // }
-          // firstPrimaryKeys?.forEach((weaponId) => {
-          //   const parentId = items[weaponId]?._parent;
-          //   const parent = items?.[parentId]?._name;
-          //   if (parent && firstPrimaryWeaponTypes[parent]) {
-          //     const multiplier = firstPrimaryWeaponTypes[parent];
-          //     pmcWeighting[index].equipment.edit.FirstPrimaryWeapon[
-          //       weaponId
-          //     ] = Math.round(multiplier * firstPrimary[weaponId]);
-          //     // console.log(firstPrimary[weaponId], " to ", pmcWeighting[index].equipment.edit.FirstPrimaryWeapon[weaponId], parent, items[weaponId]._name)
-          // } else {
-          mergeDeep(
-            botInventory.equipment[equipmentType],
-            weightingToUpdate.equipment[equipmentType]
-          );
-          // }
+          copiedInventory.equipment[equipmentType] = {
+            ...copiedInventory.equipment[equipmentType],
+            ...weightingToUpdate.equipment[equipmentType],
+          };
+          try {
+            //update weapons here
+            if (equipmentType === "FirstPrimaryWeapon") {
+              // console.log("Updating", botName, " weapons for map", location);
+              const firstPrimary: Record<string, number> = cloneDeep(
+                copiedInventory.equipment[equipmentType]
+              );
+
+              const firstPrimaryKeys = Object.keys(firstPrimary);
+              firstPrimaryKeys?.forEach((weaponId) => {
+                const parentId = items[weaponId]?._parent;
+                const parent = items?.[parentId]?._name;
+                if (parent && firstPrimaryWeaponMultiplier[parent]) {
+                  const multiplier =
+                    (firstPrimaryWeaponMultiplier[parent] - 1) / 2 + 1;
+
+                  copiedInventory.equipment[equipmentType][weaponId] =
+                    Math.round(multiplier * firstPrimary[weaponId]);
+
+                  // if (botName === "assault") {
+                  //   console.log(
+                  //     multiplier,
+                  //     location,
+                  //     botName,
+                  //     firstPrimary[weaponId],
+                  //     " to ",
+                  //     copiedInventory.equipment[equipmentType][weaponId],
+                  //     parent,
+                  //     items[weaponId]._name
+                  //   );
+                  // }
+                } else {
+                  console.log(
+                    `[AlgorithmicLevelProgression]: Unable to set map settings for bot ${botName}'s item ${items[weaponId]._name} - ${weaponId} `
+                  );
+                }
+              });
+            }
+          } catch (error) {
+            `[AlgorithmicLevelProgression]: Failed to update bot ${botName}'s ${equipmentType}`;
+          }
         }
-        if (name === "assault") {
-          buffScavGearAsLevel(botConfig.equipment[name], currentLevelIndex);
+
+        if (botName === "assault") {
+          //adjust randomization
+          buffScavGearAsLevel(botConfig.equipment[botName], currentLevelIndex);
         }
+
         setPlateWeightings(
-          name,
-          botConfig.equipment[name],
-          currentLevelIndex,
-          botInventory,
-          this.tables.templates.items
+          botName,
+          botConfig.equipment[botName],
+          currentLevelIndex
         );
-        // if (name === "assault") {
-        //   saveToFile(this.tables.bots.types[name], `refDBS/assault.json`);
-        // }
+
+        if (botName === "assault") {
+          saveToFile(this.tables.bots.types[botName], `refDBS/assault.json`);
+        }
       }
+
+      this.tables.bots.types[botName].inventory = copiedInventory;
     });
   }
 
