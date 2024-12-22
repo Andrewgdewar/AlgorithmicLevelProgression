@@ -132,9 +132,9 @@ export class globalValues {
           currentLevelIndex
         );
 
-        if (botName === "assault") {
-          saveToFile(this.tables.bots.types[botName], `refDBS/assault.json`);
-        }
+        // if (botName === "assault") {
+        //   saveToFile(this.tables.bots.types[botName], `refDBS/assault.json`);
+        // }
       }
 
       this.tables.bots.types[botName].inventory = copiedInventory;
