@@ -72,7 +72,8 @@ export const buldTieredItemTypes = (items: Record<string, ITemplateItem>) => {
   const result = {};
 
   botWeights.forEach((weight, index) => {
-    if (index < 4) // Prevents boss related gear appearing on normal bots
+    if (index < 4)
+      // Prevents boss related gear appearing on normal bots
       for (const key in weight.equipment.edit) {
         Object.keys(weight.equipment.edit[key]).forEach((id) => {
           if (blackList.has(id)) return;
@@ -196,7 +197,8 @@ export const normalizeMedianInventoryValues = (inventory: IInventory) => {
 export const addItemsToBotInventory = (
   inventory: IInventory,
   botToUpdate: BotUpdateInterface,
-  items: Record<string, ITemplateItem>
+  items: Record<string, ITemplateItem>,
+  isMarksman = false
 ) => {
   const { Ammo: botToUpdateAmmo, BasePlateChance, ...equipment } = botToUpdate;
 
@@ -215,13 +217,21 @@ export const addItemsToBotInventory = (
           .slice(startIndex, endIndex)
           .forEach(({ id, value }) => {
             if (
-              !botToUpdate.AllowSniperRifles &&
-              checkParentRecursive(id, items, [
-                weaponTypeNameToId.SniperRifle,
-                weaponTypeNameToId.MarksmanRifle,
-              ])
+              (!botToUpdate.AllowSniperRifles &&
+                checkParentRecursive(id, items, [
+                  weaponTypeNameToId.SniperRifle,
+                  weaponTypeNameToId.MarksmanRifle,
+                ])) ||
+              (isMarksman &&
+                key === "FirstPrimaryWeapon" &&
+                !checkParentRecursive(id, items, [
+                  weaponTypeNameToId.SniperRifle,
+                  weaponTypeNameToId.MarksmanRifle,
+                  weaponTypeNameToId.AssaultCarbine,
+                ]))
             ) {
-              // console.log(items[id]._name);
+              // if (isMarksman && key === "FirstPrimaryWeapon")
+              //   console.log(items[id]._name);
               return;
             }
 
@@ -253,7 +263,7 @@ export const addItemsToBotInventory = (
                   break;
                 }
                 inventory.mods[id] = mappedPresets[id];
-
+                // if (isMarksman) console.log(items[id]._name);
                 if (cachedInventory.mods[id]["patron_in_weapon"]) {
                   mappedPresets[id]["patron_in_weapon"] =
                     cachedInventory.mods[id]["patron_in_weapon"];

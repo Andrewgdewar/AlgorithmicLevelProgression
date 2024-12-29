@@ -5,7 +5,7 @@
   "scavLootBlacklist": [],
   "additionalScavLoot": ["5c94bbff86f7747ee735c08f"],
   "botAmmoRandomness": 0.1,
-  "botEquipmentRandomness": 0.1,
+  "botEquipmentRandomness": 0.3,
   "nonPmcBots": {
     "infectedpmc": {
       "tiers": [
@@ -80,8 +80,8 @@
       ],
       "AllowSniperRifles": true,
       "HasModdedWeapons": false,
-      "FirstPrimaryWeapon": [0.4, 0.8],
-      "Backpack": [0.1, 0.3],
+      "FirstPrimaryWeapon": [0, 0.8],
+      "Backpack": [0, 0.3],
       "Ammo": [0.3, 0.8],
       "ArmorVest": [0.3, 0.6],
       "TacticalVest": [0.3, 0.6],

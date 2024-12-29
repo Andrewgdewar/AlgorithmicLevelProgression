@@ -88,7 +88,13 @@ export default function SetupNonPMCBotChanges(
     //   saveToFile(tables.bots.types[name].inventory, `refDBS/marksman.json`);
     // }
     // console.log("\n", name);
-    addItemsToBotInventory(inventory, nonPmcBotConfig.nonPmcBots[name], items);
+
+    addItemsToBotInventory(
+      inventory,
+      nonPmcBotConfig.nonPmcBots[name],
+      items,
+      name === "marksman"
+    );
 
     if (nonPmcBotConfig.nonPmcBots[name].HasModdedWeapons) {
       inventory.mods = tables.bots.types.usec.inventory.mods;
@@ -101,9 +107,9 @@ export default function SetupNonPMCBotChanges(
     );
 
     applyValuesToStoredEquipment(inventory, items, storedEquipmentValues);
-
-    // if (name === "assault") {
-    //   saveToFile(tables.bots.types[name].inventory, `refDBS/assault1.json`);
+   
+    // if (name === "marksman") {
+    //   saveToFile(tables.bots.types[name].inventory, `refDBS/marksman2.json`);
     // }
 
     globalValues.storedEquipmentValues[name] = storedEquipmentValues;
