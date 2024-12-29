@@ -72,17 +72,18 @@ export const buldTieredItemTypes = (items: Record<string, ITemplateItem>) => {
   const result = {};
 
   botWeights.forEach((weight, index) => {
-    for (const key in weight.equipment.edit) {
-      Object.keys(weight.equipment.edit[key]).forEach((id) => {
-        if (blackList.has(id)) return;
-        if (!result[key]) result[key] = {};
+    if (index < 4) // Prevents boss related gear appearing on normal bots
+      for (const key in weight.equipment.edit) {
+        Object.keys(weight.equipment.edit[key]).forEach((id) => {
+          if (blackList.has(id)) return;
+          if (!result[key]) result[key] = {};
 
-        result[key][id] = Math.max(
-          result[key][id] || 1,
-          weight.equipment.edit[key][id]
-        );
-      });
-    }
+          result[key][id] = Math.max(
+            result[key][id] || 1,
+            weight.equipment.edit[key][id]
+          );
+        });
+      }
   });
 
   for (const key in result) {
@@ -385,7 +386,7 @@ const defaultRandomisation = [
 export const setPlateWeightings = (
   name: string,
   equipmentFilters: EquipmentFilters,
-  index: number,
+  index: number
 ) => {
   equipmentFilters.armorPlateWeighting = [
     {
