@@ -79,8 +79,11 @@ export class globalValues {
             ...weightingToUpdate.equipment[equipmentType],
           };
           try {
-            //update weapons here
-            if (equipmentType === "FirstPrimaryWeapon") {
+            //update weapon type weightings per map here
+            if (
+              equipmentType === "FirstPrimaryWeapon" &&
+              botName !== "marksman"
+            ) {
               // console.log("Updating", botName, " weapons for map", location);
               const firstPrimary: Record<string, number> = cloneDeep(
                 copiedInventory.equipment[equipmentType]
