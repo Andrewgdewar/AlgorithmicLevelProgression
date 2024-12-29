@@ -399,7 +399,10 @@ export const getBackPackInternalGridValue = ({
   });
   // if (total > 20) total += 20;
 
-  total = Math.round((total * 10) / Weight);
+  total = Math.round(total - Weight) * 5;
+  if (total < 0) total = 1;
+  // console.log(total, _name, Weight);
+
   if (["6034d103ca006d2dca39b3f0", "6038d614d10cbf667352dd44"].includes(_id)) {
     total = Math.round(total * 0.7);
   }
