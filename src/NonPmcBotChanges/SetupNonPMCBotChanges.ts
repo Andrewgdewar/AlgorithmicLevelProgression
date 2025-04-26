@@ -31,6 +31,8 @@ export default function SetupNonPMCBotChanges(
   const botConfig = configServer.getConfig<IBotConfig>(ConfigTypes.BOT);
 
   Object.keys(botsForUpdate).forEach((name) => {
+    if (nonPmcBotConfig.ignoreList.includes(name)) return;
+
     if (botConfig.equipment?.[name]?.weightingAdjustmentsByPlayerLevel) {
       botConfig.equipment[name].weightingAdjustmentsByPlayerLevel = [];
     }
@@ -107,7 +109,7 @@ export default function SetupNonPMCBotChanges(
     );
 
     applyValuesToStoredEquipment(inventory, items, storedEquipmentValues);
-   
+
     // if (name === "marksman") {
     //   saveToFile(tables.bots.types[name].inventory, `refDBS/marksman2.json`);
     // }

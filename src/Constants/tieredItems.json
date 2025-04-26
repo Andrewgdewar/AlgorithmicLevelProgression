@@ -1,2908 +1,3041 @@
 {
-    "TacticalVest": [
-        {
-            "id": "64be7095047e826eae02b0c1",
-            "value": 12,
-            "name": "item_equipment_rig_rscr_zulu"
-        },
-        {
-            "id": "572b7adb24597762ae139821",
-            "value": 14,
-            "name": "wild_vest"
-        },
-        {
-            "id": "5e4abc1f86f774069619fbaa",
-            "value": 16,
-            "name": "item_equipment_rig_bankrobber"
-        },
-        {
-            "id": "5fd4c4fa16cac650092f6771",
-            "value": 18,
-            "name": "item_equipment_rig_idea"
-        },
-        {
-            "id": "59e7643b86f7742cbf2c109a",
-            "value": 18,
-            "name": "wartech_vest"
-        },
-        {
-            "id": "5d5d8ca986f7742798716522",
-            "value": 18,
-            "name": "item_equipment_rig_micro"
-        },
-        {
-            "id": "6034d0230ca681766b6a0fb5",
-            "value": 19,
-            "name": "item_equipment_rig_cs_assault"
-        },
-        {
-            "id": "64be7110bf597ba84a0a41ea",
-            "value": 19,
-            "name": "item_equipment_rig_chicom"
-        },
-        {
-            "id": "5929a2a086f7744f4b234d43",
-            "value": 24,
-            "name": "bear_rig_6h112"
-        },
-        {
-            "id": "5c0e3eb886f7742015526062",
-            "value": 53,
-            "name": "item_equipment_rig_6b5_khaki"
-        },
-        {
-            "id": "5d5d646386f7742797261fd9",
-            "value": 56,
-            "name": "item_equipment_armor_6b3"
-        },
-        {
-            "id": "6034cf5fffd42c541047f72e",
-            "value": 66,
-            "name": "item_equipment_rig_umka_m33"
-        },
-        {
-            "id": "66b6295a8ca68c6461709efa",
-            "value": 66,
-            "name": "item_equipment_rig_tt_plate_carrier_mk_3"
-        },
-        {
-            "id": "5c0e446786f7742013381639",
-            "value": 68,
-            "name": "item_equipment_rig_6b5_flora"
-        },
-        {
-            "id": "5e4abfed86f77406a2713cf7",
-            "value": 68,
-            "name": "item_equipment_rig_tarzan"
-        },
-        {
-            "id": "5b44c8ea86f7742d1627baf1",
-            "value": 69,
-            "name": "item_equipment_rig_commando"
-        },
-        {
-            "id": "5d5d85c586f774279a21cbdb",
-            "value": 69,
-            "name": "item_equipment_rig_d3crx"
-        },
-        {
-            "id": "5ca20abf86f77418567a43f2",
-            "value": 69,
-            "name": "item_equipment_rig_triton"
-        },
-        {
-            "id": "5fd4c60f875c30179f5d04c2",
-            "value": 69,
-            "name": "item_equipment_rig_bssmk1"
-        },
-        {
-            "id": "60a621c49c197e4e8c4455e6",
-            "value": 71,
-            "name": "item_equipment_rig_sprofi_mk2_ak"
-        },
-        {
-            "id": "60a6220e953894617404b00a",
-            "value": 72,
-            "name": "item_equipment_rig_sprofi_mk2_smg"
-        },
-        {
-            "id": "603648ff5a45383c122086ac",
-            "value": 74,
-            "name": "item_equipment_rig_azimut_black"
-        },
-        {
-            "id": "5648a69d4bdc2ded0b8b457b",
-            "value": 75,
-            "name": "bearRig"
-        },
-        {
-            "id": "592c2d1a86f7746dbe2af32a",
-            "value": 75,
-            "name": "ana_tactical"
-        },
-        {
-            "id": "5ab8dab586f77441cd04f2a2",
-            "value": 75,
-            "name": "wartech_mk3"
-        },
-        {
-            "id": "5e9db13186f7742f845ee9d3",
-            "value": 75,
-            "name": "item_equipment_rig_bearing"
-        },
-        {
-            "id": "5c0e746986f7741453628fe5",
-            "value": 80,
-            "name": "item_equipment_rig_tv110"
-        },
-        {
-            "id": "5df8a42886f77412640e2e75",
-            "value": 84,
-            "name": "item_equipment_rig_multipurpose"
-        },
-        {
-            "id": "5c0e6a1586f77404597b4965",
-            "value": 86,
-            "name": "item_equipment_rig_beltab"
-        },
-        {
-            "id": "61bc85697113f767765c7fe7",
-            "value": 100,
-            "name": "item_equipment_rig_mmac"
-        },
-        {
-            "id": "639343fce101f4caa40a4ef3",
-            "value": 104,
-            "name": "item_equipment_rig_shellback_tactical_banshee"
-        },
-        {
-            "id": "61bcc89aef0f505f0c6cd0fc",
-            "value": 109,
-            "name": "item_equipment_rig_strandhogg"
-        },
-        {
-            "id": "544a5caa4bdc2d1a388b4568",
-            "value": 110,
-            "name": "standartRig"
-        },
-        {
-            "id": "5c0e722886f7740458316a57",
-            "value": 115,
-            "name": "item_equipment_rig_m1"
-        },
-        {
-            "id": "628dc750b910320f4c27a732",
-            "value": 117,
-            "name": "item_equipment_rig_bae_rbav_af"
-        },
-        {
-            "id": "66b6296d7994640992013b17",
-            "value": 121,
-            "name": "item_equipment_rig_stich_profi_plate_carrier_v2"
-        },
-        {
-            "id": "5e4ac41886f77406a511c9a8",
-            "value": 130,
-            "name": "item_equipment_armor_arscpc"
-        },
-        {
-            "id": "60a3c70cde5f453f634816a3",
-            "value": 135,
-            "name": "item_equipment_rig_custom_osprey_assault"
-        },
-        {
-            "id": "5ab8dced86f774646209ec87",
-            "value": 138,
-            "name": "ana_tactical_m2"
-        },
-        {
-            "id": "628d0618d1ba6e4fa07ce5a4",
-            "value": 149,
-            "name": "item_equipment_rig_bagarii"
-        },
-        {
-            "id": "60a3c68c37ea821725773ef5",
-            "value": 180,
-            "name": "item_equipment_rig_custom_osprey_defence"
-        }
-    ],
-    "Holster": [
-        {
-            "id": "64748cb8de82c85eaf0a273a",
-            "value": 92,
-            "name": "weapon_izhmeh_mr43_sawed_off_12g"
-        },
-        {
-            "id": "5cadc190ae921500103bb3b6",
-            "value": 106,
-            "name": "weapon_beretta_m9a3_9x19"
-        },
-        {
-            "id": "571a12c42459771f627b58a0",
-            "value": 109,
-            "name": "weapon_toz_tt_762x25tt"
-        },
-        {
-            "id": "576a581d2459771e7b1bc4f1",
-            "value": 110,
-            "name": "weapon_izhmeh_mp443_9x19"
-        },
-        {
-            "id": "56d59856d2720bd8418b456a",
-            "value": 114,
-            "name": "weapon_sig_p226r_9x19"
-        },
-        {
-            "id": "56e0598dd2720bb5668b45a6",
-            "value": 115,
-            "name": "weapon_tochmash_pb_9x18pm"
-        },
-        {
-            "id": "5e81c3cbac2bb513793cdc75",
-            "value": 117,
-            "name": "weapon_colt_m1911a1_1143x23"
-        },
-        {
-            "id": "579204f224597773d619e051",
-            "value": 118,
-            "name": "weapon_izhmeh_pm_treaded_9x18pm"
-        },
-        {
-            "id": "5448bd6b4bdc2dfc2f8b4569",
-            "value": 119,
-            "name": "weapon_izhmeh_pm_9x18pm"
-        },
-        {
-            "id": "5a7ae0c351dfba0017554310",
-            "value": 122,
-            "name": "weapon_glock_glock_17_gen3_9x19"
-        },
-        {
-            "id": "602a9740da11d6478d5a06dc",
-            "value": 123,
-            "name": "weapon_izhmash_pl15_9x19"
-        },
-        {
-            "id": "63088377b5cd696784087147",
-            "value": 123,
-            "name": "weapon_glock_glock_19x_9x19"
-        },
-        {
-            "id": "624c2e8614da335f1e034d8c",
-            "value": 133,
-            "name": "weapon_chiappa_rhino_200ds_9x19"
-        },
-        {
-            "id": "5f36a0e5fbf956000b716b65",
-            "value": 140,
-            "name": "weapon_colt_m45a1_1143x23"
-        },
-        {
-            "id": "6193a720f8ee7e52e42109ed",
-            "value": 143,
-            "name": "weapon_hk_usp_45"
-        },
-        {
-            "id": "59f98b4986f7746f546d2cef",
-            "value": 145,
-            "name": "weapon_tochmash_sr1mp_9x21"
-        },
-        {
-            "id": "5a17f98cfcdbcb0980087290",
-            "value": 154,
-            "name": "weapon_molot_aps_9x18pm"
-        },
-        {
-            "id": "5abccb7dd8ce87001773e277",
-            "value": 162,
-            "name": "weapon_toz_apb_9x18pm"
-        },
-        {
-            "id": "633ec7c2a6918cb895019c6c",
-            "value": 173,
-            "name": "weapon_kbp_rsh_12_127x55"
-        },
-        {
-            "id": "669fa409933e898cce0c2166",
-            "value": 173,
-            "name": "weapon_magnum_research_desert_eagle_l5_9x33r"
-        },
-        {
-            "id": "5d3eb3b0a4b93615055e84d2",
-            "value": 176,
-            "name": "weapon_fn_five_seven_57x28"
-        },
-        {
-            "id": "5d67abc1a4b93614ec50137f",
-            "value": 176,
-            "name": "weapon_fn_five_seven_57x28_fde"
-        },
-        {
-            "id": "5b1fa9b25acfc40018633c01",
-            "value": 192,
-            "name": "weapon_glock_glock_18c_gen3_9x19"
-        },
-        {
-            "id": "669fa39b48fc9f8db6035a0c",
-            "value": 203,
-            "name": "weapon_magnum_research_desert_eagle_l6_127x33"
-        },
-        {
-            "id": "669fa3f88abd2662d80eee77",
-            "value": 204,
-            "name": "weapon_magnum_research_desert_eagle_l5_127x33"
-        },
-        {
-            "id": "61a4c8884f95bc3b2c5dc96f",
-            "value": 208,
-            "name": "weapon_chiappa_rhino_50ds_9x33R"
-        }
-    ],
-    "FirstPrimaryWeapon": [
-        {
-            "id": "5bfd297f0db834001a669119",
-            "value": 74,
-            "name": "weapon_izhmash_mosin_infantry_762x54"
-        },
-        {
-            "id": "61f7c9e189e6fb1a5e3ea78d",
-            "value": 80,
-            "name": "weapon_izhmash_mp18_multi"
-        },
-        {
-            "id": "5580223e4bdc2d1c128b457f",
-            "value": 88,
-            "name": "weapon_izhmeh_mr43e-1c_12g"
-        },
-        {
-            "id": "5ea03f7400685063ec28bfa8",
-            "value": 95,
-            "name": "weapon_zis_ppsh41_762x25"
-        },
-        {
-            "id": "5de652c31b7e3716273428be",
-            "value": 96,
-            "name": "weapon_molot_vpo_215_366tkm"
-        },
-        {
-            "id": "59e6152586f77473dc057aa1",
-            "value": 100,
-            "name": "weapon_molot_vepr_km_vpo_136_762x39"
-        },
-        {
-            "id": "59984ab886f7743e98271174",
-            "value": 104,
-            "name": "weapon_izhmash_pp-19-01_9x19"
-        },
-        {
-            "id": "5a38e6bac4a2826c6e06d79b",
-            "value": 104,
-            "name": "weapon_toz_toz-106_20g"
-        },
-        {
-            "id": "574d967124597745970e7c94",
-            "value": 107,
-            "name": "weapon_toz_sks_762x39"
-        },
-        {
-            "id": "587e02ff24597743df3deaeb",
-            "value": 107,
-            "name": "weapon_molot_op_sks_762x39"
-        },
-        {
-            "id": "58948c8e86f77409493f7266",
-            "value": 107,
-            "name": "weapon_sig_mpx_9x19"
-        },
-        {
-            "id": "57f4c844245977379d5c14d1",
-            "value": 111,
-            "name": "weapon_zmz_pp-9_9x18pmm"
-        },
-        {
-            "id": "5926bb2186f7744b1c6c6e60",
-            "value": 114,
-            "name": "weapon_hk_mp5_navy3_9x19"
-        },
-        {
-            "id": "5c07c60e0db834002330051f",
-            "value": 116,
-            "name": "weapon_adar_2-15_556x45"
-        },
-        {
-            "id": "5d2f0d8048f0356c925bc3b0",
-            "value": 118,
-            "name": "weapon_hk_mp5_kurtz_9x19"
-        },
-        {
-            "id": "59d6088586f774275f37482f",
-            "value": 118,
-            "name": "weapon_izhmash_akm_762x39"
-        },
-        {
-            "id": "59e6687d86f77411d949b251",
-            "value": 120,
-            "name": "weapon_molot_akm_vpo_209_366_TKM"
-        },
-        {
-            "id": "5bf3e0490db83400196199af",
-            "value": 120,
-            "name": "weapon_izhmash_aks74_545x39"
-        },
-        {
-            "id": "66992b349950f5f4cd06029f",
-            "value": 125,
-            "name": "weapon_iwi_uzi_9x19"
-        },
-        {
-            "id": "57d14d2524597714373db789",
-            "value": 126,
-            "name": "weapon_zmz_pp-91_9x18pm"
-        },
-        {
-            "id": "583990e32459771419544dd2",
-            "value": 129,
-            "name": "weapon_izhmash_aks74un_545x39"
-        },
-        {
-            "id": "57dc2fa62459775949412633",
-            "value": 129,
-            "name": "weapon_izhmash_aks74u_545x39"
-        },
-        {
-            "id": "644674a13d52156624001fbc",
-            "value": 130,
-            "name": "weapon_kbp_9a91_9x39"
-        },
-        {
-            "id": "54491c4f4bdc2db1078b4568",
-            "value": 133,
-            "name": "weapon_izhmeh_mr133_12g"
-        },
-        {
-            "id": "5e870397991fd70db46995c8",
-            "value": 139,
-            "name": "weapon_mossberg_590a1_12g"
-        },
-        {
-            "id": "5ae08f0a5acfc408fb1398a1",
-            "value": 148,
-            "name": "weapon_izhmash_mosin_rifle_762x54"
-        },
-        {
-            "id": "59f9cabd86f7743a10721f46",
-            "value": 152,
-            "name": "weapon_izhmash_saiga_9_9x19"
-        },
-        {
-            "id": "60db29ce99594040e04c4a27",
-            "value": 157,
-            "name": "weapon_ckib_mc_255_12g"
-        },
-        {
-            "id": "60339954d62c9b14ed777c06",
-            "value": 158,
-            "name": "weapon_stmarms_stm_9_9x19"
-        },
-        {
-            "id": "57f3c6bd24597738e730fa2f",
-            "value": 161,
-            "name": "weapon_zmz_pp-91-01_9x18pm"
-        },
-        {
-            "id": "576165642459773c7a400233",
-            "value": 161,
-            "name": "weapon_izhmash_saiga12k_10_12g"
-        },
-        {
-            "id": "5a7828548dc32e5a9c28b516",
-            "value": 164,
-            "name": "weapon_remington_model_870_12g"
-        },
-        {
-            "id": "56dee2bdd2720bc8328b4567",
-            "value": 164,
-            "name": "weapon_izhmeh_mr153_12g"
-        },
-        {
-            "id": "62e7c4fba689e8c9c50dfc38",
-            "value": 165,
-            "name": "weapon_steyr_aug_a1_556x45"
-        },
-        {
-            "id": "606dae0ab0e443224b421bb7",
-            "value": 165,
-            "name": "weapon_kalashnikov_mp155_12g"
-        },
-        {
-            "id": "6259b864ebedf17603599e88",
-            "value": 178,
-            "name": "weapon_benelli_m3_s90_12g"
-        },
-        {
-            "id": "55801eed4bdc2d89578b4588",
-            "value": 182,
-            "name": "weapon_izhmash_sv-98_762x54r"
-        },
-        {
-            "id": "5cc82d76e24e8d00134b4b83",
-            "value": 189,
-            "name": "weapon_fn_p90_57x28"
-        },
-        {
-            "id": "6680304edadb7aa61d00cef0",
-            "value": 193,
-            "name": "weapon_iwi_uzi_pro_pistol_9x19"
-        },
-        {
-            "id": "5e00903ae9dc277128008b87",
-            "value": 194,
-            "name": "weapon_bt_mp9_9x19"
-        },
-        {
-            "id": "5fc3e272f8b6a877a729eac5",
-            "value": 196,
-            "name": "weapon_hk_ump_1143x23"
-        },
-        {
-            "id": "5bfea6e90db834001b7347f3",
-            "value": 207,
-            "name": "weapon_remington_model_700_762x51"
-        },
-        {
-            "id": "628b5638ad252a16da6dd245",
-            "value": 210,
-            "name": "weapon_sag_ak545_545x39"
-        },
-        {
-            "id": "628b9c37a733087d0d7fe84b",
-            "value": 211,
-            "name": "weapon_sag_ak545_short_545x39"
-        },
-        {
-            "id": "5c501a4d2e221602b412b540",
-            "value": 234,
-            "name": "weapon_molot_vepr_hunter_vpo-101_762x51"
-        },
-        {
-            "id": "627e14b21713922ded6f2c15",
-            "value": 238,
-            "name": "weapon_accuracy_inernational_axmc_86x70"
-        },
-        {
-            "id": "5df8ce05b11454561e39243b",
-            "value": 240,
-            "name": "weapon_kac_sr25_762x51"
-        },
-        {
-            "id": "62e14904c2699c0ec93adc47",
-            "value": 240,
-            "name": "weapon_tochmash_sr2m_veresk_9x21"
-        },
-        {
-            "id": "59ff346386f77477562ff5e2",
-            "value": 245,
-            "name": "weapon_izhmash_akms_762x39"
-        },
-        {
-            "id": "5447a9cd4bdc2dbd208b4567",
-            "value": 245,
-            "name": "weapon_colt_m4a1_556x45"
-        },
-        {
-            "id": "618428466ef05c2ce828f218",
-            "value": 245,
-            "name": "weapon_fn_mk16_556x45_fde"
-        },
-        {
-            "id": "645e0c6b3b381ede770e1cc9",
-            "value": 248,
-            "name": "weapon_kbp_vsk94_9x39"
-        },
-        {
-            "id": "5df24cf80dee1b22f862e9bc",
-            "value": 248,
-            "name": "weapon_orsis_t5000_762x51"
-        },
-        {
-            "id": "623063e994fc3f7b302a9696",
-            "value": 250,
-            "name": "weapon_hk_g36_556x45"
-        },
-        {
-            "id": "5ac66d725acfc43b321d4b60",
-            "value": 250,
-            "name": "weapon_izhmash_ak104_762x39"
-        },
-        {
-            "id": "5fb64bc92b1b027b1f50bcf2",
-            "value": 251,
-            "name": "weapon_tdi_kriss_vector_gen_2_1143x23"
-        },
-        {
-            "id": "588892092459774ac91d4b11",
-            "value": 251,
-            "name": "weapon_lobaev_dvl-10_308"
-        },
-        {
-            "id": "5d43021ca4b9362eab4b5e25",
-            "value": 255,
-            "name": "weapon_lone_star_tx15_designated_marksman_556x45"
-        },
-        {
-            "id": "5e848cc2988a8701445df1e8",
-            "value": 255,
-            "name": "weapon_toz_ks23m_23x75"
-        },
-        {
-            "id": "5644bd2b4bdc2d3b4c8b4572",
-            "value": 256,
-            "name": "weapon_izhmash_ak74n_545x39"
-        },
-        {
-            "id": "5bf3e03b0db834001d2c4a9c",
-            "value": 256,
-            "name": "weapon_izhmash_ak74_545x39"
-        },
-        {
-            "id": "5ab8e9fcd8ce870019439434",
-            "value": 257,
-            "name": "weapon_izhmash_aks74n_545x39"
-        },
-        {
-            "id": "5c46fbd72e2216398b5a8c9c",
-            "value": 264,
-            "name": "weapon_izhmash_svd_s_762x54"
-        },
-        {
-            "id": "5aafa857e5b5b00018480968",
-            "value": 264,
-            "name": "weapon_springfield_m1a_762x51"
-        },
-        {
-            "id": "5fbcc1d9016cce60e8341ab3",
-            "value": 292,
-            "name": "weapon_sig_mcx_gen1_762x35"
-        },
-        {
-            "id": "5fc3f2d5900b1d5091531e57",
-            "value": 292,
-            "name": "weapon_tdi_kriss_vector_gen_2_9x19"
-        },
-        {
-            "id": "643ea5b23db6f9f57107d9fd",
-            "value": 301,
-            "name": "weapon_toz_svt_40_762x54r"
-        },
-        {
-            "id": "5f2a9575926fd9352339381f",
-            "value": 316,
-            "name": "weapon_kel_tec_rfb_762x51"
-        },
-        {
-            "id": "5a367e5dc4a282000e49738f",
-            "value": 317,
-            "name": "weapon_remington_r11_rsass_762x51"
-        },
-        {
-            "id": "5ba26383d4351e00334c93d9",
-            "value": 318,
-            "name": "weapon_hk_mp7a1_46x30"
-        },
-        {
-            "id": "5ac66cb05acfc40198510a10",
-            "value": 318,
-            "name": "weapon_izhmash_ak101_556x45"
-        },
-        {
-            "id": "5ac66d015acfc400180ae6e4",
-            "value": 319,
-            "name": "weapon_izhmash_ak102_556x45"
-        },
-        {
-            "id": "6184055050224f204c1da540",
-            "value": 322,
-            "name": "weapon_fn_mk16_556x45"
-        },
-        {
-            "id": "5a0ec13bfcdbcb00165aa685",
-            "value": 325,
-            "name": "weapon_izhmash_akmn_762x39"
-        },
-        {
-            "id": "5abcbc27d8ce8700182eceeb",
-            "value": 325,
-            "name": "weapon_izhmash_akmsn_762x39"
-        },
-        {
-            "id": "5ac66d2e5acfc43b321d4b53",
-            "value": 330,
-            "name": "weapon_izhmash_ak103_762x39"
-        },
-        {
-            "id": "6513ef33e06849f06c0957ca",
-            "value": 330,
-            "name": "weapon_zid_rpd_762x39"
-        },
-        {
-            "id": "5c488a752e221602b412af63",
-            "value": 337,
-            "name": "weapon_dt_mdr_556x45"
-        },
-        {
-            "id": "5ac4cd105acfc40016339859",
-            "value": 341,
-            "name": "weapon_izhmash_ak74m_545x39"
-        },
-        {
-            "id": "5ac66d9b5acfc4001633997a",
-            "value": 343,
-            "name": "weapon_izhmash_ak105_545x39"
-        },
-        {
-            "id": "6499849fc93611967b034949",
-            "value": 343,
-            "name": "weapon_izhmash_ak12_545x39"
-        },
-        {
-            "id": "66ffa9b66e19cc902401c5e8",
-            "value": 343,
-            "name": "weapon_mps_aa_12_gen_1_12g"
-        },
-        {
-            "id": "67124dcfa3541f2a1f0e788b",
-            "value": 345,
-            "name": "weapon_mps_aa_12_gen_2_12g"
-        },
-        {
-            "id": "63171672192e68c5460cebc5",
-            "value": 346,
-            "name": "weapon_steyr_aug_a3_m1_556x45"
-        },
-        {
-            "id": "6718817435e3cfd9550d2c27",
-            "value": 346,
-            "name": "weapon_steyr_aug_a3_m1_556x45_blk"
-        },
-        {
-            "id": "5beed0f50db834001c062b12",
-            "value": 348,
-            "name": "weapon_izhmash_rpk16_545x39"
-        },
-        {
-            "id": "5fc22d7c187fea44d52eda44",
-            "value": 369,
-            "name": "weapon_sword_int_mk_18_mjolnir_86x70"
-        },
-        {
-            "id": "5cadfbf7ae92152ac412eeef",
-            "value": 385,
-            "name": "weapon_ckib_ash_12_127x55"
-        },
-        {
-            "id": "6176aca650224f204c1da3fb",
-            "value": 392,
-            "name": "weapon_hk_g28_762x51"
-        },
-        {
-            "id": "5bd70322209c4d00d7167b8f",
-            "value": 395,
-            "name": "weapon_hk_mp7a2_46x30"
-        },
-        {
-            "id": "65290f395ae2ae97b80fdf2d",
-            "value": 397,
-            "name": "weapon_sig_mcx_spear_68x51"
-        },
-        {
-            "id": "57c44b372459772d2b39b8ce",
-            "value": 402,
-            "name": "weapon_tochmash_val_9x39"
-        },
-        {
-            "id": "57838ad32459774a17445cd2",
-            "value": 402,
-            "name": "weapon_tochmash_vss_9x39"
-        },
-        {
-            "id": "651450ce0e00edc794068371",
-            "value": 404,
-            "name": "weapon_tochmash_sr3m_9x39"
-        },
-        {
-            "id": "5bb2475ed4351e00853264e3",
-            "value": 405,
-            "name": "weapon_hk_416a5_556x45"
-        },
-        {
-            "id": "65268d8ecb944ff1e90ea385",
-            "value": 411,
-            "name": "weapon_zid_rpdn_762x39"
-        },
-        {
-            "id": "5b0bbe4e5acfc40dc528a72d",
-            "value": 412,
-            "name": "weapon_dsa_sa58_762x51"
-        },
-        {
-            "id": "628a60ae6b1d481ff772e9c8",
-            "value": 415,
-            "name": "weapon_rifle_dynamics_704_762x39"
-        },
-        {
-            "id": "606587252535c57a13424cfd",
-            "value": 416,
-            "name": "weapon_cmmg_mk47_762x39"
-        },
-        {
-            "id": "64637076203536ad5600c990",
-            "value": 506,
-            "name": "weapon_zid_pkm_762x54r"
-        },
-        {
-            "id": "6410733d5dd49d77bd07847e",
-            "value": 508,
-            "name": "weapon_toz_avt_40_762x54r"
-        },
-        {
-            "id": "6165ac306ef05c2ce828ef74",
-            "value": 524,
-            "name": "weapon_fn_mk17_762x51_fde"
-        },
-        {
-            "id": "6183afd850224f204c1da514",
-            "value": 524,
-            "name": "weapon_fn_mk17_762x51"
-        },
-        {
-            "id": "5dcbd56fdbd3d91b3e5468d5",
-            "value": 543,
-            "name": "weapon_dt_mdr_762x51"
-        }
-    ],
-    "Earpiece": [
-        {
-            "id": "5b432b965acfc47a8774094e",
-            "value": 1,
-            "name": "item_equipment_headset_gsh01"
-        },
-        {
-            "id": "6033fa48ffd42c541047f728",
-            "value": 1,
-            "name": "item_equipment_headset_m32"
-        },
-        {
-            "id": "5645bcc04bdc2d363b8b4572",
-            "value": 1,
-            "name": "headphones"
-        },
-        {
-            "id": "5aa2ba71e5b5b000137b758f",
-            "value": 1,
-            "name": "headphones_MSA"
-        },
-        {
-            "id": "66b5f68de98be930d701c00e",
-            "value": 1,
-            "name": "item_equipment_headset_liberator"
-        },
-        {
-            "id": "66b5f6a28ca68c6461709ed8",
-            "value": 1,
-            "name": "helmet_team_wendy_comtac_vi_headset"
-        },
-        {
-            "id": "66b5f69ea7f72d197e70bcdb",
-            "value": 1,
-            "name": "helmet_team_wendy_comtac_v_headset"
-        },
-        {
-            "id": "5c165d832e2216398b5a7e36",
-            "value": 1,
-            "name": "item_equipment_headset_tactical_sport"
-        }
-    ],
-    "Backpack": [
-        {
-            "id": "5ab8f04f86f774585f4237d8",
-            "value": 31,
-            "name": "backpack_molle"
-        },
-        {
-            "id": "5ab8ee7786f7742d8f33f0b9",
-            "value": 35,
-            "name": "backpack_vkboarmy"
-        },
-        {
-            "id": "56e33680d2720be2748b4576",
-            "value": 39,
-            "name": "tactical_backpack"
-        },
-        {
-            "id": "544a5cde4bdc2d39388b456b",
-            "value": 76,
-            "name": "standartBackpack"
-        },
-        {
-            "id": "6034d103ca006d2dca39b3f0",
-            "value": 77,
-            "name": "item_equipment_backpack_takedown_sling"
-        },
-        {
-            "id": "6038d614d10cbf667352dd44",
-            "value": 78,
-            "name": "item_equipment_backpack_Takedown_sling_multicam"
-        },
-        {
-            "id": "5e9dcf5986f7746c417435b3",
-            "value": 92,
-            "name": "item_equipment_backpack_daypack14"
-        },
-        {
-            "id": "5ca20d5986f774331e7c9602",
-            "value": 92,
-            "name": "item_equipment_backpack_wartech"
-        },
-        {
-            "id": "60a2828e8689911a226117f9",
-            "value": 93,
-            "name": "item_equipment_backpack_pillbox"
-        },
-        {
-            "id": "656f198fb27298d6fd005466",
-            "value": 103,
-            "name": "item_equipment_backpack_dragon_egg_mk_ii"
-        },
-        {
-            "id": "618bb76513f5097c8d5aa2d5",
-            "value": 111,
-            "name": "item_equipment_backpack_gr99t20"
-        },
-        {
-            "id": "619cf0335771dd3c390269ae",
-            "value": 111,
-            "name": "item_equipment_backpack_gr99t20_multicam"
-        },
-        {
-            "id": "656ddcf0f02d7bcea90bf395",
-            "value": 112,
-            "name": "item_equipment_backpack_tehinkom_patrol"
-        },
-        {
-            "id": "618cfae774bb2d036a049e7c",
-            "value": 117,
-            "name": "item_equipment_backpack_lbt1476a"
-        },
-        {
-            "id": "5b44c6ae86f7742d1627baea",
-            "value": 127,
-            "name": "item_equipment_backpack_betav2"
-        },
-        {
-            "id": "628e1ffc83ec92260c0f437f",
-            "value": 131,
-            "name": "item_equipment_backpack_gr99_t30"
-        },
-        {
-            "id": "545cdae64bdc2d39198b4568",
-            "value": 133,
-            "name": "bigBackpack"
-        },
-        {
-            "id": "66b5f22b78bbc0200425f904",
-            "value": 133,
-            "name": "item_equipment_backpack_camelback_trizip_multicam"
-        },
-        {
-            "id": "62a1b7fbc30cfa1d366af586",
-            "value": 137,
-            "name": "item_equipment_backpack_gr99_t30_multicam"
-        },
-        {
-            "id": "5d5d940f86f7742797262046",
-            "value": 140,
-            "name": "item_equipment_backpack_mech"
-        },
-        {
-            "id": "5ab8ebf186f7742d8b372e80",
-            "value": 149,
-            "name": "backpack_sso_attack2"
-        },
-        {
-            "id": "6034d2d697633951dc245ea6",
-            "value": 149,
-            "name": "item_equipment_backpack_g2_gunslinger"
-        },
-        {
-            "id": "5c0e805e86f774683f3dd637",
-            "value": 153,
-            "name": "item_equipment_backpack_paratus"
-        },
-        {
-            "id": "656e0436d44a1bb4220303a0",
-            "value": 153,
-            "name": "item_equipment_backpack_mystery_ranch_satl"
-        },
-        {
-            "id": "639346cc1c8f182ad90c8972",
-            "value": 157,
-            "name": "item_equipment_backpack_trooper_35"
-        },
-        {
-            "id": "5f5e46b96bdad616ad46d613",
-            "value": 165,
-            "name": "item_equipment_backpack_f4terminator"
-        },
-        {
-            "id": "5c0e774286f77468413cc5b2",
-            "value": 177,
-            "name": "item_equipment_backpack_blackjack"
-        },
-        {
-            "id": "5df8a4d786f77412672a1e3b",
-            "value": 201,
-            "name": "backpack_Raid_6SH118"
-        }
-    ],
-    "Eyewear": [
-        {
-            "id": "603409c80ca681766b6a0fb2",
-            "value": 9,
-            "name": "item_equipment_glasses_npp"
-        },
-        {
-            "id": "62a61c988ec41a51b34758d5",
-            "value": 9,
-            "name": "Item_equipment_glasses_oakley"
-        },
-        {
-            "id": "5c1a1cc52e221602b3136e3d",
-            "value": 9,
-            "name": "item_equipment_glasses_m_frame"
-        },
-        {
-            "id": "5d6d2ef3a4b93618084f58bd",
-            "value": 9,
-            "name": "item_equipment_glasses_aviator"
-        },
-        {
-            "id": "5d5fca1ea4b93635fd598c07",
-            "value": 10,
-            "name": "item_equipment_glasses_ess"
-        },
-        {
-            "id": "5c0d32fcd174af02a1659c75",
-            "value": 10,
-            "name": "item_equipment_glasses_proximity"
-        },
-        {
-            "id": "5d6d2e22a4b9361bd5780d05",
-            "value": 10,
-            "name": "item_equipment_glasses_gascan"
-        },
-        {
-            "id": "5b432be65acfc433000ed01f",
-            "value": 11,
-            "name": "item_equipment_glasses_6B34"
-        },
-        {
-            "id": "557ff21e4bdc2d89578b4586",
-            "value": 11,
-            "name": "Goggles"
-        },
-        {
-            "id": "5aa2b986e5b5b00014028f4c",
-            "value": 11,
-            "name": "glasses_Duduma"
-        }
-    ],
-    "ArmorVest": [
-        {
-            "id": "5df8a2ca86f7740bfe6df777",
-            "value": 29,
-            "name": "item_equipment_armor_6b2"
-        },
-        {
-            "id": "59e7635f86f7742cbf2c1095",
-            "value": 40,
-            "name": "module_3m"
-        },
-        {
-            "id": "5648a7494bdc2d9d488b4583",
-            "value": 40,
-            "name": "notHeavy"
-        },
-        {
-            "id": "63737f448b28897f2802b874",
-            "value": 43,
-            "name": "item_equipment_armor_hexatac"
-        },
-        {
-            "id": "64be79e2bf8412471d0d9bcc",
-            "value": 50,
-            "name": "item_equipment_armor_kora_kulon_camo"
-        },
-        {
-            "id": "64be79c487d1510151095552",
-            "value": 51,
-            "name": "item_equipment_armor_kora_kulon_black"
-        },
-        {
-            "id": "64abd93857958b4249003418",
-            "value": 66,
-            "name": "item_equipment_armor_otv_ucp"
-        },
-        {
-            "id": "5ab8e4ed86f7742d8e50c7fa",
-            "value": 71,
-            "name": "armor_un"
-        },
-        {
-            "id": "5b44d22286f774172b0c9de8",
-            "value": 71,
-            "name": "item_equipment_armor_kirasa"
-        },
-        {
-            "id": "5c0e655586f774045612eeb2",
-            "value": 78,
-            "name": "item_equipment_armor_trooper"
-        },
-        {
-            "id": "5c0e51be86f774598e797894",
-            "value": 83,
-            "name": "item_equipment_armor_6b13_flora"
-        },
-        {
-            "id": "5c0e5bab86f77461f55ed1f3",
-            "value": 85,
-            "name": "item_equipment_armor_6b23_digital"
-        },
-        {
-            "id": "5f5f41476bdad616ad46d631",
-            "value": 129,
-            "name": "item_equipment_armor_korundvm"
-        },
-        {
-            "id": "5e9dacf986f774054d6b89f4",
-            "value": 129,
-            "name": "item_equipment_armor_defender2"
-        },
-        {
-            "id": "5c0e5edb86f77461f55ed1f7",
-            "value": 132,
-            "name": "item_equipment_armor_zhuk3"
-        },
-        {
-            "id": "609e8540d5c319764c2bc2e9",
-            "value": 132,
-            "name": "item_equipment_armor_custom_thorcrv"
-        },
-        {
-            "id": "5ab8e79e86f7742d8b372e78",
-            "value": 162,
-            "name": "armor_gjel"
-        },
-        {
-            "id": "5ca2151486f774244a3b8d30",
-            "value": 172,
-            "name": "item_equipment_armor_redut_m"
-        },
-        {
-            "id": "5c0e625a86f7742d77340f62",
-            "value": 172,
-            "name": "item_equipment_armor_zhuk6a"
-        },
-        {
-            "id": "5b44cf1486f77431723e3d05",
-            "value": 183,
-            "name": "item_equipment_armor_iotv_1"
-        },
-        {
-            "id": "5b44d0de86f774503d30cba8",
-            "value": 186,
-            "name": "item_equipment_armor_iotv_2"
-        },
-        {
-            "id": "5ca21c6986f77479963115a7",
-            "value": 199,
-            "name": "item_equipment_armor_redut_t"
-        },
-        {
-            "id": "545cdb794bdc2d3a198b456a",
-            "value": 205,
-            "name": "heavy"
-        },
-        {
-            "id": "5b44cd8b86f774503d30cba2",
-            "value": 205,
-            "name": "item_equipment_armor_iotv"
-        }
-    ],
-    "Headwear": [
-        {
-            "id": "5aa2a7e8e5b5b00016327c16",
-            "value": 1,
-            "name": "cap_USEC"
-        },
-        {
-            "id": "5b40e61f5acfc4001a599bec",
-            "value": 1,
-            "name": "item_equipment_head_usec_black"
-        },
-        {
-            "id": "5aa2b87de5b5b00016327c25",
-            "value": 1,
-            "name": "cap_BEAR"
-        },
-        {
-            "id": "5b40e5e25acfc4001a599bea",
-            "value": 1,
-            "name": "item_equipment_head_bear_black"
-        },
-        {
-            "id": "5b43271c5acfc432ff4dce65",
-            "value": 1,
-            "name": "item_equipment_head_bandana"
-        },
-        {
-            "id": "5b4327aa5acfc400175496e0",
-            "value": 1,
-            "name": "item_equipment_head_panama"
-        },
-        {
-            "id": "5aa2ba19e5b5b00014028f4e",
-            "value": 1,
-            "name": "hats_fleece"
-        },
-        {
-            "id": "5aa2ba46e5b5b000137b758d",
-            "value": 1,
-            "name": "hats_UF_PRO"
-        },
-        {
-            "id": "5f60e784f2bcbb675b00dac7",
-            "value": 1,
-            "name": "item_equipment_head_beret_od"
-        },
-        {
-            "id": "60b52e5bc7d8103275739d67",
-            "value": 1,
-            "name": "item_equipment_head_panama_stichprofi"
-        },
-        {
-            "id": "5f60e6403b85f6263c14558c",
-            "value": 1,
-            "name": "item_equipment_head_beret_blk"
-        },
-        {
-            "id": "5f60e7788adaa7100c3adb49",
-            "value": 1,
-            "name": "item_equipment_head_beret_blue"
-        },
-        {
-            "id": "5aa2b9ede5b5b000137b758b",
-            "value": 1,
-            "name": "hats_cowboy"
-        },
-        {
-            "id": "59e7711e86f7746cae05fbe1",
-            "value": 4,
-            "name": "helmet_k1c"
-        },
-        {
-            "id": "5c0d2727d174af02a012cf58",
-            "value": 10,
-            "name": "item_equipment_helmet_psh97_jeta"
-        },
-        {
-            "id": "5aa7d193e5b5b000171d063f",
-            "value": 12,
-            "name": "helmet_sphera-C"
-        },
-        {
-            "id": "5645bc214bdc2d363b8b4571",
-            "value": 13,
-            "name": "helmet"
-        },
-        {
-            "id": "5c06c6a80db834001b735491",
-            "value": 13,
-            "name": "item_equipment_helmet_ssh-68"
-        },
-        {
-            "id": "5aa7e454e5b5b0214e506fa2",
-            "value": 13,
-            "name": "helmet_zsh_1-2m_v1"
-        },
-        {
-            "id": "5c091a4e0db834001d5addc8",
-            "value": 15,
-            "name": "item_equipment_helmet_maska_1sh"
-        },
-        {
-            "id": "5aa7e4a4e5b5b000137b76f2",
-            "value": 15,
-            "name": "helmet_zsh_1-2m_v2"
-        },
-        {
-            "id": "5ca20ee186f774799474abc2",
-            "value": 16,
-            "name": "item_equipment_helmet_vulkan5"
-        },
-        {
-            "id": "5d6d3716a4b9361bc8618872",
-            "value": 16,
-            "name": "item_equipment_helmet_lshz2dtm"
-        },
-        {
-            "id": "5aa7e276e5b5b000171d0647",
-            "value": 18,
-            "name": "helmet_altyn"
-        },
-        {
-            "id": "66bdc28a0b603c26902b2011",
-            "value": 22,
-            "name": "item_equipment_facecover_devtac_old"
-        },
-        {
-            "id": "5b4329f05acfc47a86086aa1",
-            "value": 26,
-            "name": "item_equipment_facecover_devtac"
-        },
-        {
-            "id": "61bca7cda0eae612383adf57",
-            "value": 34,
-            "name": "item_equipment_helmet_nfm_hjelm"
-        },
-        {
-            "id": "5b432d215acfc4771e1c6624",
-            "value": 34,
-            "name": "item_equipment_helmet_LSHZ"
-        },
-        {
-            "id": "5f60b34a41e30a4ab12a6947",
-            "value": 35,
-            "name": "item_equipment_helmet_galvion_caiman"
-        },
-        {
-            "id": "5b40e4035acfc47a87740943",
-            "value": 39,
-            "name": "item_equipment_helmet_ACHHC_green"
-        },
-        {
-            "id": "5b40e3f35acfc40016388218",
-            "value": 39,
-            "name": "item_equipment_helmet_ACHHC_black"
-        },
-        {
-            "id": "5e4bfc1586f774264f7582d3",
-            "value": 40,
-            "name": "item_equipment_helmet_tc800"
-        },
-        {
-            "id": "5d5e7d28a4b936645d161203",
-            "value": 41,
-            "name": "helmet_mich2001_od"
-        },
-        {
-            "id": "65709d2d21b9f815e208ff95",
-            "value": 41,
-            "name": "item_equipment_helmet_neosteel"
-        },
-        {
-            "id": "5ea17ca01412a1425304d1c0",
-            "value": 41,
-            "name": "item_equipment_helmet_diamond_age_bastion"
-        },
-        {
-            "id": "5e01ef6886f77445f643baa4",
-            "value": 41,
-            "name": "item_equipment_helmet_team_wendy_exfil_coyote"
-        },
-        {
-            "id": "5e00c1ad86f774747333222c",
-            "value": 41,
-            "name": "item_equipment_helmet_team_wendy_exfil"
-        },
-        {
-            "id": "5ac8d6885acfc400180ae7b0",
-            "value": 42,
-            "name": "helmet_ops_core_fast_tan"
-        },
-        {
-            "id": "5c17a7ed2e2216152142459c",
-            "value": 42,
-            "name": "item_equipment_helmet_crye_airframe_tan"
-        },
-        {
-            "id": "5a154d5cfcdbcb001a3b00da",
-            "value": 42,
-            "name": "helmet_ops_core_fast"
-        },
-        {
-            "id": "5aa7d03ae5b5b00016327db5",
-            "value": 43,
-            "name": "helmet_un"
-        },
-        {
-            "id": "5a7c4850e899ef00150be885",
-            "value": 46,
-            "name": "helmet_ratnik_6B47"
-        },
-        {
-            "id": "65719f0775149d62ce0a670b",
-            "value": 47,
-            "name": "item_equipment_helmet_tor_2"
-        },
-        {
-            "id": "5aa7cfc0e5b5b00015693143",
-            "value": 48,
-            "name": "helmet_6B47_cover"
-        },
-        {
-            "id": "5b40e1525acfc4771e1c6611",
-            "value": 54,
-            "name": "item_equipment_helmet_ULACH_black"
-        },
-        {
-            "id": "5b40e2bc5acfc40016388216",
-            "value": 55,
-            "name": "item_equipment_helmet_ULACH_coyote"
-        }
-    ],
-    "FaceCover": [
-        {
-            "id": "5ab8f39486f7745cd93a1cca",
-            "value": 14,
-            "name": "balaclava_cg"
-        },
-        {
-            "id": "5b4325355acfc40019478126",
-            "value": 14,
-            "name": "item_equipment_facecover_shemagh_02"
-        },
-        {
-            "id": "5ab8f85d86f7745cd93a1cf5",
-            "value": 14,
-            "name": "shemagh"
-        },
-        {
-            "id": "5b432f3d5acfc4704b4a1dfb",
-            "value": 14,
-            "name": "item_equipment_facecover_nomexBalaclava"
-        },
-        {
-            "id": "6571bde39837cc51b800c212",
-            "value": 14,
-            "name": "item_equipment_facecover_skull_half_mask"
-        },
-        {
-            "id": "572b7f1624597762ae139822",
-            "value": 15,
-            "name": "balaclava"
-        },
-        {
-            "id": "5ab8f4ff86f77431c60d91ba",
-            "value": 15,
-            "name": "balaclava_skull"
-        },
-        {
-            "id": "5b432b2f5acfc4771e1c6622",
-            "value": 19,
-            "name": "item_equipment_facecover_shatteredmask"
-        },
-        {
-            "id": "5b432b6c5acfc4001a599bf0",
-            "value": 19,
-            "name": "item_equipment_facecover_skullmask"
-        },
-        {
-            "id": "657089638db3adca1009f4ca",
-            "value": 19,
-            "name": "item_equipment_facecover_ballistic_mask"
-        },
-        {
-            "id": "6570aead4d84f81fd002a033",
-            "value": 25,
-            "name": "item_equipment_facecover_strikeball_mask"
-        }
-    ],
-    "ArmBand": [
-        {
-            "id": "5b3f3b0e86f7746752107cda",
-            "value": 20,
-            "name": "armband_yellow"
-        },
-        {
-            "id": "5b3f3af486f774679e752c1f",
-            "value": 20,
-            "name": "armband_blue"
-        },
-        {
-            "id": "5b3f3b0186f774021a2afef7",
-            "value": 20,
-            "name": "armband_green"
-        },
-        {
-            "id": "5b3f16c486f7747c327f55f7",
-            "value": 20,
-            "name": "armband_white"
-        },
-        {
-            "id": "5b3f3ade86f7746b6b790d8e",
-            "value": 20,
-            "name": "armband_red"
-        }
-    ],
-    "Scabbard": [
-        {
-            "id": "5bffdc370db834001d23eca8",
-            "value": 22,
-            "name": "weapon_izhmash_6x5"
-        },
-        {
-            "id": "63920105a83e15700a00f168",
-            "value": 22,
-            "name": "weapon_sog_voodoo_hawk"
-        },
-        {
-            "id": "664a5428d5e33a713b622379",
-            "value": 27,
-            "name": "weapon_tactikal_gladius"
-        },
-        {
-            "id": "5bead2e00db834001c062938",
-            "value": 27,
-            "name": "weapon_voentorg_mpl-40"
-        },
-        {
-            "id": "5bffe7930db834001b734a39",
-            "value": 27,
-            "name": "weapon_crash_axe"
-        },
-        {
-            "id": "5c012ffc0db834001d23f03f",
-            "value": 27,
-            "name": "weapon_utility_axe"
-        },
-        {
-            "id": "5bffdd7e0db834001b734a1a",
-            "value": 81,
-            "name": "weapon_miller_bros_m-2"
-        }
-    ],
-    "Ammo": [
-        {
-            "id": "5e85a9f4add9fe03027d9bf1",
-            "value": 3,
-            "name": "patron_23x75_star"
-        },
-        {
-            "id": "5d6e68dea4b9361bcc29e659",
-            "value": 17,
-            "name": "patron_12x70_dual_sabot_slug"
-        },
-        {
-            "id": "5d6e69b9a4b9361bc8618958",
-            "value": 18,
-            "name": "patron_20x70_buckshot_62"
-        },
-        {
-            "id": "5a38ebd9c4a282000d722a5b",
-            "value": 20,
-            "name": "patron_20x70_buckshot"
-        },
-        {
-            "id": "5d6e69c7a4b9360b6c0d54e4",
-            "value": 21,
-            "name": "patron_20x70_buckshot_73"
-        },
-        {
-            "id": "5d6e695fa4b936359b35d852",
-            "value": 21,
-            "name": "patron_20x70_buckshot_56"
-        },
-        {
-            "id": "5d6e6772a4b936088465b17c",
-            "value": 30,
-            "name": "patron_12x70_buckshot_525"
-        },
-        {
-            "id": "560d5e524bdc2d25448b4571",
-            "value": 31,
-            "name": "patron_12x70_buckshot"
-        },
-        {
-            "id": "5d6e67fba4b9361bc73bc779",
-            "value": 32,
-            "name": "patron_12x70_buckshot_65"
-        },
-        {
-            "id": "5d6e6806a4b936088465b17e",
-            "value": 40,
-            "name": "patron_12x70_buckshot_85"
-        },
-        {
-            "id": "5737201124597760fc4431f1",
-            "value": 50,
-            "name": "patron_9x18pm_PST_gzh"
-        },
-        {
-            "id": "573719762459775a626ccbc1",
-            "value": 50,
-            "name": "patron_9x18pm_P_gzh"
-        },
-        {
-            "id": "573718ba2459775a75491131",
-            "value": 53,
-            "name": "patron_9x18pm_BZT_gzh"
-        },
-        {
-            "id": "57371f8d24597761006c6a81",
-            "value": 54,
-            "name": "patron_9x18pm_PSO_gzh"
-        },
-        {
-            "id": "56d59d3ad2720bdb418b4577",
-            "value": 54,
-            "name": "patron_9x19_PST_gzh"
-        },
-        {
-            "id": "573603c924597764442bd9cb",
-            "value": 55,
-            "name": "patron_762x25tt_T_Gzh"
-        },
-        {
-            "id": "57371f2b24597761224311f1",
-            "value": 55,
-            "name": "patron_9x18pm_PS_gs_PPO"
-        },
-        {
-            "id": "64b7bbb74b75259c590fa897",
-            "value": 56,
-            "name": "patron_9x19_m882"
-        },
-        {
-            "id": "5736026a245977644601dc61",
-            "value": 58,
-            "name": "patron_762x25tt_P_Gl"
-        },
-        {
-            "id": "5735fdcd2459776445391d61",
-            "value": 58,
-            "name": "patron_762x25tt_akbs"
-        },
-        {
-            "id": "57371eb62459776125652ac1",
-            "value": 58,
-            "name": "patron_9x18pm_PRS_gs"
-        },
-        {
-            "id": "5c3df7d588a4501f290594e5",
-            "value": 58,
-            "name": "patron_9x19_GT"
-        },
-        {
-            "id": "57371e4124597760ff7b25f1",
-            "value": 59,
-            "name": "patron_9x18pm_PPT_gzh"
-        },
-        {
-            "id": "58864a4f2459770fcc257101",
-            "value": 59,
-            "name": "patron_9x19_PSO_gzh"
-        },
-        {
-            "id": "5735ff5c245977640e39ba7e",
-            "value": 60,
-            "name": "patron_762x25tt_FMJ43"
-        },
-        {
-            "id": "57371b192459775a9f58a5e0",
-            "value": 61,
-            "name": "patron_9x18pm_PPE_gzh"
-        },
-        {
-            "id": "5f647f31b6238e5dd066e196",
-            "value": 62,
-            "name": "patron_23x75_shrapnel_25"
-        },
-        {
-            "id": "573601b42459776410737435",
-            "value": 64,
-            "name": "patron_762x25tt_LRN"
-        },
-        {
-            "id": "64b8ee384b75259c590fa89b",
-            "value": 65,
-            "name": "patron_12x70_piranha"
-        },
-        {
-            "id": "56dff4ecd2720b5f5a8b4568",
-            "value": 65,
-            "name": "patron_545x39_US"
-        },
-        {
-            "id": "573720e02459776143012541",
-            "value": 65,
-            "name": "patron_9x18pm_RG028_gzh"
-        },
-        {
-            "id": "5a26abfac4a28232980eabff",
-            "value": 65,
-            "name": "patron_9x21_sp11"
-        },
-        {
-            "id": "573602322459776445391df1",
-            "value": 66,
-            "name": "patron_762x25tt_LRNPC"
-        },
-        {
-            "id": "5737218f245977612125ba51",
-            "value": 67,
-            "name": "patron_9x18pm_SP8_gzh"
-        },
-        {
-            "id": "56dff4a2d2720bbd668b456a",
-            "value": 69,
-            "name": "patron_545x39_T"
-        },
-        {
-            "id": "5737207f24597760ff7b25f2",
-            "value": 69,
-            "name": "patron_9x18pm_PSV"
-        },
-        {
-            "id": "5e85a9a6eacf8c039e4e2ac1",
-            "value": 70,
-            "name": "patron_23x75_shrapnel_10"
-        },
-        {
-            "id": "59e68f6f86f7746c9f75e846",
-            "value": 70,
-            "name": "patron_556x45_M856"
-        },
-        {
-            "id": "5a3c16fe86f77452b62de32a",
-            "value": 70,
-            "name": "patron_9x19_luger_cci"
-        },
-        {
-            "id": "5ba26812d4351e003201fef1",
-            "value": 75,
-            "name": "patron_46x30_action_sx"
-        },
-        {
-            "id": "6576f96220d53a5b8f3e395e",
-            "value": 75,
-            "name": "patron_9x39_fmj"
-        },
-        {
-            "id": "5efb0d4f4bc50b58e81710f3",
-            "value": 76,
-            "name": "patron_1143x23_acp_lasermatch_fmj"
-        },
-        {
-            "id": "56dff421d2720b5f5a8b4567",
-            "value": 77,
-            "name": "patron_545x39_SP"
-        },
-        {
-            "id": "57372140245977611f70ee91",
-            "value": 77,
-            "name": "patron_9x18pm_SP7_gzh"
-        },
-        {
-            "id": "64b7af734b75259c590fa895",
-            "value": 78,
-            "name": "patron_762x39_sp"
-        },
-        {
-            "id": "5a269f97c4a282000b151807",
-            "value": 79,
-            "name": "patron_9x21_sp10"
-        },
-        {
-            "id": "56dff338d2720bbd668b4569",
-            "value": 80,
-            "name": "patron_545x39_PRS"
-        },
-        {
-            "id": "5cc80f79e4a949033c7343b2",
-            "value": 80,
-            "name": "patron_57x28_ss198lf"
-        },
-        {
-            "id": "5a26ac06c4a282000c5a90a8",
-            "value": 80,
-            "name": "patron_9x21_sp12"
-        },
-        {
-            "id": "5ba26844d4351e00334c9475",
-            "value": 82,
-            "name": "patron_46x30_subsonic_sx"
-        },
-        {
-            "id": "59e6918f86f7746c9f75e849",
-            "value": 82,
-            "name": "patron_556x45_MK_255_Mod_0"
-        },
-        {
-            "id": "6196364158ef8c428c287d9f",
-            "value": 82,
-            "name": "patron_762x35_vmax"
-        },
-        {
-            "id": "5efb0e16aeb21837e749c7ff",
-            "value": 85,
-            "name": "patron_9x19_quakemaker"
-        },
-        {
-            "id": "56dff216d2720bbd668b4568",
-            "value": 86,
-            "name": "patron_545x39_HP"
-        },
-        {
-            "id": "59e6927d86f77411da468256",
-            "value": 89,
-            "name": "patron_556x45_55_HP"
-        },
-        {
-            "id": "59e4d3d286f774176a36250a",
-            "value": 90,
-            "name": "patron_762x39_HP"
-        },
-        {
-            "id": "5cc86840d7f00c002412c56c",
-            "value": 91,
-            "name": "patron_57x28_r37x"
-        },
-        {
-            "id": "59e6920f86f77411d82aa167",
-            "value": 97,
-            "name": "patron_556x45_55_FMJ"
-        },
-        {
-            "id": "5c0d5ae286f7741e46554302",
-            "value": 98,
-            "name": "patron_556x45_varmageddon"
-        },
-        {
-            "id": "62330bfadc5883093563729b",
-            "value": 99,
-            "name": "patron_9x33r_hp"
-        },
-        {
-            "id": "5efb0fc6aeb21837e749c801",
-            "value": 100,
-            "name": "patron_1143x23_acp_hydra_shok"
-        },
-        {
-            "id": "573603562459776430731618",
-            "value": 100,
-            "name": "patron_762x25tt_Pst_gzh"
-        },
-        {
-            "id": "6196365d58ef8c428c287da1",
-            "value": 100,
-            "name": "patron_762x35_whisper"
-        },
-        {
-            "id": "5c0d56a986f774449d5de529",
-            "value": 102,
-            "name": "patron_9x19_rip"
-        },
-        {
-            "id": "56dff0bed2720bb0668b4567",
-            "value": 105,
-            "name": "patron_545x39_FMJ"
-        },
-        {
-            "id": "5cc86832d7f00c000d3a6e6c",
-            "value": 108,
-            "name": "patron_57x28_r37f"
-        },
-        {
-            "id": "62330c40bdd19b369e1e53d1",
-            "value": 108,
-            "name": "patron_9x33r_sp"
-        },
-        {
-            "id": "59e6658b86f77411d949b250",
-            "value": 110,
-            "name": "patron_366_TKM_Geksa"
-        },
-        {
-            "id": "5cc80f8fe4a949033b0224a2",
-            "value": 112,
-            "name": "patron_57x28_ss197sr"
-        },
-        {
-            "id": "5e023e88277cce2b522ff2b1",
-            "value": 117,
-            "name": "patron_762x51_ultra_nosler"
-        },
-        {
-            "id": "5d6e6a53a4b9361bd473feec",
-            "value": 120,
-            "name": "patron_20x70_slug_poleva_3"
-        },
-        {
-            "id": "573719df2459775a626ccbc2",
-            "value": 120,
-            "name": "patron_9x18pm_PBM"
-        },
-        {
-            "id": "5e81f423763d9f754677bf2e",
-            "value": 122,
-            "name": "patron_1143x23_acp"
-        },
-        {
-            "id": "6576f93989f0062e741ba952",
-            "value": 123,
-            "name": "patron_9x21_7u4"
-        },
-        {
-            "id": "59e6542b86f77411dc52a77a",
-            "value": 128,
-            "name": "patron_366_TKM_FMJ"
-        },
-        {
-            "id": "62330c18744e5e31df12f516",
-            "value": 128,
-            "name": "patron_9x33r_jhp"
-        },
-        {
-            "id": "5cc80f67e4a949035e43bbba",
-            "value": 129,
-            "name": "patron_57x28_sb193"
-        },
-        {
-            "id": "5ea2a8e200685063ec28c05a",
-            "value": 130,
-            "name": "patron_1143x23_rip"
-        },
-        {
-            "id": "5d6e6911a4b9361bd5780d52",
-            "value": 130,
-            "name": "patron_12x70_flechette"
-        },
-        {
-            "id": "64b7af5a8532cf95ee0a0dbd",
-            "value": 133,
-            "name": "patron_762x39_fmj"
-        },
-        {
-            "id": "5d6e6a42a4b9364f07165f52",
-            "value": 135,
-            "name": "patron_20x70_slug_poleva_6u"
-        },
-        {
-            "id": "5d6e6891a4b9361bd473feea",
-            "value": 140,
-            "name": "patron_12x70_slug_poleva_3"
-        },
-        {
-            "id": "64b8f7c241772715af0f9c3d",
-            "value": 142,
-            "name": "patron_762x54r_bthp"
-        },
-        {
-            "id": "56dff3afd2720bba668b4567",
-            "value": 146,
-            "name": "patron_545x39_PS"
-        },
-        {
-            "id": "59e4d24686f7741776641ac7",
-            "value": 146,
-            "name": "patron_762x39_US"
-        },
-        {
-            "id": "66a0d1c87d0d369e270bb9de",
-            "value": 147,
-            "name": "patron_127x33_jhp"
-        },
-        {
-            "id": "5d6e689ca4b9361bc8618956",
-            "value": 150,
-            "name": "patron_12x70_slug_poleva_6u"
-        },
-        {
-            "id": "57a0dfb82459774d3078b56c",
-            "value": 151,
-            "name": "patron_9x39_sp5"
-        },
-        {
-            "id": "5c925fa22e221601da359b7b",
-            "value": 152,
-            "name": "patron_9x19_ap_63"
-        },
-        {
-            "id": "5d6e6a05a4b93618084f58d0",
-            "value": 154,
-            "name": "patron_20x70_slug_star"
-        },
-        {
-            "id": "64b6979341772715af0f9c39",
-            "value": 166,
-            "name": "patron_46x30_jsp"
-        },
-        {
-            "id": "58820d1224597753c90aeb13",
-            "value": 167,
-            "name": "patron_12x70_slug"
-        },
-        {
-            "id": "5fbe3ffdf8b6a877a729ea82",
-            "value": 170,
-            "name": "patron_762x35_blackout"
-        },
-        {
-            "id": "64b8f7b5389d7ffd620ccba2",
-            "value": 172,
-            "name": "patron_762x54r_spbt"
-        },
-        {
-            "id": "5a26ac0ec4a28200741e1e18",
-            "value": 172,
-            "name": "patron_9x21_sp13"
-        },
-        {
-            "id": "54527a984bdc2d4e668b4567",
-            "value": 174,
-            "name": "patron_556x45_M855"
-        },
-        {
-            "id": "5cadf6e5ae921500113bb973",
-            "value": 175,
-            "name": "patron_127x55_ps12a"
-        },
-        {
-            "id": "59e4cf5286f7741778269d8a",
-            "value": 175,
-            "name": "patron_762x39_T45M"
-        },
-        {
-            "id": "66a0d1f88486c69fce00fdf6",
-            "value": 182,
-            "name": "patron_127x33_jsp"
-        },
-        {
-            "id": "5d6e68e6a4b9361c140bcfe0",
-            "value": 183,
-            "name": "patron_12x70_slug_ftx_custom_lite"
-        },
-        {
-            "id": "59e655cb86f77411dc52a77b",
-            "value": 183,
-            "name": "patron_366_TKM_EKO"
-        },
-        {
-            "id": "5d6e6869a4b9361c140bcfde",
-            "value": 190,
-            "name": "patron_12x70_slug_grizzly_40"
-        },
-        {
-            "id": "60194943740c5d77f6705eea",
-            "value": 193,
-            "name": "patron_556x45_mk_318_mod_0"
-        },
-        {
-            "id": "5cc80f53e4a949000e1ea4f8",
-            "value": 193,
-            "name": "patron_57x28_l191"
-        },
-        {
-            "id": "5cadf6ddae9215051e1c23b2",
-            "value": 195,
-            "name": "patron_127x55_ps12"
-        },
-        {
-            "id": "5e023e6e34d52a55c3304f71",
-            "value": 197,
-            "name": "patron_762x51_tpz_sp"
-        },
-        {
-            "id": "5d6e6a5fa4b93614ec501745",
-            "value": 198,
-            "name": "patron_20x70_slug_broadhead"
-        },
-        {
-            "id": "5656eb674bdc2d35148b457c",
-            "value": 199,
-            "name": "40 VOG-25"
-        },
-        {
-            "id": "5ede4739e0350d05467f73e8",
-            "value": 199,
-            "name": "patron_40x46_m406"
-        },
-        {
-            "id": "5ede47405b097655935d7d16",
-            "value": 199,
-            "name": "patron_40x46_m441"
-        },
-        {
-            "id": "5ede474b0c226a66f5402622",
-            "value": 199,
-            "name": "patron_40x46_m381"
-        },
-        {
-            "id": "5ede475b549eed7c6d5c18fb",
-            "value": 199,
-            "name": "patron_40x46_m386"
-        },
-        {
-            "id": "5f0c892565703e5c461894e9",
-            "value": 199,
-            "name": "patron_40x46_m433"
-        },
-        {
-            "id": "56dff2ced2720bb4668b4567",
-            "value": 201,
-            "name": "patron_545x39_PP"
-        },
-        {
-            "id": "5d6e68b3a4b9361bca7e50b5",
-            "value": 206,
-            "name": "patron_12x70_slug_hp_copper"
-        },
-        {
-            "id": "5fc382b6d6fa9c00c571bbc3",
-            "value": 206,
-            "name": "patron_86x70_lapua_tac_x"
-        },
-        {
-            "id": "619636be6db0f2477964e710",
-            "value": 214,
-            "name": "patron_762x35_m62"
-        },
-        {
-            "id": "5c0d668f86f7747ccb7f13b2",
-            "value": 218,
-            "name": "patron_9x39_spp"
-        },
-        {
-            "id": "5d6e68d1a4b93622fe60e845",
-            "value": 220,
-            "name": "patron_12x70_slug_superformance"
-        },
-        {
-            "id": "62330b3ed4dc74626d570b95",
-            "value": 220,
-            "name": "patron_9x33r_fmj"
-        },
-        {
-            "id": "5656d7c34bdc2d9d198b4587",
-            "value": 221,
-            "name": "patron_762x39_PS"
-        },
-        {
-            "id": "64b8f7968532cf95ee0a0dbf",
-            "value": 224,
-            "name": "patron_762x54r_fmj"
-        },
-        {
-            "id": "66a0d1e0ed648d72fe064d06",
-            "value": 224,
-            "name": "patron_127x33_cooper"
-        },
-        {
-            "id": "5cc80f38e4a949001152b560",
-            "value": 229,
-            "name": "patron_57x28_ss190"
-        },
-        {
-            "id": "6576f4708ca9c4381d16cd9d",
-            "value": 229,
-            "name": "patron_9x21_7n42"
-        },
-        {
-            "id": "56dff061d2720bb5668b4567",
-            "value": 234,
-            "name": "patron_545x39_BT"
-        },
-        {
-            "id": "5efb0da7a29a85116f6ea05f",
-            "value": 234,
-            "name": "patron_9x19_7n31"
-        },
-        {
-            "id": "5ede475339ee016e8c534742",
-            "value": 240,
-            "name": "patron_40x46_m576"
-        },
-        {
-            "id": "59e6906286f7746c9f75e847",
-            "value": 242,
-            "name": "patron_556x45_M856A1"
-        },
-        {
-            "id": "5e023e53d4353e3302577c4c",
-            "value": 243,
-            "name": "patron_762x51_bpz_fmj"
-        },
-        {
-            "id": "5efb0cabfb3e451d70735af5",
-            "value": 246,
-            "name": "patron_1143x23_acp_ap"
-        },
-        {
-            "id": "6529302b8c26af6326029fb7",
-            "value": 250,
-            "name": "patron_68x51_fmj"
-        },
-        {
-            "id": "5ba2678ad4351e44f824b344",
-            "value": 253,
-            "name": "patron_46x30_fmj_sx"
-        },
-        {
-            "id": "5d6e68c4a4b9361b93413f79",
-            "value": 257,
-            "name": "patron_12x70_slug_50_bmg_m17_traccer"
-        },
-        {
-            "id": "5c0d591486f7744c505b416f",
-            "value": 265,
-            "name": "patron_12x70_rip"
-        },
-        {
-            "id": "5fc382c1016cce60e8341b20",
-            "value": 272,
-            "name": "patron_86x70_lapua_magnum_upz"
-        },
-        {
-            "id": "64b7af434b75259c590fa893",
-            "value": 279,
-            "name": "patron_762x39_pp"
-        },
-        {
-            "id": "61962b617c6c7b169525f168",
-            "value": 285,
-            "name": "patron_545x39_7n40"
-        },
-        {
-            "id": "668fe62ac62660a5d8071446",
-            "value": 285,
-            "name": "patron_127x33_fmj"
-        },
-        {
-            "id": "61962d879bb3d20b0946d385",
-            "value": 292,
-            "name": "patron_9x39_pab9"
-        },
-        {
-            "id": "64b8725c4b75259c590fa899",
-            "value": 298,
-            "name": "patron_762x35_cbj"
-        },
-        {
-            "id": "54527ac44bdc2d36668b4567",
-            "value": 299,
-            "name": "patron_556x45_M855A1"
-        },
-        {
-            "id": "58dd3ad986f77403051cba8f",
-            "value": 300,
-            "name": "patron_762x51_M80"
-        },
-        {
-            "id": "5e023cf8186a883be655e54f",
-            "value": 302,
-            "name": "patron_762x54r_t46m"
-        },
-        {
-            "id": "56dfef82d2720bbd668b4567",
-            "value": 308,
-            "name": "patron_545x39_BP"
-        },
-        {
-            "id": "5887431f2459777e1612938f",
-            "value": 311,
-            "name": "patron_762х54R_LPS_Gzh"
-        },
-        {
-            "id": "5f0596629e22f464da6bbdd9",
-            "value": 320,
-            "name": "patron_366_custom_ap"
-        },
-        {
-            "id": "5a608bf24f39f98ffc77720e",
-            "value": 329,
-            "name": "patron_762x51_M62"
-        },
-        {
-            "id": "5d6e68a8a4b9360b6c0d54e2",
-            "value": 334,
-            "name": "patron_12x70_slug_ap_20"
-        },
-        {
-            "id": "59e0d99486f7744a32234762",
-            "value": 338,
-            "name": "patron_762x39_BP"
-        },
-        {
-            "id": "57a0e5022459774d1673f889",
-            "value": 340,
-            "name": "patron_9x39_sp6"
-        },
-        {
-            "id": "5fd20ff893a8961fc660a954",
-            "value": 341,
-            "name": "patron_762x35_blackout_ap"
-        },
-        {
-            "id": "59e77a2386f7742ee578960a",
-            "value": 344,
-            "name": "patron_762х54R_7N1"
-        },
-        {
-            "id": "6529243824cbe3c74a05e5c1",
-            "value": 352,
-            "name": "patron_68x51"
-        },
-        {
-            "id": "5cadf6eeae921500134b2799",
-            "value": 362,
-            "name": "patron_127x55_ps12b"
-        },
-        {
-            "id": "5ba26835d4351e0035628ff5",
-            "value": 375,
-            "name": "patron_46x30_ap_sx"
-        },
-        {
-            "id": "5e85aa1a988a8701445df1f5",
-            "value": 382,
-            "name": "patron_23x75_barricade"
-        },
-        {
-            "id": "59e690b686f7746c9f75e848",
-            "value": 382,
-            "name": "patron_556x45_M995"
-        },
-        {
-            "id": "56dff026d2720bb8668b4567",
-            "value": 395,
-            "name": "patron_545x39_BS"
-        },
-        {
-            "id": "5c0d688c86f77413ae3407b2",
-            "value": 398,
-            "name": "patron_9x39_bp"
-        },
-        {
-            "id": "5fc275cf85fd526b824a571a",
-            "value": 402,
-            "name": "patron_86x70_lapua_magnum"
-        },
-        {
-            "id": "601949593ae8f707c4608daa",
-            "value": 418,
-            "name": "patron_556x45_ssa_ap"
-        },
-        {
-            "id": "5e023d34e8a400319a28ed44",
-            "value": 438,
-            "name": "patron_762x54r_7bt1"
-        },
-        {
-            "id": "601aa3d2b2bcb34913271e6d",
-            "value": 443,
-            "name": "patron_762x39_mai_ap"
-        },
-        {
-            "id": "5c0d5e4486f77478390952fe",
-            "value": 467,
-            "name": "patron_545x39_7n39"
-        },
-        {
-            "id": "560d61e84bdc2da74d8b4571",
-            "value": 505,
-            "name": "patron_762х54R_SNB"
-        },
-        {
-            "id": "5a6086ea4f39f99cd479502f",
-            "value": 520,
-            "name": "patron_762x51_M61"
-        },
-        {
-            "id": "5efb0c1bd79ff02a1f5e68d9",
-            "value": 577,
-            "name": "patron_762x51_m993"
-        },
-        {
-            "id": "5e023d48186a883be655e551",
-            "value": 582,
-            "name": "patron_762x54r_7n37"
-        },
-        {
-            "id": "5fc382a9d724d907e2077dab",
-            "value": 715,
-            "name": "patron_86x70_lapua_ap"
-        }
-    ],
-    "mapper": {
-        "64be7095047e826eae02b0c1": 12,
-        "572b7adb24597762ae139821": 14,
-        "5e4abc1f86f774069619fbaa": 16,
-        "5fd4c4fa16cac650092f6771": 18,
-        "59e7643b86f7742cbf2c109a": 18,
-        "5d5d8ca986f7742798716522": 18,
-        "6034d0230ca681766b6a0fb5": 19,
-        "64be7110bf597ba84a0a41ea": 19,
-        "5929a2a086f7744f4b234d43": 24,
-        "5c0e3eb886f7742015526062": 53,
-        "5d5d646386f7742797261fd9": 56,
-        "6034cf5fffd42c541047f72e": 66,
-        "66b6295a8ca68c6461709efa": 66,
-        "5c0e446786f7742013381639": 68,
-        "5e4abfed86f77406a2713cf7": 68,
-        "5b44c8ea86f7742d1627baf1": 69,
-        "5d5d85c586f774279a21cbdb": 69,
-        "5ca20abf86f77418567a43f2": 69,
-        "5fd4c60f875c30179f5d04c2": 69,
-        "60a621c49c197e4e8c4455e6": 71,
-        "60a6220e953894617404b00a": 72,
-        "603648ff5a45383c122086ac": 74,
-        "5648a69d4bdc2ded0b8b457b": 75,
-        "592c2d1a86f7746dbe2af32a": 75,
-        "5ab8dab586f77441cd04f2a2": 75,
-        "5e9db13186f7742f845ee9d3": 75,
-        "5c0e746986f7741453628fe5": 80,
-        "5df8a42886f77412640e2e75": 84,
-        "5c0e6a1586f77404597b4965": 86,
-        "61bc85697113f767765c7fe7": 100,
-        "639343fce101f4caa40a4ef3": 104,
-        "61bcc89aef0f505f0c6cd0fc": 109,
-        "544a5caa4bdc2d1a388b4568": 110,
-        "5c0e722886f7740458316a57": 115,
-        "628dc750b910320f4c27a732": 117,
-        "66b6296d7994640992013b17": 121,
-        "5e4ac41886f77406a511c9a8": 130,
-        "60a3c70cde5f453f634816a3": 135,
-        "5ab8dced86f774646209ec87": 138,
-        "628d0618d1ba6e4fa07ce5a4": 149,
-        "60a3c68c37ea821725773ef5": 180,
-        "64748cb8de82c85eaf0a273a": 92,
-        "5cadc190ae921500103bb3b6": 106,
-        "571a12c42459771f627b58a0": 109,
-        "576a581d2459771e7b1bc4f1": 110,
-        "56d59856d2720bd8418b456a": 114,
-        "56e0598dd2720bb5668b45a6": 115,
-        "5e81c3cbac2bb513793cdc75": 117,
-        "579204f224597773d619e051": 118,
-        "5448bd6b4bdc2dfc2f8b4569": 119,
-        "5a7ae0c351dfba0017554310": 122,
-        "602a9740da11d6478d5a06dc": 123,
-        "63088377b5cd696784087147": 123,
-        "624c2e8614da335f1e034d8c": 133,
-        "5f36a0e5fbf956000b716b65": 140,
-        "6193a720f8ee7e52e42109ed": 143,
-        "59f98b4986f7746f546d2cef": 145,
-        "5a17f98cfcdbcb0980087290": 154,
-        "5abccb7dd8ce87001773e277": 162,
-        "633ec7c2a6918cb895019c6c": 173,
-        "669fa409933e898cce0c2166": 173,
-        "5d3eb3b0a4b93615055e84d2": 176,
-        "5d67abc1a4b93614ec50137f": 176,
-        "5b1fa9b25acfc40018633c01": 192,
-        "669fa39b48fc9f8db6035a0c": 203,
-        "669fa3f88abd2662d80eee77": 204,
-        "61a4c8884f95bc3b2c5dc96f": 208,
-        "5bfd297f0db834001a669119": 74,
-        "61f7c9e189e6fb1a5e3ea78d": 80,
-        "5580223e4bdc2d1c128b457f": 88,
-        "5ea03f7400685063ec28bfa8": 95,
-        "5de652c31b7e3716273428be": 96,
-        "59e6152586f77473dc057aa1": 100,
-        "59984ab886f7743e98271174": 104,
-        "5a38e6bac4a2826c6e06d79b": 104,
-        "574d967124597745970e7c94": 107,
-        "587e02ff24597743df3deaeb": 107,
-        "58948c8e86f77409493f7266": 107,
-        "57f4c844245977379d5c14d1": 111,
-        "5926bb2186f7744b1c6c6e60": 114,
-        "5c07c60e0db834002330051f": 116,
-        "5d2f0d8048f0356c925bc3b0": 118,
-        "59d6088586f774275f37482f": 118,
-        "59e6687d86f77411d949b251": 120,
-        "5bf3e0490db83400196199af": 120,
-        "66992b349950f5f4cd06029f": 125,
-        "57d14d2524597714373db789": 126,
-        "583990e32459771419544dd2": 129,
-        "57dc2fa62459775949412633": 129,
-        "644674a13d52156624001fbc": 130,
-        "54491c4f4bdc2db1078b4568": 133,
-        "5e870397991fd70db46995c8": 139,
-        "5ae08f0a5acfc408fb1398a1": 148,
-        "59f9cabd86f7743a10721f46": 152,
-        "60db29ce99594040e04c4a27": 157,
-        "60339954d62c9b14ed777c06": 158,
-        "57f3c6bd24597738e730fa2f": 161,
-        "576165642459773c7a400233": 161,
-        "5a7828548dc32e5a9c28b516": 164,
-        "56dee2bdd2720bc8328b4567": 164,
-        "62e7c4fba689e8c9c50dfc38": 165,
-        "606dae0ab0e443224b421bb7": 165,
-        "6259b864ebedf17603599e88": 178,
-        "55801eed4bdc2d89578b4588": 182,
-        "5cc82d76e24e8d00134b4b83": 189,
-        "6680304edadb7aa61d00cef0": 193,
-        "5e00903ae9dc277128008b87": 194,
-        "5fc3e272f8b6a877a729eac5": 196,
-        "5bfea6e90db834001b7347f3": 207,
-        "628b5638ad252a16da6dd245": 210,
-        "628b9c37a733087d0d7fe84b": 211,
-        "5c501a4d2e221602b412b540": 234,
-        "627e14b21713922ded6f2c15": 238,
-        "5df8ce05b11454561e39243b": 240,
-        "62e14904c2699c0ec93adc47": 240,
-        "59ff346386f77477562ff5e2": 245,
-        "5447a9cd4bdc2dbd208b4567": 245,
-        "618428466ef05c2ce828f218": 245,
-        "645e0c6b3b381ede770e1cc9": 248,
-        "5df24cf80dee1b22f862e9bc": 248,
-        "623063e994fc3f7b302a9696": 250,
-        "5ac66d725acfc43b321d4b60": 250,
-        "5fb64bc92b1b027b1f50bcf2": 251,
-        "588892092459774ac91d4b11": 251,
-        "5d43021ca4b9362eab4b5e25": 255,
-        "5e848cc2988a8701445df1e8": 255,
-        "5644bd2b4bdc2d3b4c8b4572": 256,
-        "5bf3e03b0db834001d2c4a9c": 256,
-        "5ab8e9fcd8ce870019439434": 257,
-        "5c46fbd72e2216398b5a8c9c": 264,
-        "5aafa857e5b5b00018480968": 264,
-        "5fbcc1d9016cce60e8341ab3": 292,
-        "5fc3f2d5900b1d5091531e57": 292,
-        "643ea5b23db6f9f57107d9fd": 301,
-        "5f2a9575926fd9352339381f": 316,
-        "5a367e5dc4a282000e49738f": 317,
-        "5ba26383d4351e00334c93d9": 318,
-        "5ac66cb05acfc40198510a10": 318,
-        "5ac66d015acfc400180ae6e4": 319,
-        "6184055050224f204c1da540": 322,
-        "5a0ec13bfcdbcb00165aa685": 325,
-        "5abcbc27d8ce8700182eceeb": 325,
-        "5ac66d2e5acfc43b321d4b53": 330,
-        "6513ef33e06849f06c0957ca": 330,
-        "5c488a752e221602b412af63": 337,
-        "5ac4cd105acfc40016339859": 341,
-        "5ac66d9b5acfc4001633997a": 343,
-        "6499849fc93611967b034949": 343,
-        "66ffa9b66e19cc902401c5e8": 343,
-        "67124dcfa3541f2a1f0e788b": 345,
-        "63171672192e68c5460cebc5": 346,
-        "6718817435e3cfd9550d2c27": 346,
-        "5beed0f50db834001c062b12": 348,
-        "5fc22d7c187fea44d52eda44": 369,
-        "5cadfbf7ae92152ac412eeef": 385,
-        "6176aca650224f204c1da3fb": 392,
-        "5bd70322209c4d00d7167b8f": 395,
-        "65290f395ae2ae97b80fdf2d": 397,
-        "57c44b372459772d2b39b8ce": 402,
-        "57838ad32459774a17445cd2": 402,
-        "651450ce0e00edc794068371": 404,
-        "5bb2475ed4351e00853264e3": 405,
-        "65268d8ecb944ff1e90ea385": 411,
-        "5b0bbe4e5acfc40dc528a72d": 412,
-        "628a60ae6b1d481ff772e9c8": 415,
-        "606587252535c57a13424cfd": 416,
-        "64637076203536ad5600c990": 506,
-        "6410733d5dd49d77bd07847e": 508,
-        "6165ac306ef05c2ce828ef74": 524,
-        "6183afd850224f204c1da514": 524,
-        "5dcbd56fdbd3d91b3e5468d5": 543,
-        "5b432b965acfc47a8774094e": 1,
-        "6033fa48ffd42c541047f728": 1,
-        "5645bcc04bdc2d363b8b4572": 1,
-        "5aa2ba71e5b5b000137b758f": 1,
-        "66b5f68de98be930d701c00e": 1,
-        "66b5f6a28ca68c6461709ed8": 1,
-        "66b5f69ea7f72d197e70bcdb": 1,
-        "5c165d832e2216398b5a7e36": 1,
-        "5ab8f04f86f774585f4237d8": 31,
-        "5ab8ee7786f7742d8f33f0b9": 35,
-        "56e33680d2720be2748b4576": 39,
-        "544a5cde4bdc2d39388b456b": 76,
-        "6034d103ca006d2dca39b3f0": 77,
-        "6038d614d10cbf667352dd44": 78,
-        "5e9dcf5986f7746c417435b3": 92,
-        "5ca20d5986f774331e7c9602": 92,
-        "60a2828e8689911a226117f9": 93,
-        "656f198fb27298d6fd005466": 103,
-        "618bb76513f5097c8d5aa2d5": 111,
-        "619cf0335771dd3c390269ae": 111,
-        "656ddcf0f02d7bcea90bf395": 112,
-        "618cfae774bb2d036a049e7c": 117,
-        "5b44c6ae86f7742d1627baea": 127,
-        "628e1ffc83ec92260c0f437f": 131,
-        "545cdae64bdc2d39198b4568": 133,
-        "66b5f22b78bbc0200425f904": 133,
-        "62a1b7fbc30cfa1d366af586": 137,
-        "5d5d940f86f7742797262046": 140,
-        "5ab8ebf186f7742d8b372e80": 149,
-        "6034d2d697633951dc245ea6": 149,
-        "5c0e805e86f774683f3dd637": 153,
-        "656e0436d44a1bb4220303a0": 153,
-        "639346cc1c8f182ad90c8972": 157,
-        "5f5e46b96bdad616ad46d613": 165,
-        "5c0e774286f77468413cc5b2": 177,
-        "5df8a4d786f77412672a1e3b": 201,
-        "603409c80ca681766b6a0fb2": 9,
-        "62a61c988ec41a51b34758d5": 9,
-        "5c1a1cc52e221602b3136e3d": 9,
-        "5d6d2ef3a4b93618084f58bd": 9,
-        "5d5fca1ea4b93635fd598c07": 10,
-        "5c0d32fcd174af02a1659c75": 10,
-        "5d6d2e22a4b9361bd5780d05": 10,
-        "5b432be65acfc433000ed01f": 11,
-        "557ff21e4bdc2d89578b4586": 11,
-        "5aa2b986e5b5b00014028f4c": 11,
-        "5df8a2ca86f7740bfe6df777": 29,
-        "59e7635f86f7742cbf2c1095": 40,
-        "5648a7494bdc2d9d488b4583": 40,
-        "63737f448b28897f2802b874": 43,
-        "64be79e2bf8412471d0d9bcc": 50,
-        "64be79c487d1510151095552": 51,
-        "64abd93857958b4249003418": 66,
-        "5ab8e4ed86f7742d8e50c7fa": 71,
-        "5b44d22286f774172b0c9de8": 71,
-        "5c0e655586f774045612eeb2": 78,
-        "5c0e51be86f774598e797894": 83,
-        "5c0e5bab86f77461f55ed1f3": 85,
-        "5f5f41476bdad616ad46d631": 129,
-        "5e9dacf986f774054d6b89f4": 129,
-        "5c0e5edb86f77461f55ed1f7": 132,
-        "609e8540d5c319764c2bc2e9": 132,
-        "5ab8e79e86f7742d8b372e78": 162,
-        "5ca2151486f774244a3b8d30": 172,
-        "5c0e625a86f7742d77340f62": 172,
-        "5b44cf1486f77431723e3d05": 183,
-        "5b44d0de86f774503d30cba8": 186,
-        "5ca21c6986f77479963115a7": 199,
-        "545cdb794bdc2d3a198b456a": 205,
-        "5b44cd8b86f774503d30cba2": 205,
-        "5aa2a7e8e5b5b00016327c16": 1,
-        "5b40e61f5acfc4001a599bec": 1,
-        "5aa2b87de5b5b00016327c25": 1,
-        "5b40e5e25acfc4001a599bea": 1,
-        "5b43271c5acfc432ff4dce65": 1,
-        "5b4327aa5acfc400175496e0": 1,
-        "5aa2ba19e5b5b00014028f4e": 1,
-        "5aa2ba46e5b5b000137b758d": 1,
-        "5f60e784f2bcbb675b00dac7": 1,
-        "60b52e5bc7d8103275739d67": 1,
-        "5f60e6403b85f6263c14558c": 1,
-        "5f60e7788adaa7100c3adb49": 1,
-        "5aa2b9ede5b5b000137b758b": 1,
-        "59e7711e86f7746cae05fbe1": 4,
-        "5c0d2727d174af02a012cf58": 10,
-        "5aa7d193e5b5b000171d063f": 12,
-        "5645bc214bdc2d363b8b4571": 13,
-        "5c06c6a80db834001b735491": 13,
-        "5aa7e454e5b5b0214e506fa2": 13,
-        "5c091a4e0db834001d5addc8": 15,
-        "5aa7e4a4e5b5b000137b76f2": 15,
-        "5ca20ee186f774799474abc2": 16,
-        "5d6d3716a4b9361bc8618872": 16,
-        "5aa7e276e5b5b000171d0647": 18,
-        "66bdc28a0b603c26902b2011": 22,
-        "5b4329f05acfc47a86086aa1": 26,
-        "61bca7cda0eae612383adf57": 34,
-        "5b432d215acfc4771e1c6624": 34,
-        "5f60b34a41e30a4ab12a6947": 35,
-        "5b40e4035acfc47a87740943": 39,
-        "5b40e3f35acfc40016388218": 39,
-        "5e4bfc1586f774264f7582d3": 40,
-        "5d5e7d28a4b936645d161203": 41,
-        "65709d2d21b9f815e208ff95": 41,
-        "5ea17ca01412a1425304d1c0": 41,
-        "5e01ef6886f77445f643baa4": 41,
-        "5e00c1ad86f774747333222c": 41,
-        "5ac8d6885acfc400180ae7b0": 42,
-        "5c17a7ed2e2216152142459c": 42,
-        "5a154d5cfcdbcb001a3b00da": 42,
-        "5aa7d03ae5b5b00016327db5": 43,
-        "5a7c4850e899ef00150be885": 46,
-        "65719f0775149d62ce0a670b": 47,
-        "5aa7cfc0e5b5b00015693143": 48,
-        "5b40e1525acfc4771e1c6611": 54,
-        "5b40e2bc5acfc40016388216": 55,
-        "5ab8f39486f7745cd93a1cca": 14,
-        "5b4325355acfc40019478126": 14,
-        "5ab8f85d86f7745cd93a1cf5": 14,
-        "5b432f3d5acfc4704b4a1dfb": 14,
-        "6571bde39837cc51b800c212": 14,
-        "572b7f1624597762ae139822": 15,
-        "5ab8f4ff86f77431c60d91ba": 15,
-        "5b432b2f5acfc4771e1c6622": 19,
-        "5b432b6c5acfc4001a599bf0": 19,
-        "657089638db3adca1009f4ca": 19,
-        "6570aead4d84f81fd002a033": 25,
-        "5b3f3b0e86f7746752107cda": 20,
-        "5b3f3af486f774679e752c1f": 20,
-        "5b3f3b0186f774021a2afef7": 20,
-        "5b3f16c486f7747c327f55f7": 20,
-        "5b3f3ade86f7746b6b790d8e": 20,
-        "5bffdc370db834001d23eca8": 22,
-        "63920105a83e15700a00f168": 22,
-        "664a5428d5e33a713b622379": 27,
-        "5bead2e00db834001c062938": 27,
-        "5bffe7930db834001b734a39": 27,
-        "5c012ffc0db834001d23f03f": 27,
-        "5bffdd7e0db834001b734a1a": 81,
-        "5e85a9f4add9fe03027d9bf1": 3,
-        "5d6e68dea4b9361bcc29e659": 17,
-        "5d6e69b9a4b9361bc8618958": 18,
-        "5a38ebd9c4a282000d722a5b": 20,
-        "5d6e69c7a4b9360b6c0d54e4": 21,
-        "5d6e695fa4b936359b35d852": 21,
-        "5d6e6772a4b936088465b17c": 30,
-        "560d5e524bdc2d25448b4571": 31,
-        "5d6e67fba4b9361bc73bc779": 32,
-        "5d6e6806a4b936088465b17e": 40,
-        "5737201124597760fc4431f1": 50,
-        "573719762459775a626ccbc1": 50,
-        "573718ba2459775a75491131": 53,
-        "57371f8d24597761006c6a81": 54,
-        "56d59d3ad2720bdb418b4577": 54,
-        "573603c924597764442bd9cb": 55,
-        "57371f2b24597761224311f1": 55,
-        "64b7bbb74b75259c590fa897": 56,
-        "5736026a245977644601dc61": 58,
-        "5735fdcd2459776445391d61": 58,
-        "57371eb62459776125652ac1": 58,
-        "5c3df7d588a4501f290594e5": 58,
-        "57371e4124597760ff7b25f1": 59,
-        "58864a4f2459770fcc257101": 59,
-        "5735ff5c245977640e39ba7e": 60,
-        "57371b192459775a9f58a5e0": 61,
-        "5f647f31b6238e5dd066e196": 62,
-        "573601b42459776410737435": 64,
-        "64b8ee384b75259c590fa89b": 65,
-        "56dff4ecd2720b5f5a8b4568": 65,
-        "573720e02459776143012541": 65,
-        "5a26abfac4a28232980eabff": 65,
-        "573602322459776445391df1": 66,
-        "5737218f245977612125ba51": 67,
-        "56dff4a2d2720bbd668b456a": 69,
-        "5737207f24597760ff7b25f2": 69,
-        "5e85a9a6eacf8c039e4e2ac1": 70,
-        "59e68f6f86f7746c9f75e846": 70,
-        "5a3c16fe86f77452b62de32a": 70,
-        "5ba26812d4351e003201fef1": 75,
-        "6576f96220d53a5b8f3e395e": 75,
-        "5efb0d4f4bc50b58e81710f3": 76,
-        "56dff421d2720b5f5a8b4567": 77,
-        "57372140245977611f70ee91": 77,
-        "64b7af734b75259c590fa895": 78,
-        "5a269f97c4a282000b151807": 79,
-        "56dff338d2720bbd668b4569": 80,
-        "5cc80f79e4a949033c7343b2": 80,
-        "5a26ac06c4a282000c5a90a8": 80,
-        "5ba26844d4351e00334c9475": 82,
-        "59e6918f86f7746c9f75e849": 82,
-        "6196364158ef8c428c287d9f": 82,
-        "5efb0e16aeb21837e749c7ff": 85,
-        "56dff216d2720bbd668b4568": 86,
-        "59e6927d86f77411da468256": 89,
-        "59e4d3d286f774176a36250a": 90,
-        "5cc86840d7f00c002412c56c": 91,
-        "59e6920f86f77411d82aa167": 97,
-        "5c0d5ae286f7741e46554302": 98,
-        "62330bfadc5883093563729b": 99,
-        "5efb0fc6aeb21837e749c801": 100,
-        "573603562459776430731618": 100,
-        "6196365d58ef8c428c287da1": 100,
-        "5c0d56a986f774449d5de529": 102,
-        "56dff0bed2720bb0668b4567": 105,
-        "5cc86832d7f00c000d3a6e6c": 108,
-        "62330c40bdd19b369e1e53d1": 108,
-        "59e6658b86f77411d949b250": 110,
-        "5cc80f8fe4a949033b0224a2": 112,
-        "5e023e88277cce2b522ff2b1": 117,
-        "5d6e6a53a4b9361bd473feec": 120,
-        "573719df2459775a626ccbc2": 120,
-        "5e81f423763d9f754677bf2e": 122,
-        "6576f93989f0062e741ba952": 123,
-        "59e6542b86f77411dc52a77a": 128,
-        "62330c18744e5e31df12f516": 128,
-        "5cc80f67e4a949035e43bbba": 129,
-        "5ea2a8e200685063ec28c05a": 130,
-        "5d6e6911a4b9361bd5780d52": 130,
-        "64b7af5a8532cf95ee0a0dbd": 133,
-        "5d6e6a42a4b9364f07165f52": 135,
-        "5d6e6891a4b9361bd473feea": 140,
-        "64b8f7c241772715af0f9c3d": 142,
-        "56dff3afd2720bba668b4567": 146,
-        "59e4d24686f7741776641ac7": 146,
-        "66a0d1c87d0d369e270bb9de": 147,
-        "5d6e689ca4b9361bc8618956": 150,
-        "57a0dfb82459774d3078b56c": 151,
-        "5c925fa22e221601da359b7b": 152,
-        "5d6e6a05a4b93618084f58d0": 154,
-        "64b6979341772715af0f9c39": 166,
-        "58820d1224597753c90aeb13": 167,
-        "5fbe3ffdf8b6a877a729ea82": 170,
-        "64b8f7b5389d7ffd620ccba2": 172,
-        "5a26ac0ec4a28200741e1e18": 172,
-        "54527a984bdc2d4e668b4567": 174,
-        "5cadf6e5ae921500113bb973": 175,
-        "59e4cf5286f7741778269d8a": 175,
-        "66a0d1f88486c69fce00fdf6": 182,
-        "5d6e68e6a4b9361c140bcfe0": 183,
-        "59e655cb86f77411dc52a77b": 183,
-        "5d6e6869a4b9361c140bcfde": 190,
-        "60194943740c5d77f6705eea": 193,
-        "5cc80f53e4a949000e1ea4f8": 193,
-        "5cadf6ddae9215051e1c23b2": 195,
-        "5e023e6e34d52a55c3304f71": 197,
-        "5d6e6a5fa4b93614ec501745": 198,
-        "5656eb674bdc2d35148b457c": 199,
-        "5ede4739e0350d05467f73e8": 199,
-        "5ede47405b097655935d7d16": 199,
-        "5ede474b0c226a66f5402622": 199,
-        "5ede475b549eed7c6d5c18fb": 199,
-        "5f0c892565703e5c461894e9": 199,
-        "56dff2ced2720bb4668b4567": 201,
-        "5d6e68b3a4b9361bca7e50b5": 206,
-        "5fc382b6d6fa9c00c571bbc3": 206,
-        "619636be6db0f2477964e710": 214,
-        "5c0d668f86f7747ccb7f13b2": 218,
-        "5d6e68d1a4b93622fe60e845": 220,
-        "62330b3ed4dc74626d570b95": 220,
-        "5656d7c34bdc2d9d198b4587": 221,
-        "64b8f7968532cf95ee0a0dbf": 224,
-        "66a0d1e0ed648d72fe064d06": 224,
-        "5cc80f38e4a949001152b560": 229,
-        "6576f4708ca9c4381d16cd9d": 229,
-        "56dff061d2720bb5668b4567": 234,
-        "5efb0da7a29a85116f6ea05f": 234,
-        "5ede475339ee016e8c534742": 240,
-        "59e6906286f7746c9f75e847": 242,
-        "5e023e53d4353e3302577c4c": 243,
-        "5efb0cabfb3e451d70735af5": 246,
-        "6529302b8c26af6326029fb7": 250,
-        "5ba2678ad4351e44f824b344": 253,
-        "5d6e68c4a4b9361b93413f79": 257,
-        "5c0d591486f7744c505b416f": 265,
-        "5fc382c1016cce60e8341b20": 272,
-        "64b7af434b75259c590fa893": 279,
-        "61962b617c6c7b169525f168": 285,
-        "668fe62ac62660a5d8071446": 285,
-        "61962d879bb3d20b0946d385": 292,
-        "64b8725c4b75259c590fa899": 298,
-        "54527ac44bdc2d36668b4567": 299,
-        "58dd3ad986f77403051cba8f": 300,
-        "5e023cf8186a883be655e54f": 302,
-        "56dfef82d2720bbd668b4567": 308,
-        "5887431f2459777e1612938f": 311,
-        "5f0596629e22f464da6bbdd9": 320,
-        "5a608bf24f39f98ffc77720e": 329,
-        "5d6e68a8a4b9360b6c0d54e2": 334,
-        "59e0d99486f7744a32234762": 338,
-        "57a0e5022459774d1673f889": 340,
-        "5fd20ff893a8961fc660a954": 341,
-        "59e77a2386f7742ee578960a": 344,
-        "6529243824cbe3c74a05e5c1": 352,
-        "5cadf6eeae921500134b2799": 362,
-        "5ba26835d4351e0035628ff5": 375,
-        "5e85aa1a988a8701445df1f5": 382,
-        "59e690b686f7746c9f75e848": 382,
-        "56dff026d2720bb8668b4567": 395,
-        "5c0d688c86f77413ae3407b2": 398,
-        "5fc275cf85fd526b824a571a": 402,
-        "601949593ae8f707c4608daa": 418,
-        "5e023d34e8a400319a28ed44": 438,
-        "601aa3d2b2bcb34913271e6d": 443,
-        "5c0d5e4486f77478390952fe": 467,
-        "560d61e84bdc2da74d8b4571": 505,
-        "5a6086ea4f39f99cd479502f": 520,
-        "5efb0c1bd79ff02a1f5e68d9": 577,
-        "5e023d48186a883be655e551": 582,
-        "5fc382a9d724d907e2077dab": 715
+  "TacticalVest": [
+    {
+      "id": "64be7095047e826eae02b0c1",
+      "value": 12,
+      "name": "item_equipment_rig_rscr_zulu"
+    },
+    {
+      "id": "572b7adb24597762ae139821",
+      "value": 14,
+      "name": "wild_vest"
+    },
+    {
+      "id": "5e4abc1f86f774069619fbaa",
+      "value": 16,
+      "name": "item_equipment_rig_bankrobber"
+    },
+    {
+      "id": "674589d98dd67746010329e6",
+      "value": 16,
+      "name": "item_equipment_rig_bankrobber_alpine"
+    },
+    {
+      "id": "5fd4c4fa16cac650092f6771",
+      "value": 18,
+      "name": "item_equipment_rig_idea"
+    },
+    {
+      "id": "59e7643b86f7742cbf2c109a",
+      "value": 18,
+      "name": "wartech_vest"
+    },
+    {
+      "id": "5d5d8ca986f7742798716522",
+      "value": 18,
+      "name": "item_equipment_rig_micro"
+    },
+    {
+      "id": "6034d0230ca681766b6a0fb5",
+      "value": 19,
+      "name": "item_equipment_rig_cs_assault"
+    },
+    {
+      "id": "64be7110bf597ba84a0a41ea",
+      "value": 19,
+      "name": "item_equipment_rig_chicom"
+    },
+    {
+      "id": "5929a2a086f7744f4b234d43",
+      "value": 24,
+      "name": "bear_rig_6h112"
+    },
+    {
+      "id": "5c0e3eb886f7742015526062",
+      "value": 53,
+      "name": "item_equipment_rig_6b5_khaki"
+    },
+    {
+      "id": "5d5d646386f7742797261fd9",
+      "value": 56,
+      "name": "item_equipment_armor_6b3"
+    },
+    {
+      "id": "6034cf5fffd42c541047f72e",
+      "value": 66,
+      "name": "item_equipment_rig_umka_m33"
+    },
+    {
+      "id": "66b6295a8ca68c6461709efa",
+      "value": 66,
+      "name": "item_equipment_rig_tt_plate_carrier_mk_3"
+    },
+    {
+      "id": "5c0e446786f7742013381639",
+      "value": 68,
+      "name": "item_equipment_rig_6b5_flora"
+    },
+    {
+      "id": "5e4abfed86f77406a2713cf7",
+      "value": 68,
+      "name": "item_equipment_rig_tarzan"
+    },
+    {
+      "id": "5b44c8ea86f7742d1627baf1",
+      "value": 69,
+      "name": "item_equipment_rig_commando"
+    },
+    {
+      "id": "5ca20abf86f77418567a43f2",
+      "value": 69,
+      "name": "item_equipment_rig_triton"
+    },
+    {
+      "id": "5d5d85c586f774279a21cbdb",
+      "value": 69,
+      "name": "item_equipment_rig_d3crx"
+    },
+    {
+      "id": "5fd4c60f875c30179f5d04c2",
+      "value": 69,
+      "name": "item_equipment_rig_bssmk1"
+    },
+    {
+      "id": "60a621c49c197e4e8c4455e6",
+      "value": 71,
+      "name": "item_equipment_rig_sprofi_mk2_ak"
+    },
+    {
+      "id": "60a6220e953894617404b00a",
+      "value": 72,
+      "name": "item_equipment_rig_sprofi_mk2_smg"
+    },
+    {
+      "id": "603648ff5a45383c122086ac",
+      "value": 74,
+      "name": "item_equipment_rig_azimut_black"
+    },
+    {
+      "id": "592c2d1a86f7746dbe2af32a",
+      "value": 75,
+      "name": "ana_tactical"
+    },
+    {
+      "id": "5648a69d4bdc2ded0b8b457b",
+      "value": 75,
+      "name": "bearRig"
+    },
+    {
+      "id": "5ab8dab586f77441cd04f2a2",
+      "value": 75,
+      "name": "wartech_mk3"
+    },
+    {
+      "id": "5e9db13186f7742f845ee9d3",
+      "value": 75,
+      "name": "item_equipment_rig_bearing"
+    },
+    {
+      "id": "5c0e746986f7741453628fe5",
+      "value": 80,
+      "name": "item_equipment_rig_tv110"
+    },
+    {
+      "id": "5df8a42886f77412640e2e75",
+      "value": 84,
+      "name": "item_equipment_rig_multipurpose"
+    },
+    {
+      "id": "5c0e6a1586f77404597b4965",
+      "value": 86,
+      "name": "item_equipment_rig_beltab"
+    },
+    {
+      "id": "61bc85697113f767765c7fe7",
+      "value": 100,
+      "name": "item_equipment_rig_mmac"
+    },
+    {
+      "id": "639343fce101f4caa40a4ef3",
+      "value": 104,
+      "name": "item_equipment_rig_shellback_tactical_banshee"
+    },
+    {
+      "id": "61bcc89aef0f505f0c6cd0fc",
+      "value": 109,
+      "name": "item_equipment_rig_strandhogg"
+    },
+    {
+      "id": "544a5caa4bdc2d1a388b4568",
+      "value": 110,
+      "name": "standartRig"
+    },
+    {
+      "id": "5c0e722886f7740458316a57",
+      "value": 115,
+      "name": "item_equipment_rig_m1"
+    },
+    {
+      "id": "628dc750b910320f4c27a732",
+      "value": 117,
+      "name": "item_equipment_rig_bae_rbav_af"
+    },
+    {
+      "id": "66b6296d7994640992013b17",
+      "value": 121,
+      "name": "item_equipment_rig_stich_profi_plate_carrier_v2"
+    },
+    {
+      "id": "5e4ac41886f77406a511c9a8",
+      "value": 130,
+      "name": "item_equipment_armor_arscpc"
+    },
+    {
+      "id": "60a3c70cde5f453f634816a3",
+      "value": 135,
+      "name": "item_equipment_rig_custom_osprey_assault"
+    },
+    {
+      "id": "5ab8dced86f774646209ec87",
+      "value": 138,
+      "name": "ana_tactical_m2"
+    },
+    {
+      "id": "628d0618d1ba6e4fa07ce5a4",
+      "value": 149,
+      "name": "item_equipment_rig_bagarii"
+    },
+    {
+      "id": "60a3c68c37ea821725773ef5",
+      "value": 180,
+      "name": "item_equipment_rig_custom_osprey_defence"
     }
+  ],
+  "FirstPrimaryWeapon": [
+    {
+      "id": "5bfd297f0db834001a669119",
+      "value": 74,
+      "name": "weapon_izhmash_mosin_infantry_762x54"
+    },
+    {
+      "id": "61f7c9e189e6fb1a5e3ea78d",
+      "value": 80,
+      "name": "weapon_izhmash_mp18_multi"
+    },
+    {
+      "id": "5580223e4bdc2d1c128b457f",
+      "value": 88,
+      "name": "weapon_izhmeh_mr43e-1c_12g"
+    },
+    {
+      "id": "5ea03f7400685063ec28bfa8",
+      "value": 95,
+      "name": "weapon_zis_ppsh41_762x25"
+    },
+    {
+      "id": "5de652c31b7e3716273428be",
+      "value": 96,
+      "name": "weapon_molot_vpo_215_366tkm"
+    },
+    {
+      "id": "59e6152586f77473dc057aa1",
+      "value": 100,
+      "name": "weapon_molot_vepr_km_vpo_136_762x39"
+    },
+    {
+      "id": "59984ab886f7743e98271174",
+      "value": 104,
+      "name": "weapon_izhmash_pp-19-01_9x19"
+    },
+    {
+      "id": "5a38e6bac4a2826c6e06d79b",
+      "value": 104,
+      "name": "weapon_toz_toz-106_20g"
+    },
+    {
+      "id": "57f4c844245977379d5c14d1",
+      "value": 106,
+      "name": "weapon_zmz_pp-9_9x18pmm"
+    },
+    {
+      "id": "574d967124597745970e7c94",
+      "value": 107,
+      "name": "weapon_toz_sks_762x39"
+    },
+    {
+      "id": "58948c8e86f77409493f7266",
+      "value": 107,
+      "name": "weapon_sig_mpx_9x19"
+    },
+    {
+      "id": "587e02ff24597743df3deaeb",
+      "value": 107,
+      "name": "weapon_molot_op_sks_762x39"
+    },
+    {
+      "id": "66d98233302686954b0c6f81",
+      "value": 110,
+      "name": "weapon_rsp30_blue"
+    },
+    {
+      "id": "5926bb2186f7744b1c6c6e60",
+      "value": 114,
+      "name": "weapon_hk_mp5_navy3_9x19"
+    },
+    {
+      "id": "5c07c60e0db834002330051f",
+      "value": 116,
+      "name": "weapon_adar_2-15_556x45"
+    },
+    {
+      "id": "59d6088586f774275f37482f",
+      "value": 118,
+      "name": "weapon_izhmash_akm_762x39"
+    },
+    {
+      "id": "5d2f0d8048f0356c925bc3b0",
+      "value": 118,
+      "name": "weapon_hk_mp5_kurtz_9x19"
+    },
+    {
+      "id": "5bf3e0490db83400196199af",
+      "value": 120,
+      "name": "weapon_izhmash_aks74_545x39"
+    },
+    {
+      "id": "59e6687d86f77411d949b251",
+      "value": 120,
+      "name": "weapon_molot_akm_vpo_209_366_TKM"
+    },
+    {
+      "id": "66992b349950f5f4cd06029f",
+      "value": 125,
+      "name": "weapon_iwi_uzi_9x19"
+    },
+    {
+      "id": "57d14d2524597714373db789",
+      "value": 126,
+      "name": "weapon_zmz_pp-91_9x18pm"
+    },
+    {
+      "id": "57dc2fa62459775949412633",
+      "value": 129,
+      "name": "weapon_izhmash_aks74u_545x39"
+    },
+    {
+      "id": "583990e32459771419544dd2",
+      "value": 129,
+      "name": "weapon_izhmash_aks74un_545x39"
+    },
+    {
+      "id": "644674a13d52156624001fbc",
+      "value": 130,
+      "name": "weapon_kbp_9a91_9x39"
+    },
+    {
+      "id": "54491c4f4bdc2db1078b4568",
+      "value": 133,
+      "name": "weapon_izhmeh_mr133_12g"
+    },
+    {
+      "id": "5e870397991fd70db46995c8",
+      "value": 139,
+      "name": "weapon_mossberg_590a1_12g"
+    },
+    {
+      "id": "5ae08f0a5acfc408fb1398a1",
+      "value": 143,
+      "name": "weapon_izhmash_mosin_rifle_762x54"
+    },
+    {
+      "id": "59f9cabd86f7743a10721f46",
+      "value": 147,
+      "name": "weapon_izhmash_saiga_9_9x19"
+    },
+    {
+      "id": "60339954d62c9b14ed777c06",
+      "value": 153,
+      "name": "weapon_stmarms_stm_9_9x19"
+    },
+    {
+      "id": "576165642459773c7a400233",
+      "value": 156,
+      "name": "weapon_izhmash_saiga12k_10_12g"
+    },
+    {
+      "id": "60db29ce99594040e04c4a27",
+      "value": 157,
+      "name": "weapon_ckib_mc_255_12g"
+    },
+    {
+      "id": "5a7828548dc32e5a9c28b516",
+      "value": 159,
+      "name": "weapon_remington_model_870_12g"
+    },
+    {
+      "id": "56dee2bdd2720bc8328b4567",
+      "value": 159,
+      "name": "weapon_izhmeh_mr153_12g"
+    },
+    {
+      "id": "606dae0ab0e443224b421bb7",
+      "value": 160,
+      "name": "weapon_kalashnikov_mp155_12g"
+    },
+    {
+      "id": "57f3c6bd24597738e730fa2f",
+      "value": 161,
+      "name": "weapon_zmz_pp-91-01_9x18pm"
+    },
+    {
+      "id": "62e7c4fba689e8c9c50dfc38",
+      "value": 165,
+      "name": "weapon_steyr_aug_a1_556x45"
+    },
+    {
+      "id": "6259b864ebedf17603599e88",
+      "value": 173,
+      "name": "weapon_benelli_m3_s90_12g"
+    },
+    {
+      "id": "55801eed4bdc2d89578b4588",
+      "value": 177,
+      "name": "weapon_izhmash_sv-98_762x54r"
+    },
+    {
+      "id": "5cc82d76e24e8d00134b4b83",
+      "value": 184,
+      "name": "weapon_fn_p90_57x28"
+    },
+    {
+      "id": "6680304edadb7aa61d00cef0",
+      "value": 188,
+      "name": "weapon_iwi_uzi_pro_pistol_9x19"
+    },
+    {
+      "id": "5e00903ae9dc277128008b87",
+      "value": 189,
+      "name": "weapon_bt_mp9_9x19"
+    },
+    {
+      "id": "5fc3e272f8b6a877a729eac5",
+      "value": 191,
+      "name": "weapon_hk_ump_1143x23"
+    },
+    {
+      "id": "5bfea6e90db834001b7347f3",
+      "value": 194,
+      "name": "weapon_remington_model_700_762x51"
+    },
+    {
+      "id": "628b5638ad252a16da6dd245",
+      "value": 206,
+      "name": "weapon_sag_ak545_545x39"
+    },
+    {
+      "id": "628b9c37a733087d0d7fe84b",
+      "value": 206,
+      "name": "weapon_sag_ak545_short_545x39"
+    },
+    {
+      "id": "5c501a4d2e221602b412b540",
+      "value": 218,
+      "name": "weapon_molot_vepr_hunter_vpo-101_762x51"
+    },
+    {
+      "id": "5df8ce05b11454561e39243b",
+      "value": 225,
+      "name": "weapon_kac_sr25_762x51"
+    },
+    {
+      "id": "5df24cf80dee1b22f862e9bc",
+      "value": 232,
+      "name": "weapon_orsis_t5000_762x51"
+    },
+    {
+      "id": "627e14b21713922ded6f2c15",
+      "value": 234,
+      "name": "weapon_accuracy_inernational_axmc_86x70"
+    },
+    {
+      "id": "62e14904c2699c0ec93adc47",
+      "value": 235,
+      "name": "weapon_tochmash_sr2m_veresk_9x21"
+    },
+    {
+      "id": "588892092459774ac91d4b11",
+      "value": 236,
+      "name": "weapon_lobaev_dvl-10_308"
+    },
+    {
+      "id": "673cab3e03c6a20581028bc1",
+      "value": 236,
+      "name": "weapon_sako_trg_m10_86x70"
+    },
+    {
+      "id": "618428466ef05c2ce828f218",
+      "value": 240,
+      "name": "weapon_fn_mk16_556x45_fde"
+    },
+    {
+      "id": "5447a9cd4bdc2dbd208b4567",
+      "value": 241,
+      "name": "weapon_colt_m4a1_556x45"
+    },
+    {
+      "id": "59ff346386f77477562ff5e2",
+      "value": 241,
+      "name": "weapon_izhmash_akms_762x39"
+    },
+    {
+      "id": "645e0c6b3b381ede770e1cc9",
+      "value": 243,
+      "name": "weapon_kbp_vsk94_9x39"
+    },
+    {
+      "id": "623063e994fc3f7b302a9696",
+      "value": 245,
+      "name": "weapon_hk_g36_556x45"
+    },
+    {
+      "id": "5ac66d725acfc43b321d4b60",
+      "value": 246,
+      "name": "weapon_izhmash_ak104_762x39"
+    },
+    {
+      "id": "5fb64bc92b1b027b1f50bcf2",
+      "value": 246,
+      "name": "weapon_tdi_kriss_vector_gen_2_1143x23"
+    },
+    {
+      "id": "5aafa857e5b5b00018480968",
+      "value": 248,
+      "name": "weapon_springfield_m1a_762x51"
+    },
+    {
+      "id": "5d43021ca4b9362eab4b5e25",
+      "value": 250,
+      "name": "weapon_lone_star_tx15_designated_marksman_556x45"
+    },
+    {
+      "id": "5e848cc2988a8701445df1e8",
+      "value": 250,
+      "name": "weapon_toz_ks23m_23x75"
+    },
+    {
+      "id": "5644bd2b4bdc2d3b4c8b4572",
+      "value": 251,
+      "name": "weapon_izhmash_ak74n_545x39"
+    },
+    {
+      "id": "5bf3e03b0db834001d2c4a9c",
+      "value": 251,
+      "name": "weapon_izhmash_ak74_545x39"
+    },
+    {
+      "id": "5ab8e9fcd8ce870019439434",
+      "value": 252,
+      "name": "weapon_izhmash_aks74n_545x39"
+    },
+    {
+      "id": "5c46fbd72e2216398b5a8c9c",
+      "value": 259,
+      "name": "weapon_izhmash_svd_s_762x54"
+    },
+    {
+      "id": "5fbcc1d9016cce60e8341ab3",
+      "value": 287,
+      "name": "weapon_sig_mcx_gen1_762x35"
+    },
+    {
+      "id": "5fc3f2d5900b1d5091531e57",
+      "value": 287,
+      "name": "weapon_tdi_kriss_vector_gen_2_9x19"
+    },
+    {
+      "id": "674fe9a75e51f1c47c04ec23",
+      "value": 288,
+      "name": "weapon_kiba_saiga12k_fa_12g"
+    },
+    {
+      "id": "5f2a9575926fd9352339381f",
+      "value": 295,
+      "name": "weapon_kel_tec_rfb_762x51"
+    },
+    {
+      "id": "5a367e5dc4a282000e49738f",
+      "value": 297,
+      "name": "weapon_remington_r11_rsass_762x51"
+    },
+    {
+      "id": "643ea5b23db6f9f57107d9fd",
+      "value": 297,
+      "name": "weapon_toz_svt_40_762x54r"
+    },
+    {
+      "id": "5ba26383d4351e00334c93d9",
+      "value": 313,
+      "name": "weapon_hk_mp7a1_46x30"
+    },
+    {
+      "id": "5ac66cb05acfc40198510a10",
+      "value": 313,
+      "name": "weapon_izhmash_ak101_556x45"
+    },
+    {
+      "id": "5ac66d015acfc400180ae6e4",
+      "value": 314,
+      "name": "weapon_izhmash_ak102_556x45"
+    },
+    {
+      "id": "6184055050224f204c1da540",
+      "value": 318,
+      "name": "weapon_fn_mk16_556x45"
+    },
+    {
+      "id": "5a0ec13bfcdbcb00165aa685",
+      "value": 320,
+      "name": "weapon_izhmash_akmn_762x39"
+    },
+    {
+      "id": "5abcbc27d8ce8700182eceeb",
+      "value": 320,
+      "name": "weapon_izhmash_akmsn_762x39"
+    },
+    {
+      "id": "5ac66d2e5acfc43b321d4b53",
+      "value": 325,
+      "name": "weapon_izhmash_ak103_762x39"
+    },
+    {
+      "id": "6513ef33e06849f06c0957ca",
+      "value": 325,
+      "name": "weapon_zid_rpd_762x39"
+    },
+    {
+      "id": "5c488a752e221602b412af63",
+      "value": 332,
+      "name": "weapon_dt_mdr_556x45"
+    },
+    {
+      "id": "5ac4cd105acfc40016339859",
+      "value": 337,
+      "name": "weapon_izhmash_ak74m_545x39"
+    },
+    {
+      "id": "6499849fc93611967b034949",
+      "value": 338,
+      "name": "weapon_izhmash_ak12_545x39"
+    },
+    {
+      "id": "5ac66d9b5acfc4001633997a",
+      "value": 339,
+      "name": "weapon_izhmash_ak105_545x39"
+    },
+    {
+      "id": "66ffa9b66e19cc902401c5e8",
+      "value": 339,
+      "name": "weapon_mps_aa_12_gen_1_12g"
+    },
+    {
+      "id": "67124dcfa3541f2a1f0e788b",
+      "value": 340,
+      "name": "weapon_mps_aa_12_gen_2_12g"
+    },
+    {
+      "id": "63171672192e68c5460cebc5",
+      "value": 341,
+      "name": "weapon_steyr_aug_a3_m1_556x45"
+    },
+    {
+      "id": "6718817435e3cfd9550d2c27",
+      "value": 341,
+      "name": "weapon_steyr_aug_a3_m1_556x45_blk"
+    },
+    {
+      "id": "5beed0f50db834001c062b12",
+      "value": 343,
+      "name": "weapon_izhmash_rpk16_545x39"
+    },
+    {
+      "id": "674d6121c09f69dfb201a888",
+      "value": 346,
+      "name": "weapon_aklys_defense_velociraptor_762x35"
+    },
+    {
+      "id": "5fc22d7c187fea44d52eda44",
+      "value": 365,
+      "name": "weapon_sword_int_mk_18_mjolnir_86x70"
+    },
+    {
+      "id": "6176aca650224f204c1da3fb",
+      "value": 366,
+      "name": "weapon_hk_g28_762x51"
+    },
+    {
+      "id": "5cadfbf7ae92152ac412eeef",
+      "value": 381,
+      "name": "weapon_ckib_ash_12_127x55"
+    },
+    {
+      "id": "5b0bbe4e5acfc40dc528a72d",
+      "value": 384,
+      "name": "weapon_dsa_sa58_762x51"
+    },
+    {
+      "id": "5bd70322209c4d00d7167b8f",
+      "value": 390,
+      "name": "weapon_hk_mp7a2_46x30"
+    },
+    {
+      "id": "65290f395ae2ae97b80fdf2d",
+      "value": 392,
+      "name": "weapon_sig_mcx_spear_68x51"
+    },
+    {
+      "id": "57838ad32459774a17445cd2",
+      "value": 397,
+      "name": "weapon_tochmash_vss_9x39"
+    },
+    {
+      "id": "57c44b372459772d2b39b8ce",
+      "value": 397,
+      "name": "weapon_tochmash_val_9x39"
+    },
+    {
+      "id": "651450ce0e00edc794068371",
+      "value": 399,
+      "name": "weapon_tochmash_sr3m_9x39"
+    },
+    {
+      "id": "5bb2475ed4351e00853264e3",
+      "value": 400,
+      "name": "weapon_hk_416a5_556x45"
+    },
+    {
+      "id": "65268d8ecb944ff1e90ea385",
+      "value": 407,
+      "name": "weapon_zid_rpdn_762x39"
+    },
+    {
+      "id": "628a60ae6b1d481ff772e9c8",
+      "value": 410,
+      "name": "weapon_rifle_dynamics_704_762x39"
+    },
+    {
+      "id": "606587252535c57a13424cfd",
+      "value": 411,
+      "name": "weapon_cmmg_mk47_762x39"
+    },
+    {
+      "id": "6183afd850224f204c1da514",
+      "value": 488,
+      "name": "weapon_fn_mk17_762x51"
+    },
+    {
+      "id": "6165ac306ef05c2ce828ef74",
+      "value": 488,
+      "name": "weapon_fn_mk17_762x51_fde"
+    },
+    {
+      "id": "676176d362e0497044079f4c",
+      "value": 490,
+      "name": "weapon_x_products_x17_scar_17_762x51"
+    },
+    {
+      "id": "64637076203536ad5600c990",
+      "value": 501,
+      "name": "weapon_zid_pkm_762x54r"
+    },
+    {
+      "id": "6410733d5dd49d77bd07847e",
+      "value": 503,
+      "name": "weapon_toz_avt_40_762x54r"
+    },
+    {
+      "id": "5dcbd56fdbd3d91b3e5468d5",
+      "value": 507,
+      "name": "weapon_dt_mdr_762x51"
+    }
+  ],
+  "ArmorVest": [
+    {
+      "id": "5df8a2ca86f7740bfe6df777",
+      "value": 29,
+      "name": "item_equipment_armor_6b2"
+    },
+    {
+      "id": "59e7635f86f7742cbf2c1095",
+      "value": 40,
+      "name": "module_3m"
+    },
+    {
+      "id": "5648a7494bdc2d9d488b4583",
+      "value": 40,
+      "name": "notHeavy"
+    },
+    {
+      "id": "63737f448b28897f2802b874",
+      "value": 43,
+      "name": "item_equipment_armor_hexatac"
+    },
+    {
+      "id": "64be79e2bf8412471d0d9bcc",
+      "value": 50,
+      "name": "item_equipment_armor_kora_kulon_camo"
+    },
+    {
+      "id": "64be79c487d1510151095552",
+      "value": 51,
+      "name": "item_equipment_armor_kora_kulon_black"
+    },
+    {
+      "id": "64abd93857958b4249003418",
+      "value": 66,
+      "name": "item_equipment_armor_otv_ucp"
+    },
+    {
+      "id": "5ab8e4ed86f7742d8e50c7fa",
+      "value": 71,
+      "name": "armor_un"
+    },
+    {
+      "id": "5b44d22286f774172b0c9de8",
+      "value": 71,
+      "name": "item_equipment_armor_kirasa"
+    },
+    {
+      "id": "5c0e655586f774045612eeb2",
+      "value": 78,
+      "name": "item_equipment_armor_trooper"
+    },
+    {
+      "id": "5c0e51be86f774598e797894",
+      "value": 83,
+      "name": "item_equipment_armor_6b13_flora"
+    },
+    {
+      "id": "5c0e5bab86f77461f55ed1f3",
+      "value": 85,
+      "name": "item_equipment_armor_6b23_digital"
+    },
+    {
+      "id": "5f5f41476bdad616ad46d631",
+      "value": 129,
+      "name": "item_equipment_armor_korundvm"
+    },
+    {
+      "id": "5e9dacf986f774054d6b89f4",
+      "value": 129,
+      "name": "item_equipment_armor_defender2"
+    },
+    {
+      "id": "5c0e5edb86f77461f55ed1f7",
+      "value": 132,
+      "name": "item_equipment_armor_zhuk3"
+    },
+    {
+      "id": "609e8540d5c319764c2bc2e9",
+      "value": 132,
+      "name": "item_equipment_armor_custom_thorcrv"
+    },
+    {
+      "id": "5ab8e79e86f7742d8b372e78",
+      "value": 162,
+      "name": "armor_gjel"
+    },
+    {
+      "id": "5c0e625a86f7742d77340f62",
+      "value": 172,
+      "name": "item_equipment_armor_zhuk6a"
+    },
+    {
+      "id": "5ca2151486f774244a3b8d30",
+      "value": 172,
+      "name": "item_equipment_armor_redut_m"
+    },
+    {
+      "id": "5b44cf1486f77431723e3d05",
+      "value": 183,
+      "name": "item_equipment_armor_iotv_1"
+    },
+    {
+      "id": "5b44d0de86f774503d30cba8",
+      "value": 186,
+      "name": "item_equipment_armor_iotv_2"
+    },
+    {
+      "id": "5ca21c6986f77479963115a7",
+      "value": 199,
+      "name": "item_equipment_armor_redut_t"
+    },
+    {
+      "id": "545cdb794bdc2d3a198b456a",
+      "value": 205,
+      "name": "heavy"
+    },
+    {
+      "id": "5b44cd8b86f774503d30cba2",
+      "value": 205,
+      "name": "item_equipment_armor_iotv"
+    }
+  ],
+  "Headwear": [
+    {
+      "id": "5aa2b87de5b5b00016327c25",
+      "value": 1,
+      "name": "cap_BEAR"
+    },
+    {
+      "id": "5b43271c5acfc432ff4dce65",
+      "value": 1,
+      "name": "item_equipment_head_bandana"
+    },
+    {
+      "id": "5b40e61f5acfc4001a599bec",
+      "value": 1,
+      "name": "item_equipment_head_usec_black"
+    },
+    {
+      "id": "5aa2a7e8e5b5b00016327c16",
+      "value": 1,
+      "name": "cap_USEC"
+    },
+    {
+      "id": "5b40e5e25acfc4001a599bea",
+      "value": 1,
+      "name": "item_equipment_head_bear_black"
+    },
+    {
+      "id": "5b4327aa5acfc400175496e0",
+      "value": 1,
+      "name": "item_equipment_head_panama"
+    },
+    {
+      "id": "5aa2ba46e5b5b000137b758d",
+      "value": 1,
+      "name": "hats_UF_PRO"
+    },
+    {
+      "id": "5aa2ba19e5b5b00014028f4e",
+      "value": 1,
+      "name": "hats_fleece"
+    },
+    {
+      "id": "60b52e5bc7d8103275739d67",
+      "value": 1,
+      "name": "item_equipment_head_panama_stichprofi"
+    },
+    {
+      "id": "5f60e784f2bcbb675b00dac7",
+      "value": 1,
+      "name": "item_equipment_head_beret_od"
+    },
+    {
+      "id": "5f60e7788adaa7100c3adb49",
+      "value": 1,
+      "name": "item_equipment_head_beret_blue"
+    },
+    {
+      "id": "5f60e6403b85f6263c14558c",
+      "value": 1,
+      "name": "item_equipment_head_beret_blk"
+    },
+    {
+      "id": "5aa2b9ede5b5b000137b758b",
+      "value": 1,
+      "name": "hats_cowboy"
+    },
+    {
+      "id": "5df8a58286f77412631087ed",
+      "value": 2,
+      "name": "helmet_crew"
+    },
+    {
+      "id": "59e7711e86f7746cae05fbe1",
+      "value": 4,
+      "name": "helmet_k1c"
+    },
+    {
+      "id": "5c0d2727d174af02a012cf58",
+      "value": 10,
+      "name": "item_equipment_helmet_psh97_jeta"
+    },
+    {
+      "id": "5aa7d193e5b5b000171d063f",
+      "value": 12,
+      "name": "helmet_sphera-C"
+    },
+    {
+      "id": "5645bc214bdc2d363b8b4571",
+      "value": 13,
+      "name": "helmet"
+    },
+    {
+      "id": "5c06c6a80db834001b735491",
+      "value": 13,
+      "name": "item_equipment_helmet_ssh-68"
+    },
+    {
+      "id": "5aa7e454e5b5b0214e506fa2",
+      "value": 13,
+      "name": "helmet_zsh_1-2m_v1"
+    },
+    {
+      "id": "5aa7e4a4e5b5b000137b76f2",
+      "value": 14,
+      "name": "helmet_zsh_1-2m_v2"
+    },
+    {
+      "id": "5c091a4e0db834001d5addc8",
+      "value": 15,
+      "name": "item_equipment_helmet_maska_1sh"
+    },
+    {
+      "id": "5d6d3716a4b9361bc8618872",
+      "value": 16,
+      "name": "item_equipment_helmet_lshz2dtm"
+    },
+    {
+      "id": "5ca20ee186f774799474abc2",
+      "value": 17,
+      "name": "item_equipment_helmet_vulkan5"
+    },
+    {
+      "id": "5aa7e276e5b5b000171d0647",
+      "value": 18,
+      "name": "helmet_altyn"
+    },
+    {
+      "id": "66bdc28a0b603c26902b2011",
+      "value": 21,
+      "name": "item_equipment_facecover_devtac_old"
+    },
+    {
+      "id": "5b4329f05acfc47a86086aa1",
+      "value": 26,
+      "name": "item_equipment_facecover_devtac"
+    },
+    {
+      "id": "61bca7cda0eae612383adf57",
+      "value": 34,
+      "name": "item_equipment_helmet_nfm_hjelm"
+    },
+    {
+      "id": "5b432d215acfc4771e1c6624",
+      "value": 34,
+      "name": "item_equipment_helmet_LSHZ"
+    },
+    {
+      "id": "5f60b34a41e30a4ab12a6947",
+      "value": 35,
+      "name": "item_equipment_helmet_galvion_caiman"
+    },
+    {
+      "id": "5b40e4035acfc47a87740943",
+      "value": 39,
+      "name": "item_equipment_helmet_ACHHC_green"
+    },
+    {
+      "id": "5b40e3f35acfc40016388218",
+      "value": 39,
+      "name": "item_equipment_helmet_ACHHC_black"
+    },
+    {
+      "id": "5e4bfc1586f774264f7582d3",
+      "value": 40,
+      "name": "item_equipment_helmet_tc800"
+    },
+    {
+      "id": "5d5e7d28a4b936645d161203",
+      "value": 41,
+      "name": "helmet_mich2001_od"
+    },
+    {
+      "id": "65709d2d21b9f815e208ff95",
+      "value": 41,
+      "name": "item_equipment_helmet_neosteel"
+    },
+    {
+      "id": "5ea17ca01412a1425304d1c0",
+      "value": 41,
+      "name": "item_equipment_helmet_diamond_age_bastion"
+    },
+    {
+      "id": "5ac8d6885acfc400180ae7b0",
+      "value": 42,
+      "name": "helmet_ops_core_fast_tan"
+    },
+    {
+      "id": "5e00c1ad86f774747333222c",
+      "value": 42,
+      "name": "item_equipment_helmet_team_wendy_exfil"
+    },
+    {
+      "id": "5e01ef6886f77445f643baa4",
+      "value": 42,
+      "name": "item_equipment_helmet_team_wendy_exfil_coyote"
+    },
+    {
+      "id": "5c17a7ed2e2216152142459c",
+      "value": 42,
+      "name": "item_equipment_helmet_crye_airframe_tan"
+    },
+    {
+      "id": "5a154d5cfcdbcb001a3b00da",
+      "value": 42,
+      "name": "helmet_ops_core_fast"
+    },
+    {
+      "id": "6759655674aa5e0825040d62",
+      "value": 42,
+      "name": "Item_equipment_helmet_flux"
+    },
+    {
+      "id": "67597d241d5a44f2f605df06",
+      "value": 42,
+      "name": "Item_equipment_helmet_strike_ballistic_coyote_camouflage"
+    },
+    {
+      "id": "67597ceea35600b4c10cea86",
+      "value": 42,
+      "name": "Item_equipment_helmet_strike_ballistic_coyote"
+    },
+    {
+      "id": "675956062f6ddfe8ff0e2806",
+      "value": 42,
+      "name": "Item_equipment_helmet_flux_multicam"
+    },
+    {
+      "id": "5aa7d03ae5b5b00016327db5",
+      "value": 43,
+      "name": "helmet_un"
+    },
+    {
+      "id": "5a7c4850e899ef00150be885",
+      "value": 46,
+      "name": "helmet_ratnik_6B47"
+    },
+    {
+      "id": "65719f0775149d62ce0a670b",
+      "value": 46,
+      "name": "item_equipment_helmet_tor_2"
+    },
+    {
+      "id": "5aa7cfc0e5b5b00015693143",
+      "value": 48,
+      "name": "helmet_6B47_cover"
+    },
+    {
+      "id": "6745895717824b1ec20570a6",
+      "value": 48,
+      "name": "item_equipment_helmet_6b47covered_winter"
+    },
+    {
+      "id": "5b40e1525acfc4771e1c6611",
+      "value": 54,
+      "name": "item_equipment_helmet_ULACH_black"
+    },
+    {
+      "id": "5b40e2bc5acfc40016388216",
+      "value": 55,
+      "name": "item_equipment_helmet_ULACH_coyote"
+    }
+  ],
+  "Holster": [
+    {
+      "id": "64748cb8de82c85eaf0a273a",
+      "value": 92,
+      "name": "weapon_izhmeh_mr43_sawed_off_12g"
+    },
+    {
+      "id": "5cadc190ae921500103bb3b6",
+      "value": 106,
+      "name": "weapon_beretta_m9a3_9x19"
+    },
+    {
+      "id": "571a12c42459771f627b58a0",
+      "value": 109,
+      "name": "weapon_toz_tt_762x25tt"
+    },
+    {
+      "id": "576a581d2459771e7b1bc4f1",
+      "value": 110,
+      "name": "weapon_izhmeh_mp443_9x19"
+    },
+    {
+      "id": "56d59856d2720bd8418b456a",
+      "value": 114,
+      "name": "weapon_sig_p226r_9x19"
+    },
+    {
+      "id": "56e0598dd2720bb5668b45a6",
+      "value": 115,
+      "name": "weapon_tochmash_pb_9x18pm"
+    },
+    {
+      "id": "5e81c3cbac2bb513793cdc75",
+      "value": 117,
+      "name": "weapon_colt_m1911a1_1143x23"
+    },
+    {
+      "id": "579204f224597773d619e051",
+      "value": 118,
+      "name": "weapon_izhmeh_pm_treaded_9x18pm"
+    },
+    {
+      "id": "5448bd6b4bdc2dfc2f8b4569",
+      "value": 119,
+      "name": "weapon_izhmeh_pm_9x18pm"
+    },
+    {
+      "id": "5a7ae0c351dfba0017554310",
+      "value": 122,
+      "name": "weapon_glock_glock_17_gen3_9x19"
+    },
+    {
+      "id": "602a9740da11d6478d5a06dc",
+      "value": 123,
+      "name": "weapon_izhmash_pl15_9x19"
+    },
+    {
+      "id": "63088377b5cd696784087147",
+      "value": 123,
+      "name": "weapon_glock_glock_19x_9x19"
+    },
+    {
+      "id": "624c2e8614da335f1e034d8c",
+      "value": 133,
+      "name": "weapon_chiappa_rhino_200ds_9x19"
+    },
+    {
+      "id": "5f36a0e5fbf956000b716b65",
+      "value": 140,
+      "name": "weapon_colt_m45a1_1143x23"
+    },
+    {
+      "id": "6193a720f8ee7e52e42109ed",
+      "value": 143,
+      "name": "weapon_hk_usp_45"
+    },
+    {
+      "id": "59f98b4986f7746f546d2cef",
+      "value": 145,
+      "name": "weapon_tochmash_sr1mp_9x21"
+    },
+    {
+      "id": "5a17f98cfcdbcb0980087290",
+      "value": 154,
+      "name": "weapon_molot_aps_9x18pm"
+    },
+    {
+      "id": "5abccb7dd8ce87001773e277",
+      "value": 162,
+      "name": "weapon_toz_apb_9x18pm"
+    },
+    {
+      "id": "633ec7c2a6918cb895019c6c",
+      "value": 173,
+      "name": "weapon_kbp_rsh_12_127x55"
+    },
+    {
+      "id": "669fa409933e898cce0c2166",
+      "value": 173,
+      "name": "weapon_magnum_research_desert_eagle_l5_9x33r"
+    },
+    {
+      "id": "5d67abc1a4b93614ec50137f",
+      "value": 176,
+      "name": "weapon_fn_five_seven_57x28_fde"
+    },
+    {
+      "id": "5d3eb3b0a4b93615055e84d2",
+      "value": 176,
+      "name": "weapon_fn_five_seven_57x28"
+    },
+    {
+      "id": "5b1fa9b25acfc40018633c01",
+      "value": 192,
+      "name": "weapon_glock_glock_18c_gen3_9x19"
+    },
+    {
+      "id": "669fa39b48fc9f8db6035a0c",
+      "value": 203,
+      "name": "weapon_magnum_research_desert_eagle_l6_127x33"
+    },
+    {
+      "id": "669fa3f88abd2662d80eee77",
+      "value": 204,
+      "name": "weapon_magnum_research_desert_eagle_l5_127x33"
+    },
+    {
+      "id": "61a4c8884f95bc3b2c5dc96f",
+      "value": 208,
+      "name": "weapon_chiappa_rhino_50ds_9x33R"
+    }
+  ],
+  "Earpiece": [
+    {
+      "id": "5b432b965acfc47a8774094e",
+      "value": 1,
+      "name": "item_equipment_headset_gsh01"
+    },
+    {
+      "id": "6033fa48ffd42c541047f728",
+      "value": 1,
+      "name": "item_equipment_headset_m32"
+    },
+    {
+      "id": "5645bcc04bdc2d363b8b4572",
+      "value": 1,
+      "name": "headphones"
+    },
+    {
+      "id": "5aa2ba71e5b5b000137b758f",
+      "value": 1,
+      "name": "headphones_MSA"
+    },
+    {
+      "id": "66b5f68de98be930d701c00e",
+      "value": 1,
+      "name": "item_equipment_headset_liberator"
+    },
+    {
+      "id": "66b5f6a28ca68c6461709ed8",
+      "value": 1,
+      "name": "helmet_team_wendy_comtac_vi_headset"
+    },
+    {
+      "id": "66b5f69ea7f72d197e70bcdb",
+      "value": 1,
+      "name": "helmet_team_wendy_comtac_v_headset"
+    },
+    {
+      "id": "5c165d832e2216398b5a7e36",
+      "value": 1,
+      "name": "item_equipment_headset_tactical_sport"
+    }
+  ],
+  "Backpack": [
+    {
+      "id": "5ab8f04f86f774585f4237d8",
+      "value": 31,
+      "name": "backpack_molle"
+    },
+    {
+      "id": "5ab8ee7786f7742d8f33f0b9",
+      "value": 35,
+      "name": "backpack_vkboarmy"
+    },
+    {
+      "id": "56e33680d2720be2748b4576",
+      "value": 39,
+      "name": "tactical_backpack"
+    },
+    {
+      "id": "544a5cde4bdc2d39388b456b",
+      "value": 76,
+      "name": "standartBackpack"
+    },
+    {
+      "id": "6034d103ca006d2dca39b3f0",
+      "value": 77,
+      "name": "item_equipment_backpack_takedown_sling"
+    },
+    {
+      "id": "6038d614d10cbf667352dd44",
+      "value": 78,
+      "name": "item_equipment_backpack_Takedown_sling_multicam"
+    },
+    {
+      "id": "5e9dcf5986f7746c417435b3",
+      "value": 92,
+      "name": "item_equipment_backpack_daypack14"
+    },
+    {
+      "id": "5ca20d5986f774331e7c9602",
+      "value": 92,
+      "name": "item_equipment_backpack_wartech"
+    },
+    {
+      "id": "60a2828e8689911a226117f9",
+      "value": 94,
+      "name": "item_equipment_backpack_pillbox"
+    },
+    {
+      "id": "656f198fb27298d6fd005466",
+      "value": 103,
+      "name": "item_equipment_backpack_dragon_egg_mk_ii"
+    },
+    {
+      "id": "618bb76513f5097c8d5aa2d5",
+      "value": 111,
+      "name": "item_equipment_backpack_gr99t20"
+    },
+    {
+      "id": "619cf0335771dd3c390269ae",
+      "value": 111,
+      "name": "item_equipment_backpack_gr99t20_multicam"
+    },
+    {
+      "id": "656ddcf0f02d7bcea90bf395",
+      "value": 112,
+      "name": "item_equipment_backpack_tehinkom_patrol"
+    },
+    {
+      "id": "618cfae774bb2d036a049e7c",
+      "value": 118,
+      "name": "item_equipment_backpack_lbt1476a"
+    },
+    {
+      "id": "67458794e21e5d724e066976",
+      "value": 118,
+      "name": "item_equipment_backpack_lbt1476a_slick_winter"
+    },
+    {
+      "id": "5b44c6ae86f7742d1627baea",
+      "value": 127,
+      "name": "item_equipment_backpack_betav2"
+    },
+    {
+      "id": "628e1ffc83ec92260c0f437f",
+      "value": 131,
+      "name": "item_equipment_backpack_gr99_t30"
+    },
+    {
+      "id": "545cdae64bdc2d39198b4568",
+      "value": 134,
+      "name": "bigBackpack"
+    },
+    {
+      "id": "66b5f22b78bbc0200425f904",
+      "value": 134,
+      "name": "item_equipment_backpack_camelback_trizip_multicam"
+    },
+    {
+      "id": "62a1b7fbc30cfa1d366af586",
+      "value": 138,
+      "name": "item_equipment_backpack_gr99_t30_multicam"
+    },
+    {
+      "id": "5d5d940f86f7742797262046",
+      "value": 140,
+      "name": "item_equipment_backpack_mech"
+    },
+    {
+      "id": "5ab8ebf186f7742d8b372e80",
+      "value": 150,
+      "name": "backpack_sso_attack2"
+    },
+    {
+      "id": "6034d2d697633951dc245ea6",
+      "value": 150,
+      "name": "item_equipment_backpack_g2_gunslinger"
+    },
+    {
+      "id": "5c0e805e86f774683f3dd637",
+      "value": 154,
+      "name": "item_equipment_backpack_paratus"
+    },
+    {
+      "id": "656e0436d44a1bb4220303a0",
+      "value": 154,
+      "name": "item_equipment_backpack_mystery_ranch_satl"
+    },
+    {
+      "id": "639346cc1c8f182ad90c8972",
+      "value": 158,
+      "name": "item_equipment_backpack_trooper_35"
+    },
+    {
+      "id": "5f5e46b96bdad616ad46d613",
+      "value": 166,
+      "name": "item_equipment_backpack_f4terminator"
+    },
+    {
+      "id": "5c0e774286f77468413cc5b2",
+      "value": 178,
+      "name": "item_equipment_backpack_blackjack"
+    },
+    {
+      "id": "5df8a4d786f77412672a1e3b",
+      "value": 202,
+      "name": "backpack_Raid_6SH118"
+    }
+  ],
+  "Eyewear": [
+    {
+      "id": "603409c80ca681766b6a0fb2",
+      "value": 9,
+      "name": "item_equipment_glasses_npp"
+    },
+    {
+      "id": "62a61c988ec41a51b34758d5",
+      "value": 9,
+      "name": "Item_equipment_glasses_oakley"
+    },
+    {
+      "id": "5c1a1cc52e221602b3136e3d",
+      "value": 9,
+      "name": "item_equipment_glasses_m_frame"
+    },
+    {
+      "id": "5d6d2ef3a4b93618084f58bd",
+      "value": 9,
+      "name": "item_equipment_glasses_aviator"
+    },
+    {
+      "id": "5d5fca1ea4b93635fd598c07",
+      "value": 10,
+      "name": "item_equipment_glasses_ess"
+    },
+    {
+      "id": "5c0d32fcd174af02a1659c75",
+      "value": 10,
+      "name": "item_equipment_glasses_proximity"
+    },
+    {
+      "id": "5d6d2e22a4b9361bd5780d05",
+      "value": 10,
+      "name": "item_equipment_glasses_gascan"
+    },
+    {
+      "id": "5b432be65acfc433000ed01f",
+      "value": 11,
+      "name": "item_equipment_glasses_6B34"
+    },
+    {
+      "id": "557ff21e4bdc2d89578b4586",
+      "value": 11,
+      "name": "Goggles"
+    },
+    {
+      "id": "5aa2b986e5b5b00014028f4c",
+      "value": 11,
+      "name": "glasses_Duduma"
+    }
+  ],
+  "FaceCover": [
+    {
+      "id": "5b4325355acfc40019478126",
+      "value": 14,
+      "name": "item_equipment_facecover_shemagh_02"
+    },
+    {
+      "id": "5ab8f39486f7745cd93a1cca",
+      "value": 14,
+      "name": "balaclava_cg"
+    },
+    {
+      "id": "5ab8f85d86f7745cd93a1cf5",
+      "value": 14,
+      "name": "shemagh"
+    },
+    {
+      "id": "5b432f3d5acfc4704b4a1dfb",
+      "value": 14,
+      "name": "item_equipment_facecover_nomexBalaclava"
+    },
+    {
+      "id": "6571bde39837cc51b800c212",
+      "value": 14,
+      "name": "item_equipment_facecover_skull_half_mask"
+    },
+    {
+      "id": "572b7f1624597762ae139822",
+      "value": 15,
+      "name": "balaclava"
+    },
+    {
+      "id": "675ac888803644528007b3f6",
+      "value": 15,
+      "name": "item_equipment_facecover_balaclava_white"
+    },
+    {
+      "id": "5ab8f4ff86f77431c60d91ba",
+      "value": 15,
+      "name": "balaclava_skull"
+    },
+    {
+      "id": "5b432b2f5acfc4771e1c6622",
+      "value": 19,
+      "name": "item_equipment_facecover_shatteredmask"
+    },
+    {
+      "id": "5b432b6c5acfc4001a599bf0",
+      "value": 19,
+      "name": "item_equipment_facecover_skullmask"
+    },
+    {
+      "id": "657089638db3adca1009f4ca",
+      "value": 19,
+      "name": "item_equipment_facecover_ballistic_mask"
+    },
+    {
+      "id": "6570aead4d84f81fd002a033",
+      "value": 25,
+      "name": "item_equipment_facecover_strikeball_mask"
+    }
+  ],
+  "ArmBand": [
+    {
+      "id": "5b3f16c486f7747c327f55f7",
+      "value": 20,
+      "name": "armband_white"
+    },
+    {
+      "id": "5b3f3ade86f7746b6b790d8e",
+      "value": 20,
+      "name": "armband_red"
+    },
+    {
+      "id": "5b3f3af486f774679e752c1f",
+      "value": 20,
+      "name": "armband_blue"
+    },
+    {
+      "id": "5b3f3b0186f774021a2afef7",
+      "value": 20,
+      "name": "armband_green"
+    },
+    {
+      "id": "5b3f3b0e86f7746752107cda",
+      "value": 20,
+      "name": "armband_yellow"
+    }
+  ],
+  "Scabbard": [
+    {
+      "id": "5bffdc370db834001d23eca8",
+      "value": 22,
+      "name": "weapon_izhmash_6x5"
+    },
+    {
+      "id": "63920105a83e15700a00f168",
+      "value": 22,
+      "name": "weapon_sog_voodoo_hawk"
+    },
+    {
+      "id": "664a5428d5e33a713b622379",
+      "value": 27,
+      "name": "weapon_tactikal_gladius"
+    },
+    {
+      "id": "5bead2e00db834001c062938",
+      "value": 27,
+      "name": "weapon_voentorg_mpl-40"
+    },
+    {
+      "id": "5bffe7930db834001b734a39",
+      "value": 27,
+      "name": "weapon_crash_axe"
+    },
+    {
+      "id": "5c012ffc0db834001d23f03f",
+      "value": 27,
+      "name": "weapon_utility_axe"
+    },
+    {
+      "id": "5bffdd7e0db834001b734a1a",
+      "value": 81,
+      "name": "weapon_miller_bros_m-2"
+    }
+  ],
+  "Ammo": [
+    {
+      "id": "5e85a9f4add9fe03027d9bf1",
+      "value": 3,
+      "name": "patron_23x75_star"
+    },
+    {
+      "id": "6769b8e3c1a1466c850658a8",
+      "value": 3,
+      "name": "item_ammo_box_762x51_20_m80a1"
+    },
+    {
+      "id": "5d6e68dea4b9361bcc29e659",
+      "value": 17,
+      "name": "patron_12x70_dual_sabot_slug"
+    },
+    {
+      "id": "5d6e69b9a4b9361bc8618958",
+      "value": 18,
+      "name": "patron_20x70_buckshot_62"
+    },
+    {
+      "id": "5a38ebd9c4a282000d722a5b",
+      "value": 20,
+      "name": "patron_20x70_buckshot"
+    },
+    {
+      "id": "5d6e69c7a4b9360b6c0d54e4",
+      "value": 21,
+      "name": "patron_20x70_buckshot_73"
+    },
+    {
+      "id": "5d6e695fa4b936359b35d852",
+      "value": 21,
+      "name": "patron_20x70_buckshot_56"
+    },
+    {
+      "id": "5f647fd3f6e4ab66c82faed6",
+      "value": 26,
+      "name": "patron_23x75_wave_r"
+    },
+    {
+      "id": "5d6e6772a4b936088465b17c",
+      "value": 30,
+      "name": "patron_12x70_buckshot_525"
+    },
+    {
+      "id": "560d5e524bdc2d25448b4571",
+      "value": 31,
+      "name": "patron_12x70_buckshot"
+    },
+    {
+      "id": "5d6e67fba4b9361bc73bc779",
+      "value": 32,
+      "name": "patron_12x70_buckshot_65"
+    },
+    {
+      "id": "5d6e6806a4b936088465b17e",
+      "value": 40,
+      "name": "patron_12x70_buckshot_85"
+    },
+    {
+      "id": "5737201124597760fc4431f1",
+      "value": 50,
+      "name": "patron_9x18pm_PST_gzh"
+    },
+    {
+      "id": "573719762459775a626ccbc1",
+      "value": 50,
+      "name": "patron_9x18pm_P_gzh"
+    },
+    {
+      "id": "573718ba2459775a75491131",
+      "value": 53,
+      "name": "patron_9x18pm_BZT_gzh"
+    },
+    {
+      "id": "57371f8d24597761006c6a81",
+      "value": 54,
+      "name": "patron_9x18pm_PSO_gzh"
+    },
+    {
+      "id": "56d59d3ad2720bdb418b4577",
+      "value": 54,
+      "name": "patron_9x19_PST_gzh"
+    },
+    {
+      "id": "573603c924597764442bd9cb",
+      "value": 55,
+      "name": "patron_762x25tt_T_Gzh"
+    },
+    {
+      "id": "57371f2b24597761224311f1",
+      "value": 55,
+      "name": "patron_9x18pm_PS_gs_PPO"
+    },
+    {
+      "id": "6601380580e77cfd080e3418",
+      "value": 56,
+      "name": "patron_20x70_flechette"
+    },
+    {
+      "id": "64b7bbb74b75259c590fa897",
+      "value": 56,
+      "name": "patron_9x19_m882"
+    },
+    {
+      "id": "5736026a245977644601dc61",
+      "value": 58,
+      "name": "patron_762x25tt_P_Gl"
+    },
+    {
+      "id": "5735fdcd2459776445391d61",
+      "value": 58,
+      "name": "patron_762x25tt_akbs"
+    },
+    {
+      "id": "57371eb62459776125652ac1",
+      "value": 58,
+      "name": "patron_9x18pm_PRS_gs"
+    },
+    {
+      "id": "5c3df7d588a4501f290594e5",
+      "value": 58,
+      "name": "patron_9x19_GT"
+    },
+    {
+      "id": "57371e4124597760ff7b25f1",
+      "value": 59,
+      "name": "patron_9x18pm_PPT_gzh"
+    },
+    {
+      "id": "58864a4f2459770fcc257101",
+      "value": 59,
+      "name": "patron_9x19_PSO_gzh"
+    },
+    {
+      "id": "5735ff5c245977640e39ba7e",
+      "value": 60,
+      "name": "patron_762x25tt_FMJ43"
+    },
+    {
+      "id": "57371b192459775a9f58a5e0",
+      "value": 61,
+      "name": "patron_9x18pm_PPE_gzh"
+    },
+    {
+      "id": "5f647f31b6238e5dd066e196",
+      "value": 62,
+      "name": "patron_23x75_shrapnel_25"
+    },
+    {
+      "id": "573601b42459776410737435",
+      "value": 64,
+      "name": "patron_762x25tt_LRN"
+    },
+    {
+      "id": "64b8ee384b75259c590fa89b",
+      "value": 65,
+      "name": "patron_12x70_piranha"
+    },
+    {
+      "id": "56dff4ecd2720b5f5a8b4568",
+      "value": 65,
+      "name": "patron_545x39_US"
+    },
+    {
+      "id": "573720e02459776143012541",
+      "value": 65,
+      "name": "patron_9x18pm_RG028_gzh"
+    },
+    {
+      "id": "5a26abfac4a28232980eabff",
+      "value": 65,
+      "name": "patron_9x21_sp11"
+    },
+    {
+      "id": "573602322459776445391df1",
+      "value": 66,
+      "name": "patron_762x25tt_LRNPC"
+    },
+    {
+      "id": "5737218f245977612125ba51",
+      "value": 67,
+      "name": "patron_9x18pm_SP8_gzh"
+    },
+    {
+      "id": "56dff4a2d2720bbd668b456a",
+      "value": 69,
+      "name": "patron_545x39_T"
+    },
+    {
+      "id": "5737207f24597760ff7b25f2",
+      "value": 69,
+      "name": "patron_9x18pm_PSV"
+    },
+    {
+      "id": "5e85a9a6eacf8c039e4e2ac1",
+      "value": 70,
+      "name": "patron_23x75_shrapnel_10"
+    },
+    {
+      "id": "59e68f6f86f7746c9f75e846",
+      "value": 70,
+      "name": "patron_556x45_M856"
+    },
+    {
+      "id": "5a3c16fe86f77452b62de32a",
+      "value": 70,
+      "name": "patron_9x19_luger_cci"
+    },
+    {
+      "id": "5ba26812d4351e003201fef1",
+      "value": 75,
+      "name": "patron_46x30_action_sx"
+    },
+    {
+      "id": "6576f96220d53a5b8f3e395e",
+      "value": 75,
+      "name": "patron_9x39_fmj"
+    },
+    {
+      "id": "5efb0d4f4bc50b58e81710f3",
+      "value": 76,
+      "name": "patron_1143x23_acp_lasermatch_fmj"
+    },
+    {
+      "id": "56dff421d2720b5f5a8b4567",
+      "value": 77,
+      "name": "patron_545x39_SP"
+    },
+    {
+      "id": "57372140245977611f70ee91",
+      "value": 77,
+      "name": "patron_9x18pm_SP7_gzh"
+    },
+    {
+      "id": "64b7af734b75259c590fa895",
+      "value": 78,
+      "name": "patron_762x39_sp"
+    },
+    {
+      "id": "5a269f97c4a282000b151807",
+      "value": 79,
+      "name": "patron_9x21_sp10"
+    },
+    {
+      "id": "56dff338d2720bbd668b4569",
+      "value": 80,
+      "name": "patron_545x39_PRS"
+    },
+    {
+      "id": "5cc80f79e4a949033c7343b2",
+      "value": 80,
+      "name": "patron_57x28_ss198lf"
+    },
+    {
+      "id": "5a26ac06c4a282000c5a90a8",
+      "value": 80,
+      "name": "patron_9x21_sp12"
+    },
+    {
+      "id": "5ba26844d4351e00334c9475",
+      "value": 82,
+      "name": "patron_46x30_subsonic_sx"
+    },
+    {
+      "id": "59e6918f86f7746c9f75e849",
+      "value": 82,
+      "name": "patron_556x45_MK_255_Mod_0"
+    },
+    {
+      "id": "6196364158ef8c428c287d9f",
+      "value": 82,
+      "name": "patron_762x35_vmax"
+    },
+    {
+      "id": "5efb0e16aeb21837e749c7ff",
+      "value": 85,
+      "name": "patron_9x19_quakemaker"
+    },
+    {
+      "id": "56dff216d2720bbd668b4568",
+      "value": 86,
+      "name": "patron_545x39_HP"
+    },
+    {
+      "id": "59e6927d86f77411da468256",
+      "value": 89,
+      "name": "patron_556x45_55_HP"
+    },
+    {
+      "id": "59e4d3d286f774176a36250a",
+      "value": 90,
+      "name": "patron_762x39_HP"
+    },
+    {
+      "id": "5cc86840d7f00c002412c56c",
+      "value": 91,
+      "name": "patron_57x28_r37x"
+    },
+    {
+      "id": "59e6920f86f77411d82aa167",
+      "value": 97,
+      "name": "patron_556x45_55_FMJ"
+    },
+    {
+      "id": "5c0d5ae286f7741e46554302",
+      "value": 98,
+      "name": "patron_556x45_varmageddon"
+    },
+    {
+      "id": "62330bfadc5883093563729b",
+      "value": 99,
+      "name": "patron_9x33r_hp"
+    },
+    {
+      "id": "5efb0fc6aeb21837e749c801",
+      "value": 100,
+      "name": "patron_1143x23_acp_hydra_shok"
+    },
+    {
+      "id": "573603562459776430731618",
+      "value": 100,
+      "name": "patron_762x25tt_Pst_gzh"
+    },
+    {
+      "id": "6196365d58ef8c428c287da1",
+      "value": 100,
+      "name": "patron_762x35_whisper"
+    },
+    {
+      "id": "5c0d56a986f774449d5de529",
+      "value": 102,
+      "name": "patron_9x19_rip"
+    },
+    {
+      "id": "56dff0bed2720bb0668b4567",
+      "value": 105,
+      "name": "patron_545x39_FMJ"
+    },
+    {
+      "id": "5cc86832d7f00c000d3a6e6c",
+      "value": 108,
+      "name": "patron_57x28_r37f"
+    },
+    {
+      "id": "62330c40bdd19b369e1e53d1",
+      "value": 108,
+      "name": "patron_9x33r_sp"
+    },
+    {
+      "id": "59e6658b86f77411d949b250",
+      "value": 110,
+      "name": "patron_366_TKM_Geksa"
+    },
+    {
+      "id": "5cc80f8fe4a949033b0224a2",
+      "value": 112,
+      "name": "patron_57x28_ss197sr"
+    },
+    {
+      "id": "5e023e88277cce2b522ff2b1",
+      "value": 115,
+      "name": "patron_762x51_ultra_nosler"
+    },
+    {
+      "id": "5d6e6a53a4b9361bd473feec",
+      "value": 120,
+      "name": "patron_20x70_slug_poleva_3"
+    },
+    {
+      "id": "573719df2459775a626ccbc2",
+      "value": 120,
+      "name": "patron_9x18pm_PBM"
+    },
+    {
+      "id": "5e81f423763d9f754677bf2e",
+      "value": 122,
+      "name": "patron_1143x23_acp"
+    },
+    {
+      "id": "6576f93989f0062e741ba952",
+      "value": 123,
+      "name": "patron_9x21_7u4"
+    },
+    {
+      "id": "59e6542b86f77411dc52a77a",
+      "value": 128,
+      "name": "patron_366_TKM_FMJ"
+    },
+    {
+      "id": "62330c18744e5e31df12f516",
+      "value": 128,
+      "name": "patron_9x33r_jhp"
+    },
+    {
+      "id": "5cc80f67e4a949035e43bbba",
+      "value": 129,
+      "name": "patron_57x28_sb193"
+    },
+    {
+      "id": "5ea2a8e200685063ec28c05a",
+      "value": 130,
+      "name": "patron_1143x23_rip"
+    },
+    {
+      "id": "5d6e6911a4b9361bd5780d52",
+      "value": 130,
+      "name": "patron_12x70_flechette"
+    },
+    {
+      "id": "64b7af5a8532cf95ee0a0dbd",
+      "value": 133,
+      "name": "patron_762x39_fmj"
+    },
+    {
+      "id": "5d6e6a42a4b9364f07165f52",
+      "value": 135,
+      "name": "patron_20x70_slug_poleva_6u"
+    },
+    {
+      "id": "5d6e6891a4b9361bd473feea",
+      "value": 140,
+      "name": "patron_12x70_slug_poleva_3"
+    },
+    {
+      "id": "64b8f7c241772715af0f9c3d",
+      "value": 142,
+      "name": "patron_762x54r_bthp"
+    },
+    {
+      "id": "56dff3afd2720bba668b4567",
+      "value": 146,
+      "name": "patron_545x39_PS"
+    },
+    {
+      "id": "59e4d24686f7741776641ac7",
+      "value": 146,
+      "name": "patron_762x39_US"
+    },
+    {
+      "id": "66a0d1c87d0d369e270bb9de",
+      "value": 147,
+      "name": "patron_127x33_jhp"
+    },
+    {
+      "id": "5d6e689ca4b9361bc8618956",
+      "value": 150,
+      "name": "patron_12x70_slug_poleva_6u"
+    },
+    {
+      "id": "57a0dfb82459774d3078b56c",
+      "value": 151,
+      "name": "patron_9x39_sp5"
+    },
+    {
+      "id": "5c925fa22e221601da359b7b",
+      "value": 152,
+      "name": "patron_9x19_ap_63"
+    },
+    {
+      "id": "5d6e6a05a4b93618084f58d0",
+      "value": 154,
+      "name": "patron_20x70_slug_star"
+    },
+    {
+      "id": "64b6979341772715af0f9c39",
+      "value": 166,
+      "name": "patron_46x30_jsp"
+    },
+    {
+      "id": "58820d1224597753c90aeb13",
+      "value": 167,
+      "name": "patron_12x70_slug"
+    },
+    {
+      "id": "5fbe3ffdf8b6a877a729ea82",
+      "value": 170,
+      "name": "patron_762x35_blackout"
+    },
+    {
+      "id": "64b8f7b5389d7ffd620ccba2",
+      "value": 172,
+      "name": "patron_762x54r_spbt"
+    },
+    {
+      "id": "5a26ac0ec4a28200741e1e18",
+      "value": 172,
+      "name": "patron_9x21_sp13"
+    },
+    {
+      "id": "54527a984bdc2d4e668b4567",
+      "value": 174,
+      "name": "patron_556x45_M855"
+    },
+    {
+      "id": "5cadf6e5ae921500113bb973",
+      "value": 175,
+      "name": "patron_127x55_ps12a"
+    },
+    {
+      "id": "59e4cf5286f7741778269d8a",
+      "value": 175,
+      "name": "patron_762x39_T45M"
+    },
+    {
+      "id": "66a0d1f88486c69fce00fdf6",
+      "value": 182,
+      "name": "patron_127x33_jsp"
+    },
+    {
+      "id": "5d6e68e6a4b9361c140bcfe0",
+      "value": 183,
+      "name": "patron_12x70_slug_ftx_custom_lite"
+    },
+    {
+      "id": "59e655cb86f77411dc52a77b",
+      "value": 183,
+      "name": "patron_366_TKM_EKO"
+    },
+    {
+      "id": "5d6e6869a4b9361c140bcfde",
+      "value": 190,
+      "name": "patron_12x70_slug_grizzly_40"
+    },
+    {
+      "id": "660137ef76c1b56143052be8",
+      "value": 193,
+      "name": "patron_20x70_slug_dg"
+    },
+    {
+      "id": "60194943740c5d77f6705eea",
+      "value": 193,
+      "name": "patron_556x45_mk_318_mod_0"
+    },
+    {
+      "id": "5cc80f53e4a949000e1ea4f8",
+      "value": 193,
+      "name": "patron_57x28_l191"
+    },
+    {
+      "id": "5cadf6ddae9215051e1c23b2",
+      "value": 195,
+      "name": "patron_127x55_ps12"
+    },
+    {
+      "id": "5e85aac65505fa48730d8af2",
+      "value": 195,
+      "name": "patron_23x75_cheremukha_7m"
+    },
+    {
+      "id": "5e023e6e34d52a55c3304f71",
+      "value": 195,
+      "name": "patron_762x51_tpz_sp"
+    },
+    {
+      "id": "5d6e6a5fa4b93614ec501745",
+      "value": 198,
+      "name": "patron_20x70_slug_broadhead"
+    },
+    {
+      "id": "5656eb674bdc2d35148b457c",
+      "value": 199,
+      "name": "40 VOG-25"
+    },
+    {
+      "id": "5ede4739e0350d05467f73e8",
+      "value": 199,
+      "name": "patron_40x46_m406"
+    },
+    {
+      "id": "5ede47405b097655935d7d16",
+      "value": 199,
+      "name": "patron_40x46_m441"
+    },
+    {
+      "id": "5ede474b0c226a66f5402622",
+      "value": 199,
+      "name": "patron_40x46_m381"
+    },
+    {
+      "id": "5ede475b549eed7c6d5c18fb",
+      "value": 199,
+      "name": "patron_40x46_m386"
+    },
+    {
+      "id": "5ede47641cf3836a88318df1",
+      "value": 199,
+      "name": "patron_40x46_m716"
+    },
+    {
+      "id": "5f0c892565703e5c461894e9",
+      "value": 199,
+      "name": "patron_40x46_m433"
+    },
+    {
+      "id": "56dff2ced2720bb4668b4567",
+      "value": 201,
+      "name": "patron_545x39_PP"
+    },
+    {
+      "id": "5d6e68b3a4b9361bca7e50b5",
+      "value": 206,
+      "name": "patron_12x70_slug_hp_copper"
+    },
+    {
+      "id": "5fc382b6d6fa9c00c571bbc3",
+      "value": 206,
+      "name": "patron_86x70_lapua_tac_x"
+    },
+    {
+      "id": "619636be6db0f2477964e710",
+      "value": 214,
+      "name": "patron_762x35_m62"
+    },
+    {
+      "id": "5c0d668f86f7747ccb7f13b2",
+      "value": 218,
+      "name": "patron_9x39_spp"
+    },
+    {
+      "id": "5d6e68d1a4b93622fe60e845",
+      "value": 220,
+      "name": "patron_12x70_slug_superformance"
+    },
+    {
+      "id": "62330b3ed4dc74626d570b95",
+      "value": 220,
+      "name": "patron_9x33r_fmj"
+    },
+    {
+      "id": "5656d7c34bdc2d9d198b4587",
+      "value": 221,
+      "name": "patron_762x39_PS"
+    },
+    {
+      "id": "66a0d1e0ed648d72fe064d06",
+      "value": 224,
+      "name": "patron_127x33_cooper"
+    },
+    {
+      "id": "64b8f7968532cf95ee0a0dbf",
+      "value": 224,
+      "name": "patron_762x54r_fmj"
+    },
+    {
+      "id": "5cc80f38e4a949001152b560",
+      "value": 229,
+      "name": "patron_57x28_ss190"
+    },
+    {
+      "id": "6576f4708ca9c4381d16cd9d",
+      "value": 229,
+      "name": "patron_9x21_7n42"
+    },
+    {
+      "id": "56dff061d2720bb5668b4567",
+      "value": 234,
+      "name": "patron_545x39_BT"
+    },
+    {
+      "id": "5efb0da7a29a85116f6ea05f",
+      "value": 234,
+      "name": "patron_9x19_7n31"
+    },
+    {
+      "id": "5ede475339ee016e8c534742",
+      "value": 240,
+      "name": "patron_40x46_m576"
+    },
+    {
+      "id": "59e6906286f7746c9f75e847",
+      "value": 242,
+      "name": "patron_556x45_M856A1"
+    },
+    {
+      "id": "5efb0cabfb3e451d70735af5",
+      "value": 246,
+      "name": "patron_1143x23_acp_ap"
+    },
+    {
+      "id": "6529302b8c26af6326029fb7",
+      "value": 250,
+      "name": "patron_68x51_fmj"
+    },
+    {
+      "id": "5ba2678ad4351e44f824b344",
+      "value": 253,
+      "name": "patron_46x30_fmj_sx"
+    },
+    {
+      "id": "660137d8481cc6907a0c5cda",
+      "value": 255,
+      "name": "patron_20x70_slug_ap"
+    },
+    {
+      "id": "5d6e68c4a4b9361b93413f79",
+      "value": 257,
+      "name": "patron_12x70_slug_50_bmg_m17_traccer"
+    },
+    {
+      "id": "5e023e53d4353e3302577c4c",
+      "value": 263,
+      "name": "patron_762x51_bpz_fmj"
+    },
+    {
+      "id": "5c0d591486f7744c505b416f",
+      "value": 265,
+      "name": "patron_12x70_rip"
+    },
+    {
+      "id": "5fc382c1016cce60e8341b20",
+      "value": 272,
+      "name": "patron_86x70_lapua_magnum_upz"
+    },
+    {
+      "id": "64b7af434b75259c590fa893",
+      "value": 279,
+      "name": "patron_762x39_pp"
+    },
+    {
+      "id": "668fe62ac62660a5d8071446",
+      "value": 285,
+      "name": "patron_127x33_fmj"
+    },
+    {
+      "id": "61962b617c6c7b169525f168",
+      "value": 285,
+      "name": "patron_545x39_7n40"
+    },
+    {
+      "id": "61962d879bb3d20b0946d385",
+      "value": 292,
+      "name": "patron_9x39_pab9"
+    },
+    {
+      "id": "64b8725c4b75259c590fa899",
+      "value": 298,
+      "name": "patron_762x35_cbj"
+    },
+    {
+      "id": "54527ac44bdc2d36668b4567",
+      "value": 299,
+      "name": "patron_556x45_M855A1"
+    },
+    {
+      "id": "5e023cf8186a883be655e54f",
+      "value": 302,
+      "name": "patron_762x54r_t46m"
+    },
+    {
+      "id": "56dfef82d2720bbd668b4567",
+      "value": 308,
+      "name": "patron_545x39_BP"
+    },
+    {
+      "id": "5887431f2459777e1612938f",
+      "value": 311,
+      "name": "patron_762х54R_LPS_Gzh"
+    },
+    {
+      "id": "5a608bf24f39f98ffc77720e",
+      "value": 312,
+      "name": "patron_762x51_M62"
+    },
+    {
+      "id": "5f0596629e22f464da6bbdd9",
+      "value": 320,
+      "name": "patron_366_custom_ap"
+    },
+    {
+      "id": "58dd3ad986f77403051cba8f",
+      "value": 320,
+      "name": "patron_762x51_M80"
+    },
+    {
+      "id": "5d6e68a8a4b9360b6c0d54e2",
+      "value": 334,
+      "name": "patron_12x70_slug_ap_20"
+    },
+    {
+      "id": "59e0d99486f7744a32234762",
+      "value": 338,
+      "name": "patron_762x39_BP"
+    },
+    {
+      "id": "57a0e5022459774d1673f889",
+      "value": 340,
+      "name": "patron_9x39_sp6"
+    },
+    {
+      "id": "5fd20ff893a8961fc660a954",
+      "value": 341,
+      "name": "patron_762x35_blackout_ap"
+    },
+    {
+      "id": "59e77a2386f7742ee578960a",
+      "value": 344,
+      "name": "patron_762х54R_7N1"
+    },
+    {
+      "id": "6529243824cbe3c74a05e5c1",
+      "value": 352,
+      "name": "patron_68x51"
+    },
+    {
+      "id": "5cadf6eeae921500134b2799",
+      "value": 362,
+      "name": "patron_127x55_ps12b"
+    },
+    {
+      "id": "5ba26835d4351e0035628ff5",
+      "value": 375,
+      "name": "patron_46x30_ap_sx"
+    },
+    {
+      "id": "5e85aa1a988a8701445df1f5",
+      "value": 382,
+      "name": "patron_23x75_barricade"
+    },
+    {
+      "id": "59e690b686f7746c9f75e848",
+      "value": 382,
+      "name": "patron_556x45_M995"
+    },
+    {
+      "id": "56dff026d2720bb8668b4567",
+      "value": 395,
+      "name": "patron_545x39_BS"
+    },
+    {
+      "id": "5c0d688c86f77413ae3407b2",
+      "value": 398,
+      "name": "patron_9x39_bp"
+    },
+    {
+      "id": "5fc275cf85fd526b824a571a",
+      "value": 402,
+      "name": "patron_86x70_lapua_magnum"
+    },
+    {
+      "id": "601949593ae8f707c4608daa",
+      "value": 418,
+      "name": "patron_556x45_ssa_ap"
+    },
+    {
+      "id": "5a6086ea4f39f99cd479502f",
+      "value": 435,
+      "name": "patron_762x51_M61"
+    },
+    {
+      "id": "5e023d34e8a400319a28ed44",
+      "value": 438,
+      "name": "patron_762x54r_7bt1"
+    },
+    {
+      "id": "601aa3d2b2bcb34913271e6d",
+      "value": 443,
+      "name": "patron_762x39_mai_ap"
+    },
+    {
+      "id": "5c0d5e4486f77478390952fe",
+      "value": 467,
+      "name": "patron_545x39_7n39"
+    },
+    {
+      "id": "6768c25aa7b238f14a08d3f6",
+      "value": 483,
+      "name": "patron_762x51_m80a1"
+    },
+    {
+      "id": "560d61e84bdc2da74d8b4571",
+      "value": 505,
+      "name": "patron_762х54R_SNB"
+    },
+    {
+      "id": "5efb0c1bd79ff02a1f5e68d9",
+      "value": 530,
+      "name": "patron_762x51_m993"
+    },
+    {
+      "id": "5e023d48186a883be655e551",
+      "value": 582,
+      "name": "patron_762x54r_7n37"
+    },
+    {
+      "id": "5fc382a9d724d907e2077dab",
+      "value": 715,
+      "name": "patron_86x70_lapua_ap"
+    }
+  ],
+  "mapper": {
+    "64be7095047e826eae02b0c1": 12,
+    "572b7adb24597762ae139821": 14,
+    "5e4abc1f86f774069619fbaa": 16,
+    "674589d98dd67746010329e6": 16,
+    "5fd4c4fa16cac650092f6771": 18,
+    "59e7643b86f7742cbf2c109a": 18,
+    "5d5d8ca986f7742798716522": 18,
+    "6034d0230ca681766b6a0fb5": 19,
+    "64be7110bf597ba84a0a41ea": 19,
+    "5929a2a086f7744f4b234d43": 24,
+    "5c0e3eb886f7742015526062": 53,
+    "5d5d646386f7742797261fd9": 56,
+    "6034cf5fffd42c541047f72e": 66,
+    "66b6295a8ca68c6461709efa": 66,
+    "5c0e446786f7742013381639": 68,
+    "5e4abfed86f77406a2713cf7": 68,
+    "5b44c8ea86f7742d1627baf1": 69,
+    "5ca20abf86f77418567a43f2": 69,
+    "5d5d85c586f774279a21cbdb": 69,
+    "5fd4c60f875c30179f5d04c2": 69,
+    "60a621c49c197e4e8c4455e6": 71,
+    "60a6220e953894617404b00a": 72,
+    "603648ff5a45383c122086ac": 74,
+    "592c2d1a86f7746dbe2af32a": 75,
+    "5648a69d4bdc2ded0b8b457b": 75,
+    "5ab8dab586f77441cd04f2a2": 75,
+    "5e9db13186f7742f845ee9d3": 75,
+    "5c0e746986f7741453628fe5": 80,
+    "5df8a42886f77412640e2e75": 84,
+    "5c0e6a1586f77404597b4965": 86,
+    "61bc85697113f767765c7fe7": 100,
+    "639343fce101f4caa40a4ef3": 104,
+    "61bcc89aef0f505f0c6cd0fc": 109,
+    "544a5caa4bdc2d1a388b4568": 110,
+    "5c0e722886f7740458316a57": 115,
+    "628dc750b910320f4c27a732": 117,
+    "66b6296d7994640992013b17": 121,
+    "5e4ac41886f77406a511c9a8": 130,
+    "60a3c70cde5f453f634816a3": 135,
+    "5ab8dced86f774646209ec87": 138,
+    "628d0618d1ba6e4fa07ce5a4": 149,
+    "60a3c68c37ea821725773ef5": 180,
+    "5bfd297f0db834001a669119": 74,
+    "61f7c9e189e6fb1a5e3ea78d": 80,
+    "5580223e4bdc2d1c128b457f": 88,
+    "5ea03f7400685063ec28bfa8": 95,
+    "5de652c31b7e3716273428be": 96,
+    "59e6152586f77473dc057aa1": 100,
+    "59984ab886f7743e98271174": 104,
+    "5a38e6bac4a2826c6e06d79b": 104,
+    "57f4c844245977379d5c14d1": 106,
+    "574d967124597745970e7c94": 107,
+    "58948c8e86f77409493f7266": 107,
+    "587e02ff24597743df3deaeb": 107,
+    "66d98233302686954b0c6f81": 110,
+    "5926bb2186f7744b1c6c6e60": 114,
+    "5c07c60e0db834002330051f": 116,
+    "59d6088586f774275f37482f": 118,
+    "5d2f0d8048f0356c925bc3b0": 118,
+    "5bf3e0490db83400196199af": 120,
+    "59e6687d86f77411d949b251": 120,
+    "66992b349950f5f4cd06029f": 125,
+    "57d14d2524597714373db789": 126,
+    "57dc2fa62459775949412633": 129,
+    "583990e32459771419544dd2": 129,
+    "644674a13d52156624001fbc": 130,
+    "54491c4f4bdc2db1078b4568": 133,
+    "5e870397991fd70db46995c8": 139,
+    "5ae08f0a5acfc408fb1398a1": 143,
+    "59f9cabd86f7743a10721f46": 147,
+    "60339954d62c9b14ed777c06": 153,
+    "576165642459773c7a400233": 156,
+    "60db29ce99594040e04c4a27": 157,
+    "5a7828548dc32e5a9c28b516": 159,
+    "56dee2bdd2720bc8328b4567": 159,
+    "606dae0ab0e443224b421bb7": 160,
+    "57f3c6bd24597738e730fa2f": 161,
+    "62e7c4fba689e8c9c50dfc38": 165,
+    "6259b864ebedf17603599e88": 173,
+    "55801eed4bdc2d89578b4588": 177,
+    "5cc82d76e24e8d00134b4b83": 184,
+    "6680304edadb7aa61d00cef0": 188,
+    "5e00903ae9dc277128008b87": 189,
+    "5fc3e272f8b6a877a729eac5": 191,
+    "5bfea6e90db834001b7347f3": 194,
+    "628b5638ad252a16da6dd245": 206,
+    "628b9c37a733087d0d7fe84b": 206,
+    "5c501a4d2e221602b412b540": 218,
+    "5df8ce05b11454561e39243b": 225,
+    "5df24cf80dee1b22f862e9bc": 232,
+    "627e14b21713922ded6f2c15": 234,
+    "62e14904c2699c0ec93adc47": 235,
+    "588892092459774ac91d4b11": 236,
+    "673cab3e03c6a20581028bc1": 236,
+    "618428466ef05c2ce828f218": 240,
+    "5447a9cd4bdc2dbd208b4567": 241,
+    "59ff346386f77477562ff5e2": 241,
+    "645e0c6b3b381ede770e1cc9": 243,
+    "623063e994fc3f7b302a9696": 245,
+    "5ac66d725acfc43b321d4b60": 246,
+    "5fb64bc92b1b027b1f50bcf2": 246,
+    "5aafa857e5b5b00018480968": 248,
+    "5d43021ca4b9362eab4b5e25": 250,
+    "5e848cc2988a8701445df1e8": 250,
+    "5644bd2b4bdc2d3b4c8b4572": 251,
+    "5bf3e03b0db834001d2c4a9c": 251,
+    "5ab8e9fcd8ce870019439434": 252,
+    "5c46fbd72e2216398b5a8c9c": 259,
+    "5fbcc1d9016cce60e8341ab3": 287,
+    "5fc3f2d5900b1d5091531e57": 287,
+    "674fe9a75e51f1c47c04ec23": 288,
+    "5f2a9575926fd9352339381f": 295,
+    "5a367e5dc4a282000e49738f": 297,
+    "643ea5b23db6f9f57107d9fd": 297,
+    "5ba26383d4351e00334c93d9": 313,
+    "5ac66cb05acfc40198510a10": 313,
+    "5ac66d015acfc400180ae6e4": 314,
+    "6184055050224f204c1da540": 318,
+    "5a0ec13bfcdbcb00165aa685": 320,
+    "5abcbc27d8ce8700182eceeb": 320,
+    "5ac66d2e5acfc43b321d4b53": 325,
+    "6513ef33e06849f06c0957ca": 325,
+    "5c488a752e221602b412af63": 332,
+    "5ac4cd105acfc40016339859": 337,
+    "6499849fc93611967b034949": 338,
+    "5ac66d9b5acfc4001633997a": 339,
+    "66ffa9b66e19cc902401c5e8": 339,
+    "67124dcfa3541f2a1f0e788b": 340,
+    "63171672192e68c5460cebc5": 341,
+    "6718817435e3cfd9550d2c27": 341,
+    "5beed0f50db834001c062b12": 343,
+    "674d6121c09f69dfb201a888": 346,
+    "5fc22d7c187fea44d52eda44": 365,
+    "6176aca650224f204c1da3fb": 366,
+    "5cadfbf7ae92152ac412eeef": 381,
+    "5b0bbe4e5acfc40dc528a72d": 384,
+    "5bd70322209c4d00d7167b8f": 390,
+    "65290f395ae2ae97b80fdf2d": 392,
+    "57838ad32459774a17445cd2": 397,
+    "57c44b372459772d2b39b8ce": 397,
+    "651450ce0e00edc794068371": 399,
+    "5bb2475ed4351e00853264e3": 400,
+    "65268d8ecb944ff1e90ea385": 407,
+    "628a60ae6b1d481ff772e9c8": 410,
+    "606587252535c57a13424cfd": 411,
+    "6183afd850224f204c1da514": 488,
+    "6165ac306ef05c2ce828ef74": 488,
+    "676176d362e0497044079f4c": 490,
+    "64637076203536ad5600c990": 501,
+    "6410733d5dd49d77bd07847e": 503,
+    "5dcbd56fdbd3d91b3e5468d5": 507,
+    "5df8a2ca86f7740bfe6df777": 29,
+    "59e7635f86f7742cbf2c1095": 40,
+    "5648a7494bdc2d9d488b4583": 40,
+    "63737f448b28897f2802b874": 43,
+    "64be79e2bf8412471d0d9bcc": 50,
+    "64be79c487d1510151095552": 51,
+    "64abd93857958b4249003418": 66,
+    "5ab8e4ed86f7742d8e50c7fa": 71,
+    "5b44d22286f774172b0c9de8": 71,
+    "5c0e655586f774045612eeb2": 78,
+    "5c0e51be86f774598e797894": 83,
+    "5c0e5bab86f77461f55ed1f3": 85,
+    "5f5f41476bdad616ad46d631": 129,
+    "5e9dacf986f774054d6b89f4": 129,
+    "5c0e5edb86f77461f55ed1f7": 132,
+    "609e8540d5c319764c2bc2e9": 132,
+    "5ab8e79e86f7742d8b372e78": 162,
+    "5c0e625a86f7742d77340f62": 172,
+    "5ca2151486f774244a3b8d30": 172,
+    "5b44cf1486f77431723e3d05": 183,
+    "5b44d0de86f774503d30cba8": 186,
+    "5ca21c6986f77479963115a7": 199,
+    "545cdb794bdc2d3a198b456a": 205,
+    "5b44cd8b86f774503d30cba2": 205,
+    "5aa2b87de5b5b00016327c25": 1,
+    "5b43271c5acfc432ff4dce65": 1,
+    "5b40e61f5acfc4001a599bec": 1,
+    "5aa2a7e8e5b5b00016327c16": 1,
+    "5b40e5e25acfc4001a599bea": 1,
+    "5b4327aa5acfc400175496e0": 1,
+    "5aa2ba46e5b5b000137b758d": 1,
+    "5aa2ba19e5b5b00014028f4e": 1,
+    "60b52e5bc7d8103275739d67": 1,
+    "5f60e784f2bcbb675b00dac7": 1,
+    "5f60e7788adaa7100c3adb49": 1,
+    "5f60e6403b85f6263c14558c": 1,
+    "5aa2b9ede5b5b000137b758b": 1,
+    "5df8a58286f77412631087ed": 2,
+    "59e7711e86f7746cae05fbe1": 4,
+    "5c0d2727d174af02a012cf58": 10,
+    "5aa7d193e5b5b000171d063f": 12,
+    "5645bc214bdc2d363b8b4571": 13,
+    "5c06c6a80db834001b735491": 13,
+    "5aa7e454e5b5b0214e506fa2": 13,
+    "5aa7e4a4e5b5b000137b76f2": 14,
+    "5c091a4e0db834001d5addc8": 15,
+    "5d6d3716a4b9361bc8618872": 16,
+    "5ca20ee186f774799474abc2": 17,
+    "5aa7e276e5b5b000171d0647": 18,
+    "66bdc28a0b603c26902b2011": 21,
+    "5b4329f05acfc47a86086aa1": 26,
+    "61bca7cda0eae612383adf57": 34,
+    "5b432d215acfc4771e1c6624": 34,
+    "5f60b34a41e30a4ab12a6947": 35,
+    "5b40e4035acfc47a87740943": 39,
+    "5b40e3f35acfc40016388218": 39,
+    "5e4bfc1586f774264f7582d3": 40,
+    "5d5e7d28a4b936645d161203": 41,
+    "65709d2d21b9f815e208ff95": 41,
+    "5ea17ca01412a1425304d1c0": 41,
+    "5ac8d6885acfc400180ae7b0": 42,
+    "5e00c1ad86f774747333222c": 42,
+    "5e01ef6886f77445f643baa4": 42,
+    "5c17a7ed2e2216152142459c": 42,
+    "5a154d5cfcdbcb001a3b00da": 42,
+    "6759655674aa5e0825040d62": 42,
+    "67597d241d5a44f2f605df06": 42,
+    "67597ceea35600b4c10cea86": 42,
+    "675956062f6ddfe8ff0e2806": 42,
+    "5aa7d03ae5b5b00016327db5": 43,
+    "5a7c4850e899ef00150be885": 46,
+    "65719f0775149d62ce0a670b": 46,
+    "5aa7cfc0e5b5b00015693143": 48,
+    "6745895717824b1ec20570a6": 48,
+    "5b40e1525acfc4771e1c6611": 54,
+    "5b40e2bc5acfc40016388216": 55,
+    "64748cb8de82c85eaf0a273a": 92,
+    "5cadc190ae921500103bb3b6": 106,
+    "571a12c42459771f627b58a0": 109,
+    "576a581d2459771e7b1bc4f1": 110,
+    "56d59856d2720bd8418b456a": 114,
+    "56e0598dd2720bb5668b45a6": 115,
+    "5e81c3cbac2bb513793cdc75": 117,
+    "579204f224597773d619e051": 118,
+    "5448bd6b4bdc2dfc2f8b4569": 119,
+    "5a7ae0c351dfba0017554310": 122,
+    "602a9740da11d6478d5a06dc": 123,
+    "63088377b5cd696784087147": 123,
+    "624c2e8614da335f1e034d8c": 133,
+    "5f36a0e5fbf956000b716b65": 140,
+    "6193a720f8ee7e52e42109ed": 143,
+    "59f98b4986f7746f546d2cef": 145,
+    "5a17f98cfcdbcb0980087290": 154,
+    "5abccb7dd8ce87001773e277": 162,
+    "633ec7c2a6918cb895019c6c": 173,
+    "669fa409933e898cce0c2166": 173,
+    "5d67abc1a4b93614ec50137f": 176,
+    "5d3eb3b0a4b93615055e84d2": 176,
+    "5b1fa9b25acfc40018633c01": 192,
+    "669fa39b48fc9f8db6035a0c": 203,
+    "669fa3f88abd2662d80eee77": 204,
+    "61a4c8884f95bc3b2c5dc96f": 208,
+    "5b432b965acfc47a8774094e": 1,
+    "6033fa48ffd42c541047f728": 1,
+    "5645bcc04bdc2d363b8b4572": 1,
+    "5aa2ba71e5b5b000137b758f": 1,
+    "66b5f68de98be930d701c00e": 1,
+    "66b5f6a28ca68c6461709ed8": 1,
+    "66b5f69ea7f72d197e70bcdb": 1,
+    "5c165d832e2216398b5a7e36": 1,
+    "5ab8f04f86f774585f4237d8": 31,
+    "5ab8ee7786f7742d8f33f0b9": 35,
+    "56e33680d2720be2748b4576": 39,
+    "544a5cde4bdc2d39388b456b": 76,
+    "6034d103ca006d2dca39b3f0": 77,
+    "6038d614d10cbf667352dd44": 78,
+    "5e9dcf5986f7746c417435b3": 92,
+    "5ca20d5986f774331e7c9602": 92,
+    "60a2828e8689911a226117f9": 94,
+    "656f198fb27298d6fd005466": 103,
+    "618bb76513f5097c8d5aa2d5": 111,
+    "619cf0335771dd3c390269ae": 111,
+    "656ddcf0f02d7bcea90bf395": 112,
+    "618cfae774bb2d036a049e7c": 118,
+    "67458794e21e5d724e066976": 118,
+    "5b44c6ae86f7742d1627baea": 127,
+    "628e1ffc83ec92260c0f437f": 131,
+    "545cdae64bdc2d39198b4568": 134,
+    "66b5f22b78bbc0200425f904": 134,
+    "62a1b7fbc30cfa1d366af586": 138,
+    "5d5d940f86f7742797262046": 140,
+    "5ab8ebf186f7742d8b372e80": 150,
+    "6034d2d697633951dc245ea6": 150,
+    "5c0e805e86f774683f3dd637": 154,
+    "656e0436d44a1bb4220303a0": 154,
+    "639346cc1c8f182ad90c8972": 158,
+    "5f5e46b96bdad616ad46d613": 166,
+    "5c0e774286f77468413cc5b2": 178,
+    "5df8a4d786f77412672a1e3b": 202,
+    "603409c80ca681766b6a0fb2": 9,
+    "62a61c988ec41a51b34758d5": 9,
+    "5c1a1cc52e221602b3136e3d": 9,
+    "5d6d2ef3a4b93618084f58bd": 9,
+    "5d5fca1ea4b93635fd598c07": 10,
+    "5c0d32fcd174af02a1659c75": 10,
+    "5d6d2e22a4b9361bd5780d05": 10,
+    "5b432be65acfc433000ed01f": 11,
+    "557ff21e4bdc2d89578b4586": 11,
+    "5aa2b986e5b5b00014028f4c": 11,
+    "5b4325355acfc40019478126": 14,
+    "5ab8f39486f7745cd93a1cca": 14,
+    "5ab8f85d86f7745cd93a1cf5": 14,
+    "5b432f3d5acfc4704b4a1dfb": 14,
+    "6571bde39837cc51b800c212": 14,
+    "572b7f1624597762ae139822": 15,
+    "675ac888803644528007b3f6": 15,
+    "5ab8f4ff86f77431c60d91ba": 15,
+    "5b432b2f5acfc4771e1c6622": 19,
+    "5b432b6c5acfc4001a599bf0": 19,
+    "657089638db3adca1009f4ca": 19,
+    "6570aead4d84f81fd002a033": 25,
+    "5b3f16c486f7747c327f55f7": 20,
+    "5b3f3ade86f7746b6b790d8e": 20,
+    "5b3f3af486f774679e752c1f": 20,
+    "5b3f3b0186f774021a2afef7": 20,
+    "5b3f3b0e86f7746752107cda": 20,
+    "67614b3ab8c060ebb204b106": 20,
+    "5bffdc370db834001d23eca8": 22,
+    "63920105a83e15700a00f168": 22,
+    "664a5428d5e33a713b622379": 27,
+    "5bead2e00db834001c062938": 27,
+    "5bffe7930db834001b734a39": 27,
+    "5c012ffc0db834001d23f03f": 27,
+    "5bffdd7e0db834001b734a1a": 81,
+    "5e85a9f4add9fe03027d9bf1": 3,
+    "6769b8e3c1a1466c850658a8": 3,
+    "5d6e68dea4b9361bcc29e659": 17,
+    "5d6e69b9a4b9361bc8618958": 18,
+    "5a38ebd9c4a282000d722a5b": 20,
+    "5d6e69c7a4b9360b6c0d54e4": 21,
+    "5d6e695fa4b936359b35d852": 21,
+    "5f647fd3f6e4ab66c82faed6": 26,
+    "5d6e6772a4b936088465b17c": 30,
+    "560d5e524bdc2d25448b4571": 31,
+    "5d6e67fba4b9361bc73bc779": 32,
+    "5d6e6806a4b936088465b17e": 40,
+    "5737201124597760fc4431f1": 50,
+    "573719762459775a626ccbc1": 50,
+    "573718ba2459775a75491131": 53,
+    "57371f8d24597761006c6a81": 54,
+    "56d59d3ad2720bdb418b4577": 54,
+    "573603c924597764442bd9cb": 55,
+    "57371f2b24597761224311f1": 55,
+    "6601380580e77cfd080e3418": 56,
+    "64b7bbb74b75259c590fa897": 56,
+    "5736026a245977644601dc61": 58,
+    "5735fdcd2459776445391d61": 58,
+    "57371eb62459776125652ac1": 58,
+    "5c3df7d588a4501f290594e5": 58,
+    "57371e4124597760ff7b25f1": 59,
+    "58864a4f2459770fcc257101": 59,
+    "5735ff5c245977640e39ba7e": 60,
+    "57371b192459775a9f58a5e0": 61,
+    "5f647f31b6238e5dd066e196": 62,
+    "573601b42459776410737435": 64,
+    "64b8ee384b75259c590fa89b": 65,
+    "56dff4ecd2720b5f5a8b4568": 65,
+    "573720e02459776143012541": 65,
+    "5a26abfac4a28232980eabff": 65,
+    "573602322459776445391df1": 66,
+    "5737218f245977612125ba51": 67,
+    "56dff4a2d2720bbd668b456a": 69,
+    "5737207f24597760ff7b25f2": 69,
+    "5e85a9a6eacf8c039e4e2ac1": 70,
+    "59e68f6f86f7746c9f75e846": 70,
+    "5a3c16fe86f77452b62de32a": 70,
+    "5ba26812d4351e003201fef1": 75,
+    "6576f96220d53a5b8f3e395e": 75,
+    "5efb0d4f4bc50b58e81710f3": 76,
+    "56dff421d2720b5f5a8b4567": 77,
+    "57372140245977611f70ee91": 77,
+    "64b7af734b75259c590fa895": 78,
+    "5a269f97c4a282000b151807": 79,
+    "56dff338d2720bbd668b4569": 80,
+    "5cc80f79e4a949033c7343b2": 80,
+    "5a26ac06c4a282000c5a90a8": 80,
+    "5ba26844d4351e00334c9475": 82,
+    "59e6918f86f7746c9f75e849": 82,
+    "6196364158ef8c428c287d9f": 82,
+    "5efb0e16aeb21837e749c7ff": 85,
+    "56dff216d2720bbd668b4568": 86,
+    "59e6927d86f77411da468256": 89,
+    "59e4d3d286f774176a36250a": 90,
+    "5cc86840d7f00c002412c56c": 91,
+    "59e6920f86f77411d82aa167": 97,
+    "5c0d5ae286f7741e46554302": 98,
+    "62330bfadc5883093563729b": 99,
+    "5efb0fc6aeb21837e749c801": 100,
+    "573603562459776430731618": 100,
+    "6196365d58ef8c428c287da1": 100,
+    "5c0d56a986f774449d5de529": 102,
+    "56dff0bed2720bb0668b4567": 105,
+    "5cc86832d7f00c000d3a6e6c": 108,
+    "62330c40bdd19b369e1e53d1": 108,
+    "59e6658b86f77411d949b250": 110,
+    "5cc80f8fe4a949033b0224a2": 112,
+    "5e023e88277cce2b522ff2b1": 115,
+    "5d6e6a53a4b9361bd473feec": 120,
+    "573719df2459775a626ccbc2": 120,
+    "5e81f423763d9f754677bf2e": 122,
+    "6576f93989f0062e741ba952": 123,
+    "59e6542b86f77411dc52a77a": 128,
+    "62330c18744e5e31df12f516": 128,
+    "5cc80f67e4a949035e43bbba": 129,
+    "5ea2a8e200685063ec28c05a": 130,
+    "5d6e6911a4b9361bd5780d52": 130,
+    "64b7af5a8532cf95ee0a0dbd": 133,
+    "5d6e6a42a4b9364f07165f52": 135,
+    "5d6e6891a4b9361bd473feea": 140,
+    "64b8f7c241772715af0f9c3d": 142,
+    "56dff3afd2720bba668b4567": 146,
+    "59e4d24686f7741776641ac7": 146,
+    "66a0d1c87d0d369e270bb9de": 147,
+    "5d6e689ca4b9361bc8618956": 150,
+    "57a0dfb82459774d3078b56c": 151,
+    "5c925fa22e221601da359b7b": 152,
+    "5d6e6a05a4b93618084f58d0": 154,
+    "64b6979341772715af0f9c39": 166,
+    "58820d1224597753c90aeb13": 167,
+    "5fbe3ffdf8b6a877a729ea82": 170,
+    "64b8f7b5389d7ffd620ccba2": 172,
+    "5a26ac0ec4a28200741e1e18": 172,
+    "54527a984bdc2d4e668b4567": 174,
+    "5cadf6e5ae921500113bb973": 175,
+    "59e4cf5286f7741778269d8a": 175,
+    "66a0d1f88486c69fce00fdf6": 182,
+    "5d6e68e6a4b9361c140bcfe0": 183,
+    "59e655cb86f77411dc52a77b": 183,
+    "5d6e6869a4b9361c140bcfde": 190,
+    "660137ef76c1b56143052be8": 193,
+    "60194943740c5d77f6705eea": 193,
+    "5cc80f53e4a949000e1ea4f8": 193,
+    "5cadf6ddae9215051e1c23b2": 195,
+    "5e85aac65505fa48730d8af2": 195,
+    "5e023e6e34d52a55c3304f71": 195,
+    "5d6e6a5fa4b93614ec501745": 198,
+    "5656eb674bdc2d35148b457c": 199,
+    "5ede4739e0350d05467f73e8": 199,
+    "5ede47405b097655935d7d16": 199,
+    "5ede474b0c226a66f5402622": 199,
+    "5ede475b549eed7c6d5c18fb": 199,
+    "5ede47641cf3836a88318df1": 199,
+    "5f0c892565703e5c461894e9": 199,
+    "56dff2ced2720bb4668b4567": 201,
+    "5d6e68b3a4b9361bca7e50b5": 206,
+    "5fc382b6d6fa9c00c571bbc3": 206,
+    "619636be6db0f2477964e710": 214,
+    "5c0d668f86f7747ccb7f13b2": 218,
+    "5d6e68d1a4b93622fe60e845": 220,
+    "62330b3ed4dc74626d570b95": 220,
+    "5656d7c34bdc2d9d198b4587": 221,
+    "66a0d1e0ed648d72fe064d06": 224,
+    "64b8f7968532cf95ee0a0dbf": 224,
+    "5cc80f38e4a949001152b560": 229,
+    "6576f4708ca9c4381d16cd9d": 229,
+    "56dff061d2720bb5668b4567": 234,
+    "5efb0da7a29a85116f6ea05f": 234,
+    "5ede475339ee016e8c534742": 240,
+    "59e6906286f7746c9f75e847": 242,
+    "5efb0cabfb3e451d70735af5": 246,
+    "6529302b8c26af6326029fb7": 250,
+    "5ba2678ad4351e44f824b344": 253,
+    "660137d8481cc6907a0c5cda": 255,
+    "5d6e68c4a4b9361b93413f79": 257,
+    "5e023e53d4353e3302577c4c": 263,
+    "5c0d591486f7744c505b416f": 265,
+    "5fc382c1016cce60e8341b20": 272,
+    "64b7af434b75259c590fa893": 279,
+    "668fe62ac62660a5d8071446": 285,
+    "61962b617c6c7b169525f168": 285,
+    "61962d879bb3d20b0946d385": 292,
+    "64b8725c4b75259c590fa899": 298,
+    "54527ac44bdc2d36668b4567": 299,
+    "5e023cf8186a883be655e54f": 302,
+    "56dfef82d2720bbd668b4567": 308,
+    "5887431f2459777e1612938f": 311,
+    "5a608bf24f39f98ffc77720e": 312,
+    "5f0596629e22f464da6bbdd9": 320,
+    "58dd3ad986f77403051cba8f": 320,
+    "5d6e68a8a4b9360b6c0d54e2": 334,
+    "59e0d99486f7744a32234762": 338,
+    "57a0e5022459774d1673f889": 340,
+    "5fd20ff893a8961fc660a954": 341,
+    "59e77a2386f7742ee578960a": 344,
+    "6529243824cbe3c74a05e5c1": 352,
+    "5cadf6eeae921500134b2799": 362,
+    "5ba26835d4351e0035628ff5": 375,
+    "5e85aa1a988a8701445df1f5": 382,
+    "59e690b686f7746c9f75e848": 382,
+    "56dff026d2720bb8668b4567": 395,
+    "5c0d688c86f77413ae3407b2": 398,
+    "5fc275cf85fd526b824a571a": 402,
+    "601949593ae8f707c4608daa": 418,
+    "5a6086ea4f39f99cd479502f": 435,
+    "5e023d34e8a400319a28ed44": 438,
+    "601aa3d2b2bcb34913271e6d": 443,
+    "5c0d5e4486f77478390952fe": 467,
+    "6768c25aa7b238f14a08d3f6": 483,
+    "560d61e84bdc2da74d8b4571": 505,
+    "5efb0c1bd79ff02a1f5e68d9": 530,
+    "5e023d48186a883be655e551": 582,
+    "5fc382a9d724d907e2077dab": 715
+  }
 }
