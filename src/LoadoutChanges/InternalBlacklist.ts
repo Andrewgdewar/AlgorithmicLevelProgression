@@ -260,6 +260,7 @@ export default [
   "671d8b38b769f0d88c0950f8", //mag_m1911_colt_m45a1_std_1143x23_999_infected
   "671d8b8c0959c721a50ca838", //mag_usp_hk_usp_tactical_1143x23_999_infected
   "628120f210e26c1f344e6558", // mxc broken mod
+  "66d98233302686954b0c6f81", // RSP-30 reactive signal cartridge (Blue)
 ];
 
 //5d0a29fed7ad1a002769ad08
